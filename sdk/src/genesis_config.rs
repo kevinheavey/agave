@@ -41,7 +41,7 @@ pub const DEFAULT_GENESIS_DOWNLOAD_PATH: &str = "/genesis.tar.bz2";
 pub const UNUSED_DEFAULT: u64 = 1024;
 
 // The order can't align with release lifecycle only to remain ABI-compatible...
-#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, AbiEnumVisitor, AbiExample)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ClusterType {
     Testnet,
     MainnetBeta,
@@ -83,8 +83,7 @@ impl FromStr for ClusterType {
     }
 }
 
-#[frozen_abi(digest = "3V3ZVRyzNhRfe8RJwDeGpeTP8xBWGGFBEbwTkvKKVjEa")]
-#[derive(Serialize, Deserialize, Debug, Clone, AbiExample, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct GenesisConfig {
     /// when the network (bootstrap validator) was started relative to the UNIX Epoch
     pub creation_time: UnixTimestamp,

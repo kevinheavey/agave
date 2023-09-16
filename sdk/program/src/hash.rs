@@ -42,7 +42,7 @@ const MAX_BASE58_LEN: usize = 44;
     Ord,
     PartialOrd,
     Hash,
-    AbiExample,
+    
     Pod,
     Zeroable,
 )]

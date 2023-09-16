@@ -76,7 +76,7 @@ pub const SECP256K1_PUBLIC_KEY_LENGTH: usize = 64;
     Ord,
     PartialOrd,
     Hash,
-    AbiExample,
+    
 )]
 pub struct Secp256k1Pubkey(pub [u8; SECP256K1_PUBLIC_KEY_LENGTH]);
 

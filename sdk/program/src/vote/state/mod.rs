@@ -41,8 +41,7 @@ pub const VOTE_CREDITS_GRACE_SLOTS: u8 = 2;
 // Maximum number of credits to award for a vote; this number of credits is awarded to votes on slots that land within the grace period. After that grace period, vote credits are reduced.
 pub const VOTE_CREDITS_MAXIMUM_PER_SLOT: u8 = 8;
 
-#[frozen_abi(digest = "Ch2vVEwos2EjAVqSHCyJjnN2MNX1yrpapZTGhMSCjWUH")]
-#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Clone)]
 pub struct Vote {
     /// A stack of votes starting with the oldest vote
     pub slots: Vec<Slot>,
@@ -66,7 +65,7 @@ impl Vote {
     }
 }
 
-#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Copy, Clone, AbiExample)]
+#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Copy, Clone, )]
 pub struct Lockout {
     slot: Slot,
     confirmation_count: u32,
@@ -113,7 +112,7 @@ impl Lockout {
     }
 }
 
-#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Copy, Clone, AbiExample)]
+#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Copy, Clone, )]
 pub struct LandedVote {
     // Latency is the difference in slot number between the slot that was voted on (lockout.slot) and the slot in
     // which the vote that added this Lockout landed.  For votes which were cast before versions of the validator
@@ -147,8 +146,7 @@ impl From<Lockout> for LandedVote {
     }
 }
 
-#[frozen_abi(digest = "GwJfVFsATSj7nvKwtUkHYzqPRaPY6SLxPGXApuCya3x5")]
-#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Clone)]
 pub struct VoteStateUpdate {
     /// The proposed tower
     pub lockouts: VecDeque<Lockout>,
@@ -225,7 +223,7 @@ pub struct VoteAuthorizeCheckedWithSeedArgs {
     pub current_authority_derived_key_seed: String,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, )]
 pub struct BlockTimestamp {
     pub slot: Slot,
     pub timestamp: UnixTimestamp,
@@ -234,7 +232,7 @@ pub struct BlockTimestamp {
 // this is how many epochs a voter can be remembered for slashing
 const MAX_ITEMS: usize = 32;
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, )]
 pub struct CircBuf<I> {
     buf: [I; MAX_ITEMS],
     /// next pointer
@@ -280,8 +278,7 @@ impl<I> CircBuf<I> {
     }
 }
 
-#[frozen_abi(digest = "EeenjJaSrm9hRM39gK6raRNtzG61hnk7GciUCJJRDUSQ")]
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone)]
 pub struct VoteState {
     /// the node that votes in this account
     pub node_pubkey: Pubkey,
@@ -712,7 +709,7 @@ pub mod serde_compact_vote_state_update {
         serde::{Deserialize, Deserializer, Serialize, Serializer},
     };
 
-    #[derive(Deserialize, Serialize, AbiExample)]
+    #[derive(Deserialize, Serialize, )]
     struct LockoutOffset {
         #[serde(with = "serde_varint")]
         offset: Slot,

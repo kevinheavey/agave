@@ -29,7 +29,6 @@ const MAX_BASE58_LEN: usize = 44;
     Ord,
     PartialOrd,
     Hash,
-    AbiExample,
 )]
 #[repr(transparent)]
 pub struct Hash(pub [u8; HASH_BYTES]);

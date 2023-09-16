@@ -29,7 +29,7 @@ use {
 /// dangerous to include error strings from 3rd party crates because they could
 /// change at any time and changes to them are difficult to detect.
 #[derive(
-    Serialize, Deserialize, Debug, Error, PartialEq, Eq, Clone, AbiExample, AbiEnumVisitor,
+    Serialize, Deserialize, Debug, Error, PartialEq, Eq, Clone,
 )]
 pub enum InstructionError {
     /// Deprecated! Use CustomError instead!
@@ -626,7 +626,7 @@ impl AccountMeta {
 /// construction of `Message`. Most users will not interact with it directly.
 ///
 /// [`Message`]: crate::message::Message
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone, )]
 #[serde(rename_all = "camelCase")]
 pub struct CompiledInstruction {
     /// Index into the transaction keys array indicating the program account that executes this instruction.

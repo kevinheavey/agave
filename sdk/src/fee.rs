@@ -142,10 +142,3 @@ impl Default for FeeStructure {
         Self::new(0.000005, 0.0, vec![(1_400_000, 0.0)])
     }
 }
-
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
-impl ::solana_frozen_abi::abi_example::AbiExample for FeeStructure {
-    fn example() -> Self {
-        FeeStructure::default()
-    }
-}

@@ -10,7 +10,7 @@ use {
 
 /// Reasons a transaction might be rejected.
 #[derive(
-    Error, Serialize, Deserialize, Debug, PartialEq, Eq, Clone, AbiExample, AbiEnumVisitor,
+    Error, Serialize, Deserialize, Debug, PartialEq, Eq, Clone,
 )]
 pub enum TransactionError {
     /// An account is already being processed in another transaction in a way

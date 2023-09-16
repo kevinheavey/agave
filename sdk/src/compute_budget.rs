@@ -11,8 +11,6 @@ crate::declare_id!("ComputeBudget111111111111111111111111111111");
 
 /// Compute Budget Instructions
 #[derive(
-    AbiExample,
-    AbiEnumVisitor,
     BorshDeserialize,
     BorshSerialize,
     Clone,

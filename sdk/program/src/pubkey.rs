@@ -67,7 +67,7 @@ impl From<u64> for PubkeyError {
 #[wasm_bindgen]
 #[repr(transparent)]
 #[derive(
-    AbiExample,
+    
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,

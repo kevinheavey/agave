@@ -4,7 +4,7 @@ use {
     std::collections::BTreeMap,
 };
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, AbiExample)]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, )]
 pub struct AuthorizedVoters {
     authorized_voters: BTreeMap<Epoch, Pubkey>,
 }
