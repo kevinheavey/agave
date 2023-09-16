@@ -498,7 +498,6 @@ pub mod log;
 pub mod message;
 pub mod native_token;
 pub mod nonce;
-pub mod poseidon;
 pub mod program;
 pub mod program_error;
 pub mod program_memory;
@@ -529,7 +528,7 @@ pub mod address_lookup_table_account {
     pub use crate::address_lookup_table::AddressLookupTableAccount;
 }
 
-pub use {solana_wasm_bindgen::wasm_bindgen, solana_pubkey as pubkey};
+pub use {solana_wasm_bindgen::wasm_bindgen, solana_pubkey as pubkey, solana_poseidon as poseidon};
 
 /// The [config native program][np].
 ///
