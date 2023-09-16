@@ -82,7 +82,8 @@
 //! [sysvardoc]: https://docs.solana.com/developing/runtime-facilities/sysvars
 
 use {
-    crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey},
+    crate::{account_info::AccountInfo, program_error::ProgramError},
+    solana_pubkey::Pubkey,
     lazy_static::lazy_static,
 };
 
@@ -255,7 +256,8 @@ macro_rules! impl_sysvar_get {
 mod tests {
     use {
         super::*,
-        crate::{clock::Epoch, program_error::ProgramError, pubkey::Pubkey},
+        crate::{clock::Epoch, program_error::ProgramError},
+        solana_pubkey::Pubkey,
         std::{cell::RefCell, rc::Rc},
     };
 

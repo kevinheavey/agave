@@ -4,7 +4,6 @@ use {
     crate::{
         clock::{Slot, UnixTimestamp},
         instruction::{AccountMeta, Instruction},
-        pubkey::Pubkey,
         system_instruction, sysvar,
         vote::{
             program::id,
@@ -17,6 +16,7 @@ use {
     },
     serde_derive::{Deserialize, Serialize},
     solana_hash::Hash,
+    solana_pubkey::Pubkey,
 };
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]

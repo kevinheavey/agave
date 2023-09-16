@@ -1,6 +1,6 @@
-use crate::{
-    instruction::{AccountMeta, ProcessedSiblingInstruction},
-    pubkey::Pubkey,
+use {
+    crate::instruction::{AccountMeta, ProcessedSiblingInstruction},
+    solana_pubkey::Pubkey
 };
 
 #[cfg(target_feature = "static-syscalls")]

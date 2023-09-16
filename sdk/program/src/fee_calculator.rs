@@ -187,7 +187,8 @@ impl FeeRateGovernor {
 mod tests {
     use {
         super::*,
-        crate::{pubkey::Pubkey, system_instruction},
+        crate::system_instruction,
+        solana_pubkey::Pubkey,
     };
 
     #[test]

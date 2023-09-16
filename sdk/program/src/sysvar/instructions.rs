@@ -34,9 +34,9 @@ use {
         account_info::AccountInfo,
         instruction::{AccountMeta, Instruction},
         program_error::ProgramError,
-        pubkey::Pubkey,
         serialize_utils::{read_pubkey, read_slice, read_u16, read_u8}
     },
+    solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
 };
 #[cfg(not(target_os = "solana"))]
@@ -302,8 +302,8 @@ mod tests {
         crate::{
             instruction::AccountMeta,
             message::{Message as LegacyMessage, SanitizedMessage},
-            pubkey::Pubkey,
         },
+        solana_pubkey::Pubkey,
         std::convert::TryFrom,
     };
 

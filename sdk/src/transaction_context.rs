@@ -19,8 +19,8 @@ use {
     crate::{
         account::{AccountSharedData, ReadableAccount},
         instruction::InstructionError,
-        pubkey::Pubkey,
     },
+    solana_pubkey::Pubkey,
     std::{
         cell::{Ref, RefCell, RefMut},
         collections::HashSet,

@@ -15,11 +15,13 @@
 //!
 //! [`loader_upgradeable_instruction`]: crate::loader_upgradeable_instruction
 
-use crate::{
-    instruction::{AccountMeta, Instruction, InstructionError},
-    loader_upgradeable_instruction::UpgradeableLoaderInstruction,
-    pubkey::Pubkey,
-    system_instruction, sysvar,
+use {
+    crate::{
+        instruction::{AccountMeta, Instruction, InstructionError},
+        loader_upgradeable_instruction::UpgradeableLoaderInstruction,
+        system_instruction, sysvar,
+    },
+    solana_pubkey::Pubkey,
 };
 
 crate::declare_id!("BPFLoaderUpgradeab1e11111111111111111111111");

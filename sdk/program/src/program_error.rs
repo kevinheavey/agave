@@ -2,10 +2,11 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    crate::{instruction::InstructionError, msg, pubkey::PubkeyError},
+    crate::{instruction::InstructionError, msg},
     borsh::maybestd::io::Error as BorshIoError,
     num_traits::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
+    solana_pubkey::PubkeyError,
     std::convert::TryFrom,
     thiserror::Error,
 };

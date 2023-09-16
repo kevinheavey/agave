@@ -11,13 +11,13 @@ use {
             LegacyMessage, SanitizedMessage, VersionedMessage,
         },
         precompiles::verify_if_precompile,
-        pubkey::Pubkey,
         sanitize::Sanitize,
         signature::Signature,
         solana_sdk::feature_set,
         transaction::{Result, Transaction, TransactionError, VersionedTransaction},
     },
     solana_program::message::SanitizedVersionedMessage,
+    solana_pubkey::Pubkey,
 };
 
 /// Maximum number of accounts that a transaction may lock.

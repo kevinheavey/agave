@@ -3,9 +3,9 @@
 use {
     crate::{
         instruction::{AccountMeta, Instruction},
-        pubkey::Pubkey,
         stable_layout::stable_vec::StableVec,
     },
+    solana_pubkey::Pubkey,
     std::fmt::Debug,
 };
 

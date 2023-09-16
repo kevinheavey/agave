@@ -5,6 +5,7 @@ use {
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
     num_derive::{FromPrimitive, ToPrimitive},
+    serde::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
     solana_hash::hashv,
     solana_wasm_bindgen::wasm_bindgen,
@@ -642,7 +643,7 @@ impl Pubkey {
         };
 
         #[cfg(not(target_os = "solana"))]
-        crate::program_stubs::sol_log(&self.to_string());
+        println!("{}", self.to_string());
     }
 }
 

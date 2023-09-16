@@ -3,9 +3,9 @@
 mod current;
 pub use current::{Data, DurableNonce, State};
 use {
-    crate::pubkey::Pubkey,
     serde_derive::{Deserialize, Serialize},
     solana_hash::Hash,
+    solana_pubkey::Pubkey,
     std::collections::HashSet,
 };
 
@@ -116,7 +116,8 @@ impl From<Versions> for State {
 mod tests {
     use {
         super::*,
-        crate::{fee_calculator::FeeCalculator, pubkey::Pubkey},
+        crate::fee_calculator::FeeCalculator,
+        solana_pubkey::Pubkey,
         std::iter::repeat_with,
     };
 

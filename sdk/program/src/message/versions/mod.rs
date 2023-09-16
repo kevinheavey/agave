@@ -2,7 +2,6 @@ use {
     crate::{
         instruction::CompiledInstruction,
         message::{legacy::Message as LegacyMessage, v0::MessageAddressTableLookup, MessageHeader},
-        pubkey::Pubkey,
         short_vec,
     },
     serde::{
@@ -11,6 +10,7 @@ use {
         Deserialize, Serialize,
     },
     solana_hash::Hash,
+    solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     std::fmt,
 };

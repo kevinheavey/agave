@@ -68,7 +68,8 @@ where
 mod tests {
     use {
         super::*,
-        crate::{account::AccountSharedData, pubkey::Pubkey},
+        crate::account::AccountSharedData,
+        solana_pubkey::Pubkey,
     };
 
     #[test]

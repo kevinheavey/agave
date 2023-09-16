@@ -2,10 +2,10 @@
 
 use {
     crate::{
-        pubkey::Pubkey,
         signature::Signature,
         signer::{Signer, SignerError},
     },
+    solana_pubkey::Pubkey,
     thiserror::Error,
 };
 

@@ -2,8 +2,8 @@ use {
     crate::{
         bpf_loader_upgradeable,
         message::{legacy::is_builtin_key_or_sysvar, v0, AccountKeys},
-        pubkey::Pubkey,
     },
+    solana_pubkey::Pubkey,
     std::{borrow::Cow, collections::HashSet},
 };
 

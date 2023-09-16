@@ -1,0 +1,26 @@
+[package]
+name = "solana-pubkey"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+borsh = { workspace = true }
+borsh0-9 = { package = "borsh", version = "0.9.3" }
+bs58 = { workspace = true }
+bytemuck = { workspace = true }
+curve25519-dalek = { workspace = true }
+num-derive = { workspace = true }
+num-traits = { workspace = true }
+rand = { workspace = true }
+serde = { workspace = true }
+solana-atomic-u64 = { workspace = true }
+solana-decode-error = { workspace = true }
+solana-hash = { workspace = true }
+solana-sanitize = { workspace = true }
+solana-wasm-bindgen = { workspace = true }
+thiserror = { workspace = true }
+wasm-bindgen = { workspace = true }

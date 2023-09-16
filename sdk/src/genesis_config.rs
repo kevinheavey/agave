@@ -11,7 +11,6 @@ use {
         inflation::Inflation,
         native_token::lamports_to_sol,
         poh_config::PohConfig,
-        pubkey::Pubkey,
         rent::Rent,
         shred_version::compute_shred_version,
         signature::{Keypair, Signer},
@@ -22,6 +21,7 @@ use {
     chrono::{TimeZone, Utc},
     memmap2::Mmap,
     solana_hash::{hash, Hash},
+    solana_pubkey::Pubkey,
     std::{
         collections::BTreeMap,
         fmt,

@@ -19,10 +19,11 @@ pub mod solana_rpc_client {
             super::super::{
                 solana_rpc_client_api::client_error::Result as ClientResult,
                 solana_sdk::{
-                    account::Account, hash::Hash, pubkey::Pubkey, signature::Signature,
+                    account::Account, hash::Hash, signature::Signature,
                     transaction::Transaction,
                 },
             },
+            solana_pubkey::Pubkey,
             std::{cell::RefCell, collections::HashMap, rc::Rc},
         };
 
@@ -87,8 +88,9 @@ pub mod solana_rpc_client_api {
 
 pub mod solana_rpc_client_nonce_utils {
     use {
-        super::solana_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
+        super::solana_sdk::{account::ReadableAccount, account_utils::StateMut},
         crate::nonce::state::{Data, DurableNonce, Versions},
+        solana_pubkey::Pubkey,
     };
 
     #[derive(thiserror::Error, Debug)]
@@ -115,7 +117,6 @@ pub mod solana_sdk {
     pub use {
         crate::{
             instruction, keccak, message, nonce,
-            pubkey::{self, Pubkey},
             system_instruction, system_program,
             sysvar::{
                 self,
@@ -123,10 +124,14 @@ pub mod solana_sdk {
             }
         },
         solana_hash as hash,
+        solana_pubkey::{self as pubkey, Pubkey},
     };
 
     pub mod account {
-        use crate::{clock::Epoch, pubkey::Pubkey};
+        use {
+            crate::clock::Epoch,
+            solana_pubkey::Pubkey
+        };
         #[derive(Clone)]
         pub struct Account {
             pub lamports: u64,
@@ -156,7 +161,7 @@ pub mod solana_sdk {
     }
 
     pub mod signature {
-        use crate::pubkey::Pubkey;
+        use solana_pubkey::Pubkey;
 
         #[derive(Default, Debug)]
         pub struct Signature;
@@ -204,10 +209,10 @@ pub mod solana_sdk {
             crate::{
                 instruction::Instruction,
                 message::{Message, VersionedMessage},
-                pubkey::Pubkey,
             },
             serde::Serialize,
             solana_hash::Hash,
+            solana_pubkey::Pubkey,
         };
 
         pub struct VersionedTransaction {
@@ -293,7 +298,8 @@ pub mod solana_address_lookup_table_program {
 
     pub mod state {
         use {
-            crate::{instruction::InstructionError, pubkey::Pubkey},
+            crate::instruction::InstructionError,
+            solana_pubkey::Pubkey,
             std::borrow::Cow,
         };
 

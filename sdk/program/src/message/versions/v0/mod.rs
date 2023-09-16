@@ -19,10 +19,10 @@ use {
             legacy::is_builtin_key_or_sysvar,
             AccountKeys, MessageHeader, MESSAGE_VERSION_PREFIX,
         },
-        pubkey::Pubkey,
         short_vec
     },
     solana_hash::Hash,
+    solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
 };
 pub use loaded::*;

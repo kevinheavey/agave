@@ -1,10 +1,8 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{
-        pubkey::Pubkey,
-        signature::{Signature, Signer, SignerError},
-    },
+    crate::signature::{Signature, Signer, SignerError},
+    solana_pubkey::Pubkey,
     std::sync::Arc,
 };
 

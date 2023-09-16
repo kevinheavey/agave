@@ -76,6 +76,7 @@ solana-decode-error = { workspace = true }
 solana-hash = { workspace = true }
 solana-logger = { workspace = true, optional = true }
 solana-program = { workspace = true }
+solana-pubkey = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-wasm-bindgen = { workspace = true }

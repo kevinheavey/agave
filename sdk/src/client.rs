@@ -18,7 +18,6 @@ use {
         fee_calculator::{FeeCalculator, FeeRateGovernor},
         instruction::Instruction,
         message::Message,
-        pubkey::Pubkey,
         signature::{Keypair, Signature},
         signer::Signer,
         signers::Signers,
@@ -27,6 +26,7 @@ use {
         transport::Result,
     },
     solana_hash::Hash,
+    solana_pubkey::Pubkey,
 };
 
 pub trait Client: SyncClient + AsyncClient {

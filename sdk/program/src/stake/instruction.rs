@@ -4,7 +4,6 @@ use {
     crate::{
         clock::{Epoch, UnixTimestamp},
         instruction::{AccountMeta, Instruction},
-        pubkey::Pubkey,
         stake::{
             program::id,
             state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
@@ -15,6 +14,7 @@ use {
     num_derive::{FromPrimitive, ToPrimitive},
     serde_derive::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
+    solana_pubkey::Pubkey,
     thiserror::Error,
 };
 

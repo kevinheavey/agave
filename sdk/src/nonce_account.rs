@@ -55,9 +55,9 @@ mod tests {
         crate::{
             fee_calculator::FeeCalculator,
             nonce::state::{Data, DurableNonce},
-            pubkey::Pubkey,
             system_program,
         },
+        solana_pubkey::Pubkey,
     };
 
     #[test]

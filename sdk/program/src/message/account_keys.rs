@@ -2,8 +2,8 @@ use {
     crate::{
         instruction::{CompiledInstruction, Instruction},
         message::{v0::LoadedAddresses, CompileError},
-        pubkey::Pubkey,
     },
+    solana_pubkey::Pubkey,
     std::{collections::BTreeMap, ops::Index},
 };
 

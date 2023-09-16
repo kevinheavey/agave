@@ -2,10 +2,12 @@
 //!
 //! [nubpfl]: crate::bpf_loader
 
-use crate::{
-    instruction::{AccountMeta, Instruction},
-    pubkey::Pubkey,
-    sysvar::rent,
+use {
+    crate::{
+        instruction::{AccountMeta, Instruction},
+        sysvar::rent
+    },
+    solana_pubkey::Pubkey,
 };
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]

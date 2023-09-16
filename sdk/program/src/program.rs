@@ -8,9 +8,12 @@
 //! [`invoke_signed`]: invoke_signed
 //! [cpi]: https://docs.solana.com/developing/programming-model/calling-between-programs
 
-use crate::{
-    account_info::AccountInfo, entrypoint::ProgramResult, instruction::Instruction, pubkey::Pubkey,
-    stable_layout::stable_instruction::StableInstruction,
+use {
+    crate::{
+        account_info::AccountInfo, entrypoint::ProgramResult, instruction::Instruction,
+        stable_layout::stable_instruction::StableInstruction
+    },
+    solana_pubkey::Pubkey
 };
 
 /// Invoke a cross-program instruction.

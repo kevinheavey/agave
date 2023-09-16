@@ -3,7 +3,6 @@
 use {
     crate::{
         derivation_path::DerivationPath,
-        pubkey::Pubkey,
         signature::Signature,
         signer::{EncodableKey, EncodableKeypair, SeedDerivable, Signer, SignerError},
     },
@@ -11,6 +10,7 @@ use {
     ed25519_dalek_bip32::Error as Bip32Error,
     hmac::Hmac,
     rand0_7::{rngs::OsRng, CryptoRng, RngCore},
+    solana_pubkey::Pubkey,
     std::{
         error,
         io::{Read, Write},

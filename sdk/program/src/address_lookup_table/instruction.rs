@@ -3,10 +3,10 @@ use {
         address_lookup_table::program::id,
         clock::Slot,
         instruction::{AccountMeta, Instruction},
-        pubkey::Pubkey,
         system_program,
     },
     serde::{Deserialize, Serialize},
+    solana_pubkey::Pubkey,
 };
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]

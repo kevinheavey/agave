@@ -16,11 +16,11 @@ use {
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
         instruction::{CompiledInstruction, Instruction},
         message::{compiled_keys::CompiledKeys, MessageHeader},
-        pubkey::Pubkey,
         short_vec, system_instruction, system_program, sysvar,
     },
     lazy_static::lazy_static,
     solana_hash::Hash,
+    solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_wasm_bindgen::wasm_bindgen,
     std::{convert::TryFrom, str::FromStr},
@@ -53,14 +53,14 @@ lazy_static! {
     // the value is "false"), or might be in one of these lists (if the value is "true")
     pub static ref MAYBE_BUILTIN_KEY_OR_SYSVAR: [bool; 256] = {
         let mut temp_table: [bool; 256] = [false; 256];
-        BUILTIN_PROGRAMS_KEYS.iter().for_each(|key| temp_table[key.0[0] as usize] = true);
-        sysvar::ALL_IDS.iter().for_each(|key| temp_table[key.0[0] as usize] = true);
+        BUILTIN_PROGRAMS_KEYS.iter().for_each(|key| temp_table[key.to_bytes()[0] as usize] = true);
+        sysvar::ALL_IDS.iter().for_each(|key| temp_table[key.to_bytes()[0] as usize] = true);
         temp_table
     };
 }
 
 pub fn is_builtin_key_or_sysvar(key: &Pubkey) -> bool {
-    if MAYBE_BUILTIN_KEY_OR_SYSVAR[key.0[0] as usize] {
+    if MAYBE_BUILTIN_KEY_OR_SYSVAR[key.to_bytes()[0] as usize] {
         return sysvar::is_sysvar_id(key) || BUILTIN_PROGRAMS_KEYS.contains(key);
     }
     false

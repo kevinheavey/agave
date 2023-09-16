@@ -2,11 +2,13 @@
 //!
 //! This is the loader of the program runtime v2.
 
-use crate::{
-    instruction::{AccountMeta, Instruction},
-    loader_v4_instruction::LoaderV4Instruction,
-    pubkey::Pubkey,
-    system_instruction,
+use {
+    crate::{
+        instruction::{AccountMeta, Instruction},
+        loader_v4_instruction::LoaderV4Instruction,
+        system_instruction,
+    },
+    solana_pubkey::Pubkey,
 };
 
 crate::declare_id!("LoaderV411111111111111111111111111111111111");

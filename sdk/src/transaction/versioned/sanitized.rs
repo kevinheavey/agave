@@ -41,8 +41,8 @@ mod tests {
         solana_hash::Hash,
         solana_program::{
             message::{v0, VersionedMessage},
-            pubkey::Pubkey,
         },
+        solana_pubkey::Pubkey,
     };
 
     #[test]

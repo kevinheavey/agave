@@ -4,7 +4,8 @@ use crate::{
     message::v0::{LoadedAddresses, MessageAddressTableLookup},
 };
 use {
-    crate::{instruction::Instruction, message::MessageHeader, pubkey::Pubkey},
+    crate::{instruction::Instruction, message::MessageHeader},
+    solana_pubkey::Pubkey,
     std::collections::BTreeMap,
     thiserror::Error,
 };

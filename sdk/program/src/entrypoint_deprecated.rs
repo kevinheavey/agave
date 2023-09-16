@@ -11,8 +11,9 @@
 
 extern crate alloc;
 use {
-    crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey},
+    crate::{account_info::AccountInfo, program_error::ProgramError},
     alloc::vec::Vec,
+    solana_pubkey::Pubkey,
     std::{
         cell::RefCell,
         mem::size_of,

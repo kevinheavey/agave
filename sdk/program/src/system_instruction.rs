@@ -44,12 +44,12 @@ use {
     crate::{
         instruction::{AccountMeta, Instruction},
         nonce,
-        pubkey::Pubkey,
         system_program,
         sysvar::{recent_blockhashes, rent},
     },
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
+    solana_pubkey::Pubkey,
     thiserror::Error,
 };
 

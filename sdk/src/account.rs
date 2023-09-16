@@ -6,13 +6,13 @@ use {
     crate::{
         clock::{Epoch, INITIAL_RENT_EPOCH},
         lamports::LamportsError,
-        pubkey::Pubkey,
     },
     serde::{
         ser::{Serialize, Serializer},
         Deserialize,
     },
     solana_program::{account_info::AccountInfo, debug_account_data::*, sysvar::Sysvar},
+    solana_pubkey::Pubkey,
     std::{
         cell::{Ref, RefCell},
         fmt,
@@ -44,7 +44,8 @@ pub struct Account {
 // mod because we need 'Account' below to have the name 'Account' to match expected serialization
 mod account_serialize {
     use {
-        crate::{account::ReadableAccount, clock::Epoch, pubkey::Pubkey},
+        crate::{account::ReadableAccount, clock::Epoch},
+        solana_pubkey::Pubkey,
         serde::{ser::Serializer, Serialize},
     };
     #[repr(C)]

@@ -1,6 +1,7 @@
 use {
-    crate::{clock::Epoch, pubkey::Pubkey},
+    crate::clock::Epoch,
     serde_derive::{Deserialize, Serialize},
+    solana_pubkey::Pubkey,
     std::collections::BTreeMap,
 };
 

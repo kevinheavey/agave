@@ -11,9 +11,12 @@
 //! 2. When the next epoch is entered the runtime will check for new activation requests and
 //!    active them.  When this occurs, the activation slot is recorded in the feature account
 
-use crate::{
-    account_info::AccountInfo, clock::Slot, instruction::Instruction, program_error::ProgramError,
-    pubkey::Pubkey, rent::Rent, system_instruction,
+use {
+    crate::{
+        account_info::AccountInfo, clock::Slot, instruction::Instruction, program_error::ProgramError,
+        rent::Rent, system_instruction
+    },
+    solana_pubkey::Pubkey
 };
 
 crate::declare_id!("Feature111111111111111111111111111111111111");

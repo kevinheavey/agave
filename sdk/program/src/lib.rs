@@ -512,7 +512,6 @@ pub mod program_option;
 pub mod program_pack;
 pub mod program_stubs;
 pub mod program_utils;
-pub mod pubkey;
 pub mod rent;
 pub mod secp256k1_program;
 pub mod secp256k1_recover;
@@ -539,7 +538,7 @@ pub mod address_lookup_table_account {
     pub use crate::address_lookup_table::AddressLookupTableAccount;
 }
 
-pub use solana_wasm_bindgen::wasm_bindgen;
+pub use {solana_wasm_bindgen::wasm_bindgen, solana_pubkey as pubkey};
 
 /// The [config native program][np].
 ///
@@ -555,10 +554,11 @@ pub mod sdk_ids {
     use {
         crate::{
             bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, config, ed25519_program,
-            feature, incinerator, secp256k1_program, solana_program::pubkey::Pubkey, stake,
+            feature, incinerator, secp256k1_program, stake,
             system_program, sysvar, vote,
         },
         lazy_static::lazy_static,
+        solana_pubkey::Pubkey,
     };
 
     lazy_static! {

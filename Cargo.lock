@@ -1438,6 +1438,7 @@ dependencies = [
  "solana-decode-error",
  "solana-hash",
  "solana-logger",
+ "solana-pubkey",
  "solana-sanitize",
  "solana-sdk-macro",
  "solana-wasm-bindgen",
@@ -1446,6 +1447,28 @@ dependencies = [
  "tiny-bip39",
  "wasm-bindgen",
  "zeroize",
+]
+
+[[package]]
+name = "solana-pubkey"
+version = "1.17.0"
+dependencies = [
+ "borsh 0.10.3",
+ "borsh 0.9.3",
+ "bs58",
+ "bytemuck",
+ "curve25519-dalek",
+ "num-derive",
+ "num-traits",
+ "rand 0.8.5",
+ "serde",
+ "solana-atomic-u64",
+ "solana-decode-error",
+ "solana-hash",
+ "solana-sanitize",
+ "solana-wasm-bindgen",
+ "thiserror",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -1504,6 +1527,7 @@ dependencies = [
  "solana-hash",
  "solana-logger",
  "solana-program",
+ "solana-pubkey",
  "solana-sanitize",
  "solana-sdk",
  "solana-sdk-macro",

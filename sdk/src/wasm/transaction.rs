@@ -3,10 +3,8 @@
 #![allow(non_snake_case)]
 use {
     crate::{hash::Hash, message::Message, signer::keypair::Keypair, transaction::Transaction},
-    solana_program::{
-        pubkey::Pubkey,
-        wasm::{display_to_jsvalue, instructions::Instructions},
-    },
+    solana_program::wasm::{display_to_jsvalue, instructions::Instructions},
+    solana_pubkey::Pubkey,
     wasm_bindgen::prelude::*,
 };
 

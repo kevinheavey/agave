@@ -4,9 +4,9 @@ use {
         address_lookup_table::error::AddressLookupError,
         clock::Slot,
         instruction::InstructionError,
-        pubkey::Pubkey,
         slot_hashes::{SlotHashes, MAX_ENTRIES},
     },
+    solana_pubkey::Pubkey,
     std::borrow::Cow,
 };
 

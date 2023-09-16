@@ -5,11 +5,11 @@
 use {
     crate::{
         hash::Hash,
-        pubkey::Pubkey,
         sanitize::SanitizeError,
         signature::{Signature, Signer},
     },
     num_enum::{IntoPrimitive, TryFromPrimitive},
+    solana_pubkey::Pubkey,
 };
 
 #[cfg(test)]

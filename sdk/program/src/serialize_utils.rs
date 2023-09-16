@@ -2,7 +2,7 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    crate::pubkey::Pubkey,
+    solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError
 };
 

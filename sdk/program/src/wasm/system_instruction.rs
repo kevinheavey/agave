@@ -2,7 +2,8 @@
 #![cfg(target_arch = "wasm32")]
 #![allow(non_snake_case)]
 use {
-    crate::{instruction::Instruction, pubkey::Pubkey, system_instruction::*},
+    crate::{instruction::Instruction, system_instruction::*},
+    solana_pubkey::Pubkey,
     wasm_bindgen::prelude::*,
 };
 

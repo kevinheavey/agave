@@ -1,10 +1,8 @@
 use {
-    crate::{
-        fee_calculator::FeeCalculator,
-        pubkey::Pubkey,
-    },
+    crate::fee_calculator::FeeCalculator,
     serde_derive::{Deserialize, Serialize},
-    solana_hash::{hashv, Hash}
+    solana_hash::{hashv, Hash},
+    solana_pubkey::Pubkey,
 };
 
 const DURABLE_NONCE_HASH_PREFIX: &[u8] = "DURABLE_NONCE".as_bytes();

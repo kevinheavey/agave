@@ -8,7 +8,6 @@ use {
     crate::{
         clock::{Epoch, Slot, UnixTimestamp},
         instruction::InstructionError,
-        pubkey::Pubkey,
         rent::Rent,
         sysvar::clock::Clock,
         vote::{authorized_voters::AuthorizedVoters, error::VoteError},
@@ -16,6 +15,7 @@ use {
     bincode::{serialize_into, ErrorKind},
     serde_derive::{Deserialize, Serialize},
     solana_hash::Hash,
+    solana_pubkey::Pubkey,
     std::{collections::VecDeque, fmt::Debug},
 };
 
