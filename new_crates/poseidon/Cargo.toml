@@ -1,0 +1,18 @@
+[package]
+name = "solana-poseidon"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+thiserror = { workspace = true }
+
+[target.'cfg(target_os = "solana")'.dependencies]
+solana-syscall-core = { workspace = true }
+
+[target.'cfg(not(target_os = "solana"))'.dependencies]
+ark-bn254 = { workspace = true }
+light-poseidon = { workspace = true }
