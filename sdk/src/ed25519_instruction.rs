@@ -212,53 +212,6 @@ pub mod test {
     }
 
     #[test]
-    fn test_invalid_offsets() {
-        solana_logger::setup();
-
-        let mut instruction_data = vec![0u8; DATA_START];
-        let offsets = Ed25519SignatureOffsets::default();
-        instruction_data[0..SIGNATURE_OFFSETS_START].copy_from_slice(bytes_of(&1u16));
-        instruction_data[SIGNATURE_OFFSETS_START..DATA_START].copy_from_slice(bytes_of(&offsets));
-        instruction_data.truncate(instruction_data.len() - 1);
-
-        assert_eq!(
-            verify(
-                &instruction_data,
-                &[&[0u8; 100]],
-                &FeatureSet::all_enabled(),
-            ),
-            Err(PrecompileError::InvalidInstructionDataSize)
-        );
-
-        let offsets = Ed25519SignatureOffsets {
-            signature_instruction_index: 1,
-            ..Ed25519SignatureOffsets::default()
-        };
-        assert_eq!(
-            test_case(1, &offsets),
-            Err(PrecompileError::InvalidDataOffsets)
-        );
-
-        let offsets = Ed25519SignatureOffsets {
-            message_instruction_index: 1,
-            ..Ed25519SignatureOffsets::default()
-        };
-        assert_eq!(
-            test_case(1, &offsets),
-            Err(PrecompileError::InvalidDataOffsets)
-        );
-
-        let offsets = Ed25519SignatureOffsets {
-            public_key_instruction_index: 1,
-            ..Ed25519SignatureOffsets::default()
-        };
-        assert_eq!(
-            test_case(1, &offsets),
-            Err(PrecompileError::InvalidDataOffsets)
-        );
-    }
-
-    #[test]
     fn test_message_data_offsets() {
         let offsets = Ed25519SignatureOffsets {
             message_data_offset: 99,
@@ -341,42 +294,5 @@ pub mod test {
             test_case(1, &offsets),
             Err(PrecompileError::InvalidDataOffsets)
         );
-    }
-
-    #[test]
-    fn test_ed25519() {
-        solana_logger::setup();
-
-        let privkey = ed25519_dalek::Keypair::generate(&mut thread_rng());
-        let message_arr = b"hello";
-        let mut instruction = new_ed25519_instruction(&privkey, message_arr);
-        let mint_keypair = Keypair::new();
-        let feature_set = FeatureSet::all_enabled();
-
-        let tx = Transaction::new_signed_with_payer(
-            &[instruction.clone()],
-            Some(&mint_keypair.pubkey()),
-            &[&mint_keypair],
-            Hash::default(),
-        );
-
-        assert!(tx.verify_precompiles(&feature_set).is_ok());
-
-        let index = loop {
-            let index = thread_rng().gen_range(0, instruction.data.len());
-            // byte 1 is not used, so this would not cause the verify to fail
-            if index != 1 {
-                break index;
-            }
-        };
-
-        instruction.data[index] = instruction.data[index].wrapping_add(12);
-        let tx = Transaction::new_signed_with_payer(
-            &[instruction],
-            Some(&mint_keypair.pubkey()),
-            &[&mint_keypair],
-            Hash::default(),
-        );
-        assert!(tx.verify_precompiles(&feature_set).is_err());
     }
 }

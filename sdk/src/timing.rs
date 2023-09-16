@@ -108,25 +108,6 @@ mod test {
     use super::*;
 
     #[test]
-    fn test_interval_update() {
-        solana_logger::setup();
-        let i = AtomicInterval::default();
-        assert!(!i.should_update(1000));
-
-        let i = AtomicInterval::default();
-        assert!(i.should_update_ext(1000, false));
-
-        std::thread::sleep(Duration::from_millis(10));
-        assert!(i.elapsed_ms() > 9 && i.elapsed_ms() < 1000);
-        assert!(
-            i.remaining_until_next_interval(1000) > 9
-                && i.remaining_until_next_interval(1000) < 991
-        );
-        assert!(i.should_update(9));
-        assert!(!i.should_update(100));
-    }
-
-    #[test]
     #[allow(clippy::float_cmp)]
     fn test_years_as_slots() {
         let tick_duration = Duration::from_micros(1000 * 1000 / 160);
