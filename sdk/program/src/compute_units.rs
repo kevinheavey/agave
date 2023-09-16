@@ -3,7 +3,7 @@
 pub fn sol_remaining_compute_units() -> u64 {
     #[cfg(target_os = "solana")]
     unsafe {
-        solana_syscalls_core::sol_remaining_compute_units()
+        solana_syscall_core::sol_remaining_compute_units()
     }
 
     #[cfg(not(target_os = "solana"))]

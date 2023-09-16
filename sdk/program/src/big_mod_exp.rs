@@ -46,7 +46,7 @@ pub fn big_mod_exp(base: &[u8], exponent: &[u8], modulus: &[u8]) -> Vec<u8> {
             modulus_len: modulus.len() as u64,
         };
         unsafe {
-            solana_syscalls_core::sol_big_mod_exp(
+            solana_syscall_core::sol_big_mod_exp(
                 &param as *const _ as *const u8,
                 return_value.as_mut_slice() as *mut _ as *mut u8,
             )

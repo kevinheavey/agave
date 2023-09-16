@@ -139,7 +139,7 @@ pub fn hashv(vals: &[&[u8]]) -> Hash {
     {
         let mut hash_result = [0; HASH_BYTES];
         unsafe {
-            solana_syscalls_core::sol_keccak256(
+            solana_syscall_core::sol_keccak256(
                 vals as *const _ as *const u8,
                 vals.len() as u64,
                 &mut hash_result as *mut _ as *mut u8,
