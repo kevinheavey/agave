@@ -1,5 +1,5 @@
 pub mod prelude {
-    pub use crate::alt_bn128::{consts::*, target_arch::*, AltBn128Error};
+    pub use crate::{consts::*, target_arch::*, AltBn128Error};
 }
 
 use {
@@ -372,7 +372,7 @@ mod target_arch {
 #[cfg(test)]
 mod tests {
     use {
-        crate::alt_bn128::{prelude::*, PodG1},
+        crate::{prelude::*, PodG1},
         ark_bn254::g1::G1Affine,
         ark_ec::AffineRepr,
         ark_serialize::{CanonicalSerialize, Compress},

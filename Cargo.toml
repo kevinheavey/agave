@@ -89,6 +89,7 @@ serde_json = "1.0.107"
 serde_with = { version = "2.3.3", default-features = false }
 sha2 = "0.10.7"
 sha3 = "0.10.4"
+solana-alt-bn128 = { path = "new_crates/alt-bn128" }
 solana-atomic-u64 = { path = "new_crates/atomic-u64" }
 solana-blake3 = { path = "new_crates/blake3" }
 solana-clock = { path = "new_crates/clock" }

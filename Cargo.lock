@@ -1349,6 +1349,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ecab6c735a6bb4139c0caafd0cc3635748bbb3acf4550e8138122099251f309"
 
 [[package]]
+name = "solana-alt-bn128"
+version = "1.17.0"
+dependencies = [
+ "ark-bn254",
+ "ark-ec",
+ "ark-ff",
+ "ark-serialize",
+ "array-bytes",
+ "bytemuck",
+ "serde",
+ "serde_json",
+ "solana-syscall-core",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-atomic-u64"
 version = "1.17.0"
 dependencies = [
@@ -1492,6 +1508,7 @@ dependencies = [
  "serde_json",
  "sha2 0.10.7",
  "sha3",
+ "solana-alt-bn128",
  "solana-atomic-u64",
  "solana-blake3",
  "solana-clock",
