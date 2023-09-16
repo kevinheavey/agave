@@ -29,13 +29,15 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
-use crate::{
-    account_info::AccountInfo,
-    instruction::{AccountMeta, Instruction},
-    program_error::ProgramError,
-    pubkey::Pubkey,
-    sanitize::SanitizeError,
-    serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
+use {
+    crate::{
+        account_info::AccountInfo,
+        instruction::{AccountMeta, Instruction},
+        program_error::ProgramError,
+        pubkey::Pubkey,
+        serialize_utils::{read_pubkey, read_slice, read_u16, read_u8}
+    },
+    solana_sanitize::SanitizeError,
 };
 #[cfg(not(target_os = "solana"))]
 use {

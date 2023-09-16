@@ -1404,12 +1404,20 @@ dependencies = [
  "sha2 0.10.7",
  "sha3",
  "solana-logger",
+ "solana-sanitize",
  "solana-sdk-macro",
  "static_assertions",
  "thiserror",
  "tiny-bip39",
  "wasm-bindgen",
  "zeroize",
+]
+
+[[package]]
+name = "solana-sanitize"
+version = "1.17.0"
+dependencies = [
+ "thiserror",
 ]
 
 [[package]]
@@ -1459,6 +1467,7 @@ dependencies = [
  "sha3",
  "solana-logger",
  "solana-program",
+ "solana-sanitize",
  "solana-sdk",
  "solana-sdk-macro",
  "static_assertions",

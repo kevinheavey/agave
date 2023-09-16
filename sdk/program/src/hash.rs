@@ -4,10 +4,11 @@
 //! [`Hash`]: struct@Hash
 
 use {
-    crate::{sanitize::Sanitize, wasm_bindgen},
+    crate::wasm_bindgen,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
     sha2::{Digest, Sha256},
+    solana_sanitize::{Sanitize},
     std::{convert::TryFrom, fmt, mem, str::FromStr},
     thiserror::Error,
 };
