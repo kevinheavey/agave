@@ -11,10 +11,10 @@
 use {
     crate::{
         account_info::AccountInfo, entrypoint::ProgramResult,
-        stable_layout::stable_instruction::StableInstruction
+        stable_layout::stable_instruction::StableInstruction,
     },
     solana_instruction::Instruction,
-    solana_pubkey::Pubkey
+    solana_pubkey::Pubkey,
 };
 
 /// Invoke a cross-program instruction.
@@ -400,8 +400,8 @@ pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
 pub fn check_type_assumptions() {
     extern crate memoffset;
     use {
-        solana_clock::Epoch,
         memoffset::offset_of,
+        solana_clock::Epoch,
         solana_instruction::AccountMeta,
         std::{
             cell::RefCell,

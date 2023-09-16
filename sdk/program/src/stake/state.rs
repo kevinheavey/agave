@@ -34,7 +34,7 @@ pub fn warmup_cooldown_rate(current_epoch: Epoch, new_rate_activation_epoch: Opt
     }
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy, )]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy)]
 #[allow(clippy::large_enum_variant)]
 #[deprecated(
     since = "1.17.0",
@@ -127,7 +127,7 @@ impl StakeState {
     }
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy, )]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy)]
 #[allow(clippy::large_enum_variant)]
 pub enum StakeStateV2 {
     #[default]
@@ -221,7 +221,7 @@ impl StakeStateV2 {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy, )]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
 pub enum StakeAuthorize {
     Staker,
     Withdrawer,
@@ -236,7 +236,6 @@ pub enum StakeAuthorize {
     Eq,
     Clone,
     Copy,
-    
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -271,7 +270,6 @@ impl Lockup {
     Eq,
     Clone,
     Copy,
-    
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -405,7 +403,6 @@ impl Meta {
     PartialEq,
     Clone,
     Copy,
-    
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,
@@ -652,7 +649,6 @@ impl Delegation {
     PartialEq,
     Clone,
     Copy,
-    
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,

@@ -3,12 +3,8 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::feature_set::FeatureSet,
-    lazy_static::lazy_static,
-    solana_decode_error::DecodeError,
-    solana_instruction::CompiledInstruction,
-    solana_pubkey::Pubkey,
-    thiserror::Error,
+    crate::feature_set::FeatureSet, lazy_static::lazy_static, solana_decode_error::DecodeError,
+    solana_instruction::CompiledInstruction, solana_pubkey::Pubkey, thiserror::Error,
 };
 
 /// Precompile errors

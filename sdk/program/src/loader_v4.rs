@@ -3,10 +3,7 @@
 //! This is the loader of the program runtime v2.
 
 use {
-    crate::{
-        loader_v4_instruction::LoaderV4Instruction,
-        system_instruction,
-    },
+    crate::{loader_v4_instruction::LoaderV4Instruction, system_instruction},
     solana_instruction::{AccountMeta, Instruction},
     solana_native_programs::loader_v4::id,
     solana_pubkey::Pubkey,
@@ -16,7 +13,7 @@ use {
 pub const DEPLOYMENT_COOLDOWN_IN_SLOTS: u64 = 750;
 
 #[repr(u64)]
-#[derive(Debug, PartialEq, Eq, Clone, Copy, )]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum LoaderV4Status {
     /// Program is in maintanance
     Retracted,
@@ -28,7 +25,7 @@ pub enum LoaderV4Status {
 
 /// LoaderV4 account states
 #[repr(C)]
-#[derive(Debug, PartialEq, Eq, Clone, Copy, )]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct LoaderV4State {
     /// Slot in which the program was last deployed, retracted or initialized.
     pub slot: u64,
@@ -206,7 +203,10 @@ mod tests {
         let instructions = create_buffer(&payer, &program, 123, &authority, 10, &recipient);
         assert_eq!(instructions.len(), 2);
         let instruction0 = &instructions[0];
-        assert_eq!(instruction0.program_id, solana_native_programs::system_program::id());
+        assert_eq!(
+            instruction0.program_id,
+            solana_native_programs::system_program::id()
+        );
         assert_eq!(instruction0.accounts.len(), 2);
         assert_eq!(instruction0.accounts[0].pubkey, payer);
         assert!(instruction0.accounts[0].is_writable);

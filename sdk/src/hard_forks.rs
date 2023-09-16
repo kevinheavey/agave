@@ -8,7 +8,7 @@ use {
     solana_clock::Slot,
 };
 
-#[derive(Default, Clone, Debug, Deserialize, Serialize,  PartialEq, Eq)]
+#[derive(Default, Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 pub struct HardForks {
     hard_forks: Vec<(Slot, usize)>,
 }

@@ -6,8 +6,8 @@
 use {
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
+    serde::{Deserialize, Serialize},
     sha2::{Digest, Sha256},
-    serde::{Serialize, Deserialize},
     solana_sanitize::Sanitize,
     solana_wasm_bindgen::wasm_bindgen,
     std::{convert::TryFrom, fmt, mem, str::FromStr},

@@ -29,20 +29,20 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
-use {
-    crate::{
-        account_info::AccountInfo,
-        program_error::ProgramError,
-        serialize_utils::{read_pubkey, read_slice, read_u16, read_u8}
-    },
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
-    solana_sanitize::SanitizeError,
-};
 #[cfg(not(target_os = "solana"))]
 use {
     crate::serialize_utils::{append_slice, append_u16, append_u8},
     bitflags::bitflags,
+};
+use {
+    crate::{
+        account_info::AccountInfo,
+        program_error::ProgramError,
+        serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
+    },
+    solana_instruction::{AccountMeta, Instruction},
+    solana_pubkey::Pubkey,
+    solana_sanitize::SanitizeError,
 };
 
 /// Instructions sysvar, dummy type.

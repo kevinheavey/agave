@@ -618,11 +618,8 @@ impl Message {
 mod tests {
     #![allow(deprecated)]
     use {
-        super::*,
-        crate::message::MESSAGE_HEADER_LENGTH,
-        solana_hash as hash,
-        solana_instruction::AccountMeta,
-        std::collections::HashSet,
+        super::*, crate::message::MESSAGE_HEADER_LENGTH, solana_hash as hash,
+        solana_instruction::AccountMeta, std::collections::HashSet,
     };
 
     #[test]

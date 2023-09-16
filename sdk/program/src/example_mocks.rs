@@ -19,8 +19,7 @@ pub mod solana_rpc_client {
             super::super::{
                 solana_rpc_client_api::client_error::Result as ClientResult,
                 solana_sdk::{
-                    account::Account, hash::Hash, signature::Signature,
-                    transaction::Transaction,
+                    account::Account, hash::Hash, signature::Signature, transaction::Transaction,
                 },
             },
             solana_pubkey::Pubkey,
@@ -116,24 +115,19 @@ pub mod solana_rpc_client_nonce_utils {
 pub mod solana_sdk {
     pub use {
         crate::{
-            keccak, message, nonce,
-            system_instruction,
+            keccak, message, nonce, system_instruction,
             sysvar::{
                 self,
                 clock::{self, Clock},
-            }
+            },
         },
-        solana_hash as hash,
-        solana_instruction as instruction,
+        solana_hash as hash, solana_instruction as instruction,
         solana_native_programs::system_program,
         solana_pubkey::{self as pubkey, Pubkey},
     };
 
     pub mod account {
-        use {
-            solana_clock::Epoch,
-            solana_pubkey::Pubkey
-        };
+        use {solana_clock::Epoch, solana_pubkey::Pubkey};
         #[derive(Clone)]
         pub struct Account {
             pub lamports: u64,
@@ -297,11 +291,7 @@ pub mod solana_address_lookup_table_program {
     pub use solana_native_programs::address_lookup_table::{check_id, id, ID};
 
     pub mod state {
-        use {
-            solana_instruction::InstructionError,
-            solana_pubkey::Pubkey,
-            std::borrow::Cow,
-        };
+        use {solana_instruction::InstructionError, solana_pubkey::Pubkey, std::borrow::Cow};
 
         pub struct AddressLookupTable<'a> {
             pub addresses: Cow<'a, [Pubkey]>,

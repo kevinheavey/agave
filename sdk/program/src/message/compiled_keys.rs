@@ -4,11 +4,8 @@ use crate::{
     message::v0::{LoadedAddresses, MessageAddressTableLookup},
 };
 use {
-    crate::message::MessageHeader,
-    solana_instruction::Instruction,
-    solana_pubkey::Pubkey,
-    std::collections::BTreeMap,
-    thiserror::Error,
+    crate::message::MessageHeader, solana_instruction::Instruction, solana_pubkey::Pubkey,
+    std::collections::BTreeMap, thiserror::Error,
 };
 
 /// A helper struct to collect pubkeys compiled for a set of instructions
@@ -186,7 +183,7 @@ impl CompiledKeys {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_instruction::AccountMeta, bitflags::bitflags};
+    use {super::*, bitflags::bitflags, solana_instruction::AccountMeta};
 
     bitflags! {
         #[derive(Clone, Copy)]

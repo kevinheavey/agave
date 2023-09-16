@@ -66,17 +66,7 @@ pub const SECP256K1_PUBLIC_KEY_LENGTH: usize = 64;
 
 #[repr(transparent)]
 #[derive(
-    BorshSerialize,
-    BorshDeserialize,
-    BorshSchema,
-    Clone,
-    Copy,
-    Eq,
-    PartialEq,
-    Ord,
-    PartialOrd,
-    Hash,
-    
+    BorshSerialize, BorshDeserialize, BorshSchema, Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash,
 )]
 pub struct Secp256k1Pubkey(pub [u8; SECP256K1_PUBLIC_KEY_LENGTH]);
 

@@ -115,9 +115,7 @@ impl From<Versions> for State {
 #[cfg(test)]
 mod tests {
     use {
-        super::*,
-        crate::fee_calculator::FeeCalculator,
-        solana_pubkey::Pubkey,
+        super::*, crate::fee_calculator::FeeCalculator, solana_pubkey::Pubkey,
         std::iter::repeat_with,
     };
 

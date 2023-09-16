@@ -19,9 +19,7 @@
 #![allow(deprecated)]
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    crate::{
-        declare_deprecated_sysvar_id, fee_calculator::FeeCalculator, sysvar::Sysvar,
-    },
+    crate::{declare_deprecated_sysvar_id, fee_calculator::FeeCalculator, sysvar::Sysvar},
     solana_hash::Hash,
     std::{cmp::Ordering, collections::BinaryHeap, iter::FromIterator, ops::Deref},
 };

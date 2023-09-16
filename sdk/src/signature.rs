@@ -21,9 +21,7 @@ pub const SIGNATURE_BYTES: usize = 64;
 const MAX_BASE58_SIGNATURE_LEN: usize = 88;
 
 #[repr(transparent)]
-#[derive(
-    Serialize, Deserialize, Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash, 
-)]
+#[derive(Serialize, Deserialize, Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Signature(GenericArray<u8, U64>);
 
 impl solana_sanitize::Sanitize for Signature {}

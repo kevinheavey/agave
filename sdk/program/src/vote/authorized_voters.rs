@@ -1,11 +1,11 @@
 use {
-    solana_clock::Epoch,
     serde_derive::{Deserialize, Serialize},
+    solana_clock::Epoch,
     solana_pubkey::Pubkey,
     std::collections::BTreeMap,
 };
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, )]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone)]
 pub struct AuthorizedVoters {
     authorized_voters: BTreeMap<Epoch, Pubkey>,
 }

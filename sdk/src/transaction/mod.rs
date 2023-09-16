@@ -125,7 +125,7 @@ use {
     serde::Serialize,
     solana_instruction::{CompiledInstruction, Instruction},
     solana_native_programs::system_program,
-    solana_program::{system_instruction::SystemInstruction},
+    solana_program::system_instruction::SystemInstruction,
     solana_pubkey::Pubkey,
     solana_sdk::feature_set,
     solana_short_vec as short_vec,

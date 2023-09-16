@@ -17,8 +17,7 @@
 
 use {
     crate::{
-        loader_upgradeable_instruction::UpgradeableLoaderInstruction,
-        system_instruction, sysvar,
+        loader_upgradeable_instruction::UpgradeableLoaderInstruction, system_instruction, sysvar,
     },
     solana_instruction::{AccountMeta, Instruction, InstructionError},
     solana_native_programs::bpf_loader_upgradeable::id,
@@ -26,7 +25,7 @@ use {
 };
 
 /// Upgradeable loader account states
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy, )]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
 pub enum UpgradeableLoaderState {
     /// Account is not initialized.
     Uninitialized,

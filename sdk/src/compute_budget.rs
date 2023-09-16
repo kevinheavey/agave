@@ -3,22 +3,13 @@
 #![cfg(feature = "full")]
 
 use {
+    borsh::{BorshDeserialize, BorshSerialize},
     solana_instruction::Instruction,
     solana_native_programs::compute_budget::id,
-    borsh::{BorshDeserialize, BorshSerialize},
 };
 
 /// Compute Budget Instructions
-#[derive(
-    BorshDeserialize,
-    BorshSerialize,
-    Clone,
-    Debug,
-    Deserialize,
-    PartialEq,
-    Eq,
-    Serialize,
-)]
+#[derive(BorshDeserialize, BorshSerialize, Clone, Debug, Deserialize, PartialEq, Eq, Serialize)]
 pub enum ComputeBudgetInstruction {
     /// Deprecated
     // TODO: after feature remove_deprecated_request_unit_ix::id() is activated, replace it with 'unused'

@@ -8,7 +8,7 @@ use {
     crate::{feature_set::FeatureSet, precompiles::PrecompileError},
     bytemuck::{bytes_of, Pod, Zeroable},
     ed25519_dalek::{ed25519::signature::Signature, Signer, Verifier},
-    solana_instruction::Instruction
+    solana_instruction::Instruction,
 };
 
 pub const PUBKEY_SERIALIZED_SIZE: usize = 32;
@@ -180,12 +180,7 @@ fn get_data_slice<'a>(
 
 #[cfg(test)]
 pub mod test {
-    use {
-        super::*,
-        crate::{
-            feature_set::FeatureSet,
-        },
-    };
+    use {super::*, crate::feature_set::FeatureSet};
 
     fn test_case(
         num_signatures: u16,

@@ -23,9 +23,7 @@ pub use sanitized::*;
 use {
     crate::program_utils::limited_deserialize,
     solana_native_programs::system_program,
-    solana_program::{
-        nonce::NONCED_TX_MARKER_IX_INDEX, system_instruction::SystemInstruction,
-    },
+    solana_program::{nonce::NONCED_TX_MARKER_IX_INDEX, system_instruction::SystemInstruction},
 };
 
 /// Type that serializes to the string "legacy"
@@ -48,7 +46,7 @@ impl TransactionVersion {
 
 // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
 /// An atomic transaction
-#[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize, )]
+#[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize)]
 pub struct VersionedTransaction {
     /// List of signatures
     #[serde(with = "short_vec")]

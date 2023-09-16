@@ -1,7 +1,5 @@
 use {
-    super::VersionedMessage,
-    solana_instruction::CompiledInstruction,
-    solana_pubkey::Pubkey,
+    super::VersionedMessage, solana_instruction::CompiledInstruction, solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
 };
 

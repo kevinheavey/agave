@@ -3,9 +3,9 @@
 //! [keccak]: https://keccak.team/keccak.html
 
 use {
-    solana_sanitize::Sanitize,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     sha3::{Digest, Keccak256},
+    solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
     thiserror::Error,
 };
@@ -27,7 +27,6 @@ const MAX_BASE58_LEN: usize = 44;
     Ord,
     PartialOrd,
     Hash,
-    
 )]
 #[repr(transparent)]
 pub struct Hash(pub [u8; HASH_BYTES]);

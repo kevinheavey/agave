@@ -20,10 +20,10 @@
 
 use {
     lazy_static::lazy_static,
+    solana_clock::Slot,
     solana_hash::{Hash, Hasher},
     solana_program::{epoch_schedule::EpochSchedule, stake_history::Epoch},
     solana_pubkey::Pubkey,
-    solana_clock::Slot,
     std::collections::{HashMap, HashSet},
 };
 
@@ -887,7 +887,7 @@ lazy_static! {
 }
 
 /// `FeatureSet` holds the set of currently active/inactive runtime features
-#[derive( Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct FeatureSet {
     pub active: HashMap<Pubkey, Slot>,
     pub inactive: HashSet<Pubkey>,

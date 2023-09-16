@@ -527,14 +527,17 @@ pub mod address_lookup_table_account {
     pub use crate::address_lookup_table::AddressLookupTableAccount;
 }
 
-pub use {solana_wasm_bindgen::wasm_bindgen, solana_pubkey as pubkey, solana_poseidon as poseidon, solana_blake3 as blake3};
+pub use {
+    solana_blake3 as blake3, solana_poseidon as poseidon, solana_pubkey as pubkey,
+    solana_wasm_bindgen::wasm_bindgen,
+};
 
 /// The [config native program][np].
 ///
 /// [np]: https://docs.solana.com/developing/runtime-facilities/programs#config-program
 pub mod config {
     pub mod program {
-        pub use solana_native_programs::config::{check_id, ID, id};
+        pub use solana_native_programs::config::{check_id, id, ID};
     }
 }
 
@@ -542,12 +545,11 @@ pub mod config {
 pub mod sdk_ids {
     use {
         crate::sysvar,
+        lazy_static::lazy_static,
         solana_native_programs::{
             bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, config, ed25519_program,
-            feature, incinerator, secp256k1_program, stake,
-            vote, sysvar::id as sysvar_id,
+            feature, incinerator, secp256k1_program, stake, sysvar::id as sysvar_id, vote,
         },
-        lazy_static::lazy_static,
         solana_pubkey::Pubkey,
     };
 

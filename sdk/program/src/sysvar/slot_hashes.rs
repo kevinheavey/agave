@@ -64,12 +64,7 @@ impl Sysvar for SlotHashes {
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        crate::slot_hashes::MAX_ENTRIES,
-        solana_clock::Slot,
-        solana_hash::Hash,
-    };
+    use {super::*, crate::slot_hashes::MAX_ENTRIES, solana_clock::Slot, solana_hash::Hash};
 
     #[test]
     fn test_size_of() {

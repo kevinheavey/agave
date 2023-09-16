@@ -9,6 +9,7 @@
 //! [`v0`]: crate::message::v0
 //! [future message format]: https://docs.solana.com/proposals/versioned-transactions
 
+pub use loaded::*;
 use {
     crate::{
         address_lookup_table_account::AddressLookupTableAccount,
@@ -25,13 +26,12 @@ use {
     solana_sanitize::SanitizeError,
     solana_short_vec as short_vec,
 };
-pub use loaded::*;
 
 mod loaded;
 
 /// Address table lookups describe an on-chain address lookup table to use
 /// for loading more readonly and writable accounts in a single tx.
-#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone, )]
+#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct MessageAddressTableLookup {
     /// Address lookup table account key
@@ -52,7 +52,7 @@ pub struct MessageAddressTableLookup {
 /// See the [`message`] module documentation for further description.
 ///
 /// [`message`]: crate::message
-#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone, )]
+#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Message {
     /// The message header, identifying signed and read-only `account_keys`.
@@ -358,11 +358,7 @@ impl Message {
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        crate::message::VersionedMessage,
-        solana_instruction::AccountMeta,
-    };
+    use {super::*, crate::message::VersionedMessage, solana_instruction::AccountMeta};
 
     #[test]
     fn test_sanitize() {

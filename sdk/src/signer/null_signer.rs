@@ -1,7 +1,10 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{signature::Signature, signer::{Signer, SignerError}},
+    crate::{
+        signature::Signature,
+        signer::{Signer, SignerError},
+    },
     solana_pubkey::Pubkey,
 };
 

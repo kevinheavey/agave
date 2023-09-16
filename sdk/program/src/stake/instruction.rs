@@ -2,9 +2,7 @@
 use crate::stake::config;
 use {
     crate::{
-        stake::{
-            state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
-        },
+        stake::state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
         system_instruction, sysvar,
     },
     log::*,

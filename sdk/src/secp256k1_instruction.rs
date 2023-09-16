@@ -1045,14 +1045,7 @@ fn get_data_slice<'a>(
 
 #[cfg(test)]
 pub mod test {
-    use {
-        super::*,
-        crate::{
-            secp256k1_instruction::{
-                SecpSignatureOffsets,
-            },
-        },
-    };
+    use {super::*, crate::secp256k1_instruction::SecpSignatureOffsets};
 
     fn test_case(
         num_signatures: u8,

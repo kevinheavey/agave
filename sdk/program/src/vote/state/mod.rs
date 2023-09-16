@@ -65,7 +65,7 @@ impl Vote {
     }
 }
 
-#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Copy, Clone, )]
+#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Copy, Clone)]
 pub struct Lockout {
     slot: Slot,
     confirmation_count: u32,
@@ -112,7 +112,7 @@ impl Lockout {
     }
 }
 
-#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Copy, Clone, )]
+#[derive(Serialize, Default, Deserialize, Debug, PartialEq, Eq, Copy, Clone)]
 pub struct LandedVote {
     // Latency is the difference in slot number between the slot that was voted on (lockout.slot) and the slot in
     // which the vote that added this Lockout landed.  For votes which were cast before versions of the validator
@@ -223,7 +223,7 @@ pub struct VoteAuthorizeCheckedWithSeedArgs {
     pub current_authority_derived_key_seed: String,
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone, )]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Eq, Clone)]
 pub struct BlockTimestamp {
     pub slot: Slot,
     pub timestamp: UnixTimestamp,
@@ -232,7 +232,7 @@ pub struct BlockTimestamp {
 // this is how many epochs a voter can be remembered for slashing
 const MAX_ITEMS: usize = 32;
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, )]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
 pub struct CircBuf<I> {
     buf: [I; MAX_ITEMS],
     /// next pointer
@@ -701,16 +701,13 @@ impl VoteState {
 pub mod serde_compact_vote_state_update {
     use {
         super::*,
-        crate::{
-            serde_varint,
-            vote::state::Lockout,
-        },
+        crate::{serde_varint, vote::state::Lockout},
         serde::{Deserialize, Deserializer, Serialize, Serializer},
         solana_clock::{Slot, UnixTimestamp},
         solana_short_vec as short_vec,
     };
 
-    #[derive(Deserialize, Serialize, )]
+    #[derive(Deserialize, Serialize)]
     struct LockoutOffset {
         #[serde(with = "serde_varint")]
         offset: Slot,

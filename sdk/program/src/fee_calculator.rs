@@ -1,13 +1,9 @@
 //! Calculation of transaction fees.
 
 #![allow(clippy::arithmetic_side_effects)]
-use {
-    crate::message::Message,
-    log::*,
-    solana_clock::DEFAULT_MS_PER_SLOT,
-};
+use {crate::message::Message, log::*, solana_clock::DEFAULT_MS_PER_SLOT};
 
-#[derive(Serialize, Deserialize, Default, PartialEq, Eq, Clone, Copy, Debug, )]
+#[derive(Serialize, Deserialize, Default, PartialEq, Eq, Clone, Copy, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct FeeCalculator {
     /// The current cost of a signature.
@@ -35,7 +31,8 @@ impl FeeCalculator {
             // Message may not be sanitized here
             if program_index < message.account_keys.len() {
                 let id = message.account_keys[program_index];
-                if (solana_native_programs::secp256k1_program::check_id(&id) || solana_native_programs::ed25519_program::check_id(&id))
+                if (solana_native_programs::secp256k1_program::check_id(&id)
+                    || solana_native_programs::ed25519_program::check_id(&id))
                     && !instruction.data.is_empty()
                 {
                     num_signatures += instruction.data[0] as u64;
@@ -48,7 +45,7 @@ impl FeeCalculator {
     }
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug, )]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct FeeRateGovernor {
     // The current cost of a signature  This amount may increase/decrease over time based on
@@ -186,11 +183,7 @@ impl FeeRateGovernor {
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        crate::system_instruction,
-        solana_pubkey::Pubkey,
-    };
+    use {super::*, crate::system_instruction, solana_pubkey::Pubkey};
 
     #[test]
     fn test_fee_rate_governor_burn() {

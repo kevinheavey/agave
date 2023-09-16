@@ -3,12 +3,9 @@
 use {
     crate::{
         system_instruction, sysvar,
-        vote::{
-            state::{
-                serde_compact_vote_state_update, Vote, VoteAuthorize,
-                VoteAuthorizeCheckedWithSeedArgs, VoteAuthorizeWithSeedArgs, VoteInit,
-                VoteStateUpdate, VoteStateVersions,
-            },
+        vote::state::{
+            serde_compact_vote_state_update, Vote, VoteAuthorize, VoteAuthorizeCheckedWithSeedArgs,
+            VoteAuthorizeWithSeedArgs, VoteInit, VoteStateUpdate, VoteStateVersions,
         },
     },
     serde_derive::{Deserialize, Serialize},

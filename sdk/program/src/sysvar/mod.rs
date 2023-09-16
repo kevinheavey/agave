@@ -83,8 +83,8 @@
 
 use {
     crate::{account_info::AccountInfo, program_error::ProgramError},
-    solana_pubkey::Pubkey,
     lazy_static::lazy_static,
+    solana_pubkey::Pubkey,
 };
 
 pub mod clock;
@@ -173,7 +173,6 @@ macro_rules! declare_deprecated_sysvar_id(
         }
     )
 );
-
 
 /// A type that holds sysvar data and has an associated sysvar `Pubkey`.
 pub trait SysvarId {

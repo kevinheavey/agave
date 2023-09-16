@@ -1,7 +1,5 @@
 use {
-    crate::{
-        message::{legacy::is_builtin_key_or_sysvar, v0, AccountKeys},
-    },
+    crate::message::{legacy::is_builtin_key_or_sysvar, v0, AccountKeys},
     solana_native_programs::bpf_loader_upgradeable,
     solana_pubkey::Pubkey,
     std::{borrow::Cow, collections::HashSet},
@@ -174,9 +172,7 @@ impl<'a> LoadedMessage<'a> {
 #[cfg(test)]
 mod tests {
     use {
-        super::*,
-        crate::message::MessageHeader,
-        itertools::Itertools,
+        super::*, crate::message::MessageHeader, itertools::Itertools,
         solana_instruction::CompiledInstruction,
     };
 

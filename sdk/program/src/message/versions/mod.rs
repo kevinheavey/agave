@@ -1,5 +1,7 @@
 use {
-    crate::message::{legacy::Message as LegacyMessage, v0::MessageAddressTableLookup, MessageHeader},
+    crate::message::{
+        legacy::Message as LegacyMessage, v0::MessageAddressTableLookup, MessageHeader,
+    },
     serde::{
         de::{self, Deserializer, SeqAccess, Visitor},
         ser::{SerializeTuple, Serializer},

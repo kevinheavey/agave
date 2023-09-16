@@ -2,7 +2,7 @@
 //!
 //! [bincode]: https://docs.rs/bincode
 
-use {solana_instruction::InstructionError, bincode::config::Options};
+use {bincode::config::Options, solana_instruction::InstructionError};
 
 /// Deserialize with a limit based the maximum amount of data a program can expect to get.
 /// This function should be used in place of direct deserialization to help prevent OOM errors

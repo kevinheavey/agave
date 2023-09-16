@@ -5,7 +5,6 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 #[derive(
     Serialize,
     Deserialize,
-    
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,

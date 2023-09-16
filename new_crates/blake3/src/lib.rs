@@ -3,9 +3,9 @@
 //! [blake3]: https://github.com/BLAKE3-team/BLAKE3
 
 use {
-    serde::{Serialize, Deserialize},
-    solana_sanitize::Sanitize,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
+    serde::{Deserialize, Serialize},
+    solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
     thiserror::Error,
 };

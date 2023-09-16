@@ -13,13 +13,12 @@
 
 use {
     crate::{
-        account_info::AccountInfo, program_error::ProgramError,
-        rent::Rent, system_instruction
+        account_info::AccountInfo, program_error::ProgramError, rent::Rent, system_instruction,
     },
     solana_clock::Slot,
     solana_instruction::Instruction,
     solana_native_programs::feature::id,
-    solana_pubkey::Pubkey
+    solana_pubkey::Pubkey,
 };
 
 #[derive(Default, Debug, Serialize, Deserialize, PartialEq, Eq)]

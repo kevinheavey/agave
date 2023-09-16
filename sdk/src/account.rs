@@ -3,9 +3,7 @@
 #[cfg(feature = "dev-context-only-utils")]
 use qualifier_attr::qualifiers;
 use {
-    crate::{
-        lamports::LamportsError,
-    },
+    crate::lamports::LamportsError,
     serde::{
         ser::{Serialize, Serializer},
         Deserialize,
@@ -44,10 +42,10 @@ pub struct Account {
 // mod because we need 'Account' below to have the name 'Account' to match expected serialization
 mod account_serialize {
     use {
-        crate::{account::ReadableAccount, },
+        crate::account::ReadableAccount,
+        serde::{ser::Serializer, Serialize},
         solana_clock::Epoch,
         solana_pubkey::Pubkey,
-        serde::{ser::Serializer, Serialize},
     };
     #[repr(C)]
     #[derive(Serialize)]
@@ -103,7 +101,7 @@ impl Serialize for AccountSharedData {
 /// An Account with data that is stored on chain
 /// This will be the in-memory representation of the 'Account' struct data.
 /// The existing 'Account' structure cannot easily change due to downstream projects.
-#[derive(PartialEq, Eq, Clone, Default,  Deserialize)]
+#[derive(PartialEq, Eq, Clone, Default, Deserialize)]
 #[serde(from = "Account")]
 pub struct AccountSharedData {
     /// lamports in the account

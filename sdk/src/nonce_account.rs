@@ -75,8 +75,8 @@ mod tests {
 
     fn new_nonce_account(versions: Versions) -> AccountSharedData {
         AccountSharedData::new_data(
-            1_000_000,             // lamports
-            &versions,             // state
+            1_000_000,                                     // lamports
+            &versions,                                     // state
             &solana_native_programs::system_program::id(), // owner
         )
         .unwrap()
