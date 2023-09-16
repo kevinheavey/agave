@@ -1,10 +1,11 @@
 //! The native loader native program.
 
-use crate::{
+use {
+    crate::{
     account::{
         Account, AccountSharedData, InheritableAccountFields, DUMMY_INHERITABLE_ACCOUNT_FIELDS,
-    },
-    clock::INITIAL_RENT_EPOCH,
+    }},
+    solana_clock::INITIAL_RENT_EPOCH
 };
 
 crate::declare_id!("NativeLoader1111111111111111111111111111111");

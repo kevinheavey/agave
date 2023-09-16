@@ -1356,6 +1356,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-clock"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-sdk-macro",
+ "static_assertions",
+]
+
+[[package]]
 name = "solana-decode-error"
 version = "1.17.0"
 dependencies = [
@@ -1453,6 +1462,7 @@ dependencies = [
  "sha2 0.10.7",
  "sha3",
  "solana-atomic-u64",
+ "solana-clock",
  "solana-decode-error",
  "solana-hash",
  "solana-instruction",
@@ -1545,6 +1555,7 @@ dependencies = [
  "serde_with",
  "sha2 0.10.7",
  "sha3",
+ "solana-clock",
  "solana-decode-error",
  "solana-hash",
  "solana-instruction",

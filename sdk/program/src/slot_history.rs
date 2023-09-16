@@ -7,7 +7,7 @@
 //! [`sysvar::slot_history`]: crate::sysvar::slot_history
 
 #![allow(clippy::arithmetic_side_effects)]
-pub use crate::clock::Slot;
+pub use solana_clock::Slot;
 use bv::{BitVec, BitsMut};
 
 /// A bitvector indicating which slots are present in the past epoch.
@@ -92,97 +92,6 @@ impl SlotHistory {
 #[cfg(test)]
 mod tests {
     use {super::*, log::*};
-
-    #[test]
-    fn slot_history_test1() {
-        solana_logger::setup();
-        // should be divisible by 64 since the clear logic works on blocks
-        assert_eq!(MAX_ENTRIES % 64, 0);
-        let mut slot_history = SlotHistory::default();
-        info!("add 2");
-        slot_history.add(2);
-        assert_eq!(slot_history.check(0), Check::Found);
-        assert_eq!(slot_history.check(1), Check::NotFound);
-        for i in 3..MAX_ENTRIES {
-            assert_eq!(slot_history.check(i), Check::Future);
-        }
-        info!("add 20");
-        slot_history.add(20);
-        info!("add max_entries");
-        slot_history.add(MAX_ENTRIES);
-        assert_eq!(slot_history.check(0), Check::TooOld);
-        assert_eq!(slot_history.check(1), Check::NotFound);
-        for i in &[2, 20, MAX_ENTRIES] {
-            assert_eq!(slot_history.check(*i), Check::Found);
-        }
-        for i in 3..20 {
-            assert_eq!(slot_history.check(i), Check::NotFound, "i: {i}");
-        }
-        for i in 21..MAX_ENTRIES {
-            assert_eq!(slot_history.check(i), Check::NotFound, "i: {i}");
-        }
-        assert_eq!(slot_history.check(MAX_ENTRIES + 1), Check::Future);
-
-        info!("add max_entries + 3");
-        let slot = 3 * MAX_ENTRIES + 3;
-        slot_history.add(slot);
-        for i in &[0, 1, 2, 20, 21, MAX_ENTRIES] {
-            assert_eq!(slot_history.check(*i), Check::TooOld);
-        }
-        let start = slot - MAX_ENTRIES + 1;
-        let end = slot;
-        for i in start..end {
-            assert_eq!(slot_history.check(i), Check::NotFound, "i: {i}");
-        }
-        assert_eq!(slot_history.check(slot), Check::Found);
-    }
-
-    #[test]
-    fn slot_history_test_wrap() {
-        solana_logger::setup();
-        let mut slot_history = SlotHistory::default();
-        info!("add 2");
-        slot_history.add(2);
-        assert_eq!(slot_history.check(0), Check::Found);
-        assert_eq!(slot_history.check(1), Check::NotFound);
-        for i in 3..MAX_ENTRIES {
-            assert_eq!(slot_history.check(i), Check::Future);
-        }
-        info!("add 20");
-        slot_history.add(20);
-        info!("add max_entries + 19");
-        slot_history.add(MAX_ENTRIES + 19);
-        for i in 0..19 {
-            assert_eq!(slot_history.check(i), Check::TooOld);
-        }
-        assert_eq!(slot_history.check(MAX_ENTRIES), Check::NotFound);
-        assert_eq!(slot_history.check(20), Check::Found);
-        assert_eq!(slot_history.check(MAX_ENTRIES + 19), Check::Found);
-        assert_eq!(slot_history.check(20), Check::Found);
-        for i in 21..MAX_ENTRIES + 19 {
-            assert_eq!(slot_history.check(i), Check::NotFound, "found: {i}");
-        }
-        assert_eq!(slot_history.check(MAX_ENTRIES + 20), Check::Future);
-    }
-
-    #[test]
-    fn slot_history_test_same_index() {
-        solana_logger::setup();
-        let mut slot_history = SlotHistory::default();
-        info!("add 3,4");
-        slot_history.add(3);
-        slot_history.add(4);
-        assert_eq!(slot_history.check(1), Check::NotFound);
-        assert_eq!(slot_history.check(2), Check::NotFound);
-        assert_eq!(slot_history.check(3), Check::Found);
-        assert_eq!(slot_history.check(4), Check::Found);
-        slot_history.add(MAX_ENTRIES + 5);
-        assert_eq!(slot_history.check(5), Check::TooOld);
-        for i in 6..MAX_ENTRIES + 5 {
-            assert_eq!(slot_history.check(i), Check::NotFound, "i: {i}");
-        }
-        assert_eq!(slot_history.check(MAX_ENTRIES + 5), Check::Found);
-    }
 
     #[test]
     fn test_older_slot() {

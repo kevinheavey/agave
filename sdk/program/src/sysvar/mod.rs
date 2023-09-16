@@ -256,7 +256,8 @@ macro_rules! impl_sysvar_get {
 mod tests {
     use {
         super::*,
-        crate::{clock::Epoch, program_error::ProgramError},
+        crate::program_error::ProgramError,
+        solana_clock::Epoch,
         solana_pubkey::Pubkey,
         std::{cell::RefCell, rc::Rc},
     };

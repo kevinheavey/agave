@@ -2,7 +2,6 @@
 
 use {
     crate::{
-        clock::{Slot, UnixTimestamp},
         system_instruction, sysvar,
         vote::{
             program::id,
@@ -14,6 +13,7 @@ use {
         },
     },
     serde_derive::{Deserialize, Serialize},
+    solana_clock::{Slot, UnixTimestamp},
     solana_hash::Hash,
     solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,

@@ -2,7 +2,6 @@
 use crate::stake::config;
 use {
     crate::{
-        clock::{Epoch, UnixTimestamp},
         stake::{
             program::id,
             state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
@@ -12,6 +11,7 @@ use {
     log::*,
     num_derive::{FromPrimitive, ToPrimitive},
     serde_derive::{Deserialize, Serialize},
+    solana_clock::{Epoch, UnixTimestamp},
     solana_decode_error::DecodeError,
     solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,

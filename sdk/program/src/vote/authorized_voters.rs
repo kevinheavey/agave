@@ -1,5 +1,5 @@
 use {
-    crate::clock::Epoch,
+    solana_clock::Epoch,
     serde_derive::{Deserialize, Serialize},
     solana_pubkey::Pubkey,
     std::collections::BTreeMap,

@@ -5,7 +5,6 @@
 
 use {
     crate::{
-        clock::{Clock, Epoch, UnixTimestamp},
         stake::{
             instruction::{LockupArgs, StakeError},
             stake_flags::StakeFlags,
@@ -13,6 +12,7 @@ use {
         stake_history::{StakeHistory, StakeHistoryEntry},
     },
     borsh::{maybestd::io, BorshDeserialize, BorshSchema, BorshSerialize},
+    solana_clock::{Clock, Epoch, UnixTimestamp},
     solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
     std::collections::HashSet,
@@ -351,7 +351,6 @@ impl Authorized {
     Eq,
     Clone,
     Copy,
-    
     BorshDeserialize,
     BorshSchema,
     BorshSerialize,

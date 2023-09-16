@@ -10,8 +10,8 @@ use {
             create_account_shared_data_with_fields, to_account, AccountSharedData,
             InheritableAccountFields, DUMMY_INHERITABLE_ACCOUNT_FIELDS,
         },
-        clock::INITIAL_RENT_EPOCH,
     },
+    solana_clock::INITIAL_RENT_EPOCH,
     std::{collections::BinaryHeap, iter::FromIterator},
 };
 

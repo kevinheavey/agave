@@ -4,13 +4,13 @@
 use qualifier_attr::qualifiers;
 use {
     crate::{
-        clock::{Epoch, INITIAL_RENT_EPOCH},
         lamports::LamportsError,
     },
     serde::{
         ser::{Serialize, Serializer},
         Deserialize,
     },
+    solana_clock::{Epoch, INITIAL_RENT_EPOCH},
     solana_program::{account_info::AccountInfo, debug_account_data::*, sysvar::Sysvar},
     solana_pubkey::Pubkey,
     std::{
@@ -44,7 +44,8 @@ pub struct Account {
 // mod because we need 'Account' below to have the name 'Account' to match expected serialization
 mod account_serialize {
     use {
-        crate::{account::ReadableAccount, clock::Epoch},
+        crate::{account::ReadableAccount, },
+        solana_clock::Epoch,
         solana_pubkey::Pubkey,
         serde::{ser::Serializer, Serialize},
     };

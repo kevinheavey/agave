@@ -5,7 +5,6 @@
 use {
     crate::{
         account::{Account, AccountSharedData},
-        clock::{UnixTimestamp, DEFAULT_TICKS_PER_SLOT},
         epoch_schedule::EpochSchedule,
         fee_calculator::FeeRateGovernor,
         inflation::Inflation,
@@ -20,6 +19,7 @@ use {
     bincode::{deserialize, serialize},
     chrono::{TimeZone, Utc},
     memmap2::Mmap,
+    solana_clock::{UnixTimestamp, DEFAULT_TICKS_PER_SLOT},
     solana_hash::{hash, Hash},
     solana_pubkey::Pubkey,
     std::{

@@ -5,7 +5,7 @@
 
 use {
     byteorder::{ByteOrder, LittleEndian},
-    solana_sdk::clock::Slot,
+    solana_clock::Slot,
 };
 
 #[derive(Default, Clone, Debug, Deserialize, Serialize,  PartialEq, Eq)]

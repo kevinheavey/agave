@@ -13,9 +13,10 @@
 
 use {
     crate::{
-        account_info::AccountInfo, clock::Slot, program_error::ProgramError,
+        account_info::AccountInfo, program_error::ProgramError,
         rent::Rent, system_instruction
     },
+    solana_clock::Slot,
     solana_instruction::Instruction,
     solana_pubkey::Pubkey
 };
@@ -63,7 +64,7 @@ pub fn activate_with_lamports(
 
 #[cfg(test)]
 mod test {
-    use {super::*, solana_program::clock::Slot};
+    use {super::*, solana_clock::Slot};
 
     #[test]
     fn test_feature_size_of() {

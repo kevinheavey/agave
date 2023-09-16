@@ -130,7 +130,7 @@ pub mod solana_sdk {
 
     pub mod account {
         use {
-            crate::clock::Epoch,
+            solana_clock::Epoch,
             solana_pubkey::Pubkey
         };
         #[derive(Clone)]

@@ -2,8 +2,9 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    crate::{clock::DEFAULT_MS_PER_SLOT, ed25519_program, message::Message, secp256k1_program},
+    crate::{ed25519_program, message::Message, secp256k1_program},
     log::*,
+    solana_clock::DEFAULT_MS_PER_SLOT,
 };
 
 #[derive(Serialize, Deserialize, Default, PartialEq, Eq, Clone, Copy, Debug, )]

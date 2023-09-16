@@ -12,7 +12,6 @@
 use {
     crate::{
         account::Account,
-        clock::Slot,
         commitment_config::CommitmentConfig,
         epoch_info::EpochInfo,
         fee_calculator::{FeeCalculator, FeeRateGovernor},
@@ -24,6 +23,7 @@ use {
         transaction::{self, Transaction, VersionedTransaction},
         transport::Result,
     },
+    solana_clock::Slot,
     solana_hash::Hash,
     solana_instruction::Instruction,
     solana_pubkey::Pubkey,

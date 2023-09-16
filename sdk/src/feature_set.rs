@@ -23,7 +23,7 @@ use {
     solana_hash::{Hash, Hasher},
     solana_program::{epoch_schedule::EpochSchedule, stake_history::Epoch},
     solana_pubkey::Pubkey,
-    solana_sdk::clock::Slot,
+    solana_clock::Slot,
     std::collections::{HashMap, HashSet},
 };
 

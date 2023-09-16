@@ -66,7 +66,8 @@ impl Sysvar for SlotHashes {
 mod tests {
     use {
         super::*,
-        crate::{clock::Slot, slot_hashes::MAX_ENTRIES},
+        crate::slot_hashes::MAX_ENTRIES,
+        solana_clock::Slot,
         solana_hash::Hash,
     };
 

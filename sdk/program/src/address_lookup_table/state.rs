@@ -2,9 +2,9 @@ use {
     serde::{Deserialize, Serialize},
     solana_program::{
         address_lookup_table::error::AddressLookupError,
-        clock::Slot,
         slot_hashes::{SlotHashes, MAX_ENTRIES},
     },
+    solana_clock::Slot,
     solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
     std::borrow::Cow,

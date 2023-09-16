@@ -6,13 +6,13 @@ use crate::epoch_schedule::MAX_LEADER_SCHEDULE_EPOCH_OFFSET;
 use bincode::deserialize;
 use {
     crate::{
-        clock::{Epoch, Slot, UnixTimestamp},
         rent::Rent,
         sysvar::clock::Clock,
         vote::{authorized_voters::AuthorizedVoters, error::VoteError},
     },
     bincode::{serialize_into, ErrorKind},
     serde_derive::{Deserialize, Serialize},
+    solana_clock::{Epoch, Slot, UnixTimestamp},
     solana_hash::Hash,
     solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
@@ -702,11 +702,11 @@ pub mod serde_compact_vote_state_update {
     use {
         super::*,
         crate::{
-            clock::{Slot, UnixTimestamp},
             serde_varint,
             vote::state::Lockout,
         },
         serde::{Deserialize, Deserializer, Serialize, Serializer},
+        solana_clock::{Slot, UnixTimestamp},
         solana_short_vec as short_vec,
     };
 

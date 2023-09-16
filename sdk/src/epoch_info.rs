@@ -4,7 +4,7 @@
 //!
 //! [`getEpochInfo`]: https://docs.solana.com/developing/clients/jsonrpc-api#getepochinfo
 
-use crate::clock::{Epoch, Slot};
+use solana_clock::{Epoch, Slot};
 
 #[derive(Serialize, Deserialize, Clone, Debug, Eq, PartialEq)]
 #[serde(rename_all = "camelCase")]

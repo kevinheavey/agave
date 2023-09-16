@@ -400,7 +400,7 @@ pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
 pub fn check_type_assumptions() {
     extern crate memoffset;
     use {
-        crate::clock::Epoch,
+        solana_clock::Epoch,
         memoffset::offset_of,
         solana_instruction::AccountMeta,
         std::{
