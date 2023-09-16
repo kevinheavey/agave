@@ -8,7 +8,6 @@ use {
         clock::{UnixTimestamp, DEFAULT_TICKS_PER_SLOT},
         epoch_schedule::EpochSchedule,
         fee_calculator::FeeRateGovernor,
-        hash::{hash, Hash},
         inflation::Inflation,
         native_token::lamports_to_sol,
         poh_config::PohConfig,
@@ -22,6 +21,7 @@ use {
     bincode::{deserialize, serialize},
     chrono::{TimeZone, Utc},
     memmap2::Mmap,
+    solana_hash::{hash, Hash},
     std::{
         collections::BTreeMap,
         fmt,

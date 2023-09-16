@@ -38,8 +38,8 @@ impl SanitizedVersionedTransaction {
 mod tests {
     use {
         super::*,
+        solana_hash::Hash,
         solana_program::{
-            hash::Hash,
             message::{v0, VersionedMessage},
             pubkey::Pubkey,
         },

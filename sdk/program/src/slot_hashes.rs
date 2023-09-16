@@ -8,7 +8,7 @@
 
 pub use crate::clock::Slot;
 use {
-    crate::hash::Hash,
+    solana_hash::Hash,
     std::{
         iter::FromIterator,
         ops::Deref,
@@ -78,7 +78,7 @@ impl Deref for SlotHashes {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::hash::hash};
+    use {super::*, solana_hash::hash};
 
     #[test]
     fn test() {

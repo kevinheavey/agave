@@ -1349,6 +1349,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ecab6c735a6bb4139c0caafd0cc3635748bbb3acf4550e8138122099251f309"
 
 [[package]]
+name = "solana-atomic-u64"
+version = "1.17.0"
+dependencies = [
+ "thiserror",
+]
+
+[[package]]
+name = "solana-hash"
+version = "1.17.0"
+dependencies = [
+ "borsh 0.10.3",
+ "bs58",
+ "bytemuck",
+ "serde",
+ "sha2 0.10.7",
+ "solana-atomic-u64",
+ "solana-sanitize",
+ "solana-wasm-bindgen",
+ "thiserror",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "solana-logger"
 version = "1.17.0"
 dependencies = [
@@ -1403,6 +1426,8 @@ dependencies = [
  "serde_json",
  "sha2 0.10.7",
  "sha3",
+ "solana-atomic-u64",
+ "solana-hash",
  "solana-logger",
  "solana-sanitize",
  "solana-sdk-macro",
@@ -1466,6 +1491,7 @@ dependencies = [
  "serde_with",
  "sha2 0.10.7",
  "sha3",
+ "solana-hash",
  "solana-logger",
  "solana-program",
  "solana-sanitize",

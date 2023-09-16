@@ -112,14 +112,17 @@ pub mod solana_rpc_client_nonce_utils {
 /// This lets examples in solana-program appear to be written as client
 /// programs.
 pub mod solana_sdk {
-    pub use crate::{
-        hash, instruction, keccak, message, nonce,
-        pubkey::{self, Pubkey},
-        system_instruction, system_program,
-        sysvar::{
-            self,
-            clock::{self, Clock},
+    pub use {
+        crate::{
+            instruction, keccak, message, nonce,
+            pubkey::{self, Pubkey},
+            system_instruction, system_program,
+            sysvar::{
+                self,
+                clock::{self, Clock},
+            }
         },
+        solana_hash as hash,
     };
 
     pub mod account {
@@ -199,12 +202,12 @@ pub mod solana_sdk {
         use {
             super::{signature::Signature, signer::SignerError, signers::Signers},
             crate::{
-                hash::Hash,
                 instruction::Instruction,
                 message::{Message, VersionedMessage},
                 pubkey::Pubkey,
             },
             serde::Serialize,
+            solana_hash::Hash,
         };
 
         pub struct VersionedTransaction {

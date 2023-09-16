@@ -7,6 +7,7 @@ use {
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
     sha2::{Digest, Sha256},
+    serde::{Serialize, Deserialize},
     solana_sanitize::Sanitize,
     solana_wasm_bindgen::wasm_bindgen,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
@@ -131,7 +132,7 @@ impl Hash {
 
     /// unique Hash for tests and benchmarks.
     pub fn new_unique() -> Self {
-        use crate::atomic_u64::AtomicU64;
+        use solana_atomic_u64::AtomicU64;
         static I: AtomicU64 = AtomicU64::new(1);
 
         let mut b = [0u8; HASH_BYTES];

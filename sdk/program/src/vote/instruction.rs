@@ -3,7 +3,6 @@
 use {
     crate::{
         clock::{Slot, UnixTimestamp},
-        hash::Hash,
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,
         system_instruction, sysvar,
@@ -17,6 +16,7 @@ use {
         },
     },
     serde_derive::{Deserialize, Serialize},
+    solana_hash::Hash,
 };
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]

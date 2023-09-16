@@ -3,8 +3,9 @@
 mod current;
 pub use current::{Data, DurableNonce, State};
 use {
-    crate::{hash::Hash, pubkey::Pubkey},
+    crate::pubkey::Pubkey,
     serde_derive::{Deserialize, Serialize},
+    solana_hash::Hash,
     std::collections::HashSet,
 };
 

@@ -13,7 +13,6 @@ use {
     crate::{
         address_lookup_table_account::AddressLookupTableAccount,
         bpf_loader_upgradeable,
-        hash::Hash,
         instruction::{CompiledInstruction, Instruction},
         message::{
             compiled_keys::{CompileError, CompiledKeys},
@@ -23,6 +22,7 @@ use {
         pubkey::Pubkey,
         short_vec
     },
+    solana_hash::Hash,
     solana_sanitize::SanitizeError,
 };
 pub use loaded::*;

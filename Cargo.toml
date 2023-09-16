@@ -89,7 +89,9 @@ serde_json = "1.0.107"
 serde_with = { version = "2.3.3", default-features = false }
 sha2 = "0.10.7"
 sha3 = "0.10.4"
+solana-atomic-u64 = { path = "new_crates/atomic-u64" }
 solana-download-utils = { path = "download-utils", version = "=1.17.0" }
+solana-hash = { path = "new_crates/hash" }
 solana-logger = { path = "logger", version = "=1.17.0" }
 solana-program = { path = "sdk/program", version = "=1.17.0" }
 solana-sanitize = { path = "new_crates/sanitize" }

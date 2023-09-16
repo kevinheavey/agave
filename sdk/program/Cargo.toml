@@ -32,6 +32,8 @@ serde_derive = { workspace = true }
 serde_json = { workspace = true }
 sha2 = { workspace = true }
 sha3 = { workspace = true }
+solana-atomic-u64 = { workspace = true }
+solana-hash = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-wasm-bindgen = { workspace = true }

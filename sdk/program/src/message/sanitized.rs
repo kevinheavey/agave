@@ -1,7 +1,6 @@
 use {
     crate::{
         ed25519_program,
-        hash::Hash,
         instruction::CompiledInstruction,
         message::{
             legacy,
@@ -16,6 +15,7 @@ use {
         solana_program::{system_instruction::SystemInstruction, system_program},
         sysvar::instructions::{BorrowedAccountMeta, BorrowedInstruction},
     },
+    solana_hash::Hash,
     solana_sanitize::{Sanitize, SanitizeError},
     std::{borrow::Cow, convert::TryFrom},
     thiserror::Error,

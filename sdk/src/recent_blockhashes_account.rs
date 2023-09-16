@@ -89,10 +89,8 @@ mod tests {
         super::*,
         crate::account::from_account,
         rand::{seq::SliceRandom, thread_rng},
-        solana_program::{
-            hash::{Hash, HASH_BYTES},
-            sysvar::recent_blockhashes::Entry,
-        },
+        solana_hash::{Hash, HASH_BYTES},
+        solana_program::sysvar::recent_blockhashes::Entry,
     };
 
     #[test]

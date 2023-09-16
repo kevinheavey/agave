@@ -9,22 +9,24 @@
 
 #![cfg(feature = "full")]
 
-use crate::{
-    account::Account,
-    clock::Slot,
-    commitment_config::CommitmentConfig,
-    epoch_info::EpochInfo,
-    fee_calculator::{FeeCalculator, FeeRateGovernor},
-    hash::Hash,
-    instruction::Instruction,
-    message::Message,
-    pubkey::Pubkey,
-    signature::{Keypair, Signature},
-    signer::Signer,
-    signers::Signers,
-    system_instruction,
-    transaction::{self, Transaction, VersionedTransaction},
-    transport::Result,
+use {
+    crate::{
+        account::Account,
+        clock::Slot,
+        commitment_config::CommitmentConfig,
+        epoch_info::EpochInfo,
+        fee_calculator::{FeeCalculator, FeeRateGovernor},
+        instruction::Instruction,
+        message::Message,
+        pubkey::Pubkey,
+        signature::{Keypair, Signature},
+        signer::Signer,
+        signers::Signers,
+        system_instruction,
+        transaction::{self, Transaction, VersionedTransaction},
+        transport::Result,
+    },
+    solana_hash::Hash,
 };
 
 pub trait Client: SyncClient + AsyncClient {

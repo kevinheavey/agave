@@ -7,7 +7,6 @@ use bincode::deserialize;
 use {
     crate::{
         clock::{Epoch, Slot, UnixTimestamp},
-        hash::Hash,
         instruction::InstructionError,
         pubkey::Pubkey,
         rent::Rent,
@@ -16,6 +15,7 @@ use {
     },
     bincode::{serialize_into, ErrorKind},
     serde_derive::{Deserialize, Serialize},
+    solana_hash::Hash,
     std::{collections::VecDeque, fmt::Debug},
 };
 

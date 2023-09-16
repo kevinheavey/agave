@@ -217,7 +217,7 @@ impl<'a> AddressLookupTable<'a> {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::hash::Hash};
+    use {super::*, solana_hash::Hash};
 
     impl AddressLookupTable<'_> {
         fn new_for_tests(meta: LookupTableMeta, num_addresses: usize) -> Self {

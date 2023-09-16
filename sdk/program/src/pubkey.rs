@@ -2,10 +2,11 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    crate::{decode_error::DecodeError, hash::hashv},
+    crate::decode_error::DecodeError,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
     num_derive::{FromPrimitive, ToPrimitive},
+    solana_hash::hashv,
     solana_wasm_bindgen::wasm_bindgen,
     std::{
         convert::{Infallible, TryFrom},
@@ -193,7 +194,7 @@ impl Pubkey {
 
     /// unique Pubkey for tests and benchmarks.
     pub fn new_unique() -> Self {
-        use crate::atomic_u64::AtomicU64;
+        use solana_atomic_u64::AtomicU64;
         static I: AtomicU64 = AtomicU64::new(1);
 
         let mut b = [0u8; 32];
@@ -593,7 +594,7 @@ impl Pubkey {
         // not supported
         #[cfg(not(target_os = "solana"))]
         {
-            let mut hasher = crate::hash::Hasher::default();
+            let mut hasher = solana_hash::Hasher::default();
             for seed in seeds.iter() {
                 hasher.hash(seed);
             }

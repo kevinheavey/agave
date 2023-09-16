@@ -1,0 +1,20 @@
+[package]
+name = "solana-hash"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+borsh = { workspace = true }
+bs58 = { workspace = true }
+bytemuck = { workspace = true, features = ["derive"] }
+sha2 = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+solana-atomic-u64 = { workspace = true }
+solana-sanitize = { workspace = true }
+solana-wasm-bindgen = { workspace = true }
+thiserror = { workspace = true }
+wasm-bindgen = { workspace = true }

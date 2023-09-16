@@ -14,13 +14,13 @@
 use {
     crate::{
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
-        hash::Hash,
         instruction::{CompiledInstruction, Instruction},
         message::{compiled_keys::CompiledKeys, MessageHeader},
         pubkey::Pubkey,
         short_vec, system_instruction, system_program, sysvar,
     },
     lazy_static::lazy_static,
+    solana_hash::Hash,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_wasm_bindgen::wasm_bindgen,
     std::{convert::TryFrom, str::FromStr},
@@ -478,7 +478,7 @@ impl Message {
         let mut hasher = blake3::Hasher::new();
         hasher.update(b"solana-tx-message-v1");
         hasher.update(message_bytes);
-        Hash(<[u8; crate::hash::HASH_BYTES]>::try_from(hasher.finalize().as_slice()).unwrap())
+        Hash::from(<[u8; solana_hash::HASH_BYTES]>::try_from(hasher.finalize().as_slice()).unwrap())
     }
 
     pub fn compile_instruction(&self, ix: &Instruction) -> CompiledInstruction {
@@ -618,7 +618,8 @@ mod tests {
     #![allow(deprecated)]
     use {
         super::*,
-        crate::{hash, instruction::AccountMeta, message::MESSAGE_HEADER_LENGTH},
+        crate::{instruction::AccountMeta, message::MESSAGE_HEADER_LENGTH},
+        solana_hash as hash,
         std::collections::HashSet,
     };
 

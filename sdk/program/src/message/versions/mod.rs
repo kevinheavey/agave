@@ -1,6 +1,5 @@
 use {
     crate::{
-        hash::Hash,
         instruction::CompiledInstruction,
         message::{legacy::Message as LegacyMessage, v0::MessageAddressTableLookup, MessageHeader},
         pubkey::Pubkey,
@@ -11,6 +10,7 @@ use {
         ser::{SerializeTuple, Serializer},
         Deserialize, Serialize,
     },
+    solana_hash::Hash,
     solana_sanitize::{Sanitize, SanitizeError},
     std::fmt,
 };
@@ -147,7 +147,7 @@ impl VersionedMessage {
         let mut hasher = blake3::Hasher::new();
         hasher.update(b"solana-tx-message-v1");
         hasher.update(message_bytes);
-        Hash(<[u8; crate::hash::HASH_BYTES]>::try_from(hasher.finalize().as_slice()).unwrap())
+        Hash::from(<[u8; solana_hash::HASH_BYTES]>::try_from(hasher.finalize().as_slice()).unwrap())
     }
 }
 
