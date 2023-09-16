@@ -1406,6 +1406,7 @@ dependencies = [
  "solana-logger",
  "solana-sanitize",
  "solana-sdk-macro",
+ "solana-wasm-bindgen",
  "static_assertions",
  "thiserror",
  "tiny-bip39",
@@ -1470,6 +1471,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk",
  "solana-sdk-macro",
+ "solana-wasm-bindgen",
  "static_assertions",
  "thiserror",
  "tiny-bip39",
@@ -1486,6 +1488,14 @@ dependencies = [
  "quote",
  "rustversion",
  "syn 2.0.33",
+]
+
+[[package]]
+name = "solana-wasm-bindgen"
+version = "1.17.0"
+dependencies = [
+ "solana-sdk-macro",
+ "wasm-bindgen",
 ]
 
 [[package]]

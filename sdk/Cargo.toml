@@ -76,6 +76,7 @@ solana-logger = { workspace = true, optional = true }
 solana-program = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
+solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 uriparse = { workspace = true }
 wasm-bindgen = { workspace = true }

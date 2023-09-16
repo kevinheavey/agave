@@ -14,11 +14,12 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    crate::{pubkey::Pubkey, short_vec, wasm_bindgen},
+    crate::{pubkey::Pubkey, short_vec},
     bincode::serialize,
     borsh::BorshSerialize,
     serde::Serialize,
     solana_sanitize::Sanitize,
+    solana_wasm_bindgen::wasm_bindgen,
     thiserror::Error,
 };
 

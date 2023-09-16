@@ -18,10 +18,11 @@ use {
         instruction::{CompiledInstruction, Instruction},
         message::{compiled_keys::CompiledKeys, MessageHeader},
         pubkey::Pubkey,
-        short_vec, system_instruction, system_program, sysvar, wasm_bindgen,
+        short_vec, system_instruction, system_program, sysvar,
     },
     lazy_static::lazy_static,
     solana_sanitize::{Sanitize, SanitizeError},
+    solana_wasm_bindgen::wasm_bindgen,
     std::{convert::TryFrom, str::FromStr},
 };
 
