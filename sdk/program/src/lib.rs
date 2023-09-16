@@ -492,7 +492,6 @@ pub mod epoch_schedule;
 pub mod feature;
 pub mod fee_calculator;
 pub mod incinerator;
-pub mod instruction;
 pub mod keccak;
 pub mod lamports;
 pub mod last_restart_slot;

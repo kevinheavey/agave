@@ -32,10 +32,10 @@
 use {
     crate::{
         account_info::AccountInfo,
-        instruction::{AccountMeta, Instruction},
         program_error::ProgramError,
         serialize_utils::{read_pubkey, read_slice, read_u16, read_u8}
     },
+    solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
 };
@@ -299,10 +299,8 @@ pub fn get_instruction_relative(
 mod tests {
     use {
         super::*,
-        crate::{
-            instruction::AccountMeta,
-            message::{Message as LegacyMessage, SanitizedMessage},
-        },
+        crate::message::{Message as LegacyMessage, SanitizedMessage},
+        solana_instruction::AccountMeta,
         solana_pubkey::Pubkey,
         std::convert::TryFrom,
     };

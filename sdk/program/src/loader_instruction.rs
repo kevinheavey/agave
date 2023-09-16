@@ -3,10 +3,8 @@
 //! [nubpfl]: crate::bpf_loader
 
 use {
-    crate::{
-        instruction::{AccountMeta, Instruction},
-        sysvar::rent
-    },
+    crate::sysvar::rent,
+    solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
 };
 

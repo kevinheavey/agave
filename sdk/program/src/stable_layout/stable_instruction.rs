@@ -1,10 +1,8 @@
 //! `Instruction`, with a stable memory layout
 
 use {
-    crate::{
-        instruction::{AccountMeta, Instruction},
-        stable_layout::stable_vec::StableVec,
-    },
+    crate::stable_layout::stable_vec::StableVec,
+    solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
     std::fmt::Debug,
 };

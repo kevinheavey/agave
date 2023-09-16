@@ -2,10 +2,10 @@ use {
     crate::{
         address_lookup_table::program::id,
         clock::Slot,
-        instruction::{AccountMeta, Instruction},
         system_program,
     },
     serde::{Deserialize, Serialize},
+    solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
 };
 

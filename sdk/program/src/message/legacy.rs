@@ -14,12 +14,12 @@
 use {
     crate::{
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
-        instruction::{CompiledInstruction, Instruction},
         message::{compiled_keys::CompiledKeys, MessageHeader},
         system_instruction, system_program, sysvar,
     },
     lazy_static::lazy_static,
     solana_hash::Hash,
+    solana_instruction::{CompiledInstruction, Instruction},
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_short_vec as short_vec,
@@ -619,8 +619,9 @@ mod tests {
     #![allow(deprecated)]
     use {
         super::*,
-        crate::{instruction::AccountMeta, message::MESSAGE_HEADER_LENGTH},
+        crate::message::MESSAGE_HEADER_LENGTH,
         solana_hash as hash,
+        solana_instruction::AccountMeta,
         std::collections::HashSet,
     };
 

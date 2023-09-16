@@ -3,7 +3,7 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::instruction::Instruction,
+    solana_instruction::Instruction,
     borsh::{BorshDeserialize, BorshSerialize},
 };
 

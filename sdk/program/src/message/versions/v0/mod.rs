@@ -13,7 +13,6 @@ use {
     crate::{
         address_lookup_table_account::AddressLookupTableAccount,
         bpf_loader_upgradeable,
-        instruction::{CompiledInstruction, Instruction},
         message::{
             compiled_keys::{CompileError, CompiledKeys},
             legacy::is_builtin_key_or_sysvar,
@@ -21,6 +20,7 @@ use {
         },
     },
     solana_hash::Hash,
+    solana_instruction::{CompiledInstruction, Instruction},
     solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
     solana_short_vec as short_vec,
@@ -360,7 +360,8 @@ impl Message {
 mod tests {
     use {
         super::*,
-        crate::{instruction::AccountMeta, message::VersionedMessage},
+        crate::message::VersionedMessage,
+        solana_instruction::AccountMeta,
     };
 
     #[test]

@@ -17,10 +17,10 @@
 
 use {
     crate::{
-        instruction::{AccountMeta, Instruction, InstructionError},
         loader_upgradeable_instruction::UpgradeableLoaderInstruction,
         system_instruction, sysvar,
     },
+    solana_instruction::{AccountMeta, Instruction, InstructionError},
     solana_pubkey::Pubkey,
 };
 

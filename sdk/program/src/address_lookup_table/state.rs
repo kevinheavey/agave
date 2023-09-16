@@ -3,9 +3,9 @@ use {
     solana_program::{
         address_lookup_table::error::AddressLookupError,
         clock::Slot,
-        instruction::InstructionError,
         slot_hashes::{SlotHashes, MAX_ENTRIES},
     },
+    solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
     std::borrow::Cow,
 };

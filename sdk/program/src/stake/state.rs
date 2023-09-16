@@ -6,7 +6,6 @@
 use {
     crate::{
         clock::{Clock, Epoch, UnixTimestamp},
-        instruction::InstructionError,
         stake::{
             instruction::{LockupArgs, StakeError},
             stake_flags::StakeFlags,
@@ -14,6 +13,7 @@ use {
         stake_history::{StakeHistory, StakeHistoryEntry},
     },
     borsh::{maybestd::io, BorshDeserialize, BorshSchema, BorshSerialize},
+    solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
     std::collections::HashSet,
 };

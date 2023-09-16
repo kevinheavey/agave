@@ -230,7 +230,7 @@ mod tests {
     #[test]
     #[allow(deprecated)]
     fn test_fee_calculator_calculate_fee_secp256k1() {
-        use crate::instruction::Instruction;
+        use solana_instruction::Instruction;
         let pubkey0 = Pubkey::from([0; 32]);
         let pubkey1 = Pubkey::from([1; 32]);
         let ix0 = system_instruction::transfer(&pubkey0, &pubkey1, 1);

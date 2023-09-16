@@ -16,10 +16,12 @@
 use {
     bincode::serialize,
     borsh::BorshSerialize,
-    serde::Serialize,
+    num_traits::ToPrimitive,
+    serde::{Deserialize, Serialize},
     solana_pubkey::Pubkey,
     solana_sanitize::Sanitize,
     solana_short_vec as short_vec,
+    solana_syscall_core::define_syscall,
     solana_wasm_bindgen::wasm_bindgen,
     thiserror::Error,
 };
@@ -678,6 +680,9 @@ pub struct ProcessedSiblingInstruction {
     pub accounts_len: u64,
 }
 
+define_syscall!(fn sol_get_processed_sibling_instruction(index: u64, meta: *mut ProcessedSiblingInstruction, program_id: *mut Pubkey, data: *mut u8, accounts: *mut AccountMeta) -> u64);
+
+#[allow(unused_variables)]
 /// Returns a sibling instruction from the processed sibling instruction list.
 ///
 /// The processed sibling instruction list is a reverse-ordered list of
@@ -727,7 +732,7 @@ pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
     }
 
     #[cfg(not(target_os = "solana"))]
-    crate::program_stubs::sol_get_processed_sibling_instruction(index)
+    None
 }
 
 // Stack height when processing transaction-level instructions
@@ -744,6 +749,86 @@ pub fn get_stack_height() -> usize {
 
     #[cfg(not(target_os = "solana"))]
     {
-        crate::program_stubs::sol_get_stack_height() as usize
+        0
+    }
+}
+
+
+/// Builtin return values occupy the upper 32 bits
+const BUILTIN_BIT_SHIFT: usize = 32;
+macro_rules! to_builtin {
+    ($error:expr) => {
+        ($error as u64) << BUILTIN_BIT_SHIFT
+    };
+}
+
+pub const CUSTOM_ZERO: u64 = to_builtin!(1);
+pub const INVALID_ARGUMENT: u64 = to_builtin!(2);
+pub const INVALID_INSTRUCTION_DATA: u64 = to_builtin!(3);
+pub const INVALID_ACCOUNT_DATA: u64 = to_builtin!(4);
+pub const ACCOUNT_DATA_TOO_SMALL: u64 = to_builtin!(5);
+pub const INSUFFICIENT_FUNDS: u64 = to_builtin!(6);
+pub const INCORRECT_PROGRAM_ID: u64 = to_builtin!(7);
+pub const MISSING_REQUIRED_SIGNATURES: u64 = to_builtin!(8);
+pub const ACCOUNT_ALREADY_INITIALIZED: u64 = to_builtin!(9);
+pub const UNINITIALIZED_ACCOUNT: u64 = to_builtin!(10);
+pub const NOT_ENOUGH_ACCOUNT_KEYS: u64 = to_builtin!(11);
+pub const ACCOUNT_BORROW_FAILED: u64 = to_builtin!(12);
+pub const MAX_SEED_LENGTH_EXCEEDED: u64 = to_builtin!(13);
+pub const INVALID_SEEDS: u64 = to_builtin!(14);
+pub const BORSH_IO_ERROR: u64 = to_builtin!(15);
+pub const ACCOUNT_NOT_RENT_EXEMPT: u64 = to_builtin!(16);
+pub const UNSUPPORTED_SYSVAR: u64 = to_builtin!(17);
+pub const ILLEGAL_OWNER: u64 = to_builtin!(18);
+pub const MAX_ACCOUNTS_DATA_ALLOCATIONS_EXCEEDED: u64 = to_builtin!(19);
+pub const INVALID_ACCOUNT_DATA_REALLOC: u64 = to_builtin!(20);
+pub const MAX_INSTRUCTION_TRACE_LENGTH_EXCEEDED: u64 = to_builtin!(21);
+pub const BUILTIN_PROGRAMS_MUST_CONSUME_COMPUTE_UNITS: u64 = to_builtin!(22);
+// Warning: Any new program errors added here must also be:
+// - Added to the conversions in program_error.rs
+// - Added as an equivalent to InstructionError
+// - Be featureized in the BPF loader to return `InstructionError::InvalidError`
+//   until the feature is activated
+
+impl<T> From<T> for InstructionError
+where
+    T: ToPrimitive,
+{
+    fn from(error: T) -> Self {
+        let error = error.to_u64().unwrap_or(0xbad_c0de);
+        match error {
+            CUSTOM_ZERO => Self::Custom(0),
+            INVALID_ARGUMENT => Self::InvalidArgument,
+            INVALID_INSTRUCTION_DATA => Self::InvalidInstructionData,
+            INVALID_ACCOUNT_DATA => Self::InvalidAccountData,
+            ACCOUNT_DATA_TOO_SMALL => Self::AccountDataTooSmall,
+            INSUFFICIENT_FUNDS => Self::InsufficientFunds,
+            INCORRECT_PROGRAM_ID => Self::IncorrectProgramId,
+            MISSING_REQUIRED_SIGNATURES => Self::MissingRequiredSignature,
+            ACCOUNT_ALREADY_INITIALIZED => Self::AccountAlreadyInitialized,
+            UNINITIALIZED_ACCOUNT => Self::UninitializedAccount,
+            NOT_ENOUGH_ACCOUNT_KEYS => Self::NotEnoughAccountKeys,
+            ACCOUNT_BORROW_FAILED => Self::AccountBorrowFailed,
+            MAX_SEED_LENGTH_EXCEEDED => Self::MaxSeedLengthExceeded,
+            INVALID_SEEDS => Self::InvalidSeeds,
+            BORSH_IO_ERROR => Self::BorshIoError("Unknown".to_string()),
+            ACCOUNT_NOT_RENT_EXEMPT => Self::AccountNotRentExempt,
+            UNSUPPORTED_SYSVAR => Self::UnsupportedSysvar,
+            ILLEGAL_OWNER => Self::IllegalOwner,
+            MAX_ACCOUNTS_DATA_ALLOCATIONS_EXCEEDED => Self::MaxAccountsDataAllocationsExceeded,
+            INVALID_ACCOUNT_DATA_REALLOC => Self::InvalidRealloc,
+            MAX_INSTRUCTION_TRACE_LENGTH_EXCEEDED => Self::MaxInstructionTraceLengthExceeded,
+            BUILTIN_PROGRAMS_MUST_CONSUME_COMPUTE_UNITS => {
+                Self::BuiltinProgramsMustConsumeComputeUnits
+            }
+            _ => {
+                // A valid custom error has no bits set in the upper 32
+                if error >> BUILTIN_BIT_SHIFT == 0 {
+                    Self::Custom(error as u32)
+                } else {
+                    Self::InvalidError
+                }
+            }
+        }
     }
 }

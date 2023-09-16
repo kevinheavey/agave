@@ -114,7 +114,6 @@
 use {
     crate::{
         hash::Hash,
-        instruction::{CompiledInstruction, Instruction},
         message::Message,
         nonce::NONCED_TX_MARKER_IX_INDEX,
         precompiles::verify_if_precompile,
@@ -124,6 +123,7 @@ use {
         signers::Signers,
     },
     serde::Serialize,
+    solana_instruction::{CompiledInstruction, Instruction},
     solana_program::{system_instruction::SystemInstruction, system_program},
     solana_pubkey::Pubkey,
     solana_sdk::feature_set,
@@ -1116,11 +1116,11 @@ mod tests {
         super::*,
         crate::{
             hash::hash,
-            instruction::AccountMeta,
             signature::{Keypair, Presigner, Signer},
             system_instruction, sysvar,
         },
         bincode::{deserialize, serialize, serialized_size},
+        solana_instruction::AccountMeta,
         std::mem::size_of,
     };
 

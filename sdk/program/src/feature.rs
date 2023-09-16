@@ -13,9 +13,10 @@
 
 use {
     crate::{
-        account_info::AccountInfo, clock::Slot, instruction::Instruction, program_error::ProgramError,
+        account_info::AccountInfo, clock::Slot, program_error::ProgramError,
         rent::Rent, system_instruction
     },
+    solana_instruction::Instruction,
     solana_pubkey::Pubkey
 };
 

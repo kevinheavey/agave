@@ -116,7 +116,7 @@ pub mod solana_rpc_client_nonce_utils {
 pub mod solana_sdk {
     pub use {
         crate::{
-            instruction, keccak, message, nonce,
+            keccak, message, nonce,
             system_instruction, system_program,
             sysvar::{
                 self,
@@ -124,6 +124,7 @@ pub mod solana_sdk {
             }
         },
         solana_hash as hash,
+        solana_instruction as instruction,
         solana_pubkey::{self as pubkey, Pubkey},
     };
 
@@ -206,12 +207,10 @@ pub mod solana_sdk {
     pub mod transaction {
         use {
             super::{signature::Signature, signer::SignerError, signers::Signers},
-            crate::{
-                instruction::Instruction,
-                message::{Message, VersionedMessage},
-            },
+            crate::message::{Message, VersionedMessage},
             serde::Serialize,
             solana_hash::Hash,
+            solana_instruction::Instruction,
             solana_pubkey::Pubkey,
         };
 
@@ -298,7 +297,7 @@ pub mod solana_address_lookup_table_program {
 
     pub mod state {
         use {
-            crate::instruction::InstructionError,
+            solana_instruction::InstructionError,
             solana_pubkey::Pubkey,
             std::borrow::Cow,
         };

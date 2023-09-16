@@ -79,7 +79,7 @@ impl<E> DecodeError<E> for VoteError {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::instruction::InstructionError};
+    use {super::*, solana_instruction::InstructionError};
 
     #[test]
     fn test_custom_error_decode() {

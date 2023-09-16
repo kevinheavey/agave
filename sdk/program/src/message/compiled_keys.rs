@@ -4,7 +4,8 @@ use crate::{
     message::v0::{LoadedAddresses, MessageAddressTableLookup},
 };
 use {
-    crate::{instruction::Instruction, message::MessageHeader},
+    crate::message::MessageHeader,
+    solana_instruction::Instruction,
     solana_pubkey::Pubkey,
     std::collections::BTreeMap,
     thiserror::Error,
@@ -185,7 +186,7 @@ impl CompiledKeys {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::instruction::AccountMeta, bitflags::bitflags};
+    use {super::*, solana_instruction::AccountMeta, bitflags::bitflags};
 
     bitflags! {
         #[derive(Clone, Copy)]

@@ -42,13 +42,13 @@
 #[allow(deprecated)]
 use {
     crate::{
-        instruction::{AccountMeta, Instruction},
         nonce,
         system_program,
         sysvar::{recent_blockhashes, rent},
     },
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
+    solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
     thiserror::Error,
 };
@@ -1761,7 +1761,7 @@ pub fn upgrade_nonce_account(nonce_pubkey: Pubkey) -> Instruction {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::instruction::Instruction};
+    use {super::*, solana_instruction::Instruction};
 
     fn get_keys(instruction: &Instruction) -> Vec<Pubkey> {
         instruction.accounts.iter().map(|x| x.pubkey).collect()

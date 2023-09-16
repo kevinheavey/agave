@@ -1,8 +1,6 @@
 use {
-    crate::{
-        instruction::{CompiledInstruction, Instruction},
-        message::{v0::LoadedAddresses, CompileError},
-    },
+    crate::message::{v0::LoadedAddresses, CompileError},
+    solana_instruction::{CompiledInstruction, Instruction},
     solana_pubkey::Pubkey,
     std::{collections::BTreeMap, ops::Index},
 };
@@ -140,7 +138,7 @@ impl<'a> AccountKeys<'a> {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::instruction::AccountMeta};
+    use {super::*, solana_instruction::AccountMeta};
 
     fn test_account_keys() -> [Pubkey; 6] {
         let key0 = Pubkey::new_unique();

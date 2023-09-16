@@ -224,7 +224,7 @@ mod tests {
             signer::{keypair::Keypair, Signer},
             system_instruction, sysvar,
         },
-        solana_program::instruction::{AccountMeta, Instruction},
+        solana_instruction::{AccountMeta, Instruction},
         solana_pubkey::Pubkey,
     };
 

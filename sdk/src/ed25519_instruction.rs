@@ -5,9 +5,10 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{feature_set::FeatureSet, instruction::Instruction, precompiles::PrecompileError},
+    crate::{feature_set::FeatureSet, precompiles::PrecompileError},
     bytemuck::{bytes_of, Pod, Zeroable},
     ed25519_dalek::{ed25519::signature::Signature, Signer, Verifier},
+    solana_instruction::Instruction
 };
 
 pub const PUBKEY_SERIALIZED_SIZE: usize = 32;

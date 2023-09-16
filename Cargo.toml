@@ -93,6 +93,7 @@ solana-atomic-u64 = { path = "new_crates/atomic-u64" }
 solana-decode-error = { path = "new_crates/decode-error" }
 solana-download-utils = { path = "download-utils", version = "=1.17.0" }
 solana-hash = { path = "new_crates/hash" }
+solana-instruction = { path = "new_crates/instruction" }
 solana-logger = { path = "logger", version = "=1.17.0" }
 solana-program = { path = "sdk/program", version = "=1.17.0" }
 solana-pubkey = { path = "new_crates/pubkey" }

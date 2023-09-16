@@ -1,6 +1,6 @@
 //! Defines the [`LamportsError`] type.
 
-use {crate::instruction::InstructionError, thiserror::Error};
+use {solana_instruction::InstructionError, thiserror::Error};
 
 #[derive(Debug, Error)]
 pub enum LamportsError {

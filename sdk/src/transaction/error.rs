@@ -1,10 +1,10 @@
 use {
     crate::{
-        instruction::InstructionError,
         message::{AddressLoaderError, SanitizeMessageError},
         sanitize::SanitizeError,
     },
     serde::Serialize,
+    solana_instruction::InstructionError,
     thiserror::Error,
 };
 

@@ -1,14 +1,12 @@
 use {
-    crate::{
-        instruction::CompiledInstruction,
-        message::{legacy::Message as LegacyMessage, v0::MessageAddressTableLookup, MessageHeader},
-    },
+    crate::message::{legacy::Message as LegacyMessage, v0::MessageAddressTableLookup, MessageHeader},
     serde::{
         de::{self, Deserializer, SeqAccess, Visitor},
         ser::{SerializeTuple, Serializer},
         Deserialize, Serialize,
     },
     solana_hash::Hash,
+    solana_instruction::CompiledInstruction,
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_short_vec as short_vec,
@@ -299,10 +297,8 @@ impl<'de> Deserialize<'de> for VersionedMessage {
 mod tests {
     use {
         super::*,
-        crate::{
-            instruction::{AccountMeta, Instruction},
-            message::v0::MessageAddressTableLookup,
-        },
+        crate::message::v0::MessageAddressTableLookup,
+        solana_instruction::{AccountMeta, Instruction},
     };
 
     #[test]

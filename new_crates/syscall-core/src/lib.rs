@@ -1,3 +1,4 @@
+#[macro_export]
 #[cfg(target_feature = "static-syscalls")]
 macro_rules! define_syscall {
     (fn $name:ident($($arg:ident: $typ:ty),*) -> $ret:ty) => {
@@ -19,6 +20,7 @@ macro_rules! define_syscall {
     }
 }
 
+#[macro_export]
 #[cfg(not(target_feature = "static-syscalls"))]
 macro_rules! define_syscall {
 	(fn $name:ident($($arg:ident: $typ:ty),*) -> $ret:ty) => {

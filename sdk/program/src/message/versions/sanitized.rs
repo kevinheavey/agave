@@ -1,6 +1,6 @@
 use {
     super::VersionedMessage,
-    crate::instruction::CompiledInstruction,
+    solana_instruction::CompiledInstruction,
     solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
 };

@@ -1,7 +1,6 @@
 use {
     crate::{
         ed25519_program,
-        instruction::CompiledInstruction,
         message::{
             legacy,
             v0::{self, LoadedAddresses},
@@ -15,6 +14,7 @@ use {
         sysvar::instructions::{BorrowedAccountMeta, BorrowedInstruction},
     },
     solana_hash::Hash,
+    solana_instruction::CompiledInstruction,
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     std::{borrow::Cow, convert::TryFrom},

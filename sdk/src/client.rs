@@ -16,7 +16,6 @@ use {
         commitment_config::CommitmentConfig,
         epoch_info::EpochInfo,
         fee_calculator::{FeeCalculator, FeeRateGovernor},
-        instruction::Instruction,
         message::Message,
         signature::{Keypair, Signature},
         signer::Signer,
@@ -26,6 +25,7 @@ use {
         transport::Result,
     },
     solana_hash::Hash,
+    solana_instruction::Instruction,
     solana_pubkey::Pubkey,
 };
 

@@ -10,9 +10,10 @@
 
 use {
     crate::{
-        account_info::AccountInfo, entrypoint::ProgramResult, instruction::Instruction,
+        account_info::AccountInfo, entrypoint::ProgramResult,
         stable_layout::stable_instruction::StableInstruction
     },
+    solana_instruction::Instruction,
     solana_pubkey::Pubkey
 };
 
@@ -399,8 +400,9 @@ pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
 pub fn check_type_assumptions() {
     extern crate memoffset;
     use {
-        crate::{clock::Epoch, instruction::AccountMeta},
+        crate::clock::Epoch,
         memoffset::offset_of,
+        solana_instruction::AccountMeta,
         std::{
             cell::RefCell,
             mem::{align_of, size_of},

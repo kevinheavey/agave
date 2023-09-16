@@ -4,10 +4,10 @@
 
 use {
     crate::{
-        instruction::{AccountMeta, Instruction},
         loader_v4_instruction::LoaderV4Instruction,
         system_instruction,
     },
+    solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
 };
 

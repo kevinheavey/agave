@@ -1381,6 +1381,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-instruction"
+version = "1.17.0"
+dependencies = [
+ "bincode",
+ "borsh 0.10.3",
+ "num-traits",
+ "serde",
+ "solana-pubkey",
+ "solana-sanitize",
+ "solana-short-vec",
+ "solana-syscall-core",
+ "solana-wasm-bindgen",
+ "thiserror",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "solana-logger"
 version = "1.17.0"
 dependencies = [
@@ -1438,6 +1455,7 @@ dependencies = [
  "solana-atomic-u64",
  "solana-decode-error",
  "solana-hash",
+ "solana-instruction",
  "solana-logger",
  "solana-pubkey",
  "solana-sanitize",
@@ -1529,6 +1547,7 @@ dependencies = [
  "sha3",
  "solana-decode-error",
  "solana-hash",
+ "solana-instruction",
  "solana-logger",
  "solana-program",
  "solana-pubkey",

@@ -175,8 +175,9 @@ impl<'a> LoadedMessage<'a> {
 mod tests {
     use {
         super::*,
-        crate::{instruction::CompiledInstruction, message::MessageHeader},
+        crate::message::MessageHeader,
         itertools::Itertools,
+        solana_instruction::CompiledInstruction,
     };
 
     fn check_test_loaded_message() -> (LoadedMessage<'static>, [Pubkey; 6]) {
