@@ -484,7 +484,6 @@ pub mod epoch_rewards;
 pub mod epoch_schedule;
 pub mod feature;
 pub mod fee_calculator;
-pub mod keccak;
 pub mod lamports;
 pub mod last_restart_slot;
 pub mod loader_instruction;
@@ -530,6 +529,7 @@ pub use {
     solana_stable_layout as stable_layout,
     solana_alt_bn128 as alt_bn128,
     solana_big_mod_exp as big_mod_exp,
+    solana_keccak as keccak
 };
 
 /// The [config native program][np].

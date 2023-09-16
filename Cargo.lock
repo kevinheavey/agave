@@ -1451,6 +1451,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-keccak"
+version = "1.17.0"
+dependencies = [
+ "borsh 0.10.3",
+ "bs58",
+ "serde",
+ "sha3",
+ "solana-atomic-u64",
+ "solana-sanitize",
+ "solana-syscall-core",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-logger"
 version = "1.17.0"
 dependencies = [
@@ -1530,6 +1544,7 @@ dependencies = [
  "solana-decode-error",
  "solana-hash",
  "solana-instruction",
+ "solana-keccak",
  "solana-logger",
  "solana-native-programs",
  "solana-poseidon",

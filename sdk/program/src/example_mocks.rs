@@ -115,13 +115,14 @@ pub mod solana_rpc_client_nonce_utils {
 pub mod solana_sdk {
     pub use {
         crate::{
-            keccak, message, nonce, system_instruction,
+            message, nonce, system_instruction,
             sysvar::{
                 self,
                 clock::{self, Clock},
             },
         },
         solana_hash as hash, solana_instruction as instruction,
+        solana_keccak as keccak,
         solana_native_programs::system_program,
         solana_pubkey::{self as pubkey, Pubkey},
     };

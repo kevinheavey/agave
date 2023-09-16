@@ -4,6 +4,7 @@
 
 use {
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
+    serde::{Deserialize, Serialize},
     sha3::{Digest, Keccak256},
     solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},

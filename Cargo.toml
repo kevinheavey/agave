@@ -98,6 +98,7 @@ solana-decode-error = { path = "new_crates/decode-error" }
 solana-download-utils = { path = "download-utils", version = "=1.17.0" }
 solana-hash = { path = "new_crates/hash" }
 solana-instruction = { path = "new_crates/instruction" }
+solana-keccak = { path = "new_crates/keccak" }
 solana-logger = { path = "logger", version = "=1.17.0" }
 solana-native-programs = { path = "new_crates/native-programs" }
 solana-poseidon = { path = "new_crates/poseidon" }
