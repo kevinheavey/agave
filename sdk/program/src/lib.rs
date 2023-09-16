@@ -474,7 +474,6 @@ pub mod account_info;
 pub mod address_lookup_table;
 pub mod alt_bn128;
 pub mod big_mod_exp;
-pub mod blake3;
 pub mod borsh;
 pub mod borsh0_10;
 pub mod borsh0_9;
@@ -528,7 +527,7 @@ pub mod address_lookup_table_account {
     pub use crate::address_lookup_table::AddressLookupTableAccount;
 }
 
-pub use {solana_wasm_bindgen::wasm_bindgen, solana_pubkey as pubkey, solana_poseidon as poseidon};
+pub use {solana_wasm_bindgen::wasm_bindgen, solana_pubkey as pubkey, solana_poseidon as poseidon, solana_blake3 as blake3};
 
 /// The [config native program][np].
 ///

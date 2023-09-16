@@ -1356,6 +1356,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-blake3"
+version = "1.17.0"
+dependencies = [
+ "blake3",
+ "borsh 0.10.3",
+ "bs58",
+ "serde",
+ "solana-atomic-u64",
+ "solana-sanitize",
+ "solana-syscall-core",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-clock"
 version = "1.17.0"
 dependencies = [
@@ -1479,6 +1493,7 @@ dependencies = [
  "sha2 0.10.7",
  "sha3",
  "solana-atomic-u64",
+ "solana-blake3",
  "solana-clock",
  "solana-decode-error",
  "solana-hash",
