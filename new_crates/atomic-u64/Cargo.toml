@@ -7,5 +7,5 @@ homepage = { workspace = true }
 license = { workspace = true }
 edition = { workspace = true }
 
-[dependencies]
+[target.'cfg(not(target_pointer_width = "64"))'.dependencies]
 parking_lot = { workspace = true }
