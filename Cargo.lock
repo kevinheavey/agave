@@ -1372,6 +1372,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-big-mod-exp"
+version = "1.17.0"
+dependencies = [
+ "array-bytes",
+ "bytemuck",
+ "num-bigint",
+ "num-traits",
+ "serde",
+ "serde_json",
+ "solana-syscall-core",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-blake3"
 version = "1.17.0"
 dependencies = [
@@ -1510,6 +1524,7 @@ dependencies = [
  "sha3",
  "solana-alt-bn128",
  "solana-atomic-u64",
+ "solana-big-mod-exp",
  "solana-blake3",
  "solana-clock",
  "solana-decode-error",

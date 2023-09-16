@@ -34,6 +34,7 @@ sha2 = { workspace = true }
 sha3 = { workspace = true }
 solana-alt-bn128 = { workspace = true }
 solana-atomic-u64 = { workspace = true }
+solana-big-mod-exp = { workspace = true }
 solana-blake3 = { workspace = true }
 solana-clock = { workspace = true }
 solana-decode-error = { workspace = true }

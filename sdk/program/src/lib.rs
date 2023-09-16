@@ -472,7 +472,6 @@ extern crate self as solana_program;
 
 pub mod account_info;
 pub mod address_lookup_table;
-pub mod big_mod_exp;
 pub mod borsh;
 pub mod borsh0_10;
 pub mod borsh0_9;
@@ -530,6 +529,7 @@ pub use {
     solana_wasm_bindgen::wasm_bindgen,
     solana_stable_layout as stable_layout,
     solana_alt_bn128 as alt_bn128,
+    solana_big_mod_exp as big_mod_exp,
 };
 
 /// The [config native program][np].
