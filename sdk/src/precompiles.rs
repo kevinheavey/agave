@@ -4,10 +4,11 @@
 
 use {
     crate::{
-        decode_error::DecodeError, feature_set::FeatureSet, instruction::CompiledInstruction,
+        feature_set::FeatureSet, instruction::CompiledInstruction,
         pubkey::Pubkey,
     },
     lazy_static::lazy_static,
+    solana_decode_error::DecodeError,
     thiserror::Error,
 };
 

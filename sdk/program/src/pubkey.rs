@@ -2,10 +2,10 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    crate::decode_error::DecodeError,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
     num_derive::{FromPrimitive, ToPrimitive},
+    solana_decode_error::DecodeError,
     solana_hash::hashv,
     solana_wasm_bindgen::wasm_bindgen,
     std::{

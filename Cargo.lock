@@ -1356,6 +1356,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-decode-error"
+version = "1.17.0"
+dependencies = [
+ "num-derive",
+ "num-traits",
+]
+
+[[package]]
 name = "solana-hash"
 version = "1.17.0"
 dependencies = [
@@ -1427,6 +1435,7 @@ dependencies = [
  "sha2 0.10.7",
  "sha3",
  "solana-atomic-u64",
+ "solana-decode-error",
  "solana-hash",
  "solana-logger",
  "solana-sanitize",
@@ -1491,6 +1500,7 @@ dependencies = [
  "serde_with",
  "sha2 0.10.7",
  "sha3",
+ "solana-decode-error",
  "solana-hash",
  "solana-logger",
  "solana-program",
