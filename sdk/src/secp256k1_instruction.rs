@@ -1048,16 +1048,10 @@ pub mod test {
     use {
         super::*,
         crate::{
-            feature_set,
-            hash::Hash,
-            keccak,
             secp256k1_instruction::{
-                new_secp256k1_instruction, SecpSignatureOffsets, SIGNATURE_OFFSETS_SERIALIZED_SIZE,
+                SecpSignatureOffsets,
             },
-            signature::{Keypair, Signer},
-            transaction::Transaction,
         },
-        rand0_7::{thread_rng, Rng},
     };
 
     fn test_case(

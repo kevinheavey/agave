@@ -182,13 +182,8 @@ pub mod test {
     use {
         super::*,
         crate::{
-            ed25519_instruction::new_ed25519_instruction,
             feature_set::FeatureSet,
-            hash::Hash,
-            signature::{Keypair, Signer},
-            transaction::Transaction,
         },
-        rand0_7::{thread_rng, Rng},
     };
 
     fn test_case(

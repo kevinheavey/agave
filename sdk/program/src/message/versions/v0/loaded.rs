@@ -175,7 +175,7 @@ impl<'a> LoadedMessage<'a> {
 mod tests {
     use {
         super::*,
-        crate::{instruction::CompiledInstruction, message::MessageHeader, system_program, sysvar},
+        crate::{instruction::CompiledInstruction, message::MessageHeader},
         itertools::Itertools,
     };
 
