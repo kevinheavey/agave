@@ -4,8 +4,8 @@
 // legacy module paths
 pub use crate::signer::{keypair::*, null_signer::*, presigner::*, *};
 use {
-    crate::pubkey::Pubkey,
     generic_array::{typenum::U64, GenericArray},
+    solana_pubkey::Pubkey,
     std::{
         borrow::{Borrow, Cow},
         convert::TryInto,
