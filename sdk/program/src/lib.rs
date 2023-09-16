@@ -510,7 +510,6 @@ pub mod serde_varint;
 pub mod serialize_utils;
 pub mod slot_hashes;
 pub mod slot_history;
-pub mod stable_layout;
 pub mod stake;
 pub mod stake_history;
 pub mod syscalls;
@@ -530,6 +529,7 @@ pub mod address_lookup_table_account {
 pub use {
     solana_blake3 as blake3, solana_poseidon as poseidon, solana_pubkey as pubkey,
     solana_wasm_bindgen::wasm_bindgen,
+    solana_stable_layout as stable_layout,
 };
 
 /// The [config native program][np].

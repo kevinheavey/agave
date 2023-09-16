@@ -1505,6 +1505,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk-macro",
  "solana-short-vec",
+ "solana-stable-layout",
  "solana-syscall-core",
  "solana-wasm-bindgen",
  "static_assertions",
@@ -1628,6 +1629,16 @@ dependencies = [
  "bincode",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "solana-stable-layout"
+version = "1.17.0"
+dependencies = [
+ "memoffset",
+ "solana-instruction",
+ "solana-pubkey",
+ "thiserror",
 ]
 
 [[package]]

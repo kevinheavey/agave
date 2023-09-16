@@ -11,10 +11,10 @@
 use {
     crate::{
         account_info::AccountInfo, entrypoint::ProgramResult,
-        stable_layout::stable_instruction::StableInstruction,
     },
     solana_instruction::Instruction,
     solana_pubkey::Pubkey,
+    solana_stable_layout::stable_instruction::StableInstruction,
 };
 
 /// Invoke a cross-program instruction.
