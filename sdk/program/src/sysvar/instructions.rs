@@ -336,7 +336,7 @@ mod tests {
         let key = id();
         let mut lamports = 0;
         let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
-        let owner = crate::sysvar::id();
+        let owner = solana_native_programs::sysvar::id();
         let mut account_info = AccountInfo::new(
             &key,
             false,
@@ -391,7 +391,7 @@ mod tests {
         let mut lamports = 0;
         let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
         store_current_index(&mut data, 1);
-        let owner = crate::sysvar::id();
+        let owner = solana_native_programs::sysvar::id();
         let mut account_info = AccountInfo::new(
             &key,
             false,
@@ -449,7 +449,7 @@ mod tests {
         let mut lamports = 0;
         let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
         store_current_index(&mut data, 1);
-        let owner = crate::sysvar::id();
+        let owner = solana_native_programs::sysvar::id();
         let mut account_info = AccountInfo::new(
             &key,
             false,

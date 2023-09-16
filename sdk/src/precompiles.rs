@@ -77,12 +77,12 @@ lazy_static! {
     /// The list of all precompiled programs
     static ref PRECOMPILES: Vec<Precompile> = vec![
         Precompile::new(
-            crate::secp256k1_program::id(),
+            solana_native_programs::secp256k1_program::id(),
             None, // always enabled
             crate::secp256k1_instruction::verify,
         ),
         Precompile::new(
-            crate::ed25519_program::id(),
+            solana_native_programs::ed25519_program::id(),
             None, // always enabled
             crate::ed25519_instruction::verify,
         ),

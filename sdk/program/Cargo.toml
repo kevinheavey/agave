@@ -37,6 +37,7 @@ solana-clock = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
+solana-native-programs = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }

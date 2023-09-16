@@ -1416,6 +1416,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-native-programs"
+version = "1.17.0"
+dependencies = [
+ "solana-pubkey",
+ "solana-sdk-macro",
+]
+
+[[package]]
 name = "solana-program"
 version = "1.17.0"
 dependencies = [
@@ -1467,6 +1475,7 @@ dependencies = [
  "solana-hash",
  "solana-instruction",
  "solana-logger",
+ "solana-native-programs",
  "solana-pubkey",
  "solana-sanitize",
  "solana-sdk-macro",
@@ -1560,6 +1569,7 @@ dependencies = [
  "solana-hash",
  "solana-instruction",
  "solana-logger",
+ "solana-native-programs",
  "solana-program",
  "solana-pubkey",
  "solana-sanitize",

@@ -4,10 +4,9 @@
 
 use {
     solana_instruction::Instruction,
+    solana_native_programs::compute_budget::id,
     borsh::{BorshDeserialize, BorshSerialize},
 };
-
-crate::declare_id!("ComputeBudget111111111111111111111111111111");
 
 /// Compute Budget Instructions
 #[derive(

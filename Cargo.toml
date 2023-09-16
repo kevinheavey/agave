@@ -96,6 +96,7 @@ solana-download-utils = { path = "download-utils", version = "=1.17.0" }
 solana-hash = { path = "new_crates/hash" }
 solana-instruction = { path = "new_crates/instruction" }
 solana-logger = { path = "logger", version = "=1.17.0" }
+solana-native-programs = { path = "new_crates/native-programs" }
 solana-program = { path = "sdk/program", version = "=1.17.0" }
 solana-pubkey = { path = "new_crates/pubkey" }
 solana-sanitize = { path = "new_crates/sanitize" }

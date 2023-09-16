@@ -1,6 +1,5 @@
 use {
     crate::{
-        ed25519_program,
         message::{
             legacy,
             v0::{self, LoadedAddresses},
@@ -9,12 +8,12 @@ use {
         },
         nonce::NONCED_TX_MARKER_IX_INDEX,
         program_utils::limited_deserialize,
-        secp256k1_program,
-        solana_program::{system_instruction::SystemInstruction, system_program},
+        solana_program::system_instruction::SystemInstruction,
         sysvar::instructions::{BorrowedAccountMeta, BorrowedInstruction},
     },
     solana_hash::Hash,
     solana_instruction::CompiledInstruction,
+    solana_native_programs::{ed25519_program, secp256k1_program, system_program},
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     std::{borrow::Cow, convert::TryFrom},

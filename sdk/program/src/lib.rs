@@ -478,19 +478,15 @@ pub mod blake3;
 pub mod borsh;
 pub mod borsh0_10;
 pub mod borsh0_9;
-pub mod bpf_loader;
-pub mod bpf_loader_deprecated;
 pub mod bpf_loader_upgradeable;
 pub mod compute_units;
 pub mod debug_account_data;
-pub mod ed25519_program;
 pub mod entrypoint;
 pub mod entrypoint_deprecated;
 pub mod epoch_rewards;
 pub mod epoch_schedule;
 pub mod feature;
 pub mod fee_calculator;
-pub mod incinerator;
 pub mod keccak;
 pub mod lamports;
 pub mod last_restart_slot;
@@ -511,7 +507,6 @@ pub mod program_pack;
 pub mod program_stubs;
 pub mod program_utils;
 pub mod rent;
-pub mod secp256k1_program;
 pub mod secp256k1_recover;
 pub mod serde_varint;
 pub mod serialize_utils;
@@ -522,7 +517,6 @@ pub mod stake;
 pub mod stake_history;
 pub mod syscalls;
 pub mod system_instruction;
-pub mod system_program;
 pub mod sysvar;
 pub mod vote;
 pub mod wasm;
@@ -542,17 +536,18 @@ pub use {solana_wasm_bindgen::wasm_bindgen, solana_pubkey as pubkey};
 /// [np]: https://docs.solana.com/developing/runtime-facilities/programs#config-program
 pub mod config {
     pub mod program {
-        crate::declare_id!("Config1111111111111111111111111111111111111");
+        pub use solana_native_programs::config::{check_id, ID, id};
     }
 }
 
 /// A vector of Solana SDK IDs.
 pub mod sdk_ids {
     use {
-        crate::{
+        crate::sysvar,
+        solana_native_programs::{
             bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, config, ed25519_program,
             feature, incinerator, secp256k1_program, stake,
-            system_program, sysvar, vote,
+            vote, sysvar::id as sysvar_id,
         },
         lazy_static::lazy_static,
         solana_pubkey::Pubkey,
@@ -563,17 +558,17 @@ pub mod sdk_ids {
             let mut sdk_ids = vec![
                 ed25519_program::id(),
                 secp256k1_program::id(),
-                system_program::id(),
-                sysvar::id(),
+                solana_native_programs::system_program::id(),
+                sysvar_id(),
                 bpf_loader::id(),
                 bpf_loader_upgradeable::id(),
                 incinerator::id(),
-                config::program::id(),
-                vote::program::id(),
+                config::id(),
+                vote::id(),
                 feature::id(),
                 bpf_loader_deprecated::id(),
                 #[allow(deprecated)]
-                stake::config::id(),
+                stake::id(),
             ];
             sdk_ids.extend(sysvar::ALL_IDS.iter());
             sdk_ids

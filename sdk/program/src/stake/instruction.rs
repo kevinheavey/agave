@@ -3,7 +3,6 @@ use crate::stake::config;
 use {
     crate::{
         stake::{
-            program::id,
             state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
         },
         system_instruction, sysvar,
@@ -14,6 +13,7 @@ use {
     solana_clock::{Epoch, UnixTimestamp},
     solana_decode_error::DecodeError,
     solana_instruction::{AccountMeta, Instruction},
+    solana_native_programs::stake::id,
     solana_pubkey::Pubkey,
     thiserror::Error,
 };

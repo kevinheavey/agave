@@ -174,8 +174,6 @@ macro_rules! declare_deprecated_sysvar_id(
     )
 );
 
-// Owner pubkey for sysvar accounts
-crate::declare_id!("Sysvar1111111111111111111111111111111111111");
 
 /// A type that holds sysvar data and has an associated sysvar `Pubkey`.
 pub trait SysvarId {

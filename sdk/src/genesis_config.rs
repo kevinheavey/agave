@@ -13,7 +13,6 @@ use {
         rent::Rent,
         shred_version::compute_shred_version,
         signature::{Keypair, Signer},
-        system_program,
         timing::years_as_slots,
     },
     bincode::{deserialize, serialize},
@@ -119,7 +118,7 @@ pub fn create_genesis_config(lamports: u64) -> (GenesisConfig, Keypair) {
         GenesisConfig::new(
             &[(
                 faucet_keypair.pubkey(),
-                AccountSharedData::new(lamports, 0, &system_program::id()),
+                AccountSharedData::new(lamports, 0, &solana_native_programs::system_program::id()),
             )],
             &[],
         ),

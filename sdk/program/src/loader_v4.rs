@@ -8,10 +8,9 @@ use {
         system_instruction,
     },
     solana_instruction::{AccountMeta, Instruction},
+    solana_native_programs::loader_v4::id,
     solana_pubkey::Pubkey,
 };
-
-crate::declare_id!("LoaderV411111111111111111111111111111111111");
 
 /// Cooldown before a program can be un-/redeployed again
 pub const DEPLOYMENT_COOLDOWN_IN_SLOTS: u64 = 750;
@@ -188,7 +187,7 @@ pub fn transfer_authority(
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::system_program, memoffset::offset_of};
+    use {super::*, memoffset::offset_of};
 
     #[test]
     fn test_layout() {
@@ -207,7 +206,7 @@ mod tests {
         let instructions = create_buffer(&payer, &program, 123, &authority, 10, &recipient);
         assert_eq!(instructions.len(), 2);
         let instruction0 = &instructions[0];
-        assert_eq!(instruction0.program_id, system_program::id());
+        assert_eq!(instruction0.program_id, solana_native_programs::system_program::id());
         assert_eq!(instruction0.accounts.len(), 2);
         assert_eq!(instruction0.accounts[0].pubkey, payer);
         assert!(instruction0.accounts[0].is_writable);

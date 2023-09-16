@@ -12,7 +12,6 @@
 use {
     crate::{
         address_lookup_table_account::AddressLookupTableAccount,
-        bpf_loader_upgradeable,
         message::{
             compiled_keys::{CompileError, CompiledKeys},
             legacy::is_builtin_key_or_sysvar,
@@ -21,6 +20,7 @@ use {
     },
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
+    solana_native_programs::bpf_loader_upgradeable,
     solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
     solana_short_vec as short_vec,

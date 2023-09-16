@@ -1,0 +1,12 @@
+[package]
+name = "solana-native-programs"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+solana-pubkey = { workspace = true }
+solana-sdk-macro = { workspace = true }

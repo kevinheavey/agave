@@ -18,10 +18,9 @@ use {
     },
     solana_clock::Slot,
     solana_instruction::Instruction,
+    solana_native_programs::feature::id,
     solana_pubkey::Pubkey
 };
-
-crate::declare_id!("Feature111111111111111111111111111111111111");
 
 #[derive(Default, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Feature {

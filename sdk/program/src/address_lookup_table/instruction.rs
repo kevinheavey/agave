@@ -1,11 +1,8 @@
 use {
-    crate::{
-        address_lookup_table::program::id,
-        system_program,
-    },
     serde::{Deserialize, Serialize},
     solana_clock::Slot,
     solana_instruction::{AccountMeta, Instruction},
+    solana_native_programs::address_lookup_table::id,
     solana_pubkey::Pubkey,
 };
 
@@ -98,7 +95,7 @@ fn create_lookup_table_common(
             AccountMeta::new(lookup_table_address, false),
             AccountMeta::new_readonly(authority_address, authority_is_signer),
             AccountMeta::new(payer_address, true),
-            AccountMeta::new_readonly(system_program::id(), false),
+            AccountMeta::new_readonly(solana_native_programs::system_program::id(), false),
         ],
     );
 
@@ -167,7 +164,7 @@ pub fn extend_lookup_table(
     if let Some(payer_address) = payer_address {
         accounts.extend([
             AccountMeta::new(payer_address, true),
-            AccountMeta::new_readonly(system_program::id(), false),
+            AccountMeta::new_readonly(solana_native_programs::system_program::id(), false),
         ]);
     }
 

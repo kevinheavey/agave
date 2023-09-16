@@ -122,7 +122,7 @@ impl SanitizedTransaction {
             {
                 let mut ix_iter = message.program_instructions_iter();
                 ix_iter.next().map(|(program_id, _ix)| program_id)
-                    == Some(&crate::vote::program::id())
+                    == Some(&solana_native_programs::vote::id())
             } else {
                 false
             }

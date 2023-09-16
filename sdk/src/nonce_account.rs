@@ -19,7 +19,7 @@ pub fn create_account(lamports: u64) -> RefCell<AccountSharedData> {
             lamports,
             &Versions::new(State::Uninitialized),
             State::size(),
-            &crate::system_program::id(),
+            &solana_native_programs::system_program::id(),
         )
         .expect("nonce_account"),
     )
@@ -31,7 +31,7 @@ pub fn verify_nonce_account(
     account: &AccountSharedData,
     recent_blockhash: &Hash, // Transaction.message.recent_blockhash
 ) -> Option<Data> {
-    (account.owner() == &crate::system_program::id())
+    (account.owner() == &solana_native_programs::system_program::id())
         .then(|| {
             StateMut::<Versions>::state(account)
                 .ok()?
@@ -55,7 +55,6 @@ mod tests {
         crate::{
             fee_calculator::FeeCalculator,
             nonce::state::{Data, DurableNonce},
-            system_program,
         },
         solana_pubkey::Pubkey,
     };
@@ -63,7 +62,7 @@ mod tests {
     #[test]
     fn test_verify_bad_account_owner_fails() {
         let program_id = Pubkey::new_unique();
-        assert_ne!(program_id, crate::system_program::id());
+        assert_ne!(program_id, solana_native_programs::system_program::id());
         let account = AccountSharedData::new_data_with_space(
             42,
             &Versions::new(State::Uninitialized),
@@ -78,7 +77,7 @@ mod tests {
         AccountSharedData::new_data(
             1_000_000,             // lamports
             &versions,             // state
-            &system_program::id(), // owner
+            &solana_native_programs::system_program::id(), // owner
         )
         .unwrap()
     }

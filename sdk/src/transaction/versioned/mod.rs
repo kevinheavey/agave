@@ -22,8 +22,9 @@ mod sanitized;
 pub use sanitized::*;
 use {
     crate::program_utils::limited_deserialize,
+    solana_native_programs::system_program,
     solana_program::{
-        nonce::NONCED_TX_MARKER_IX_INDEX, system_instruction::SystemInstruction, system_program,
+        nonce::NONCED_TX_MARKER_IX_INDEX, system_instruction::SystemInstruction,
     },
 };
 
@@ -338,7 +339,7 @@ mod tests {
             AccountMeta::new_readonly(nonce_pubkey, true),
         ];
         let nonce_instruction = Instruction::new_with_bincode(
-            system_program::id(),
+            solana_native_programs::system_program::id(),
             &system_instruction::SystemInstruction::AdvanceNonceAccount,
             account_metas,
         );

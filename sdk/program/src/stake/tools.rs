@@ -28,7 +28,7 @@ fn get_minimum_delegation_return_data() -> Result<u64, ProgramError> {
     crate::program::get_return_data()
         .ok_or(ProgramError::InvalidInstructionData)
         .and_then(|(program_id, return_data)| {
-            (program_id == super::program::id())
+            (program_id == solana_native_programs::stake::id())
                 .then_some(return_data)
                 .ok_or(ProgramError::IncorrectProgramId)
         })

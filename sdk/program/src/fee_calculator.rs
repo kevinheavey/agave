@@ -2,7 +2,7 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    crate::{ed25519_program, message::Message, secp256k1_program},
+    crate::message::Message,
     log::*,
     solana_clock::DEFAULT_MS_PER_SLOT,
 };
@@ -35,7 +35,7 @@ impl FeeCalculator {
             // Message may not be sanitized here
             if program_index < message.account_keys.len() {
                 let id = message.account_keys[program_index];
-                if (secp256k1_program::check_id(&id) || ed25519_program::check_id(&id))
+                if (solana_native_programs::secp256k1_program::check_id(&id) || solana_native_programs::ed25519_program::check_id(&id))
                     && !instruction.data.is_empty()
                 {
                     num_signatures += instruction.data[0] as u64;
@@ -236,12 +236,12 @@ mod tests {
         let pubkey1 = Pubkey::from([1; 32]);
         let ix0 = system_instruction::transfer(&pubkey0, &pubkey1, 1);
         let mut secp_instruction = Instruction {
-            program_id: crate::secp256k1_program::id(),
+            program_id: solana_native_programs::secp256k1_program::id(),
             accounts: vec![],
             data: vec![],
         };
         let mut secp_instruction2 = Instruction {
-            program_id: crate::secp256k1_program::id(),
+            program_id: solana_native_programs::secp256k1_program::id(),
             accounts: vec![],
             data: vec![1],
         };

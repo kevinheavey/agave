@@ -4,7 +4,6 @@ use {
     crate::{
         system_instruction, sysvar,
         vote::{
-            program::id,
             state::{
                 serde_compact_vote_state_update, Vote, VoteAuthorize,
                 VoteAuthorizeCheckedWithSeedArgs, VoteAuthorizeWithSeedArgs, VoteInit,
@@ -16,6 +15,7 @@ use {
     solana_clock::{Slot, UnixTimestamp},
     solana_hash::Hash,
     solana_instruction::{AccountMeta, Instruction},
+    solana_native_programs::vote::id,
     solana_pubkey::Pubkey,
 };
 

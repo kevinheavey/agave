@@ -124,7 +124,8 @@ use {
     },
     serde::Serialize,
     solana_instruction::{CompiledInstruction, Instruction},
-    solana_program::{system_instruction::SystemInstruction, system_program},
+    solana_native_programs::system_program,
+    solana_program::{system_instruction::SystemInstruction},
     solana_pubkey::Pubkey,
     solana_sdk::feature_set,
     solana_short_vec as short_vec,
@@ -1595,7 +1596,7 @@ mod tests {
             AccountMeta::new_readonly(nonce_pubkey, true),
         ];
         let nonce_instruction = Instruction::new_with_bincode(
-            system_program::id(),
+            solana_native_programs::system_program::id(),
             &system_instruction::SystemInstruction::AdvanceNonceAccount,
             account_metas,
         );

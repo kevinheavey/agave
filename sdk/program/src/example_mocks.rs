@@ -117,7 +117,7 @@ pub mod solana_sdk {
     pub use {
         crate::{
             keccak, message, nonce,
-            system_instruction, system_program,
+            system_instruction,
             sysvar::{
                 self,
                 clock::{self, Clock},
@@ -125,6 +125,7 @@ pub mod solana_sdk {
         },
         solana_hash as hash,
         solana_instruction as instruction,
+        solana_native_programs::system_program,
         solana_pubkey::{self as pubkey, Pubkey},
     };
 
@@ -293,7 +294,7 @@ pub mod solana_sdk {
     note = "Please use `solana_sdk::address_lookup_table` instead"
 )]
 pub mod solana_address_lookup_table_program {
-    pub use crate::address_lookup_table::program::{check_id, id, ID};
+    pub use solana_native_programs::address_lookup_table::{check_id, id, ID};
 
     pub mod state {
         use {

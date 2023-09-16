@@ -5,10 +5,9 @@ use {
     account::{
         Account, AccountSharedData, InheritableAccountFields, DUMMY_INHERITABLE_ACCOUNT_FIELDS,
     }},
-    solana_clock::INITIAL_RENT_EPOCH
+    solana_clock::INITIAL_RENT_EPOCH,
+    solana_native_programs::native_loader::id,
 };
-
-crate::declare_id!("NativeLoader1111111111111111111111111111111");
 
 /// Create an executable account with the given shared object name.
 #[deprecated(

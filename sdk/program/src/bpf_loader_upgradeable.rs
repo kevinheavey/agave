@@ -21,10 +21,9 @@ use {
         system_instruction, sysvar,
     },
     solana_instruction::{AccountMeta, Instruction, InstructionError},
+    solana_native_programs::bpf_loader_upgradeable::id,
     solana_pubkey::Pubkey,
 };
-
-crate::declare_id!("BPFLoaderUpgradeab1e11111111111111111111111");
 
 /// Upgradeable loader account states
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy, )]
@@ -196,7 +195,7 @@ pub fn deploy_with_max_program_len(
                 AccountMeta::new(*buffer_address, false),
                 AccountMeta::new_readonly(sysvar::rent::id(), false),
                 AccountMeta::new_readonly(sysvar::clock::id(), false),
-                AccountMeta::new_readonly(crate::system_program::id(), false),
+                AccountMeta::new_readonly(solana_native_programs::system_program::id(), false),
                 AccountMeta::new_readonly(*upgrade_authority_address, true),
             ],
         ),
@@ -365,7 +364,7 @@ pub fn extend_program(
     ];
     if let Some(payer_address) = payer_address {
         metas.push(AccountMeta::new_readonly(
-            crate::system_program::id(),
+            solana_native_programs::system_program::id(),
             false,
         ));
         metas.push(AccountMeta::new(*payer_address, true));

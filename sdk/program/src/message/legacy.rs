@@ -13,13 +13,13 @@
 
 use {
     crate::{
-        bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
         message::{compiled_keys::CompiledKeys, MessageHeader},
-        system_instruction, system_program, sysvar,
+        system_instruction, sysvar,
     },
     lazy_static::lazy_static,
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
+    solana_native_programs::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable},
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_short_vec as short_vec,
@@ -38,7 +38,7 @@ lazy_static! {
             parse("Stake11111111111111111111111111111111111111"),
             parse("StakeConfig11111111111111111111111111111111"),
             parse("Vote111111111111111111111111111111111111111"),
-            system_program::id(),
+            solana_native_programs::system_program::id(),
             bpf_loader::id(),
             bpf_loader_deprecated::id(),
             bpf_loader_upgradeable::id(),

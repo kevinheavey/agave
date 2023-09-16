@@ -6,7 +6,3 @@ pub mod authorized_voters;
 pub mod error;
 pub mod instruction;
 pub mod state;
-
-pub mod program {
-    crate::declare_id!("Vote111111111111111111111111111111111111111");
-}

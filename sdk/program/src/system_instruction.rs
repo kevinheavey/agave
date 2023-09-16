@@ -43,7 +43,6 @@
 use {
     crate::{
         nonce,
-        system_program,
         sysvar::{recent_blockhashes, rent},
     },
     num_derive::{FromPrimitive, ToPrimitive},
@@ -444,7 +443,7 @@ pub fn create_account(
         AccountMeta::new(*to_pubkey, true),
     ];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::CreateAccount {
             lamports,
             space,
@@ -472,7 +471,7 @@ pub fn create_account_with_seed(
     ];
 
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::CreateAccountWithSeed {
             base: *base,
             seed: seed.to_string(),
@@ -667,7 +666,7 @@ pub fn create_account_with_seed(
 pub fn assign(pubkey: &Pubkey, owner: &Pubkey) -> Instruction {
     let account_metas = vec![AccountMeta::new(*pubkey, true)];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::Assign { owner: *owner },
         account_metas,
     )
@@ -684,7 +683,7 @@ pub fn assign_with_seed(
         AccountMeta::new_readonly(*base, true),
     ];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::AssignWithSeed {
             base: *base,
             seed: seed.to_string(),
@@ -880,7 +879,7 @@ pub fn transfer(from_pubkey: &Pubkey, to_pubkey: &Pubkey, lamports: u64) -> Inst
         AccountMeta::new(*to_pubkey, false),
     ];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::Transfer { lamports },
         account_metas,
     )
@@ -900,7 +899,7 @@ pub fn transfer_with_seed(
         AccountMeta::new(*to_pubkey, false),
     ];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::TransferWithSeed {
             lamports,
             from_seed,
@@ -1096,7 +1095,7 @@ pub fn transfer_with_seed(
 pub fn allocate(pubkey: &Pubkey, space: u64) -> Instruction {
     let account_metas = vec![AccountMeta::new(*pubkey, true)];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::Allocate { space },
         account_metas,
     )
@@ -1114,7 +1113,7 @@ pub fn allocate_with_seed(
         AccountMeta::new_readonly(*base, true),
     ];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::AllocateWithSeed {
             base: *base,
             seed: seed.to_string(),
@@ -1288,10 +1287,10 @@ pub fn create_nonce_account_with_seed(
             seed,
             lamports,
             nonce::State::size() as u64,
-            &system_program::id(),
+            &solana_native_programs::system_program::id(),
         ),
         Instruction::new_with_bincode(
-            system_program::id(),
+            solana_native_programs::system_program::id(),
             &SystemInstruction::InitializeNonceAccount(*authority),
             vec![
                 AccountMeta::new(*nonce_pubkey, false),
@@ -1426,10 +1425,10 @@ pub fn create_nonce_account(
             nonce_pubkey,
             lamports,
             nonce::State::size() as u64,
-            &system_program::id(),
+            &solana_native_programs::system_program::id(),
         ),
         Instruction::new_with_bincode(
-            system_program::id(),
+            solana_native_programs::system_program::id(),
             &SystemInstruction::InitializeNonceAccount(*authority),
             vec![
                 AccountMeta::new(*nonce_pubkey, false),
@@ -1572,7 +1571,7 @@ pub fn advance_nonce_account(nonce_pubkey: &Pubkey, authorized_pubkey: &Pubkey) 
         AccountMeta::new_readonly(*authorized_pubkey, true),
     ];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::AdvanceNonceAccount,
         account_metas,
     )
@@ -1665,7 +1664,7 @@ pub fn withdraw_nonce_account(
         AccountMeta::new_readonly(*authorized_pubkey, true),
     ];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::WithdrawNonceAccount(lamports),
         account_metas,
     )
@@ -1742,7 +1741,7 @@ pub fn authorize_nonce_account(
         AccountMeta::new_readonly(*authorized_pubkey, true),
     ];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::AuthorizeNonceAccount(*new_authority),
         account_metas,
     )
@@ -1753,7 +1752,7 @@ pub fn authorize_nonce_account(
 pub fn upgrade_nonce_account(nonce_pubkey: Pubkey) -> Instruction {
     let account_metas = vec![AccountMeta::new(nonce_pubkey, /*is_signer:*/ false)];
     Instruction::new_with_bincode(
-        system_program::id(),
+        solana_native_programs::system_program::id(),
         &SystemInstruction::UpgradeNonceAccount,
         account_metas,
     )
@@ -1788,7 +1787,7 @@ mod tests {
         let ixs = create_nonce_account(&from_pubkey, &nonce_pubkey, &authorized, 42);
         assert_eq!(ixs.len(), 2);
         let ix = &ixs[0];
-        assert_eq!(ix.program_id, system_program::id());
+        assert_eq!(ix.program_id, solana_native_programs::system_program::id());
         let pubkeys: Vec<_> = ix.accounts.iter().map(|am| am.pubkey).collect();
         assert!(pubkeys.contains(&from_pubkey));
         assert!(pubkeys.contains(&nonce_pubkey));
