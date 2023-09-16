@@ -739,7 +739,7 @@ pub const TRANSACTION_LEVEL_STACK_HEIGHT: usize = 1;
 pub fn get_stack_height() -> usize {
     #[cfg(target_os = "solana")]
     unsafe {
-        crate::syscalls::sol_get_stack_height() as usize
+        solana_syscalls_core::sol_get_stack_height() as usize
     }
 
     #[cfg(not(target_os = "solana"))]

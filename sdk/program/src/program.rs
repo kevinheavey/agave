@@ -298,7 +298,7 @@ pub fn invoke_signed_unchecked(
     {
         let instruction = StableInstruction::from(instruction.clone());
         let result = unsafe {
-            crate::syscalls::sol_invoke_signed_rust(
+            solana_syscall_core::sol_invoke_signed_rust(
                 &instruction as *const _ as *const u8,
                 account_infos as *const _ as *const u8,
                 account_infos.len() as u64,
@@ -329,7 +329,7 @@ pub const MAX_RETURN_DATA: usize = 1024;
 pub fn set_return_data(data: &[u8]) {
     #[cfg(target_os = "solana")]
     unsafe {
-        crate::syscalls::sol_set_return_data(data.as_ptr(), data.len() as u64)
+        solana_syscall_core::sol_set_return_data(data.as_ptr(), data.len() as u64)
     };
 
     #[cfg(not(target_os = "solana"))]

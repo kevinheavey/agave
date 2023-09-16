@@ -405,7 +405,7 @@ pub fn secp256k1_recover(
     {
         let mut pubkey_buffer = [0u8; SECP256K1_PUBLIC_KEY_LENGTH];
         let result = unsafe {
-            crate::syscalls::sol_secp256k1_recover(
+            solana_syscalls_core::sol_secp256k1_recover(
                 hash.as_ptr(),
                 recovery_id as u64,
                 signature.as_ptr(),

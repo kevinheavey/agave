@@ -35,7 +35,7 @@
 pub fn sol_memcpy(dst: &mut [u8], src: &[u8], n: usize) {
     #[cfg(target_os = "solana")]
     unsafe {
-        crate::syscalls::sol_memcpy_(dst.as_mut_ptr(), src.as_ptr(), n as u64);
+        solana_syscalls_core::sol_memcpy_(dst.as_mut_ptr(), src.as_ptr(), n as u64);
     }
 
     #[cfg(not(target_os = "solana"))]
@@ -64,7 +64,7 @@ pub fn sol_memcpy(dst: &mut [u8], src: &[u8], n: usize) {
 #[inline]
 pub unsafe fn sol_memmove(dst: *mut u8, src: *mut u8, n: usize) {
     #[cfg(target_os = "solana")]
-    crate::syscalls::sol_memmove_(dst, src, n as u64);
+    solana_syscalls_core::sol_memmove_(dst, src, n as u64);
 
     #[cfg(not(target_os = "solana"))]
     crate::program_stubs::sol_memmove(dst, src, n);
@@ -100,7 +100,7 @@ pub fn sol_memcmp(s1: &[u8], s2: &[u8], n: usize) -> i32 {
 
     #[cfg(target_os = "solana")]
     unsafe {
-        crate::syscalls::sol_memcmp_(s1.as_ptr(), s2.as_ptr(), n as u64, &mut result as *mut i32);
+        solana_syscalls_core::sol_memcmp_(s1.as_ptr(), s2.as_ptr(), n as u64, &mut result as *mut i32);
     }
 
     #[cfg(not(target_os = "solana"))]
@@ -137,7 +137,7 @@ pub fn sol_memcmp(s1: &[u8], s2: &[u8], n: usize) -> i32 {
 pub fn sol_memset(s: &mut [u8], c: u8, n: usize) {
     #[cfg(target_os = "solana")]
     unsafe {
-        crate::syscalls::sol_memset_(s.as_mut_ptr(), c, n as u64);
+        solana_syscalls_core::sol_memset_(s.as_mut_ptr(), c, n as u64);
     }
 
     #[cfg(not(target_os = "solana"))]

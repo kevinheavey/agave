@@ -239,7 +239,7 @@ macro_rules! impl_sysvar_get {
             let var_addr = &mut var as *mut _ as *mut u8;
 
             #[cfg(target_os = "solana")]
-            let result = unsafe { $crate::syscalls::$syscall_name(var_addr) };
+            let result = unsafe { ::solana_syscall_core::$syscall_name(var_addr) };
 
             #[cfg(not(target_os = "solana"))]
             let result = $crate::program_stubs::$syscall_name(var_addr);
