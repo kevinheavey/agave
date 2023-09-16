@@ -1374,6 +1374,7 @@ dependencies = [
  "sha2 0.10.7",
  "solana-atomic-u64",
  "solana-sanitize",
+ "solana-syscall-core",
  "solana-wasm-bindgen",
  "thiserror",
  "wasm-bindgen",
@@ -1466,6 +1467,7 @@ dependencies = [
  "solana-decode-error",
  "solana-hash",
  "solana-sanitize",
+ "solana-syscall-core",
  "solana-wasm-bindgen",
  "thiserror",
  "wasm-bindgen",
@@ -1549,6 +1551,10 @@ dependencies = [
  "rustversion",
  "syn 2.0.33",
 ]
+
+[[package]]
+name = "solana-syscall-core"
+version = "1.17.0"
 
 [[package]]
 name = "solana-wasm-bindgen"

@@ -24,3 +24,6 @@ solana-sanitize = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 wasm-bindgen = { workspace = true }
+
+[target.'cfg(target_os = "solana")'.dependencies]
+solana-syscall-core = { workspace = true }

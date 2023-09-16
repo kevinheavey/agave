@@ -161,7 +161,7 @@ pub fn hashv(vals: &[&[u8]]) -> Hash {
     {
         let mut hash_result = [0; HASH_BYTES];
         unsafe {
-            crate::syscalls::sol_sha256(
+            solana_syscall_core::sol_sha256(
                 vals as *const _ as *const u8,
                 vals.len() as u64,
                 &mut hash_result as *mut _ as *mut u8,
