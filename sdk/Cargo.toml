@@ -79,6 +79,7 @@ solana-program = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
+solana-short-vec = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 uriparse = { workspace = true }

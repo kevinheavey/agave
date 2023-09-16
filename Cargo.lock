@@ -1442,6 +1442,7 @@ dependencies = [
  "solana-pubkey",
  "solana-sanitize",
  "solana-sdk-macro",
+ "solana-short-vec",
  "solana-syscall-core",
  "solana-wasm-bindgen",
  "static_assertions",
@@ -1534,6 +1535,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk",
  "solana-sdk-macro",
+ "solana-short-vec",
  "solana-wasm-bindgen",
  "static_assertions",
  "thiserror",
@@ -1551,6 +1553,16 @@ dependencies = [
  "quote",
  "rustversion",
  "syn 2.0.33",
+]
+
+[[package]]
+name = "solana-short-vec"
+version = "1.17.0"
+dependencies = [
+ "assert_matches",
+ "bincode",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

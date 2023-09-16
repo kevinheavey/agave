@@ -120,7 +120,6 @@ use {
         precompiles::verify_if_precompile,
         program_utils::limited_deserialize,
         sanitize::{Sanitize, SanitizeError},
-        short_vec,
         signature::{Signature, SignerError},
         signers::Signers,
     },
@@ -128,6 +127,7 @@ use {
     solana_program::{system_instruction::SystemInstruction, system_program},
     solana_pubkey::Pubkey,
     solana_sdk::feature_set,
+    solana_short_vec as short_vec,
     solana_wasm_bindgen::wasm_bindgen,
     std::result,
 };

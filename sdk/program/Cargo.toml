@@ -38,6 +38,7 @@ solana-hash = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }
+solana-short-vec = { workspace = true }
 solana-syscall-core = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }

@@ -99,6 +99,7 @@ solana-pubkey = { path = "new_crates/pubkey" }
 solana-sanitize = { path = "new_crates/sanitize" }
 solana-sdk = { path = "sdk", version = "=1.17.0" }
 solana-sdk-macro = { path = "sdk/macro", version = "=1.17.0" }
+solana-short-vec = { path = "new_crates/short-vec" }
 solana-syscall-core = { path = "new_crates/syscall-core" }
 solana-wasm-bindgen = { path = "new_crates/wasm-bindgen" }
 static_assertions = "1.1.0"
