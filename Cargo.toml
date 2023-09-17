@@ -106,6 +106,7 @@ solana-program = { path = "sdk/program", version = "=1.17.0" }
 solana-pubkey = { path = "new_crates/pubkey" }
 solana-rent = { path = "new_crates/rent" }
 solana-sanitize = { path = "new_crates/sanitize" }
+solana-secp256k1-recover = { path = "new_crates/secp256k1-recover" }
 solana-sdk = { path = "sdk", version = "=1.17.0" }
 solana-sdk-macro = { path = "sdk/macro", version = "=1.17.0" }
 solana-short-vec = { path = "new_crates/short-vec" }

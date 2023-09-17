@@ -1552,6 +1552,7 @@ dependencies = [
  "solana-rent",
  "solana-sanitize",
  "solana-sdk-macro",
+ "solana-secp256k1-recover",
  "solana-short-vec",
  "solana-stable-layout",
  "solana-syscall-core",
@@ -1676,6 +1677,17 @@ dependencies = [
  "quote",
  "rustversion",
  "syn 2.0.33",
+]
+
+[[package]]
+name = "solana-secp256k1-recover"
+version = "1.17.0"
+dependencies = [
+ "borsh 0.10.3",
+ "libsecp256k1",
+ "serde",
+ "solana-syscall-core",
+ "thiserror",
 ]
 
 [[package]]

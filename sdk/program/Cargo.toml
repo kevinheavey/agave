@@ -47,6 +47,7 @@ solana-pubkey = { workspace = true }
 solana-rent = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }
+solana-secp256k1-recover = { workspace = true }
 solana-short-vec = { workspace = true }
 solana-stable-layout = { workspace = true }
 solana-syscall-core = { workspace = true }

@@ -501,7 +501,6 @@ pub mod program_option;
 pub mod program_pack;
 pub mod program_stubs;
 pub mod program_utils;
-pub mod secp256k1_recover;
 pub mod serde_varint;
 pub mod serialize_utils;
 pub mod slot_hashes;
@@ -529,7 +528,8 @@ pub use {
     solana_alt_bn128 as alt_bn128,
     solana_big_mod_exp as big_mod_exp,
     solana_keccak as keccak,
-    solana_rent as rent
+    solana_rent as rent,
+    solana_secp256k1_recover as secp256k1_recover
 };
 
 /// The [config native program][np].
