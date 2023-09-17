@@ -2,7 +2,7 @@
 #![deny(clippy::indexing_slicing)]
 
 #[cfg(all(not(target_os = "solana"), debug_assertions))]
-use crate::signature::Signature;
+use solana_signature_core::Signature;
 use {
     crate::account::{AccountSharedData, ReadableAccount},
     solana_instruction::InstructionError,

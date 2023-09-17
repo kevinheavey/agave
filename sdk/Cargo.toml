@@ -90,6 +90,7 @@ solana-rent = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-short-vec = { workspace = true }
+solana-signature-core = { workspace = true }
 solana-stake-history = { workspace = true }
 solana-system-instruction-core = { workspace = true }
 solana-sysvar-core = { workspace = true }

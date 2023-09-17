@@ -120,6 +120,7 @@ solana-serialize-utils = { path = "new_crates/serialize-utils" }
 solana-sdk = { path = "sdk", version = "=1.17.0" }
 solana-sdk-macro = { path = "sdk/macro", version = "=1.17.0" }
 solana-short-vec = { path = "new_crates/short-vec" }
+solana-signature-core = { path = "new_crates/signature-core" }
 solana-slot-hashes = { path = "new_crates/slot-hashes" }
 solana-slot-history = { path = "new_crates/slot-history" }
 solana-stable-layout = { path = "new_crates/stable-layout" }

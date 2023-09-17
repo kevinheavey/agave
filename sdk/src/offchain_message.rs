@@ -3,13 +3,10 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{
-        hash::Hash,
-        sanitize::SanitizeError,
-        signature::{Signature, Signer},
-    },
+    crate::{hash::Hash, sanitize::SanitizeError, signature::Signer},
     num_enum::{IntoPrimitive, TryFromPrimitive},
     solana_pubkey::Pubkey,
+    solana_signature_core::Signature,
 };
 
 #[cfg(test)]

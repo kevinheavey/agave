@@ -16,7 +16,7 @@ use {
         epoch_info::EpochInfo,
         fee_calculator::{FeeCalculator, FeeRateGovernor},
         message::Message,
-        signature::{Keypair, Signature},
+        signature::Keypair,
         signer::Signer,
         signers::Signers,
         transaction::{self, Transaction, VersionedTransaction},
@@ -26,6 +26,7 @@ use {
     solana_hash::Hash,
     solana_instruction::Instruction,
     solana_pubkey::Pubkey,
+    solana_signature_core::Signature,
 };
 
 pub trait Client: SyncClient + AsyncClient {

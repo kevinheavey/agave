@@ -1,8 +1,9 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::signature::{Signature, Signer, SignerError},
+    crate::signature::{Signer, SignerError},
     solana_pubkey::Pubkey,
+    solana_signature_core::Signature,
     std::sync::Arc,
 };
 

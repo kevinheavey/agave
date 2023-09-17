@@ -1675,6 +1675,7 @@ dependencies = [
  "solana-secp256k1-recover",
  "solana-serialize-utils",
  "solana-short-vec",
+ "solana-signature-core",
  "solana-slot-hashes",
  "solana-slot-history",
  "solana-stable-layout",
@@ -1807,6 +1808,7 @@ dependencies = [
  "solana-sdk",
  "solana-sdk-macro",
  "solana-short-vec",
+ "solana-signature-core",
  "solana-stake-history",
  "solana-system-instruction-core",
  "solana-sysvar-core",
@@ -1857,6 +1859,21 @@ dependencies = [
  "bincode",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "solana-signature-core"
+version = "1.17.0"
+dependencies = [
+ "bs58",
+ "curve25519-dalek",
+ "ed25519-dalek",
+ "generic-array",
+ "rand 0.8.5",
+ "serde",
+ "solana-pubkey",
+ "solana-sanitize",
+ "thiserror",
 ]
 
 [[package]]

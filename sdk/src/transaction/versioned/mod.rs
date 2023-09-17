@@ -7,13 +7,13 @@ use {
         hash::Hash,
         message::VersionedMessage,
         sanitize::SanitizeError,
-        signature::Signature,
         signer::SignerError,
         signers::Signers,
         transaction::{Result, Transaction, TransactionError},
     },
     serde::Serialize,
     solana_short_vec as short_vec,
+    solana_signature_core::Signature,
     std::cmp::Ordering,
 };
 

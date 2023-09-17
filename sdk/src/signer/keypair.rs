@@ -1,16 +1,14 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{
-        signature::Signature,
-        signer::{EncodableKey, EncodableKeypair, SeedDerivable, Signer, SignerError},
-    },
+    crate::signer::{EncodableKey, EncodableKeypair, SeedDerivable, Signer, SignerError},
     ed25519_dalek::Signer as DalekSigner,
     ed25519_dalek_bip32::Error as Bip32Error,
     hmac::Hmac,
     rand0_7::{rngs::OsRng, CryptoRng, RngCore},
     solana_derivation_path::DerivationPath,
     solana_pubkey::Pubkey,
+    solana_signature_core::Signature,
     std::{
         error,
         io::{Read, Write},

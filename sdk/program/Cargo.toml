@@ -58,6 +58,7 @@ solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-short-vec = { workspace = true }
+solana-signature-core = { workspace = true }
 solana-slot-hashes = { workspace = true }
 solana-slot-history = { workspace = true }
 solana-stable-layout = { workspace = true }
