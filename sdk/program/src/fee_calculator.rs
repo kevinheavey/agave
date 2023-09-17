@@ -183,7 +183,7 @@ impl FeeRateGovernor {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::system_instruction, solana_pubkey::Pubkey};
+    use {super::*, solana_pubkey::Pubkey};
 
     #[test]
     fn test_fee_rate_governor_burn() {
@@ -210,13 +210,13 @@ mod tests {
         // One signature, a fee.
         let pubkey0 = Pubkey::from([0; 32]);
         let pubkey1 = Pubkey::from([1; 32]);
-        let ix0 = system_instruction::transfer(&pubkey0, &pubkey1, 1);
+        let ix0 = solana_system_instruction_core::transfer(&pubkey0, &pubkey1, 1);
         let message = Message::new(&[ix0], Some(&pubkey0));
         assert_eq!(FeeCalculator::new(2).calculate_fee(&message), 2);
 
         // Two signatures, double the fee.
-        let ix0 = system_instruction::transfer(&pubkey0, &pubkey1, 1);
-        let ix1 = system_instruction::transfer(&pubkey1, &pubkey0, 1);
+        let ix0 = solana_system_instruction_core::transfer(&pubkey0, &pubkey1, 1);
+        let ix1 = solana_system_instruction_core::transfer(&pubkey1, &pubkey0, 1);
         let message = Message::new(&[ix0, ix1], Some(&pubkey0));
         assert_eq!(FeeCalculator::new(2).calculate_fee(&message), 4);
     }
@@ -227,7 +227,7 @@ mod tests {
         use solana_instruction::Instruction;
         let pubkey0 = Pubkey::from([0; 32]);
         let pubkey1 = Pubkey::from([1; 32]);
-        let ix0 = system_instruction::transfer(&pubkey0, &pubkey1, 1);
+        let ix0 = solana_system_instruction_core::transfer(&pubkey0, &pubkey1, 1);
         let mut secp_instruction = Instruction {
             program_id: solana_native_programs::secp256k1_program::id(),
             accounts: vec![],

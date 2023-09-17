@@ -12,7 +12,6 @@
 //!    active them.  When this occurs, the activation slot is recorded in the feature account
 
 use {
-    crate::system_instruction,
     solana_clock::Slot,
     solana_instruction::Instruction,
     solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
@@ -54,9 +53,9 @@ pub fn activate_with_lamports(
     lamports: u64,
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::transfer(funding_address, feature_id, lamports),
-        system_instruction::allocate(feature_id, Feature::size_of() as u64),
-        system_instruction::assign(feature_id, &id()),
+        solana_system_instruction_core::transfer(funding_address, feature_id, lamports),
+        solana_system_instruction_core::allocate(feature_id, Feature::size_of() as u64),
+        solana_system_instruction_core::assign(feature_id, &id()),
     ]
 }
 

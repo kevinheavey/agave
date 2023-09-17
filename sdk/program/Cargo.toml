@@ -59,6 +59,7 @@ solana-slot-history = { workspace = true }
 solana-stable-layout = { workspace = true }
 solana-stake-history = { workspace = true }
 solana-syscall-core = { workspace = true }
+solana-system-instruction-core = { workspace = true }
 solana-sysvar-core = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }

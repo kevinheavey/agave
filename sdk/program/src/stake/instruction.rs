@@ -1,10 +1,7 @@
 #[allow(deprecated)]
 use crate::stake::config;
 use {
-    crate::{
-        stake::state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
-        system_instruction,
-    },
+    crate::stake::state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
     log::*,
     num_derive::{FromPrimitive, ToPrimitive},
     serde_derive::{Deserialize, Serialize},
@@ -356,7 +353,7 @@ pub fn create_account_with_seed(
     lamports: u64,
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::create_account_with_seed(
+        solana_system_instruction_core::create_account_with_seed(
             from_pubkey,
             stake_pubkey,
             base,
@@ -377,7 +374,7 @@ pub fn create_account(
     lamports: u64,
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::create_account(
+        solana_system_instruction_core::create_account(
             from_pubkey,
             stake_pubkey,
             lamports,
@@ -397,7 +394,7 @@ pub fn create_account_with_seed_checked(
     lamports: u64,
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::create_account_with_seed(
+        solana_system_instruction_core::create_account_with_seed(
             from_pubkey,
             stake_pubkey,
             base,
@@ -417,7 +414,7 @@ pub fn create_account_checked(
     lamports: u64,
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::create_account(
+        solana_system_instruction_core::create_account(
             from_pubkey,
             stake_pubkey,
             lamports,
@@ -450,8 +447,11 @@ pub fn split(
     split_stake_pubkey: &Pubkey,
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::allocate(split_stake_pubkey, StakeStateV2::size_of() as u64),
-        system_instruction::assign(split_stake_pubkey, &id()),
+        solana_system_instruction_core::allocate(
+            split_stake_pubkey,
+            StakeStateV2::size_of() as u64,
+        ),
+        solana_system_instruction_core::assign(split_stake_pubkey, &id()),
         _split(
             stake_pubkey,
             authorized_pubkey,
@@ -470,7 +470,7 @@ pub fn split_with_seed(
     seed: &str,                  // seed
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::allocate_with_seed(
+        solana_system_instruction_core::allocate_with_seed(
             split_stake_pubkey,
             base,
             seed,
@@ -794,8 +794,11 @@ pub fn redelegate(
     uninitialized_stake_pubkey: &Pubkey,
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::allocate(uninitialized_stake_pubkey, StakeStateV2::size_of() as u64),
-        system_instruction::assign(uninitialized_stake_pubkey, &id()),
+        solana_system_instruction_core::allocate(
+            uninitialized_stake_pubkey,
+            StakeStateV2::size_of() as u64,
+        ),
+        solana_system_instruction_core::assign(uninitialized_stake_pubkey, &id()),
         _redelegate(
             stake_pubkey,
             authorized_pubkey,
@@ -814,7 +817,7 @@ pub fn redelegate_with_seed(
     seed: &str,                          // seed
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::allocate_with_seed(
+        solana_system_instruction_core::allocate_with_seed(
             uninitialized_stake_pubkey,
             base,
             seed,

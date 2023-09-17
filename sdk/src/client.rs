@@ -19,7 +19,6 @@ use {
         signature::{Keypair, Signature},
         signer::Signer,
         signers::Signers,
-        system_instruction,
         transaction::{self, Transaction, VersionedTransaction},
         transport::Result,
     },
@@ -237,7 +236,7 @@ pub trait AsyncClient {
         recent_blockhash: Hash,
     ) -> Result<Signature> {
         let transfer_instruction =
-            system_instruction::transfer(&keypair.pubkey(), pubkey, lamports);
+            solana_system_instruction_core::transfer(&keypair.pubkey(), pubkey, lamports);
         self.async_send_instruction(keypair, transfer_instruction, recent_blockhash)
     }
 }

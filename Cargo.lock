@@ -1624,6 +1624,7 @@ dependencies = [
  "solana-stable-layout",
  "solana-stake-history",
  "solana-syscall-core",
+ "solana-system-instruction-core",
  "solana-sysvar-core",
  "solana-wasm-bindgen",
  "static_assertions",
@@ -1737,6 +1738,7 @@ dependencies = [
  "solana-sdk-macro",
  "solana-short-vec",
  "solana-stake-history",
+ "solana-system-instruction-core",
  "solana-sysvar-core",
  "solana-wasm-bindgen",
  "static_assertions",
@@ -1827,6 +1829,25 @@ dependencies = [
 [[package]]
 name = "solana-syscall-core"
 version = "1.17.0"
+
+[[package]]
+name = "solana-system-instruction-core"
+version = "1.17.0"
+dependencies = [
+ "anyhow",
+ "borsh 0.10.3",
+ "num-derive",
+ "num-traits",
+ "serde",
+ "solana-decode-error",
+ "solana-instruction",
+ "solana-native-programs",
+ "solana-program",
+ "solana-pubkey",
+ "solana-sysvar-core",
+ "static_assertions",
+ "thiserror",
+]
 
 [[package]]
 name = "solana-sysvar-core"

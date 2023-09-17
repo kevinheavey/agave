@@ -12,10 +12,7 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    crate::{
-        message::{compiled_keys::CompiledKeys, MessageHeader},
-        system_instruction,
-    },
+    crate::message::{compiled_keys::CompiledKeys, MessageHeader},
     lazy_static::lazy_static,
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
@@ -439,8 +436,10 @@ impl Message {
         nonce_account_pubkey: &Pubkey,
         nonce_authority_pubkey: &Pubkey,
     ) -> Self {
-        let nonce_ix =
-            system_instruction::advance_nonce_account(nonce_account_pubkey, nonce_authority_pubkey);
+        let nonce_ix = solana_system_instruction_core::advance_nonce_account(
+            nonce_account_pubkey,
+            nonce_authority_pubkey,
+        );
         instructions.insert(0, nonce_ix);
         Self::new(&instructions, payer)
     }

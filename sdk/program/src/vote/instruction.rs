@@ -1,12 +1,9 @@
 //! Vote program instructions
 
 use {
-    crate::{
-        system_instruction,
-        vote::state::{
-            serde_compact_vote_state_update, Vote, VoteAuthorize, VoteAuthorizeCheckedWithSeedArgs,
-            VoteAuthorizeWithSeedArgs, VoteInit, VoteStateUpdate, VoteStateVersions,
-        },
+    crate::vote::state::{
+        serde_compact_vote_state_update, Vote, VoteAuthorize, VoteAuthorizeCheckedWithSeedArgs,
+        VoteAuthorizeWithSeedArgs, VoteInit, VoteStateUpdate, VoteStateVersions,
     },
     serde_derive::{Deserialize, Serialize},
     solana_clock::{Slot, UnixTimestamp},
@@ -278,8 +275,13 @@ pub fn create_account_with_config(
     lamports: u64,
     config: CreateVoteAccountConfig,
 ) -> Vec<Instruction> {
-    let create_ix =
-        system_instruction::create_account(from_pubkey, vote_pubkey, lamports, config.space, &id());
+    let create_ix = solana_system_instruction_core::create_account(
+        from_pubkey,
+        vote_pubkey,
+        lamports,
+        config.space,
+        &id(),
+    );
     let init_ix = initialize_account(vote_pubkey, vote_init);
     vec![create_ix, init_ix]
 }

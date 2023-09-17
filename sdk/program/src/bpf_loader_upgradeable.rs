@@ -16,7 +16,7 @@
 //! [`loader_upgradeable_instruction`]: crate::loader_upgradeable_instruction
 
 use {
-    crate::{loader_upgradeable_instruction::UpgradeableLoaderInstruction, system_instruction},
+    crate::loader_upgradeable_instruction::UpgradeableLoaderInstruction,
     solana_instruction::{AccountMeta, Instruction, InstructionError},
     solana_pubkey::Pubkey,
 };
@@ -127,7 +127,7 @@ pub fn create_buffer(
     program_len: usize,
 ) -> Result<Vec<Instruction>, InstructionError> {
     Ok(vec![
-        system_instruction::create_account(
+        solana_system_instruction_core::create_account(
             payer_address,
             buffer_address,
             lamports,
@@ -176,7 +176,7 @@ pub fn deploy_with_max_program_len(
 ) -> Result<Vec<Instruction>, InstructionError> {
     let (programdata_address, _) = Pubkey::find_program_address(&[program_address.as_ref()], &id());
     Ok(vec![
-        system_instruction::create_account(
+        solana_system_instruction_core::create_account(
             payer_address,
             program_address,
             program_lamports,

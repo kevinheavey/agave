@@ -3,7 +3,7 @@
 //! This is the loader of the program runtime v2.
 
 use {
-    crate::{loader_v4_instruction::LoaderV4Instruction, system_instruction},
+    crate::loader_v4_instruction::LoaderV4Instruction,
     solana_instruction::{AccountMeta, Instruction},
     solana_native_programs::loader_v4::id,
     solana_pubkey::Pubkey,
@@ -74,7 +74,13 @@ pub fn create_buffer(
     recipient_address: &Pubkey,
 ) -> Vec<Instruction> {
     vec![
-        system_instruction::create_account(payer_address, buffer_address, lamports, 0, &id()),
+        solana_system_instruction_core::create_account(
+            payer_address,
+            buffer_address,
+            lamports,
+            0,
+            &id(),
+        ),
         Instruction::new_with_bincode(
             id(),
             &LoaderV4Instruction::Truncate { new_size },

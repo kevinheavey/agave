@@ -121,6 +121,7 @@ solana-slot-history = { path = "new_crates/slot-history" }
 solana-stable-layout = { path = "new_crates/stable-layout" }
 solana-stake-history = { path = "new_crates/stake-history" }
 solana-syscall-core = { path = "new_crates/syscall-core" }
+solana-system-instruction-core = { path = "new_crates/system-instruction-core" }
 solana-sysvar-core = { path = "new_crates/sysvar-core" }
 solana-wasm-bindgen = { path = "new_crates/wasm-bindgen" }
 static_assertions = "1.1.0"

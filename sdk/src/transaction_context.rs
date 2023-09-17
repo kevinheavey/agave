@@ -16,14 +16,11 @@ use {
 };
 #[cfg(not(target_os = "solana"))]
 use {
-    crate::{
-        account::WritableAccount,
-        rent::Rent,
-        system_instruction::{
-            MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION, MAX_PERMITTED_DATA_LENGTH,
-        },
-    },
+    crate::{account::WritableAccount, rent::Rent},
     solana_program::entrypoint::MAX_PERMITTED_DATA_INCREASE,
+    solana_system_instruction_core::{
+        MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION, MAX_PERMITTED_DATA_LENGTH,
+    },
     std::mem::MaybeUninit,
 };
 

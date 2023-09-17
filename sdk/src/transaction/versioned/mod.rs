@@ -21,9 +21,9 @@ mod sanitized;
 
 pub use sanitized::*;
 use {
-    crate::program_utils::limited_deserialize,
-    solana_native_programs::system_program,
-    solana_program::{nonce::NONCED_TX_MARKER_IX_INDEX, system_instruction::SystemInstruction},
+    crate::program_utils::limited_deserialize, solana_native_programs::system_program,
+    solana_program::nonce::NONCED_TX_MARKER_IX_INDEX,
+    solana_system_instruction_core::SystemInstruction,
 };
 
 /// Type that serializes to the string "legacy"
@@ -221,7 +221,6 @@ mod tests {
         crate::{
             message::Message as LegacyMessage,
             signer::{keypair::Keypair, Signer},
-            system_instruction,
         },
         solana_instruction::{AccountMeta, Instruction},
         solana_pubkey::Pubkey,
@@ -277,8 +276,8 @@ mod tests {
         let nonce_keypair = Keypair::new();
         let nonce_pubkey = nonce_keypair.pubkey();
         let instructions = [
-            system_instruction::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
-            system_instruction::transfer(&from_pubkey, &nonce_pubkey, 42),
+            solana_system_instruction_core::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
+            solana_system_instruction_core::transfer(&from_pubkey, &nonce_pubkey, 42),
         ];
         let message = LegacyMessage::new(&instructions, Some(&nonce_pubkey));
         let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());
@@ -315,8 +314,8 @@ mod tests {
         let nonce_keypair = Keypair::new();
         let nonce_pubkey = nonce_keypair.pubkey();
         let instructions = [
-            system_instruction::transfer(&from_pubkey, &nonce_pubkey, 42),
-            system_instruction::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
+            solana_system_instruction_core::transfer(&from_pubkey, &nonce_pubkey, 42),
+            solana_system_instruction_core::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
         ];
         let message = LegacyMessage::new(&instructions, Some(&from_pubkey));
         let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());
@@ -338,7 +337,7 @@ mod tests {
         ];
         let nonce_instruction = Instruction::new_with_bincode(
             solana_native_programs::system_program::id(),
-            &system_instruction::SystemInstruction::AdvanceNonceAccount,
+            &solana_system_instruction_core::SystemInstruction::AdvanceNonceAccount,
             account_metas,
         );
         let tx = Transaction::new_signed_with_payer(
@@ -358,13 +357,13 @@ mod tests {
         let nonce_keypair = Keypair::new();
         let nonce_pubkey = nonce_keypair.pubkey();
         let instructions = [
-            system_instruction::withdraw_nonce_account(
+            solana_system_instruction_core::withdraw_nonce_account(
                 &nonce_pubkey,
                 &nonce_pubkey,
                 &from_pubkey,
                 42,
             ),
-            system_instruction::transfer(&from_pubkey, &nonce_pubkey, 42),
+            solana_system_instruction_core::transfer(&from_pubkey, &nonce_pubkey, 42),
         ];
         let message = LegacyMessage::new(&instructions, Some(&nonce_pubkey));
         let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());

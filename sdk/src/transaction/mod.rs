@@ -125,10 +125,10 @@ use {
     serde::Serialize,
     solana_instruction::{CompiledInstruction, Instruction},
     solana_native_programs::system_program,
-    solana_program::system_instruction::SystemInstruction,
     solana_pubkey::Pubkey,
     solana_sdk::feature_set,
     solana_short_vec as short_vec,
+    solana_system_instruction_core::SystemInstruction,
     solana_wasm_bindgen::wasm_bindgen,
     std::result,
 };
@@ -1118,7 +1118,6 @@ mod tests {
         crate::{
             hash::hash,
             signature::{Keypair, Presigner, Signer},
-            system_instruction,
         },
         bincode::{deserialize, serialize, serialized_size},
         solana_instruction::AccountMeta,
@@ -1305,7 +1304,7 @@ mod tests {
         let alice_keypair = Keypair::new();
         let alice_pubkey = alice_keypair.pubkey();
         let bob_pubkey = solana_sdk::pubkey::new_rand();
-        let ix = system_instruction::transfer(&alice_pubkey, &bob_pubkey, 42);
+        let ix = solana_system_instruction_core::transfer(&alice_pubkey, &bob_pubkey, 42);
 
         let expected_data_size = size_of::<u32>() + size_of::<u64>();
         assert_eq!(expected_data_size, 12);
@@ -1542,8 +1541,8 @@ mod tests {
         let nonce_keypair = Keypair::new();
         let nonce_pubkey = nonce_keypair.pubkey();
         let instructions = [
-            system_instruction::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
-            system_instruction::transfer(&from_pubkey, &nonce_pubkey, 42),
+            solana_system_instruction_core::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
+            solana_system_instruction_core::transfer(&from_pubkey, &nonce_pubkey, 42),
         ];
         let message = Message::new(&instructions, Some(&nonce_pubkey));
         let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());
@@ -1575,8 +1574,8 @@ mod tests {
         let nonce_keypair = Keypair::new();
         let nonce_pubkey = nonce_keypair.pubkey();
         let instructions = [
-            system_instruction::transfer(&from_pubkey, &nonce_pubkey, 42),
-            system_instruction::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
+            solana_system_instruction_core::transfer(&from_pubkey, &nonce_pubkey, 42),
+            solana_system_instruction_core::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
         ];
         let message = Message::new(&instructions, Some(&from_pubkey));
         let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());
@@ -1597,7 +1596,7 @@ mod tests {
         ];
         let nonce_instruction = Instruction::new_with_bincode(
             solana_native_programs::system_program::id(),
-            &system_instruction::SystemInstruction::AdvanceNonceAccount,
+            &solana_system_instruction_core::SystemInstruction::AdvanceNonceAccount,
             account_metas,
         );
         let tx = Transaction::new_signed_with_payer(
@@ -1616,13 +1615,13 @@ mod tests {
         let nonce_keypair = Keypair::new();
         let nonce_pubkey = nonce_keypair.pubkey();
         let instructions = [
-            system_instruction::withdraw_nonce_account(
+            solana_system_instruction_core::withdraw_nonce_account(
                 &nonce_pubkey,
                 &nonce_pubkey,
                 &from_pubkey,
                 42,
             ),
-            system_instruction::transfer(&from_pubkey, &nonce_pubkey, 42),
+            solana_system_instruction_core::transfer(&from_pubkey, &nonce_pubkey, 42),
         ];
         let message = Message::new(&instructions, Some(&nonce_pubkey));
         let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());
@@ -1662,7 +1661,11 @@ mod tests {
         let from_keypair = Keypair::new();
         let from_pubkey = from_keypair.pubkey();
         let to_pubkey = Pubkey::new_unique();
-        let instructions = [system_instruction::transfer(&from_pubkey, &to_pubkey, 42)];
+        let instructions = [solana_system_instruction_core::transfer(
+            &from_pubkey,
+            &to_pubkey,
+            42,
+        )];
         let mut tx = Transaction::new_with_payer(&instructions, Some(&from_pubkey));
         let unused_keypair = Keypair::new();
         let err = tx
