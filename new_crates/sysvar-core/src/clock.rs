@@ -128,7 +128,7 @@
 
 pub use solana_clock::Clock;
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_msg_and_friends::program_error::ProgramError,
 };
 

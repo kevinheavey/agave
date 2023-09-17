@@ -39,9 +39,9 @@
 //! ```
 //!
 
-pub use crate::last_restart_slot::LastRestartSlot;
+pub use solana_last_restart_slot::LastRestartSlot;
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_msg_and_friends::program_error::ProgramError,
 };
 

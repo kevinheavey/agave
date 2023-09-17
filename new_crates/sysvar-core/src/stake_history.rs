@@ -45,8 +45,8 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-pub use crate::stake_history::StakeHistory;
-use crate::sysvar::Sysvar;
+pub use solana_stake_history::StakeHistory;
+use crate::Sysvar;
 
 crate::declare_sysvar_id!("SysvarStakeHistory1111111111111111111111111", StakeHistory);
 

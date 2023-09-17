@@ -21,12 +21,12 @@
 #![allow(deprecated)]
 
 use {
-    crate::{fee_calculator::FeeCalculator, impl_sysvar_get, sysvar::Sysvar},
+    crate::fee_calculator::FeeCalculator,
     solana_msg_and_friends::program_error::ProgramError,
     solana_sdk_macro::CloneZeroed,
+    solana_sysvar_core::{Sysvar, impl_sysvar_get}
 };
-
-crate::declare_deprecated_sysvar_id!("SysvarFees111111111111111111111111111111111", Fees);
+pub use solana_sysvar_core::fees::{id, check_id};
 
 /// Transaction fees.
 #[deprecated(
@@ -52,6 +52,19 @@ impl Sysvar for Fees {
     impl_sysvar_get!(sol_get_fees_sysvar);
 }
 
+impl solana_sysvar_core::SysvarId for Fees {
+    fn id() -> solana_pubkey::Pubkey {
+        #[allow(deprecated)]
+        id()
+    }
+
+    fn check_id(pubkey: &solana_pubkey::Pubkey) -> bool {
+        #[allow(deprecated)]
+        check_id(pubkey)
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -65,5 +78,9 @@ mod tests {
         };
         let cloned_fees = fees.clone();
         assert_eq!(cloned_fees, fees);
+    }
+
+    fn test_sysvar_id() {
+        assert!(solana_sysvar_core::is_sysvar_id(&id()), "sysvar::is_sysvar_id() doesn't know about Fees");
     }
 }

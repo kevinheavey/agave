@@ -9,8 +9,9 @@ use {
         Deserialize,
     },
     solana_clock::{Epoch, INITIAL_RENT_EPOCH},
-    solana_program::{account_info::AccountInfo, debug_account_data::*, sysvar::Sysvar},
+    solana_msg_and_friends::{account_info::AccountInfo, debug_account_data::*},
     solana_pubkey::Pubkey,
+    solana_sysvar_core::Sysvar,
     std::{
         cell::{Ref, RefCell},
         fmt,

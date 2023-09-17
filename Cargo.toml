@@ -98,9 +98,11 @@ solana-decode-error = { path = "new_crates/decode-error" }
 solana-derivation-path = { path = "new_crates/derivation-path" }
 solana-download-utils = { path = "download-utils", version = "=1.17.0" }
 solana-epoch-schedule = { path = "new_crates/epoch-schedule" }
+solana-epoch-rewards = { path = "new_crates/epoch-rewards" }
 solana-hash = { path = "new_crates/hash" }
 solana-instruction = { path = "new_crates/instruction" }
 solana-keccak = { path = "new_crates/keccak" }
+solana-last-restart-slot = { path = "new_crates/last-restart-slot" }
 solana-logger = { path = "logger", version = "=1.17.0" }
 solana-msg-and-friends = { path = "new_crates/msg-and-friends" }
 solana-native-programs = { path = "new_crates/native-programs" }
@@ -114,8 +116,12 @@ solana-serialize-utils = { path = "new_crates/serialize-utils" }
 solana-sdk = { path = "sdk", version = "=1.17.0" }
 solana-sdk-macro = { path = "sdk/macro", version = "=1.17.0" }
 solana-short-vec = { path = "new_crates/short-vec" }
+solana-slot-hashes = { path = "new_crates/slot-hashes" }
+solana-slot-history = { path = "new_crates/slot-history" }
 solana-stable-layout = { path = "new_crates/stable-layout" }
+solana-stake-history = { path = "new_crates/stake-history" }
 solana-syscall-core = { path = "new_crates/syscall-core" }
+solana-sysvar-core = { path = "new_crates/sysvar-core" }
 solana-wasm-bindgen = { path = "new_crates/wasm-bindgen" }
 static_assertions = "1.1.0"
 syn = "2.0"

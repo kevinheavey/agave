@@ -38,6 +38,7 @@ solana-big-mod-exp = { workspace = true }
 solana-blake3 = { workspace = true }
 solana-clock = { workspace = true }
 solana-decode-error = { workspace = true }
+solana-epoch-rewards = { workspace = true }
 solana-epoch-schedule = { workspace = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
@@ -52,8 +53,12 @@ solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-short-vec = { workspace = true }
+solana-slot-hashes = { workspace = true }
+solana-slot-history = { workspace = true }
 solana-stable-layout = { workspace = true }
+solana-stake-history = { workspace = true }
 solana-syscall-core = { workspace = true }
+solana-sysvar-core = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 

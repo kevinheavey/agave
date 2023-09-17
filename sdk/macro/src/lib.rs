@@ -194,6 +194,19 @@ impl ToTokens for ProgramSdkIdDeprecated {
     }
 }
 
+struct ProgramSdkIdDeprecatedLite(proc_macro2::TokenStream);
+impl Parse for ProgramSdkIdDeprecatedLite {
+    fn parse(input: ParseStream) -> Result<Self> {
+        parse_id(input, quote! { ::solana_pubkey::Pubkey }).map(Self)
+    }
+}
+
+impl ToTokens for ProgramSdkIdDeprecatedLite {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        deprecated_id_to_tokens(&self.0, quote! { ::solana_pubkey::Pubkey }, tokens)
+    }
+}
+
 #[allow(dead_code)] // `respan` may be compiled out
 struct RespanInput {
     to_respan: Path,
@@ -303,6 +316,12 @@ pub fn program_declare_id_lite(input: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn program_declare_deprecated_id(input: TokenStream) -> TokenStream {
     let id = parse_macro_input!(input as ProgramSdkIdDeprecated);
+    TokenStream::from(quote! {#id})
+}
+
+#[proc_macro]
+pub fn program_declare_deprecated_id_lite(input: TokenStream) -> TokenStream {
+    let id = parse_macro_input!(input as ProgramSdkIdDeprecatedLite);
     TokenStream::from(quote! {#id})
 }
 

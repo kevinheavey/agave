@@ -3,9 +3,9 @@
 //! [nubpfl]: crate::bpf_loader
 
 use {
-    crate::sysvar::rent,
     solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
+    solana_sysvar_core::rent,
 };
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]

@@ -477,11 +477,9 @@ pub mod borsh0_9;
 pub mod bpf_loader_upgradeable;
 pub mod compute_units;
 pub mod entrypoint_deprecated;
-pub mod epoch_rewards;
 pub mod feature;
 pub mod fee_calculator;
 pub mod lamports;
-pub mod last_restart_slot;
 pub mod loader_instruction;
 pub mod loader_upgradeable_instruction;
 pub mod loader_v4;
@@ -494,10 +492,7 @@ pub mod program_option;
 pub mod program_pack;
 pub mod program_utils;
 pub mod serde_varint;
-pub mod slot_hashes;
-pub mod slot_history;
 pub mod stake;
-pub mod stake_history;
 pub mod syscalls;
 pub mod system_instruction;
 pub mod sysvar;
@@ -534,6 +529,11 @@ pub use {
     solana_secp256k1_recover as secp256k1_recover, solana_serialize_utils as serialize_utils,
     solana_stable_layout as stable_layout,
     solana_wasm_bindgen::wasm_bindgen,
+    solana_sysvar_core::{declare_deprecated_sysvar_id, declare_sysvar_id, impl_sysvar_get},
+    solana_epoch_rewards as epoch_rewards, 
+    solana_slot_hashes as slot_hashes,
+    solana_slot_history as slot_history,
+    solana_stake_history as stake_history
 };
 
 /// The [config native program][np].
@@ -548,7 +548,6 @@ pub mod config {
 /// A vector of Solana SDK IDs.
 pub mod sdk_ids {
     use {
-        crate::sysvar,
         lazy_static::lazy_static,
         solana_native_programs::{
             bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, config, ed25519_program,
@@ -574,7 +573,7 @@ pub mod sdk_ids {
                 #[allow(deprecated)]
                 stake::id(),
             ];
-            sdk_ids.extend(sysvar::ALL_IDS.iter());
+            sdk_ids.extend(solana_sysvar_core::ALL_IDS.iter());
             sdk_ids
         };
     }

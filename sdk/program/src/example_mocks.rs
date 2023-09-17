@@ -118,12 +118,12 @@ pub mod solana_sdk {
             message, nonce, system_instruction,
             sysvar::{
                 self,
-                clock::{self, Clock},
             },
         },
         solana_hash as hash, solana_instruction as instruction, solana_keccak as keccak,
         solana_native_programs::system_program,
         solana_pubkey::{self as pubkey, Pubkey},
+        solana_clock::{self as clock, Clock}
     };
 
     pub mod account {

@@ -19,8 +19,9 @@
 #![allow(deprecated)]
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    crate::{declare_deprecated_sysvar_id, fee_calculator::FeeCalculator, sysvar::Sysvar},
+    crate::fee_calculator::FeeCalculator,
     solana_hash::Hash,
+    solana_sysvar_core::{Sysvar, recent_blockhashes::{id, check_id}},
     std::{cmp::Ordering, collections::BinaryHeap, iter::FromIterator, ops::Deref},
 };
 
@@ -29,11 +30,6 @@ use {
     note = "Please do not use, will no longer be available in the future"
 )]
 pub const MAX_ENTRIES: usize = 150;
-
-declare_deprecated_sysvar_id!(
-    "SysvarRecentB1ockHashes11111111111111111111",
-    RecentBlockhashes
-);
 
 #[deprecated(
     since = "1.9.0",
@@ -152,6 +148,18 @@ impl Sysvar for RecentBlockhashes {
     }
 }
 
+impl solana_sysvar_core::SysvarId for RecentBlockhashes {
+    fn id() -> solana_pubkey::Pubkey {
+        #[allow(deprecated)]
+        id()
+    }
+
+    fn check_id(pubkey: &solana_pubkey::Pubkey) -> bool {
+        #[allow(deprecated)]
+        check_id(pubkey)
+    }
+}
+
 impl Deref for RecentBlockhashes {
     type Target = Vec<Entry>;
     fn deref(&self) -> &Self::Target {
@@ -178,5 +186,9 @@ mod tests {
                 as usize,
             RecentBlockhashes::size_of()
         );
+    }
+
+    fn test_sysvar_id() {
+        assert!(solana_sysvar_core::is_sysvar_id(&id()), "sysvar::is_sysvar_id() doesn't know about RecentBlockhashes");
     }
 }

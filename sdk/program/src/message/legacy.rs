@@ -14,7 +14,7 @@
 use {
     crate::{
         message::{compiled_keys::CompiledKeys, MessageHeader},
-        system_instruction, sysvar,
+        system_instruction
     },
     lazy_static::lazy_static,
     solana_hash::Hash,
@@ -55,14 +55,14 @@ lazy_static! {
     pub static ref MAYBE_BUILTIN_KEY_OR_SYSVAR: [bool; 256] = {
         let mut temp_table: [bool; 256] = [false; 256];
         BUILTIN_PROGRAMS_KEYS.iter().for_each(|key| temp_table[key.to_bytes()[0] as usize] = true);
-        sysvar::ALL_IDS.iter().for_each(|key| temp_table[key.to_bytes()[0] as usize] = true);
+        solana_sysvar_core::ALL_IDS.iter().for_each(|key| temp_table[key.to_bytes()[0] as usize] = true);
         temp_table
     };
 }
 
 pub fn is_builtin_key_or_sysvar(key: &Pubkey) -> bool {
     if MAYBE_BUILTIN_KEY_OR_SYSVAR[key.to_bytes()[0] as usize] {
-        return sysvar::is_sysvar_id(key) || BUILTIN_PROGRAMS_KEYS.contains(key);
+        return solana_sysvar_core::is_sysvar_id(key) || BUILTIN_PROGRAMS_KEYS.contains(key);
     }
     false
 }
@@ -580,7 +580,7 @@ impl Message {
         data: &[u8],
     ) -> Result<Instruction, SanitizeError> {
         #[allow(deprecated)]
-        sysvar::instructions::load_instruction_at(index, data)
+        solana_sysvar_core::instructions::load_instruction_at(index, data)
     }
 
     pub fn signer_keys(&self) -> Vec<&Pubkey> {

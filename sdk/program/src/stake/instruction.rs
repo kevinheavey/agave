@@ -3,7 +3,7 @@ use crate::stake::config;
 use {
     crate::{
         stake::state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
-        system_instruction, sysvar,
+        system_instruction
     },
     log::*,
     num_derive::{FromPrimitive, ToPrimitive},
@@ -328,7 +328,7 @@ pub fn initialize(stake_pubkey: &Pubkey, authorized: &Authorized, lockup: &Locku
         &StakeInstruction::Initialize(*authorized, *lockup),
         vec![
             AccountMeta::new(*stake_pubkey, false),
-            AccountMeta::new_readonly(sysvar::rent::id(), false),
+            AccountMeta::new_readonly(solana_sysvar_core::rent::id(), false),
         ],
     )
 }
@@ -339,7 +339,7 @@ pub fn initialize_checked(stake_pubkey: &Pubkey, authorized: &Authorized) -> Ins
         &StakeInstruction::InitializeChecked,
         vec![
             AccountMeta::new(*stake_pubkey, false),
-            AccountMeta::new_readonly(sysvar::rent::id(), false),
+            AccountMeta::new_readonly(solana_sysvar_core::rent::id(), false),
             AccountMeta::new_readonly(authorized.staker, false),
             AccountMeta::new_readonly(authorized.withdrawer, true),
         ],
@@ -494,8 +494,8 @@ pub fn merge(
     let account_metas = vec![
         AccountMeta::new(*destination_stake_pubkey, false),
         AccountMeta::new(*source_stake_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
-        AccountMeta::new_readonly(sysvar::stake_history::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::stake_history::id(), false),
         AccountMeta::new_readonly(*authorized_pubkey, true),
     ];
 
@@ -559,7 +559,7 @@ pub fn authorize(
 ) -> Instruction {
     let mut account_metas = vec![
         AccountMeta::new(*stake_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*authorized_pubkey, true),
     ];
 
@@ -583,7 +583,7 @@ pub fn authorize_checked(
 ) -> Instruction {
     let mut account_metas = vec![
         AccountMeta::new(*stake_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*authorized_pubkey, true),
         AccountMeta::new_readonly(*new_authorized_pubkey, true),
     ];
@@ -611,7 +611,7 @@ pub fn authorize_with_seed(
     let mut account_metas = vec![
         AccountMeta::new(*stake_pubkey, false),
         AccountMeta::new_readonly(*authority_base, true),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
     ];
 
     if let Some(custodian_pubkey) = custodian_pubkey {
@@ -644,7 +644,7 @@ pub fn authorize_checked_with_seed(
     let mut account_metas = vec![
         AccountMeta::new(*stake_pubkey, false),
         AccountMeta::new_readonly(*authority_base, true),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*new_authorized_pubkey, true),
     ];
 
@@ -673,8 +673,8 @@ pub fn delegate_stake(
     let account_metas = vec![
         AccountMeta::new(*stake_pubkey, false),
         AccountMeta::new_readonly(*vote_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
-        AccountMeta::new_readonly(sysvar::stake_history::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::stake_history::id(), false),
         #[allow(deprecated)]
         AccountMeta::new_readonly(config::id(), false),
         AccountMeta::new_readonly(*authorized_pubkey, true),
@@ -692,8 +692,8 @@ pub fn withdraw(
     let mut account_metas = vec![
         AccountMeta::new(*stake_pubkey, false),
         AccountMeta::new(*to_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
-        AccountMeta::new_readonly(sysvar::stake_history::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::stake_history::id(), false),
         AccountMeta::new_readonly(*withdrawer_pubkey, true),
     ];
 
@@ -707,7 +707,7 @@ pub fn withdraw(
 pub fn deactivate_stake(stake_pubkey: &Pubkey, authorized_pubkey: &Pubkey) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*stake_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*authorized_pubkey, true),
     ];
     Instruction::new_with_bincode(id(), &StakeInstruction::Deactivate, account_metas)

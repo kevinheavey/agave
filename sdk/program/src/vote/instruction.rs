@@ -2,7 +2,7 @@
 
 use {
     crate::{
-        system_instruction, sysvar,
+        system_instruction,
         vote::state::{
             serde_compact_vote_state_update, Vote, VoteAuthorize, VoteAuthorizeCheckedWithSeedArgs,
             VoteAuthorizeWithSeedArgs, VoteInit, VoteStateUpdate, VoteStateVersions,
@@ -202,8 +202,8 @@ impl VoteInstruction {
 fn initialize_account(vote_pubkey: &Pubkey, vote_init: &VoteInit) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*vote_pubkey, false),
-        AccountMeta::new_readonly(sysvar::rent::id(), false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::rent::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(vote_init.node_pubkey, true),
     ];
 
@@ -292,7 +292,7 @@ pub fn authorize(
 ) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*vote_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*authorized_pubkey, true),
     ];
 
@@ -311,7 +311,7 @@ pub fn authorize_checked(
 ) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*vote_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*authorized_pubkey, true),
         AccountMeta::new_readonly(*new_authorized_pubkey, true),
     ];
@@ -333,7 +333,7 @@ pub fn authorize_with_seed(
 ) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*vote_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*current_authority_base_key, true),
     ];
 
@@ -359,7 +359,7 @@ pub fn authorize_checked_with_seed(
 ) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*vote_pubkey, false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*current_authority_base_key, true),
         AccountMeta::new_readonly(*new_authority, true),
     ];
@@ -413,8 +413,8 @@ pub fn update_commission(
 pub fn vote(vote_pubkey: &Pubkey, authorized_voter_pubkey: &Pubkey, vote: Vote) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*vote_pubkey, false),
-        AccountMeta::new_readonly(sysvar::slot_hashes::id(), false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::slot_hashes::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*authorized_voter_pubkey, true),
     ];
 
@@ -429,8 +429,8 @@ pub fn vote_switch(
 ) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*vote_pubkey, false),
-        AccountMeta::new_readonly(sysvar::slot_hashes::id(), false),
-        AccountMeta::new_readonly(sysvar::clock::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::slot_hashes::id(), false),
+        AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
         AccountMeta::new_readonly(*authorized_voter_pubkey, true),
     ];
 

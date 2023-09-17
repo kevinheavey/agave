@@ -1,0 +1,32 @@
+[package]
+name = "solana-sysvar-core"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+bincode = { workspace = true }
+bitflags = { workspace = true }
+serde = { workspace = true }
+lazy_static = { workspace = true }
+solana-clock = { workspace = true }
+solana-epoch-rewards = { workspace = true }
+solana-epoch-schedule = { workspace = true }
+solana-instruction = { workspace = true }
+solana-last-restart-slot = { workspace = true }
+solana-msg-and-friends = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-rent = { workspace = true }
+solana-sanitize = { workspace = true }
+solana-sdk-macro = { workspace = true }
+solana-serialize-utils = { workspace = true }
+solana-slot-hashes = { workspace = true }
+solana-slot-history = { workspace = true }
+solana-stake-history = { workspace = true }
+
+
+[dev-dependencies]
+serde = { workspace = true, features = ["derive"] }

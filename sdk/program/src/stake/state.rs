@@ -9,12 +9,12 @@ use {
             instruction::{LockupArgs, StakeError},
             stake_flags::StakeFlags,
         },
-        stake_history::{StakeHistory, StakeHistoryEntry},
     },
     borsh::{maybestd::io, BorshDeserialize, BorshSchema, BorshSerialize},
     solana_clock::{Clock, Epoch, UnixTimestamp},
     solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
+    solana_stake_history::{StakeHistory, StakeHistoryEntry},
     std::collections::HashSet,
 };
 

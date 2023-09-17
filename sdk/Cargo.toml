@@ -79,6 +79,7 @@ solana-epoch-schedule = { workspace = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
 solana-logger = { workspace = true, optional = true }
+solana-msg-and-friends = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-program = { workspace = true }
 solana-pubkey = { workspace = true }
@@ -86,6 +87,8 @@ solana-rent = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-short-vec = { workspace = true }
+solana-stake-history = { workspace = true }
+solana-sysvar-core = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 uriparse = { workspace = true }

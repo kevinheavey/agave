@@ -1,15 +1,16 @@
-//! Information about epoch duration.
+//! Configuration for network [rent].
 //!
-//! The _epoch schedule_ sysvar provides access to the [`EpochSchedule`] type,
-//! which includes the number of slots per epoch, timing of leader schedule
-//! selection, and information about epoch warm-up time.
+//! [rent]: https://docs.solana.com/implemented-proposals/rent
 //!
-//! [`EpochSchedule`] implements [`Sysvar::get`] and can be loaded efficiently without
+//! The _rent sysvar_ provides access to the [`Rent`] type, which defines
+//! storage rent fees.
+//!
+//! [`Rent`] implements [`Sysvar::get`] and can be loaded efficiently without
 //! passing the sysvar account ID to the program.
 //!
-//! See also the Solana [documentation on the epoch schedule sysvar][sdoc].
+//! See also the Solana [documentation on the rent sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.solana.com/developing/runtime-facilities/sysvars#epochschedule
+//! [sdoc]: https://docs.solana.com/developing/runtime-facilities/sysvars#rent
 //!
 //! # Examples
 //!
@@ -21,7 +22,7 @@
 //! #    entrypoint::ProgramResult,
 //! #    msg,
 //! #    pubkey::Pubkey,
-//! #    sysvar::epoch_schedule::{self, EpochSchedule},
+//! #    sysvar::rent::{self, Rent},
 //! #    sysvar::Sysvar,
 //! # };
 //! # use solana_program::program_error::ProgramError;
@@ -32,16 +33,16 @@
 //!     instruction_data: &[u8],
 //! ) -> ProgramResult {
 //!
-//!     let epoch_schedule = EpochSchedule::get()?;
-//!     msg!("epoch_schedule: {:#?}", epoch_schedule);
+//!     let rent = Rent::get()?;
+//!     msg!("rent: {:#?}", rent);
 //!
 //!     Ok(())
 //! }
 //! #
 //! # use solana_program::sysvar::SysvarId;
-//! # let p = EpochSchedule::id();
-//! # let l = &mut 1120560;
-//! # let d = &mut vec![0, 32, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+//! # let p = Rent::id();
+//! # let l = &mut 1009200;
+//! # let d = &mut vec![152, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 100];
 //! # let a = AccountInfo::new(&p, false, false, l, d, &p, false, 0);
 //! # let accounts = &[a.clone(), a];
 //! # process_instruction(
@@ -52,7 +53,7 @@
 //! # Ok::<(), ProgramError>(())
 //! ```
 //!
-//! Accessing via on-chain program's account parameters:
+//! Accessing via on-chain program's parameters:
 //!
 //! ```
 //! # use solana_program::{
@@ -60,7 +61,7 @@
 //! #    entrypoint::ProgramResult,
 //! #    msg,
 //! #    pubkey::Pubkey,
-//! #    sysvar::epoch_schedule::{self, EpochSchedule},
+//! #    sysvar::rent::{self, Rent},
 //! #    sysvar::Sysvar,
 //! # };
 //! # use solana_program::program_error::ProgramError;
@@ -71,20 +72,20 @@
 //!     instruction_data: &[u8],
 //! ) -> ProgramResult {
 //!     let account_info_iter = &mut accounts.iter();
-//!     let epoch_schedule_account_info = next_account_info(account_info_iter)?;
+//!     let rent_account_info = next_account_info(account_info_iter)?;
 //!
-//!     assert!(epoch_schedule::check_id(epoch_schedule_account_info.key));
+//!     assert!(rent::check_id(rent_account_info.key));
 //!
-//!     let epoch_schedule = EpochSchedule::from_account_info(epoch_schedule_account_info)?;
-//!     msg!("epoch_schedule: {:#?}", epoch_schedule);
+//!     let rent = Rent::from_account_info(rent_account_info)?;
+//!     msg!("rent: {:#?}", rent);
 //!
 //!     Ok(())
 //! }
 //! #
 //! # use solana_program::sysvar::SysvarId;
-//! # let p = EpochSchedule::id();
-//! # let l = &mut 1120560;
-//! # let d = &mut vec![0, 32, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+//! # let p = Rent::id();
+//! # let l = &mut 1009200;
+//! # let d = &mut vec![152, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 100];
 //! # let a = AccountInfo::new(&p, false, false, l, d, &p, false, 0);
 //! # let accounts = &[a.clone(), a];
 //! # process_instruction(
@@ -102,37 +103,37 @@
 //! # use solana_program::example_mocks::solana_rpc_client;
 //! # use solana_sdk::account::Account;
 //! # use solana_rpc_client::rpc_client::RpcClient;
-//! # use solana_sdk::sysvar::epoch_schedule::{self, EpochSchedule};
+//! # use solana_sdk::sysvar::rent::{self, Rent};
 //! # use anyhow::Result;
 //! #
-//! fn print_sysvar_epoch_schedule(client: &RpcClient) -> Result<()> {
-//! #   client.set_get_account_response(epoch_schedule::ID, Account {
-//! #       lamports: 1120560,
-//! #       data: vec![0, 32, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//! fn print_sysvar_rent(client: &RpcClient) -> Result<()> {
+//! #   client.set_get_account_response(rent::ID, Account {
+//! #       lamports: 1009200,
+//! #       data: vec![152, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 100],
 //! #       owner: solana_sdk::system_program::ID,
 //! #       executable: false,
 //! #       rent_epoch: 307,
 //! # });
 //! #
-//!     let epoch_schedule = client.get_account(&epoch_schedule::ID)?;
-//!     let data: EpochSchedule = bincode::deserialize(&epoch_schedule.data)?;
+//!     let rent = client.get_account(&rent::ID)?;
+//!     let data: Rent = bincode::deserialize(&rent.data)?;
 //!
 //!     Ok(())
 //! }
 //! #
 //! # let client = RpcClient::new(String::new());
-//! # print_sysvar_epoch_schedule(&client)?;
+//! # print_sysvar_rent(&client)?;
 //! #
 //! # Ok::<(), anyhow::Error>(())
 //! ```
-pub use solana_epoch_schedule::EpochSchedule;
+pub use solana_rent::Rent;
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_msg_and_friends::program_error::ProgramError,
 };
 
-crate::declare_sysvar_id!("SysvarEpochSchedu1e111111111111111111111111", EpochSchedule);
+crate::declare_sysvar_id!("SysvarRent111111111111111111111111111111111", Rent);
 
-impl Sysvar for EpochSchedule {
-    impl_sysvar_get!(sol_get_epoch_schedule_sysvar);
+impl Sysvar for Rent {
+    impl_sysvar_get!(sol_get_rent_sysvar);
 }

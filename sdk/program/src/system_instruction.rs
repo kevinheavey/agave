@@ -43,12 +43,12 @@
 use {
     crate::{
         nonce,
-        sysvar::{recent_blockhashes, rent},
     },
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
+    solana_sysvar_core::{recent_blockhashes, rent},
     thiserror::Error,
 };
 

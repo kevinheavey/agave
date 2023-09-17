@@ -1428,6 +1428,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-epoch-rewards"
+version = "1.17.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "solana-epoch-schedule"
 version = "1.17.0"
 dependencies = [
@@ -1484,6 +1491,15 @@ dependencies = [
  "solana-sanitize",
  "solana-syscall-core",
  "thiserror",
+]
+
+[[package]]
+name = "solana-last-restart-slot"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-clock",
+ "solana-sdk-macro",
 ]
 
 [[package]]
@@ -1586,6 +1602,7 @@ dependencies = [
  "solana-blake3",
  "solana-clock",
  "solana-decode-error",
+ "solana-epoch-rewards",
  "solana-epoch-schedule",
  "solana-hash",
  "solana-instruction",
@@ -1601,8 +1618,12 @@ dependencies = [
  "solana-secp256k1-recover",
  "solana-serialize-utils",
  "solana-short-vec",
+ "solana-slot-hashes",
+ "solana-slot-history",
  "solana-stable-layout",
+ "solana-stake-history",
  "solana-syscall-core",
+ "solana-sysvar-core",
  "solana-wasm-bindgen",
  "static_assertions",
  "thiserror",
@@ -1705,6 +1726,7 @@ dependencies = [
  "solana-hash",
  "solana-instruction",
  "solana-logger",
+ "solana-msg-and-friends",
  "solana-native-programs",
  "solana-program",
  "solana-pubkey",
@@ -1713,6 +1735,8 @@ dependencies = [
  "solana-sdk",
  "solana-sdk-macro",
  "solana-short-vec",
+ "solana-stake-history",
+ "solana-sysvar-core",
  "solana-wasm-bindgen",
  "static_assertions",
  "thiserror",
@@ -1763,6 +1787,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-slot-hashes"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-clock",
+ "solana-hash",
+]
+
+[[package]]
+name = "solana-slot-history"
+version = "1.17.0"
+dependencies = [
+ "bv",
+ "serde",
+ "solana-clock",
+]
+
+[[package]]
 name = "solana-stable-layout"
 version = "1.17.0"
 dependencies = [
@@ -1774,8 +1816,40 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-stake-history"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-clock",
+]
+
+[[package]]
 name = "solana-syscall-core"
 version = "1.17.0"
+
+[[package]]
+name = "solana-sysvar-core"
+version = "1.17.0"
+dependencies = [
+ "bincode",
+ "bitflags 2.3.3",
+ "lazy_static",
+ "serde",
+ "solana-clock",
+ "solana-epoch-rewards",
+ "solana-epoch-schedule",
+ "solana-instruction",
+ "solana-last-restart-slot",
+ "solana-msg-and-friends",
+ "solana-pubkey",
+ "solana-rent",
+ "solana-sanitize",
+ "solana-sdk-macro",
+ "solana-serialize-utils",
+ "solana-slot-hashes",
+ "solana-slot-history",
+ "solana-stake-history",
+]
 
 [[package]]
 name = "solana-wasm-bindgen"

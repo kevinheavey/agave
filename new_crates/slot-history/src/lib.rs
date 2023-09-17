@@ -7,7 +7,7 @@
 //! [`sysvar::slot_history`]: crate::sysvar::slot_history
 
 #![allow(clippy::arithmetic_side_effects)]
-use bv::{BitVec, BitsMut};
+use {bv::{BitVec, BitsMut}, serde::{Deserialize, Serialize}};
 pub use solana_clock::Slot;
 
 /// A bitvector indicating which slots are present in the past epoch.

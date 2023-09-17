@@ -17,7 +17,7 @@
 
 use {
     crate::{
-        loader_upgradeable_instruction::UpgradeableLoaderInstruction, system_instruction, sysvar,
+        loader_upgradeable_instruction::UpgradeableLoaderInstruction, system_instruction
     },
     solana_instruction::{AccountMeta, Instruction, InstructionError},
     solana_pubkey::Pubkey,
@@ -193,8 +193,8 @@ pub fn deploy_with_max_program_len(
                 AccountMeta::new(programdata_address, false),
                 AccountMeta::new(*program_address, false),
                 AccountMeta::new(*buffer_address, false),
-                AccountMeta::new_readonly(sysvar::rent::id(), false),
-                AccountMeta::new_readonly(sysvar::clock::id(), false),
+                AccountMeta::new_readonly(solana_sysvar_core::rent::id(), false),
+                AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
                 AccountMeta::new_readonly(solana_native_programs::system_program::id(), false),
                 AccountMeta::new_readonly(*upgrade_authority_address, true),
             ],
@@ -218,8 +218,8 @@ pub fn upgrade(
             AccountMeta::new(*program_address, false),
             AccountMeta::new(*buffer_address, false),
             AccountMeta::new(*spill_address, false),
-            AccountMeta::new_readonly(sysvar::rent::id(), false),
-            AccountMeta::new_readonly(sysvar::clock::id(), false),
+            AccountMeta::new_readonly(solana_sysvar_core::rent::id(), false),
+            AccountMeta::new_readonly(solana_sysvar_core::clock::id(), false),
             AccountMeta::new_readonly(*authority_address, true),
         ],
     )

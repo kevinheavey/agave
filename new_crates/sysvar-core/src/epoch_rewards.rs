@@ -129,9 +129,9 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-pub use crate::epoch_rewards::EpochRewards;
+pub use solana_epoch_rewards::EpochRewards;
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_msg_and_friends::program_error::ProgramError,
 };
 

@@ -23,8 +23,8 @@ use {
     solana_clock::Slot,
     solana_epoch_schedule::EpochSchedule,
     solana_hash::{Hash, Hasher},
-    solana_program::stake_history::Epoch,
     solana_pubkey::Pubkey,
+    solana_stake_history::Epoch,
     std::collections::{HashMap, HashSet},
 };
 
