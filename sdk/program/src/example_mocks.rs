@@ -115,11 +115,12 @@ pub mod solana_rpc_client_nonce_utils {
 pub mod solana_sdk {
     pub use {
         crate::{
-            message, nonce, system_instruction,
+            nonce, system_instruction,
             sysvar::{self},
         },
         solana_clock::{self as clock, Clock},
         solana_hash as hash, solana_instruction as instruction, solana_keccak as keccak,
+        solana_message as message,
         solana_native_programs::system_program,
         solana_pubkey::{self as pubkey, Pubkey},
     };
@@ -200,10 +201,10 @@ pub mod solana_sdk {
     pub mod transaction {
         use {
             super::{signature::Signature, signer::SignerError, signers::Signers},
-            crate::message::{Message, VersionedMessage},
             serde::Serialize,
             solana_hash::Hash,
             solana_instruction::Instruction,
+            solana_message::{Message, VersionedMessage},
             solana_pubkey::Pubkey,
         };
 

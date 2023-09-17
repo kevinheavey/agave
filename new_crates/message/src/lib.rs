@@ -53,6 +53,7 @@ mod non_bpf_modules {
 
 #[cfg(not(target_os = "solana"))]
 pub use non_bpf_modules::*;
+use serde::{Deserialize, Serialize};
 pub use {compiled_keys::CompileError, legacy::Message};
 
 /// The length of a message header in bytes.

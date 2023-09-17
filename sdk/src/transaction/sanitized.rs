@@ -1,6 +1,6 @@
 #![cfg(feature = "full")]
 
-pub use crate::message::{AddressLoader, SimpleAddressLoader};
+pub use solana_message::{AddressLoader, SimpleAddressLoader};
 use {
     super::SanitizedVersionedTransaction,
     crate::{
@@ -16,7 +16,7 @@ use {
         solana_sdk::feature_set,
         transaction::{Result, Transaction, TransactionError, VersionedTransaction},
     },
-    solana_program::message::SanitizedVersionedMessage,
+    solana_message::SanitizedVersionedMessage,
     solana_pubkey::Pubkey,
 };
 

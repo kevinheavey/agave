@@ -1525,6 +1525,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-message"
+version = "1.17.0"
+dependencies = [
+ "anyhow",
+ "bincode",
+ "bitflags 2.3.3",
+ "blake3",
+ "borsh 0.10.3",
+ "itertools",
+ "lazy_static",
+ "serde",
+ "solana-address-lookup-table-core",
+ "solana-hash",
+ "solana-instruction",
+ "solana-msg-and-friends",
+ "solana-native-programs",
+ "solana-nonce-core",
+ "solana-program-utils",
+ "solana-pubkey",
+ "solana-sanitize",
+ "solana-short-vec",
+ "solana-system-instruction-core",
+ "solana-sysvar-core",
+ "solana-wasm-bindgen",
+ "thiserror",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "solana-msg-and-friends"
 version = "1.17.0"
 dependencies = [
@@ -1633,6 +1662,7 @@ dependencies = [
  "solana-keccak",
  "solana-last-restart-slot",
  "solana-logger",
+ "solana-message",
  "solana-msg-and-friends",
  "solana-native-programs",
  "solana-nonce-core",
@@ -1765,6 +1795,7 @@ dependencies = [
  "solana-hash",
  "solana-instruction",
  "solana-logger",
+ "solana-message",
  "solana-msg-and-friends",
  "solana-native-programs",
  "solana-nonce-core",

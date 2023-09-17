@@ -12,8 +12,9 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    crate::message::{compiled_keys::CompiledKeys, MessageHeader},
+    crate::{compiled_keys::CompiledKeys, MessageHeader},
     lazy_static::lazy_static,
+    serde::{Deserialize, Serialize},
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
     solana_native_programs::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable},
@@ -173,7 +174,7 @@ impl Message {
     /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_program::example_mocks::solana_sdk;
     /// # use solana_program::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
@@ -244,7 +245,7 @@ impl Message {
     /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_program::example_mocks::solana_sdk;
     /// # use solana_program::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
@@ -340,7 +341,7 @@ impl Message {
     /// [`solana_rpc_client`]: https://docs.rs/solana-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_program::example_mocks::solana_sdk;
     /// # use solana_program::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
@@ -617,7 +618,7 @@ impl Message {
 mod tests {
     #![allow(deprecated)]
     use {
-        super::*, crate::message::MESSAGE_HEADER_LENGTH, solana_hash as hash,
+        super::*, crate::MESSAGE_HEADER_LENGTH, solana_hash as hash,
         solana_instruction::AccountMeta, std::collections::HashSet,
     };
 

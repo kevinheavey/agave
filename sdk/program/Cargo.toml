@@ -45,6 +45,7 @@ solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
 solana-keccak = { workspace = true }
 solana-last-restart-slot = { workspace = true }
+solana-message = { workspace = true }
 solana-msg-and-friends = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-nonce-core = { workspace = true }

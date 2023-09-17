@@ -11,11 +11,12 @@
 
 pub use loaded::*;
 use {
-    crate::message::{
+    crate::{
         compiled_keys::{CompileError, CompiledKeys},
         legacy::is_builtin_key_or_sysvar,
         AccountKeys, MessageHeader, MESSAGE_VERSION_PREFIX,
     },
+    serde::{Deserialize, Serialize},
     solana_address_lookup_table_core::AddressLookupTableAccount,
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
@@ -185,7 +186,7 @@ impl Message {
     /// [`solana_sdk`]: https://docs.rs/solana-sdk
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_program::example_mocks::{
     /// #     solana_rpc_client,
     /// #     solana_sdk,
@@ -356,7 +357,7 @@ impl Message {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::message::VersionedMessage, solana_instruction::AccountMeta};
+    use {super::*, crate::VersionedMessage, solana_instruction::AccountMeta};
 
     #[test]
     fn test_sanitize() {

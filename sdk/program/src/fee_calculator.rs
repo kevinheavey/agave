@@ -1,7 +1,7 @@
 //! Calculation of transaction fees.
 
 #![allow(clippy::arithmetic_side_effects)]
-use {crate::message::Message, log::*, solana_clock::DEFAULT_MS_PER_SLOT};
+use {log::*, solana_clock::DEFAULT_MS_PER_SLOT, solana_message::Message};
 
 #[derive(Serialize, Deserialize, Default, PartialEq, Eq, Clone, Copy, Debug)]
 #[serde(rename_all = "camelCase")]

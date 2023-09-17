@@ -1,5 +1,5 @@
 use {
-    crate::message::{
+    crate::{
         legacy,
         v0::{self, LoadedAddresses},
         AccountKeys, AddressLoader, AddressLoaderError, MessageHeader, SanitizedVersionedMessage,
@@ -368,7 +368,7 @@ impl SanitizedMessage {
 mod tests {
     use {
         super::*,
-        crate::message::v0,
+        crate::v0,
         solana_instruction::{AccountMeta, Instruction},
         solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
         solana_pubkey::Pubkey,
