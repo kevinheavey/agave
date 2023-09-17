@@ -14,3 +14,4 @@ thiserror = { workspace = true }
 
 [dev-dependencies]
 memoffset = { workspace = true }
+solana-program = { workspace = true }

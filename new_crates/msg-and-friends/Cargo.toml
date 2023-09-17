@@ -24,3 +24,6 @@ thiserror = { workspace = true }
 
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-syscall-core = { workspace = true }
+
+[dev-dependencies]
+solana-program = { workspace = true }

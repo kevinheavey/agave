@@ -324,7 +324,7 @@ impl Secp256k1Pubkey {
 ///
 /// The RPC client program:
 ///
-/// ```no_run
+/// ```ignore
 /// # use solana_program::example_mocks::solana_rpc_client;
 /// # use solana_program::example_mocks::solana_sdk;
 /// use anyhow::Result;

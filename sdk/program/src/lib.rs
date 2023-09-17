@@ -514,16 +514,28 @@ pub mod address_lookup_table_account {
     pub use crate::address_lookup_table::AddressLookupTableAccount;
 }
 
+pub mod incinerator {
+    pub use solana_native_programs::incinerator::{id, ID, check_id};
+}
+
+pub mod secp256k1_program {
+    pub use solana_native_programs::secp256k1_program::{id, ID, check_id};
+}
+
 pub use {
     solana_alt_bn128 as alt_bn128, solana_big_mod_exp as big_mod_exp, solana_blake3 as blake3,
     solana_keccak as keccak,
+    solana_clock as clock,
+    solana_decode_error as decode_error,
     solana_msg_and_friends::{
         account_info, custom_heap_default, custom_panic_default, debug_account_data, entrypoint,
         log, msg, program_error, program_memory, program_stubs,
-    },
+    }, solana_instruction as instruction,
     solana_poseidon as poseidon, solana_pubkey as pubkey, solana_rent as rent,
+    solana_hash as hash,
     solana_secp256k1_recover as secp256k1_recover, solana_stable_layout as stable_layout,
     solana_wasm_bindgen::wasm_bindgen,
+    solana_native_programs::system_program,
 };
 
 /// The [config native program][np].

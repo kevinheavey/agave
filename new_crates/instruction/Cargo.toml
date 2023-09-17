@@ -19,3 +19,7 @@ solana-syscall-core = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 wasm-bindgen = { workspace = true }
+
+[dev-dependencies]
+anyhow = { workspace = true }
+solana-program = { workspace = true }

@@ -48,10 +48,10 @@ pub use solana_program::{
     account_info, address_lookup_table, alt_bn128, big_mod_exp, blake3, borsh, borsh0_10, borsh0_9,
     bpf_loader_upgradeable, config, custom_heap_default, custom_panic_default, debug_account_data,
     declare_deprecated_sysvar_id, declare_sysvar_id, epoch_rewards, epoch_schedule, fee_calculator,
-    impl_sysvar_get, keccak, lamports, loader_instruction, loader_upgradeable_instruction,
+    impl_sysvar_get, instruction, keccak, lamports, loader_instruction, loader_upgradeable_instruction,
     loader_v4, loader_v4_instruction, message, msg, native_token, nonce, poseidon, program,
     program_error, program_memory, program_option, program_pack, rent, sdk_ids, secp256k1_recover,
-    serde_varint, serialize_utils, slot_hashes, slot_history, stable_layout, stake, stake_history,
+    serde_varint, serialize_utils, secp256k1_program, slot_hashes, slot_history, stable_layout, stake, stake_history,
     syscalls, system_instruction, sysvar, unchecked_div_by_const, vote,
 };
 pub use {

@@ -17,3 +17,6 @@ solana-syscall-core = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 libsecp256k1 = { workspace = true }
+
+[dev-dependencies]
+solana-program = { workspace = true }

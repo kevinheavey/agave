@@ -16,3 +16,6 @@ solana-syscall-core = { workspace = true }
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 ark-bn254 = { workspace = true }
 light-poseidon = { workspace = true }
+
+[dev-dependencies]
+solana-program = { workspace = true }

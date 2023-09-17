@@ -20,9 +20,10 @@ use {
         loader_upgradeable_instruction::UpgradeableLoaderInstruction, system_instruction, sysvar,
     },
     solana_instruction::{AccountMeta, Instruction, InstructionError},
-    solana_native_programs::bpf_loader_upgradeable::id,
     solana_pubkey::Pubkey,
 };
+
+pub use solana_native_programs::bpf_loader_upgradeable::{ID, id, check_id,};
 
 /// Upgradeable loader account states
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
