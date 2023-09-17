@@ -29,4 +29,8 @@ solana-stake-history = { workspace = true }
 
 
 [dev-dependencies]
+anyhow = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
+solana-native-programs = { workspace = true }
+solana-hash = { workspace = true }
+solana-program = { workspace = true }

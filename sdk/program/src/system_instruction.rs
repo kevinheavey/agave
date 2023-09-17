@@ -41,9 +41,7 @@
 
 #[allow(deprecated)]
 use {
-    crate::{
-        nonce,
-    },
+    crate::nonce,
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     solana_instruction::{AccountMeta, Instruction},

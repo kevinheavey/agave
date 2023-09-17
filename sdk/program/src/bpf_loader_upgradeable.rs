@@ -16,9 +16,7 @@
 //! [`loader_upgradeable_instruction`]: crate::loader_upgradeable_instruction
 
 use {
-    crate::{
-        loader_upgradeable_instruction::UpgradeableLoaderInstruction, system_instruction
-    },
+    crate::{loader_upgradeable_instruction::UpgradeableLoaderInstruction, system_instruction},
     solana_instruction::{AccountMeta, Instruction, InstructionError},
     solana_pubkey::Pubkey,
 };

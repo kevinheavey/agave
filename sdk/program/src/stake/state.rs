@@ -4,11 +4,9 @@
 #![allow(deprecated)]
 
 use {
-    crate::{
-        stake::{
-            instruction::{LockupArgs, StakeError},
-            stake_flags::StakeFlags,
-        },
+    crate::stake::{
+        instruction::{LockupArgs, StakeError},
+        stake_flags::StakeFlags,
     },
     borsh::{maybestd::io, BorshDeserialize, BorshSchema, BorshSerialize},
     solana_clock::{Clock, Epoch, UnixTimestamp},

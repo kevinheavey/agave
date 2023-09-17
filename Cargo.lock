@@ -1607,6 +1607,7 @@ dependencies = [
  "solana-hash",
  "solana-instruction",
  "solana-keccak",
+ "solana-last-restart-slot",
  "solana-logger",
  "solana-msg-and-friends",
  "solana-native-programs",
@@ -1831,6 +1832,7 @@ version = "1.17.0"
 name = "solana-sysvar-core"
 version = "1.17.0"
 dependencies = [
+ "anyhow",
  "bincode",
  "bitflags 2.3.3",
  "lazy_static",
@@ -1838,9 +1840,12 @@ dependencies = [
  "solana-clock",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
+ "solana-hash",
  "solana-instruction",
  "solana-last-restart-slot",
  "solana-msg-and-friends",
+ "solana-native-programs",
+ "solana-program",
  "solana-pubkey",
  "solana-rent",
  "solana-sanitize",

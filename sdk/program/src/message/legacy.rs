@@ -14,7 +14,7 @@
 use {
     crate::{
         message::{compiled_keys::CompiledKeys, MessageHeader},
-        system_instruction
+        system_instruction,
     },
     lazy_static::lazy_static,
     solana_hash::Hash,

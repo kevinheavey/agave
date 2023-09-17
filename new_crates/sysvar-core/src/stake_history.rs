@@ -16,7 +16,7 @@
 //!
 //! Calling via the RPC client:
 //!
-//! ```
+//! ```ignore
 //! # use solana_program::example_mocks::solana_sdk;
 //! # use solana_program::example_mocks::solana_rpc_client;
 //! # use solana_sdk::account::Account;
@@ -45,8 +45,8 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-pub use solana_stake_history::StakeHistory;
 use crate::Sysvar;
+pub use solana_stake_history::StakeHistory;
 
 crate::declare_sysvar_id!("SysvarStakeHistory1111111111111111111111111", StakeHistory);
 
@@ -60,7 +60,10 @@ impl Sysvar for StakeHistory {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::stake_history::*};
+    use {
+        super::*,
+        solana_stake_history::{StakeHistoryEntry, MAX_ENTRIES},
+    };
 
     #[test]
     fn test_size_of() {

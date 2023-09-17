@@ -1,6 +1,9 @@
 //! This sysvar is deprecated and unused.
 
-use {crate::Sysvar, serde::{Deserialize, Serialize}};
+use {
+    crate::Sysvar,
+    serde::{Deserialize, Serialize},
+};
 
 crate::declare_sysvar_id!("SysvarRewards111111111111111111111111111111", Rewards);
 

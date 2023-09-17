@@ -368,7 +368,20 @@ impl SanitizedMessage {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::message::v0, std::collections::HashSet};
+    use {
+        super::*,
+        crate::message::v0,
+        solana_instruction::{AccountMeta, Instruction},
+        solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
+        solana_pubkey::Pubkey,
+        solana_sysvar_core::instructions::{
+            construct_instructions_data, deserialize_instruction, get_instruction_relative, id,
+            load_current_index_checked, load_instruction_at_checked, serialize_instructions,
+            store_current_index,
+        },
+        std::collections::HashSet,
+        std::convert::TryFrom,
+    };
 
     #[test]
     fn test_try_from_message() {
@@ -557,5 +570,259 @@ mod tests {
                 panic!("Expect to be SanitizedMessage::V0")
             }
         }
+    }
+
+    #[test]
+    fn test_load_instruction_at_checked() {
+        let instruction0 = Instruction::new_with_bincode(
+            Pubkey::new_unique(),
+            &0,
+            vec![AccountMeta::new(Pubkey::new_unique(), false)],
+        );
+        let instruction1 = Instruction::new_with_bincode(
+            Pubkey::new_unique(),
+            &0,
+            vec![AccountMeta::new(Pubkey::new_unique(), false)],
+        );
+        let sanitized_message = SanitizedMessage::try_from(legacy::Message::new(
+            &[instruction0.clone(), instruction1.clone()],
+            Some(&Pubkey::new_unique()),
+        ))
+        .unwrap();
+
+        let key = id();
+        let mut lamports = 0;
+        let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
+        let owner = solana_native_programs::sysvar::id();
+        let mut account_info = AccountInfo::new(
+            &key,
+            false,
+            false,
+            &mut lamports,
+            &mut data,
+            &owner,
+            false,
+            0,
+        );
+
+        assert_eq!(
+            instruction0,
+            load_instruction_at_checked(0, &account_info).unwrap()
+        );
+        assert_eq!(
+            instruction1,
+            load_instruction_at_checked(1, &account_info).unwrap()
+        );
+        assert_eq!(
+            Err(ProgramError::InvalidArgument),
+            load_instruction_at_checked(2, &account_info)
+        );
+
+        let key = Pubkey::new_unique();
+        account_info.key = &key;
+        assert_eq!(
+            Err(ProgramError::UnsupportedSysvar),
+            load_instruction_at_checked(2, &account_info)
+        );
+    }
+
+    #[test]
+    fn test_load_current_index_checked() {
+        let instruction0 = Instruction::new_with_bincode(
+            Pubkey::new_unique(),
+            &0,
+            vec![AccountMeta::new(Pubkey::new_unique(), false)],
+        );
+        let instruction1 = Instruction::new_with_bincode(
+            Pubkey::new_unique(),
+            &0,
+            vec![AccountMeta::new(Pubkey::new_unique(), false)],
+        );
+        let sanitized_message = SanitizedMessage::try_from(legacy::Message::new(
+            &[instruction0, instruction1],
+            Some(&Pubkey::new_unique()),
+        ))
+        .unwrap();
+
+        let key = id();
+        let mut lamports = 0;
+        let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
+        store_current_index(&mut data, 1);
+        let owner = solana_native_programs::sysvar::id();
+        let mut account_info = AccountInfo::new(
+            &key,
+            false,
+            false,
+            &mut lamports,
+            &mut data,
+            &owner,
+            false,
+            0,
+        );
+
+        assert_eq!(1, load_current_index_checked(&account_info).unwrap());
+        {
+            let mut data = account_info.try_borrow_mut_data().unwrap();
+            store_current_index(&mut data, 0);
+        }
+        assert_eq!(0, load_current_index_checked(&account_info).unwrap());
+
+        let key = Pubkey::new_unique();
+        account_info.key = &key;
+        assert_eq!(
+            Err(ProgramError::UnsupportedSysvar),
+            load_current_index_checked(&account_info)
+        );
+    }
+
+    #[test]
+    fn test_get_instruction_relative() {
+        let instruction0 = Instruction::new_with_bincode(
+            Pubkey::new_unique(),
+            &0,
+            vec![AccountMeta::new(Pubkey::new_unique(), false)],
+        );
+        let instruction1 = Instruction::new_with_bincode(
+            Pubkey::new_unique(),
+            &0,
+            vec![AccountMeta::new(Pubkey::new_unique(), false)],
+        );
+        let instruction2 = Instruction::new_with_bincode(
+            Pubkey::new_unique(),
+            &0,
+            vec![AccountMeta::new(Pubkey::new_unique(), false)],
+        );
+        let sanitized_message = SanitizedMessage::try_from(legacy::Message::new(
+            &[
+                instruction0.clone(),
+                instruction1.clone(),
+                instruction2.clone(),
+            ],
+            Some(&Pubkey::new_unique()),
+        ))
+        .unwrap();
+
+        let key = id();
+        let mut lamports = 0;
+        let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
+        store_current_index(&mut data, 1);
+        let owner = solana_native_programs::sysvar::id();
+        let mut account_info = AccountInfo::new(
+            &key,
+            false,
+            false,
+            &mut lamports,
+            &mut data,
+            &owner,
+            false,
+            0,
+        );
+
+        assert_eq!(
+            Err(ProgramError::InvalidArgument),
+            get_instruction_relative(-2, &account_info)
+        );
+        assert_eq!(
+            instruction0,
+            get_instruction_relative(-1, &account_info).unwrap()
+        );
+        assert_eq!(
+            instruction1,
+            get_instruction_relative(0, &account_info).unwrap()
+        );
+        assert_eq!(
+            instruction2,
+            get_instruction_relative(1, &account_info).unwrap()
+        );
+        assert_eq!(
+            Err(ProgramError::InvalidArgument),
+            get_instruction_relative(2, &account_info)
+        );
+        {
+            let mut data = account_info.try_borrow_mut_data().unwrap();
+            store_current_index(&mut data, 0);
+        }
+        assert_eq!(
+            Err(ProgramError::InvalidArgument),
+            get_instruction_relative(-1, &account_info)
+        );
+        assert_eq!(
+            instruction0,
+            get_instruction_relative(0, &account_info).unwrap()
+        );
+        assert_eq!(
+            instruction1,
+            get_instruction_relative(1, &account_info).unwrap()
+        );
+        assert_eq!(
+            instruction2,
+            get_instruction_relative(2, &account_info).unwrap()
+        );
+        assert_eq!(
+            Err(ProgramError::InvalidArgument),
+            get_instruction_relative(3, &account_info)
+        );
+
+        let key = Pubkey::new_unique();
+        account_info.key = &key;
+        assert_eq!(
+            Err(ProgramError::UnsupportedSysvar),
+            get_instruction_relative(0, &account_info)
+        );
+    }
+
+    #[test]
+    fn test_serialize_instructions() {
+        let program_id0 = Pubkey::new_unique();
+        let program_id1 = Pubkey::new_unique();
+        let id0 = Pubkey::new_unique();
+        let id1 = Pubkey::new_unique();
+        let id2 = Pubkey::new_unique();
+        let id3 = Pubkey::new_unique();
+        let instructions = vec![
+            Instruction::new_with_bincode(program_id0, &0, vec![AccountMeta::new(id0, false)]),
+            Instruction::new_with_bincode(program_id0, &0, vec![AccountMeta::new(id1, true)]),
+            Instruction::new_with_bincode(
+                program_id1,
+                &0,
+                vec![AccountMeta::new_readonly(id2, false)],
+            ),
+            Instruction::new_with_bincode(
+                program_id1,
+                &0,
+                vec![AccountMeta::new_readonly(id3, true)],
+            ),
+        ];
+
+        let message = legacy::Message::new(&instructions, Some(&id1));
+        let sanitized_message = SanitizedMessage::try_from(message).unwrap();
+        let serialized = serialize_instructions(&sanitized_message.decompile_instructions());
+
+        // assert that deserialize_instruction is compatible with SanitizedMessage::serialize_instructions
+        for (i, instruction) in instructions.iter().enumerate() {
+            assert_eq!(
+                deserialize_instruction(i, &serialized).unwrap(),
+                *instruction
+            );
+        }
+    }
+
+    #[test]
+    fn test_decompile_instructions_out_of_bounds() {
+        let program_id0 = Pubkey::new_unique();
+        let id0 = Pubkey::new_unique();
+        let id1 = Pubkey::new_unique();
+        let instructions = vec![
+            Instruction::new_with_bincode(program_id0, &0, vec![AccountMeta::new(id0, false)]),
+            Instruction::new_with_bincode(program_id0, &0, vec![AccountMeta::new(id1, true)]),
+        ];
+
+        let message =
+            SanitizedMessage::try_from(legacy::Message::new(&instructions, Some(&id1))).unwrap();
+        let serialized = serialize_instructions(&message.decompile_instructions());
+        assert_eq!(
+            deserialize_instruction(instructions.len(), &serialized).unwrap_err(),
+            SanitizeError::IndexOutOfBounds,
+        );
     }
 }

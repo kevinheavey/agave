@@ -20,13 +20,13 @@
 
 #![allow(deprecated)]
 
+pub use solana_sysvar_core::fees::{check_id, id};
 use {
     crate::fee_calculator::FeeCalculator,
     solana_msg_and_friends::program_error::ProgramError,
     solana_sdk_macro::CloneZeroed,
-    solana_sysvar_core::{Sysvar, impl_sysvar_get}
+    solana_sysvar_core::{impl_sysvar_get, Sysvar},
 };
-pub use solana_sysvar_core::fees::{id, check_id};
 
 /// Transaction fees.
 #[deprecated(
@@ -64,7 +64,6 @@ impl solana_sysvar_core::SysvarId for Fees {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -80,7 +79,11 @@ mod tests {
         assert_eq!(cloned_fees, fees);
     }
 
+    #[test]
     fn test_sysvar_id() {
-        assert!(solana_sysvar_core::is_sysvar_id(&id()), "sysvar::is_sysvar_id() doesn't know about Fees");
+        assert!(
+            solana_sysvar_core::is_sysvar_id(&id()),
+            "sysvar::is_sysvar_id() doesn't know about Fees"
+        );
     }
 }

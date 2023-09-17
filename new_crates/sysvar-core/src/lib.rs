@@ -253,8 +253,9 @@ macro_rules! impl_sysvar_get {
 mod tests {
     use {
         super::*,
-        solana_msg_and_friends::program_error::ProgramError,
+        serde::{Deserialize, Serialize},
         solana_clock::Epoch,
+        solana_msg_and_friends::program_error::ProgramError,
         solana_pubkey::Pubkey,
         std::{cell::RefCell, rc::Rc},
     };
@@ -266,11 +267,11 @@ mod tests {
     }
     solana_sdk_macro::program_declare_id_lite!("TestSysvar111111111111111111111111111111111");
     impl crate::SysvarId for TestSysvar {
-        fn id() -> crate::pubkey::Pubkey {
+        fn id() -> solana_pubkey::Pubkey {
             id()
         }
 
-        fn check_id(pubkey: &crate::pubkey::Pubkey) -> bool {
+        fn check_id(pubkey: &solana_pubkey::Pubkey) -> bool {
             check_id(pubkey)
         }
     }
@@ -279,7 +280,7 @@ mod tests {
     #[test]
     fn test_sysvar_account_info_to_from() {
         let test_sysvar = TestSysvar::default();
-        let key = crate::sysvar::tests::id();
+        let key = id();
         let wrong_key = Pubkey::new_unique();
         let owner = Pubkey::new_unique();
         let mut lamports = 42;

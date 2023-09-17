@@ -221,7 +221,7 @@ mod tests {
         crate::{
             message::Message as LegacyMessage,
             signer::{keypair::Keypair, Signer},
-            system_instruction, sysvar,
+            system_instruction,
         },
         solana_instruction::{AccountMeta, Instruction},
         solana_pubkey::Pubkey,
@@ -333,7 +333,7 @@ mod tests {
         let account_metas = vec![
             AccountMeta::new_readonly(nonce_pubkey, false),
             #[allow(deprecated)]
-            AccountMeta::new_readonly(sysvar::recent_blockhashes::id(), false),
+            AccountMeta::new_readonly(solana_sysvar_core::recent_blockhashes::id(), false),
             AccountMeta::new_readonly(nonce_pubkey, true),
         ];
         let nonce_instruction = Instruction::new_with_bincode(

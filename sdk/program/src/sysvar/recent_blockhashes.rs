@@ -21,7 +21,10 @@
 use {
     crate::fee_calculator::FeeCalculator,
     solana_hash::Hash,
-    solana_sysvar_core::{Sysvar, recent_blockhashes::{id, check_id}},
+    solana_sysvar_core::{
+        recent_blockhashes::{check_id, id},
+        Sysvar,
+    },
     std::{cmp::Ordering, collections::BinaryHeap, iter::FromIterator, ops::Deref},
 };
 
@@ -188,7 +191,11 @@ mod tests {
         );
     }
 
+    #[test]
     fn test_sysvar_id() {
-        assert!(solana_sysvar_core::is_sysvar_id(&id()), "sysvar::is_sysvar_id() doesn't know about RecentBlockhashes");
+        assert!(
+            solana_sysvar_core::is_sysvar_id(&id()),
+            "sysvar::is_sysvar_id() doesn't know about RecentBlockhashes"
+        );
     }
 }

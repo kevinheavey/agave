@@ -3,7 +3,7 @@ use crate::stake::config;
 use {
     crate::{
         stake::state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
-        system_instruction
+        system_instruction,
     },
     log::*,
     num_derive::{FromPrimitive, ToPrimitive},

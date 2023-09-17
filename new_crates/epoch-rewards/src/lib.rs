@@ -6,7 +6,7 @@
 //!
 //! [`sysvar::epoch_rewards`]: crate::sysvar::epoch_rewards
 
-use serde::{Deserialize, Serialize}; 
+use serde::{Deserialize, Serialize};
 
 use std::ops::AddAssign;
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone, Copy)]

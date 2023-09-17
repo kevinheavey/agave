@@ -1118,7 +1118,7 @@ mod tests {
         crate::{
             hash::hash,
             signature::{Keypair, Presigner, Signer},
-            system_instruction, sysvar,
+            system_instruction,
         },
         bincode::{deserialize, serialize, serialized_size},
         solana_instruction::AccountMeta,
@@ -1592,7 +1592,7 @@ mod tests {
         let account_metas = vec![
             AccountMeta::new_readonly(nonce_pubkey, false),
             #[allow(deprecated)]
-            AccountMeta::new_readonly(sysvar::recent_blockhashes::id(), false),
+            AccountMeta::new_readonly(solana_sysvar_core::recent_blockhashes::id(), false),
             AccountMeta::new_readonly(nonce_pubkey, true),
         ];
         let nonce_instruction = Instruction::new_with_bincode(

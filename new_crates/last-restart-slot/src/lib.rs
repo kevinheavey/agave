@@ -1,6 +1,10 @@
 //! Information about the last restart slot (hard fork).
 
-use {solana_clock::Slot, solana_sdk_macro::CloneZeroed, serde::{Deserialize, Serialize}};
+use {
+    serde::{Deserialize, Serialize},
+    solana_clock::Slot,
+    solana_sdk_macro::CloneZeroed,
+};
 
 #[repr(C)]
 #[derive(Serialize, Deserialize, Debug, CloneZeroed, PartialEq, Eq, Default)]

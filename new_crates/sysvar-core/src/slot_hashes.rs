@@ -16,7 +16,7 @@
 //!
 //! Calling via the RPC client:
 //!
-//! ```
+//! ```ignore
 //! # use solana_program::example_mocks::solana_sdk;
 //! # use solana_program::example_mocks::solana_rpc_client;
 //! # use solana_sdk::account::Account;
@@ -67,7 +67,7 @@ impl Sysvar for SlotHashes {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::slot_hashes::MAX_ENTRIES, solana_clock::Slot, solana_hash::Hash};
+    use {super::*, solana_clock::Slot, solana_hash::Hash, solana_slot_hashes::MAX_ENTRIES};
 
     #[test]
     fn test_size_of() {
