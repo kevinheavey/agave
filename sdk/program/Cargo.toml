@@ -47,6 +47,7 @@ solana-native-programs = { workspace = true }
 solana-poseidon = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-rent = { workspace = true }
+solana-serialize-utils = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-secp256k1-recover = { workspace = true }

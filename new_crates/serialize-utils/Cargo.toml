@@ -1,0 +1,12 @@
+[package]
+name = "solana-serialize-utils"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+solana-pubkey = { workspace = true }
+solana-sanitize = { workspace = true }

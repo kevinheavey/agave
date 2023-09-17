@@ -494,7 +494,6 @@ pub mod program_option;
 pub mod program_pack;
 pub mod program_utils;
 pub mod serde_varint;
-pub mod serialize_utils;
 pub mod slot_hashes;
 pub mod slot_history;
 pub mod stake;
@@ -532,7 +531,8 @@ pub use {
     },
     solana_native_programs::system_program,
     solana_poseidon as poseidon, solana_pubkey as pubkey, solana_rent as rent,
-    solana_secp256k1_recover as secp256k1_recover, solana_stable_layout as stable_layout,
+    solana_secp256k1_recover as secp256k1_recover, solana_serialize_utils as serialize_utils,
+    solana_stable_layout as stable_layout,
     solana_wasm_bindgen::wasm_bindgen,
 };
 

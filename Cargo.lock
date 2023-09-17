@@ -1836,6 +1836,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk-macro 1.17.0",
  "solana-secp256k1-recover",
+ "solana-serialize-utils",
  "solana-short-vec",
  "solana-stable-layout",
  "solana-syscall-core",
@@ -2044,6 +2045,14 @@ dependencies = [
  "solana-program 1.17.0",
  "solana-syscall-core",
  "thiserror",
+]
+
+[[package]]
+name = "solana-serialize-utils"
+version = "1.17.0"
+dependencies = [
+ "solana-pubkey",
+ "solana-sanitize",
 ]
 
 [[package]]

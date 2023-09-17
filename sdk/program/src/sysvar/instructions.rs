@@ -31,15 +31,15 @@
 
 #[cfg(not(target_os = "solana"))]
 use {
-    crate::serialize_utils::{append_slice, append_u16, append_u8},
     bitflags::bitflags,
+    solana_serialize_utils::{append_slice, append_u16, append_u8},
 };
 use {
-    crate::serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
     solana_instruction::{AccountMeta, Instruction},
     solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
     solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
+    solana_serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
 };
 
 /// Instructions sysvar, dummy type.
