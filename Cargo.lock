@@ -1549,6 +1549,7 @@ dependencies = [
  "solana-native-programs",
  "solana-poseidon",
  "solana-pubkey",
+ "solana-rent",
  "solana-sanitize",
  "solana-sdk-macro",
  "solana-short-vec",
@@ -1583,6 +1584,15 @@ dependencies = [
  "solana-wasm-bindgen",
  "thiserror",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "solana-rent"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-clock",
+ "solana-sdk-macro",
 ]
 
 [[package]]

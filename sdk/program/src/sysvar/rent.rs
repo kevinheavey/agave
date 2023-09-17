@@ -126,7 +126,7 @@
 //! #
 //! # Ok::<(), anyhow::Error>(())
 //! ```
-pub use crate::rent::Rent;
+pub use solana_rent::Rent;
 use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
 
 crate::declare_sysvar_id!("SysvarRent111111111111111111111111111111111", Rent);

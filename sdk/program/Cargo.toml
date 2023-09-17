@@ -44,6 +44,7 @@ solana-keccak = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-poseidon = { workspace = true }
 solana-pubkey = { workspace = true }
+solana-rent = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-short-vec = { workspace = true }
