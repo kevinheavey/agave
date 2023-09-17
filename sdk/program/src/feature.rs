@@ -12,14 +12,10 @@
 //!    active them.  When this occurs, the activation slot is recorded in the feature account
 
 use {
-    crate::{
-        system_instruction,
-    },
-    solana_msg_and_friends::{
-        account_info::AccountInfo, program_error::ProgramError,
-    },
+    crate::system_instruction,
     solana_clock::Slot,
     solana_instruction::Instruction,
+    solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
     solana_native_programs::feature::id,
     solana_pubkey::Pubkey,
     solana_rent::Rent,

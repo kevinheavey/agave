@@ -82,8 +82,8 @@
 //! [sysvardoc]: https://docs.solana.com/developing/runtime-facilities/sysvars
 
 use {
-    solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
     lazy_static::lazy_static,
+    solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
     solana_pubkey::Pubkey,
 };
 

@@ -47,8 +47,8 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use crate::sysvar::Sysvar;
 pub use crate::slot_history::SlotHistory;
+use crate::sysvar::Sysvar;
 pub use solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError};
 
 crate::declare_sysvar_id!("SysvarS1otHistory11111111111111111111111111", SlotHistory);

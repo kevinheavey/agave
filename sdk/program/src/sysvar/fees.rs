@@ -21,9 +21,7 @@
 #![allow(deprecated)]
 
 use {
-    crate::{
-        fee_calculator::FeeCalculator, impl_sysvar_get, sysvar::Sysvar,
-    },
+    crate::{fee_calculator::FeeCalculator, impl_sysvar_get, sysvar::Sysvar},
     solana_msg_and_friends::program_error::ProgramError,
     solana_sdk_macro::CloneZeroed,
 };

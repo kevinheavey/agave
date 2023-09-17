@@ -1,8 +1,7 @@
 //! Utility functions
 use {
-    crate::{ stake::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION},
+    crate::stake::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION, solana_clock::Epoch,
     solana_msg_and_friends::program_error::ProgramError,
-    solana_clock::Epoch,
 };
 
 /// Helper function for programs to call [`GetMinimumDelegation`] and then fetch the return data

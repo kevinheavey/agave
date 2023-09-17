@@ -5,16 +5,14 @@ use crate::epoch_schedule::MAX_LEADER_SCHEDULE_EPOCH_OFFSET;
 #[cfg(not(target_os = "solana"))]
 use bincode::deserialize;
 use {
-    crate::{
-        vote::{authorized_voters::AuthorizedVoters, error::VoteError},
-    },
+    crate::vote::{authorized_voters::AuthorizedVoters, error::VoteError},
     bincode::{serialize_into, ErrorKind},
     serde_derive::{Deserialize, Serialize},
-    solana_clock::{Epoch, Slot, UnixTimestamp, Clock},
-    solana_rent::Rent,
+    solana_clock::{Clock, Epoch, Slot, UnixTimestamp},
     solana_hash::Hash,
     solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
+    solana_rent::Rent,
     std::{collections::VecDeque, fmt::Debug},
 };
 

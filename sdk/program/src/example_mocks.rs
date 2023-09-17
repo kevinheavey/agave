@@ -121,8 +121,7 @@ pub mod solana_sdk {
                 clock::{self, Clock},
             },
         },
-        solana_hash as hash, solana_instruction as instruction,
-        solana_keccak as keccak,
+        solana_hash as hash, solana_instruction as instruction, solana_keccak as keccak,
         solana_native_programs::system_program,
         solana_pubkey::{self as pubkey, Pubkey},
     };

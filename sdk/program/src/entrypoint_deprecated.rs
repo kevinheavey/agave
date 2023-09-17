@@ -11,8 +11,8 @@
 
 extern crate alloc;
 use {
-    solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
     alloc::vec::Vec,
+    solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
     solana_pubkey::Pubkey,
     std::{
         cell::RefCell,
