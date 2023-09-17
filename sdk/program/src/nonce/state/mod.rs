@@ -1,10 +1,14 @@
 //! State for durable transaction nonces.
 
 mod current;
-pub use current::{Data, DurableNonce, State};
+pub use {
+    current::{Data, State},
+    solana_nonce_core::state::DurableNonce,
+};
 use {
     serde_derive::{Deserialize, Serialize},
     solana_hash::Hash,
+    solana_nonce_core::state::AuthorizeNonceError,
     solana_pubkey::Pubkey,
     std::collections::HashSet,
 };
@@ -14,12 +18,6 @@ pub enum Versions {
     Legacy(Box<State>),
     /// Current variants have durable nonce and blockhash domains separated.
     Current(Box<State>),
-}
-
-#[derive(Debug, Eq, PartialEq)]
-pub enum AuthorizeNonceError {
-    MissingRequiredSignature(/*account authority:*/ Pubkey),
-    Uninitialized,
 }
 
 impl Versions {

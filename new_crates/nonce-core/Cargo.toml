@@ -1,0 +1,14 @@
+[package]
+name = "solana-nonce-core"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+serde = { workspace = true, features = ["derive"] }
+solana-hash = { workspace = true }
+solana-pubkey = { workspace = true }
+thiserror = { workspace = true }

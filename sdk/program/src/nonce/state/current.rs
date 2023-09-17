@@ -1,14 +1,10 @@
 use {
     crate::fee_calculator::FeeCalculator,
     serde_derive::{Deserialize, Serialize},
-    solana_hash::{hashv, Hash},
+    solana_hash::Hash,
+    solana_nonce_core::state::DurableNonce,
     solana_pubkey::Pubkey,
 };
-
-const DURABLE_NONCE_HASH_PREFIX: &[u8] = "DURABLE_NONCE".as_bytes();
-
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Deserialize, Serialize)]
-pub struct DurableNonce(Hash);
 
 /// Initialized data of a durable transaction nonce account.
 ///
@@ -41,23 +37,12 @@ impl Data {
     /// Named blockhash for legacy reasons, but durable nonce and blockhash
     /// have separate domains.
     pub fn blockhash(&self) -> Hash {
-        self.durable_nonce.0
+        *self.durable_nonce.as_hash()
     }
 
     /// Get the cost per signature for the next transaction to use this nonce.
     pub fn get_lamports_per_signature(&self) -> u64 {
         self.fee_calculator.lamports_per_signature
-    }
-}
-
-impl DurableNonce {
-    pub fn from_blockhash(blockhash: &Hash) -> Self {
-        Self(hashv(&[DURABLE_NONCE_HASH_PREFIX, blockhash.as_ref()]))
-    }
-
-    /// Hash value used as recent_blockhash field in Transactions.
-    pub fn as_hash(&self) -> &Hash {
-        &self.0
     }
 }
 

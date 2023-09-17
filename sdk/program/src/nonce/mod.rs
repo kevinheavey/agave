@@ -3,4 +3,4 @@
 pub mod state;
 pub use state::State;
 
-pub const NONCED_TX_MARKER_IX_INDEX: u8 = 0;
+pub use solana_nonce_core::NONCED_TX_MARKER_IX_INDEX;

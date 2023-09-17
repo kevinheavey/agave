@@ -1541,6 +1541,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-nonce-core"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-hash",
+ "solana-pubkey",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-poseidon"
 version = "1.17.0"
 dependencies = [
@@ -1611,6 +1621,7 @@ dependencies = [
  "solana-logger",
  "solana-msg-and-friends",
  "solana-native-programs",
+ "solana-nonce-core",
  "solana-poseidon",
  "solana-pubkey",
  "solana-rent",
@@ -1730,6 +1741,7 @@ dependencies = [
  "solana-logger",
  "solana-msg-and-friends",
  "solana-native-programs",
+ "solana-nonce-core",
  "solana-program",
  "solana-pubkey",
  "solana-rent",
