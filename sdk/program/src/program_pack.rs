@@ -1,6 +1,6 @@
 //! The [`Pack`] serialization trait.
 
-use crate::program_error::ProgramError;
+use solana_msg_and_friends::program_error::ProgramError;
 
 /// Check if a program account state is initialized
 pub trait IsInitialized {

@@ -115,25 +115,25 @@ pub trait SyscallStubs: Sync + Send {
 struct DefaultSyscallStubs {}
 impl SyscallStubs for DefaultSyscallStubs {}
 
-pub(crate) fn sol_log(message: &str) {
+pub fn sol_log(message: &str) {
     SYSCALL_STUBS.read().unwrap().sol_log(message);
 }
 
-pub(crate) fn sol_log_64(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64) {
+pub fn sol_log_64(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64) {
     sol_log(&format!(
         "{arg1:#x}, {arg2:#x}, {arg3:#x}, {arg4:#x}, {arg5:#x}"
     ));
 }
 
-pub(crate) fn sol_log_compute_units() {
+pub fn sol_log_compute_units() {
     SYSCALL_STUBS.read().unwrap().sol_log_compute_units();
 }
 
-pub(crate) fn sol_remaining_compute_units() -> u64 {
+pub fn sol_remaining_compute_units() -> u64 {
     SYSCALL_STUBS.read().unwrap().sol_remaining_compute_units()
 }
 
-pub(crate) fn sol_invoke_signed(
+pub fn sol_invoke_signed(
     instruction: &Instruction,
     account_infos: &[AccountInfo],
     signers_seeds: &[&[&[u8]]],
@@ -144,80 +144,80 @@ pub(crate) fn sol_invoke_signed(
         .sol_invoke_signed(instruction, account_infos, signers_seeds)
 }
 
-pub(crate) fn sol_get_clock_sysvar(var_addr: *mut u8) -> u64 {
+pub fn sol_get_clock_sysvar(var_addr: *mut u8) -> u64 {
     SYSCALL_STUBS.read().unwrap().sol_get_clock_sysvar(var_addr)
 }
 
-pub(crate) fn sol_get_epoch_schedule_sysvar(var_addr: *mut u8) -> u64 {
+pub fn sol_get_epoch_schedule_sysvar(var_addr: *mut u8) -> u64 {
     SYSCALL_STUBS
         .read()
         .unwrap()
         .sol_get_epoch_schedule_sysvar(var_addr)
 }
 
-pub(crate) fn sol_get_fees_sysvar(var_addr: *mut u8) -> u64 {
+pub fn sol_get_fees_sysvar(var_addr: *mut u8) -> u64 {
     SYSCALL_STUBS.read().unwrap().sol_get_fees_sysvar(var_addr)
 }
 
-pub(crate) fn sol_get_rent_sysvar(var_addr: *mut u8) -> u64 {
+pub fn sol_get_rent_sysvar(var_addr: *mut u8) -> u64 {
     SYSCALL_STUBS.read().unwrap().sol_get_rent_sysvar(var_addr)
 }
 
-pub(crate) fn sol_get_last_restart_slot(var_addr: *mut u8) -> u64 {
+pub fn sol_get_last_restart_slot(var_addr: *mut u8) -> u64 {
     SYSCALL_STUBS
         .read()
         .unwrap()
         .sol_get_last_restart_slot(var_addr)
 }
 
-pub(crate) fn sol_memcpy(dst: *mut u8, src: *const u8, n: usize) {
+pub fn sol_memcpy(dst: *mut u8, src: *const u8, n: usize) {
     unsafe {
         SYSCALL_STUBS.read().unwrap().sol_memcpy(dst, src, n);
     }
 }
 
-pub(crate) fn sol_memmove(dst: *mut u8, src: *const u8, n: usize) {
+pub fn sol_memmove(dst: *mut u8, src: *const u8, n: usize) {
     unsafe {
         SYSCALL_STUBS.read().unwrap().sol_memmove(dst, src, n);
     }
 }
 
-pub(crate) fn sol_memcmp(s1: *const u8, s2: *const u8, n: usize, result: *mut i32) {
+pub fn sol_memcmp(s1: *const u8, s2: *const u8, n: usize, result: *mut i32) {
     unsafe {
         SYSCALL_STUBS.read().unwrap().sol_memcmp(s1, s2, n, result);
     }
 }
 
-pub(crate) fn sol_memset(s: *mut u8, c: u8, n: usize) {
+pub fn sol_memset(s: *mut u8, c: u8, n: usize) {
     unsafe {
         SYSCALL_STUBS.read().unwrap().sol_memset(s, c, n);
     }
 }
 
-pub(crate) fn sol_get_return_data() -> Option<(Pubkey, Vec<u8>)> {
+pub fn sol_get_return_data() -> Option<(Pubkey, Vec<u8>)> {
     SYSCALL_STUBS.read().unwrap().sol_get_return_data()
 }
 
-pub(crate) fn sol_set_return_data(data: &[u8]) {
+pub fn sol_set_return_data(data: &[u8]) {
     SYSCALL_STUBS.read().unwrap().sol_set_return_data(data)
 }
 
-pub(crate) fn sol_log_data(data: &[&[u8]]) {
+pub fn sol_log_data(data: &[&[u8]]) {
     SYSCALL_STUBS.read().unwrap().sol_log_data(data)
 }
 
-pub(crate) fn sol_get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
+pub fn sol_get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
     SYSCALL_STUBS
         .read()
         .unwrap()
         .sol_get_processed_sibling_instruction(index)
 }
 
-pub(crate) fn sol_get_stack_height() -> u64 {
+pub fn sol_get_stack_height() -> u64 {
     SYSCALL_STUBS.read().unwrap().sol_get_stack_height()
 }
 
-pub(crate) fn sol_get_epoch_rewards_sysvar(var_addr: *mut u8) -> u64 {
+pub fn sol_get_epoch_rewards_sysvar(var_addr: *mut u8) -> u64 {
     SYSCALL_STUBS
         .read()
         .unwrap()

@@ -22,8 +22,9 @@
 
 use {
     crate::{
-        fee_calculator::FeeCalculator, impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar,
+        fee_calculator::FeeCalculator, impl_sysvar_get, sysvar::Sysvar,
     },
+    solana_msg_and_friends::program_error::ProgramError,
     solana_sdk_macro::CloneZeroed,
 };
 

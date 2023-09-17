@@ -100,6 +100,7 @@ solana-hash = { path = "new_crates/hash" }
 solana-instruction = { path = "new_crates/instruction" }
 solana-keccak = { path = "new_crates/keccak" }
 solana-logger = { path = "logger", version = "=1.17.0" }
+solana-msg-and-friends = { path = "new_crates/msg-and-friends" }
 solana-native-programs = { path = "new_crates/native-programs" }
 solana-poseidon = { path = "new_crates/poseidon" }
 solana-program = { path = "sdk/program", version = "=1.17.0" }

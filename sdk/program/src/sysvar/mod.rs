@@ -82,7 +82,7 @@
 //! [sysvardoc]: https://docs.solana.com/developing/runtime-facilities/sysvars
 
 use {
-    crate::{account_info::AccountInfo, program_error::ProgramError},
+    solana_msg_and_friends::{account_info::AccountInfo, program_error::ProgramError},
     lazy_static::lazy_static,
     solana_pubkey::Pubkey,
 };
@@ -239,10 +239,10 @@ macro_rules! impl_sysvar_get {
             let result = unsafe { ::solana_syscall_core::$syscall_name(var_addr) };
 
             #[cfg(not(target_os = "solana"))]
-            let result = $crate::program_stubs::$syscall_name(var_addr);
+            let result = ::solana_msg_and_friends::program_stubs::$syscall_name(var_addr);
 
             match result {
-                $crate::entrypoint::SUCCESS => Ok(var),
+                ::solana_msg_and_friends::entrypoint::SUCCESS => Ok(var),
                 e => Err(e.into()),
             }
         }

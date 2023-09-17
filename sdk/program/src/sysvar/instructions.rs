@@ -36,11 +36,11 @@ use {
 };
 use {
     crate::{
-        account_info::AccountInfo,
-        program_error::ProgramError,
         serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
     },
     solana_instruction::{AccountMeta, Instruction},
+    solana_msg_and_friends::{        account_info::AccountInfo,
+        program_error::ProgramError,},
     solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
 };

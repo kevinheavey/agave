@@ -93,7 +93,7 @@ macro_rules! msg {
 pub fn sol_log(message: &str) {
     #[cfg(target_os = "solana")]
     unsafe {
-        solana_syscall_core::sol_log_(message.as_ptr(), message.len() as u64);
+        ::solana_syscall_core::sol_log_(message.as_ptr(), message.len() as u64);
     }
 
     #[cfg(not(target_os = "solana"))]
@@ -105,7 +105,7 @@ pub fn sol_log(message: &str) {
 pub fn sol_log_64(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64) {
     #[cfg(target_os = "solana")]
     unsafe {
-        solana_syscall_core::sol_log_64_(arg1, arg2, arg3, arg4, arg5);
+        ::solana_syscall_core::sol_log_64_(arg1, arg2, arg3, arg4, arg5);
     }
 
     #[cfg(not(target_os = "solana"))]
@@ -116,7 +116,7 @@ pub fn sol_log_64(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64) {
 pub fn sol_log_data(data: &[&[u8]]) {
     #[cfg(target_os = "solana")]
     unsafe {
-        solana_syscall_core::sol_log_data(data as *const _ as *const u8, data.len() as u64)
+        ::solana_syscall_core::sol_log_data(data as *const _ as *const u8, data.len() as u64)
     };
 
     #[cfg(not(target_os = "solana"))]
@@ -160,7 +160,7 @@ pub fn sol_log_params(accounts: &[AccountInfo], data: &[u8]) {
 pub fn sol_log_compute_units() {
     #[cfg(target_os = "solana")]
     unsafe {
-        solana_syscall_core::sol_log_compute_units_();
+        ::solana_syscall_core::sol_log_compute_units_();
     }
     #[cfg(not(target_os = "solana"))]
     crate::program_stubs::sol_log_compute_units();

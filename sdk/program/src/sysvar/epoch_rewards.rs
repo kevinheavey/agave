@@ -130,7 +130,7 @@
 //! ```
 
 pub use crate::epoch_rewards::EpochRewards;
-use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
+use {crate::{impl_sysvar_get, sysvar::Sysvar}, solana_msg_and_friends::program_error::ProgramError};
 
 crate::declare_sysvar_id!("SysvarEpochRewards1111111111111111111111111", EpochRewards);
 

@@ -1,6 +1,7 @@
 //! Utility functions
 use {
-    crate::{program_error::ProgramError, stake::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION},
+    crate::{ stake::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION},
+    solana_msg_and_friends::program_error::ProgramError,
     solana_clock::Epoch,
 };
 

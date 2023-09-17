@@ -5,6 +5,7 @@ use {
     crate::msg,
     borsh::maybestd::io::Error as BorshIoError,
     num_traits::FromPrimitive,
+    serde::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
     solana_instruction::{
         InstructionError, ACCOUNT_ALREADY_INITIALIZED, ACCOUNT_BORROW_FAILED,

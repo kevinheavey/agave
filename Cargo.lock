@@ -1474,6 +1474,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-msg-and-friends"
+version = "1.17.0"
+dependencies = [
+ "base64 0.21.4",
+ "bincode",
+ "borsh 0.10.3",
+ "itertools",
+ "lazy_static",
+ "num-traits",
+ "rustversion",
+ "serde",
+ "solana-clock",
+ "solana-decode-error",
+ "solana-instruction",
+ "solana-pubkey",
+ "solana-syscall-core",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-native-programs"
 version = "1.17.0"
 dependencies = [
@@ -1546,6 +1566,7 @@ dependencies = [
  "solana-instruction",
  "solana-keccak",
  "solana-logger",
+ "solana-msg-and-friends",
  "solana-native-programs",
  "solana-poseidon",
  "solana-pubkey",

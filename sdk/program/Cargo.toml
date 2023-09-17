@@ -41,6 +41,7 @@ solana-decode-error = { workspace = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
 solana-keccak = { workspace = true }
+solana-msg-and-friends = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-poseidon = { workspace = true }
 solana-pubkey = { workspace = true }

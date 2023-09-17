@@ -126,7 +126,7 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
+use {crate::{impl_sysvar_get, sysvar::Sysvar}, solana_msg_and_friends::program_error::ProgramError};
 pub use solana_clock::Clock;
 
 crate::declare_sysvar_id!("SysvarC1ock11111111111111111111111111111111", Clock);

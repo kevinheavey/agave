@@ -470,15 +470,12 @@
 // Allows macro expansion of `use ::solana_program::*` to work within this crate
 extern crate self as solana_program;
 
-pub mod account_info;
 pub mod address_lookup_table;
 pub mod borsh;
 pub mod borsh0_10;
 pub mod borsh0_9;
 pub mod bpf_loader_upgradeable;
 pub mod compute_units;
-pub mod debug_account_data;
-pub mod entrypoint;
 pub mod entrypoint_deprecated;
 pub mod epoch_rewards;
 pub mod epoch_schedule;
@@ -490,16 +487,12 @@ pub mod loader_instruction;
 pub mod loader_upgradeable_instruction;
 pub mod loader_v4;
 pub mod loader_v4_instruction;
-pub mod log;
 pub mod message;
 pub mod native_token;
 pub mod nonce;
 pub mod program;
-pub mod program_error;
-pub mod program_memory;
 pub mod program_option;
 pub mod program_pack;
-pub mod program_stubs;
 pub mod program_utils;
 pub mod serde_varint;
 pub mod serialize_utils;
@@ -529,7 +522,8 @@ pub use {
     solana_big_mod_exp as big_mod_exp,
     solana_keccak as keccak,
     solana_rent as rent,
-    solana_secp256k1_recover as secp256k1_recover
+    solana_secp256k1_recover as secp256k1_recover,
+    solana_msg_and_friends::{account_info, debug_account_data, entrypoint, log, msg, program_error, program_memory, program_stubs, custom_heap_default, custom_panic_default},
 };
 
 /// The [config native program][np].

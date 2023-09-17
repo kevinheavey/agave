@@ -8,6 +8,6 @@ pub fn sol_remaining_compute_units() -> u64 {
 
     #[cfg(not(target_os = "solana"))]
     {
-        crate::program_stubs::sol_remaining_compute_units()
+        solana_msg_and_friends::program_stubs::sol_remaining_compute_units()
     }
 }

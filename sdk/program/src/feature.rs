@@ -13,7 +13,10 @@
 
 use {
     crate::{
-        account_info::AccountInfo, program_error::ProgramError, system_instruction,
+        system_instruction,
+    },
+    solana_msg_and_friends::{
+        account_info::AccountInfo, program_error::ProgramError,
     },
     solana_clock::Slot,
     solana_instruction::Instruction,
