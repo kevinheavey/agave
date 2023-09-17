@@ -3,11 +3,12 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{signature::PresignerError, transaction::TransactionError},
+    crate::signature::PresignerError,
     itertools::Itertools,
     solana_derivation_path::DerivationPath,
     solana_pubkey::Pubkey,
     solana_signature_core::Signature,
+    solana_transaction_error::TransactionError,
     std::{
         error,
         fs::{self, File, OpenOptions},

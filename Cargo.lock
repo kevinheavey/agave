@@ -1812,6 +1812,7 @@ dependencies = [
  "solana-stake-history",
  "solana-system-instruction-core",
  "solana-sysvar-core",
+ "solana-transaction-error",
  "solana-wasm-bindgen",
  "static_assertions",
  "thiserror",
@@ -1962,6 +1963,17 @@ dependencies = [
  "solana-slot-hashes",
  "solana-slot-history",
  "solana-stake-history",
+]
+
+[[package]]
+name = "solana-transaction-error"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-instruction",
+ "solana-message",
+ "solana-sanitize",
+ "thiserror",
 ]
 
 [[package]]

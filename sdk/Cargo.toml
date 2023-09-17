@@ -94,6 +94,7 @@ solana-signature-core = { workspace = true }
 solana-stake-history = { workspace = true }
 solana-system-instruction-core = { workspace = true }
 solana-sysvar-core = { workspace = true }
+solana-transaction-error = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 uriparse = { workspace = true }

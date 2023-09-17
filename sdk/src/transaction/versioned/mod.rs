@@ -9,11 +9,12 @@ use {
         sanitize::SanitizeError,
         signer::SignerError,
         signers::Signers,
-        transaction::{Result, Transaction, TransactionError},
+        transaction::{Result, Transaction},
     },
     serde::Serialize,
     solana_short_vec as short_vec,
     solana_signature_core::Signature,
+    solana_transaction_error::TransactionError,
     std::cmp::Ordering,
 };
 

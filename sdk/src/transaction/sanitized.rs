@@ -13,11 +13,12 @@ use {
         precompiles::verify_if_precompile,
         sanitize::Sanitize,
         solana_sdk::feature_set,
-        transaction::{Result, Transaction, TransactionError, VersionedTransaction},
+        transaction::{Result, Transaction, VersionedTransaction},
     },
     solana_message::SanitizedVersionedMessage,
     solana_pubkey::Pubkey,
     solana_signature_core::Signature,
+    solana_transaction_error::TransactionError,
 };
 
 /// Maximum number of accounts that a transaction may lock.

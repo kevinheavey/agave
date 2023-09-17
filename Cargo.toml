@@ -128,6 +128,7 @@ solana-stake-history = { path = "new_crates/stake-history" }
 solana-syscall-core = { path = "new_crates/syscall-core" }
 solana-system-instruction-core = { path = "new_crates/system-instruction-core" }
 solana-sysvar-core = { path = "new_crates/sysvar-core" }
+solana-transaction-error = { path = "new_crates/transaction-error"}
 solana-wasm-bindgen = { path = "new_crates/wasm-bindgen" }
 static_assertions = "1.1.0"
 syn = "2.0"
