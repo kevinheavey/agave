@@ -10,7 +10,7 @@ edition = { workspace = true }
 [dependencies]
 bs58 = { workspace = true }
 ed25519-dalek = { workspace = true }
-generic-array = { workspace = true }
+generic-array = { workspace = true, features = ["serde"] }
 rand = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 solana-sanitize = { workspace = true }

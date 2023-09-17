@@ -10,7 +10,6 @@ use {
         native_token::lamports_to_sol,
         poh_config::PohConfig,
         shred_version::compute_shred_version,
-        signature::{Keypair, Signer},
         timing::years_as_slots,
     },
     bincode::{deserialize, serialize},
@@ -21,6 +20,7 @@ use {
     solana_hash::{hash, Hash},
     solana_pubkey::Pubkey,
     solana_rent::Rent,
+    solana_signer::{keypair::Keypair, Signer},
     std::{
         collections::BTreeMap,
         fmt,

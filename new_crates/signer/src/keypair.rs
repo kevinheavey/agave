@@ -1,7 +1,5 @@
-#![cfg(feature = "full")]
-
 use {
-    crate::signer::{EncodableKey, EncodableKeypair, SeedDerivable, Signer, SignerError},
+    crate::{EncodableKey, EncodableKeypair, SeedDerivable, Signer, SignerError},
     ed25519_dalek::Signer as DalekSigner,
     ed25519_dalek_bip32::Error as Bip32Error,
     hmac::Hmac,

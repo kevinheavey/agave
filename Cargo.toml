@@ -79,6 +79,7 @@ qstring = "0.7.2"
 qualifier_attr = { version = "0.2.2", default-features = false }
 quote = "1.0"
 rand = "0.8.5"
+rand0-7 = { package = "rand", version = "0.7" }
 rustc_version = "0.4"
 rustversion = "1.0.14"
 scopeguard = "1.2.0"
@@ -121,6 +122,7 @@ solana-sdk = { path = "sdk", version = "=1.17.0" }
 solana-sdk-macro = { path = "sdk/macro", version = "=1.17.0" }
 solana-short-vec = { path = "new_crates/short-vec" }
 solana-signature-core = { path = "new_crates/signature-core" }
+solana-signer = { path = "new_crates/signer" }
 solana-slot-hashes = { path = "new_crates/slot-hashes" }
 solana-slot-history = { path = "new_crates/slot-history" }
 solana-stable-layout = { path = "new_crates/stable-layout" }

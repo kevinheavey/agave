@@ -2,15 +2,15 @@
 #![cfg(feature = "full")]
 
 // legacy module paths
-pub use crate::signer::{keypair::*, null_signer::*, presigner::*, *};
 pub use solana_signature_core::Signature;
+pub use solana_signer::{keypair::*, null_signer::*, presigner::*, *};
 use {
     solana_pubkey::Pubkey,
     std::borrow::{Borrow, Cow},
 };
 
 pub trait Signable {
-    fn sign(&mut self, keypair: &Keypair) {
+    fn sign(&mut self, keypair: &solana_signer::keypair::Keypair) {
         let signature = keypair.sign_message(self.signable_data().borrow());
         self.set_signature(signature);
     }

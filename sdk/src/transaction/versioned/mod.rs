@@ -4,16 +4,16 @@
 
 use {
     crate::{
-        hash::Hash,
-        message::VersionedMessage,
-        sanitize::SanitizeError,
-        signer::SignerError,
         signers::Signers,
         transaction::{Result, Transaction},
     },
     serde::Serialize,
+    solana_hash::Hash,
+    solana_message::VersionedMessage,
+    solana_sanitize::SanitizeError,
     solana_short_vec as short_vec,
     solana_signature_core::Signature,
+    solana_signer::SignerError,
     solana_transaction_error::TransactionError,
     std::cmp::Ordering,
 };

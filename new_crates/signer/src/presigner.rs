@@ -1,7 +1,5 @@
-#![cfg(feature = "full")]
-
 use {
-    crate::signer::{Signer, SignerError},
+    crate::{Signer, SignerError},
     solana_pubkey::Pubkey,
     solana_signature_core::Signature,
     thiserror::Error,
@@ -61,7 +59,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::signer::keypair::keypair_from_seed};
+    use {super::*, crate::keypair::keypair_from_seed};
 
     #[test]
     fn test_presigner() {

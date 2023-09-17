@@ -1,0 +1,29 @@
+[package]
+name = "solana-signer"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+bs58 = { workspace = true }
+ed25519-dalek = { workspace = true }
+ed25519-dalek-bip32 = { workspace = true }
+hmac = { workspace = true }
+itertools = { workspace = true }
+pbkdf2 = { workspace = true }
+sha2 = { workspace = true }
+rand0-7 = { workspace = true }
+serde_json = { workspace = true }
+solana-derivation-path = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-signature-core = { workspace = true }
+solana-transaction-error = { workspace = true }
+thiserror = { workspace = true }
+wasm-bindgen = { workspace = true }
+
+[dev-dependencies]
+tiny-bip39 = { workspace = true }
+static_assertions = { workspace = true }

@@ -1809,6 +1809,7 @@ dependencies = [
  "solana-sdk-macro",
  "solana-short-vec",
  "solana-signature-core",
+ "solana-signer",
  "solana-stake-history",
  "solana-system-instruction-core",
  "solana-sysvar-core",
@@ -1875,6 +1876,29 @@ dependencies = [
  "solana-pubkey",
  "solana-sanitize",
  "thiserror",
+]
+
+[[package]]
+name = "solana-signer"
+version = "1.17.0"
+dependencies = [
+ "bs58",
+ "ed25519-dalek",
+ "ed25519-dalek-bip32",
+ "hmac 0.12.1",
+ "itertools",
+ "pbkdf2 0.11.0",
+ "rand 0.7.3",
+ "serde_json",
+ "sha2 0.10.7",
+ "solana-derivation-path",
+ "solana-pubkey",
+ "solana-signature-core",
+ "solana-transaction-error",
+ "static_assertions",
+ "thiserror",
+ "tiny-bip39",
+ "wasm-bindgen",
 ]
 
 [[package]]

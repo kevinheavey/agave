@@ -37,7 +37,7 @@
 extern crate self as solana_sdk;
 
 #[cfg(feature = "full")]
-pub use signer::signers;
+pub use solana_signer::signers;
 // These solana_program imports could be *-imported, but that causes a bunch of
 // confusing duplication in the docs due to a rustdoc bug. #26211
 #[allow(deprecated)]
@@ -57,7 +57,7 @@ pub use solana_program::{
 };
 pub use {
     solana_decode_error as decode_error, solana_derivation_path as derivation_path,
-    solana_sanitize as sanitize, solana_wasm_bindgen as wasm_bindgen,
+    solana_sanitize as sanitize, solana_signer as signer, solana_wasm_bindgen as wasm_bindgen,
 };
 
 pub mod account;
@@ -96,7 +96,6 @@ pub mod rpc_port;
 pub mod secp256k1_instruction;
 pub mod shred_version;
 pub mod signature;
-pub mod signer;
 pub mod system_transaction;
 pub mod timing;
 pub mod transaction;

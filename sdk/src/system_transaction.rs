@@ -2,13 +2,11 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{
-        hash::Hash,
-        message::Message,
-        signature::{Keypair, Signer},
-        transaction::Transaction,
-    },
+    crate::transaction::Transaction,
+    solana_hash::Hash,
+    solana_message::Message,
     solana_pubkey::Pubkey,
+    solana_signer::{keypair::Keypair, Signer},
 };
 
 /// Create and sign new SystemInstruction::CreateAccount transaction

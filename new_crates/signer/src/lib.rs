@@ -1,9 +1,5 @@
-//! Abstractions and implementations for transaction signers.
-
-#![cfg(feature = "full")]
-
 use {
-    crate::signature::PresignerError,
+    crate::presigner::PresignerError,
     itertools::Itertools,
     solana_derivation_path::DerivationPath,
     solana_pubkey::Pubkey,
@@ -196,7 +192,7 @@ pub trait EncodableKeypair: EncodableKey {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::signer::keypair::Keypair};
+    use {super::*, crate::keypair::Keypair};
 
     fn pubkeys(signers: &[&dyn Signer]) -> Vec<Pubkey> {
         signers.iter().map(|x| x.pubkey()).collect()

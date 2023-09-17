@@ -8,6 +8,6 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-bv = { workspace = true }
+bv = { workspace = true, features = ["serde"] }
 serde = { workspace = true, features = ["derive"] }
 solana-clock = { workspace = true }
