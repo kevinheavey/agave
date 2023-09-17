@@ -1554,6 +1554,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-epoch-schedule"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-clock",
+ "solana-sdk-macro 1.17.0",
+]
+
+[[package]]
 name = "solana-frozen-abi"
 version = "1.16.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1814,6 +1823,7 @@ dependencies = [
  "solana-blake3",
  "solana-clock",
  "solana-decode-error",
+ "solana-epoch-schedule",
  "solana-hash",
  "solana-instruction",
  "solana-keccak",
@@ -1980,12 +1990,14 @@ dependencies = [
  "solana-clock",
  "solana-decode-error",
  "solana-derivation-path",
+ "solana-epoch-schedule",
  "solana-hash",
  "solana-instruction",
  "solana-logger 1.17.0",
  "solana-native-programs",
  "solana-program 1.17.0",
  "solana-pubkey",
+ "solana-rent",
  "solana-sanitize",
  "solana-sdk 1.17.0",
  "solana-sdk-macro 1.17.0",

@@ -478,7 +478,6 @@ pub mod bpf_loader_upgradeable;
 pub mod compute_units;
 pub mod entrypoint_deprecated;
 pub mod epoch_rewards;
-pub mod epoch_schedule;
 pub mod feature;
 pub mod fee_calculator;
 pub mod lamports;
@@ -534,6 +533,7 @@ pub use {
     solana_poseidon as poseidon, solana_pubkey as pubkey, solana_rent as rent,
     solana_secp256k1_recover as secp256k1_recover, solana_stable_layout as stable_layout,
     solana_wasm_bindgen::wasm_bindgen,
+    solana_epoch_schedule as epoch_schedule,
 };
 
 /// The [config native program][np].

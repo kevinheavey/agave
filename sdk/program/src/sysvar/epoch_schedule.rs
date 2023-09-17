@@ -125,7 +125,7 @@
 //! #
 //! # Ok::<(), anyhow::Error>(())
 //! ```
-pub use crate::epoch_schedule::EpochSchedule;
+pub use solana_epoch_schedule::EpochSchedule;
 use {
     crate::{impl_sysvar_get, sysvar::Sysvar},
     solana_msg_and_friends::program_error::ProgramError,

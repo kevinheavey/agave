@@ -97,6 +97,7 @@ solana-clock = { path = "new_crates/clock" }
 solana-decode-error = { path = "new_crates/decode-error" }
 solana-derivation-path = { path = "new_crates/derivation-path" }
 solana-download-utils = { path = "download-utils", version = "=1.17.0" }
+solana-epoch-schedule = { path = "new_crates/epoch-schedule" }
 solana-hash = { path = "new_crates/hash" }
 solana-instruction = { path = "new_crates/instruction" }
 solana-keccak = { path = "new_crates/keccak" }

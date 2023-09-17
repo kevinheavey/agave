@@ -5,12 +5,10 @@
 use {
     crate::{
         account::{Account, AccountSharedData},
-        epoch_schedule::EpochSchedule,
         fee_calculator::FeeRateGovernor,
         inflation::Inflation,
         native_token::lamports_to_sol,
         poh_config::PohConfig,
-        rent::Rent,
         shred_version::compute_shred_version,
         signature::{Keypair, Signer},
         timing::years_as_slots,
@@ -19,8 +17,10 @@ use {
     chrono::{TimeZone, Utc},
     memmap2::Mmap,
     solana_clock::{UnixTimestamp, DEFAULT_TICKS_PER_SLOT},
+    solana_epoch_schedule::EpochSchedule,
     solana_hash::{hash, Hash},
     solana_pubkey::Pubkey,
+    solana_rent::Rent,
     std::{
         collections::BTreeMap,
         fmt,
