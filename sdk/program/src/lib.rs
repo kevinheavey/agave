@@ -490,7 +490,6 @@ pub mod nonce;
 pub mod program;
 pub mod program_option;
 pub mod program_pack;
-pub mod program_utils;
 pub mod serde_varint;
 pub mod stake;
 pub mod syscalls;
@@ -526,10 +525,11 @@ pub use {
         log, msg, program_error, program_memory, program_stubs,
     },
     solana_native_programs::system_program,
-    solana_poseidon as poseidon, solana_pubkey as pubkey, solana_rent as rent,
-    solana_secp256k1_recover as secp256k1_recover, solana_serialize_utils as serialize_utils,
-    solana_slot_hashes as slot_hashes, solana_slot_history as slot_history,
-    solana_stable_layout as stable_layout, solana_stake_history as stake_history,
+    solana_poseidon as poseidon, solana_program_utils as program_utils, solana_pubkey as pubkey,
+    solana_rent as rent, solana_secp256k1_recover as secp256k1_recover,
+    solana_serialize_utils as serialize_utils, solana_slot_hashes as slot_hashes,
+    solana_slot_history as slot_history, solana_stable_layout as stable_layout,
+    solana_stake_history as stake_history,
     solana_sysvar_core::{declare_deprecated_sysvar_id, declare_sysvar_id, impl_sysvar_get},
     solana_wasm_bindgen::wasm_bindgen,
 };

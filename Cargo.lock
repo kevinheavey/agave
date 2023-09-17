@@ -1637,6 +1637,7 @@ dependencies = [
  "solana-native-programs",
  "solana-nonce-core",
  "solana-poseidon",
+ "solana-program-utils",
  "solana-pubkey",
  "solana-rent",
  "solana-sanitize",
@@ -1657,6 +1658,17 @@ dependencies = [
  "tiny-bip39",
  "wasm-bindgen",
  "zeroize",
+]
+
+[[package]]
+name = "solana-program-utils"
+version = "1.17.0"
+dependencies = [
+ "bincode",
+ "serde",
+ "solana-instruction",
+ "solana-system-instruction-core",
+ "thiserror",
 ]
 
 [[package]]
@@ -1757,6 +1769,7 @@ dependencies = [
  "solana-native-programs",
  "solana-nonce-core",
  "solana-program",
+ "solana-program-utils",
  "solana-pubkey",
  "solana-rent",
  "solana-sanitize",

@@ -49,6 +49,7 @@ solana-msg-and-friends = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-nonce-core = { workspace = true }
 solana-poseidon = { workspace = true }
+solana-program-utils = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-rent = { workspace = true }
 solana-serialize-utils = { workspace = true }
