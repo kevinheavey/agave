@@ -14,7 +14,7 @@
 pub use solana_clock::{Epoch, Slot, DEFAULT_SLOTS_PER_EPOCH};
 use {
     serde::{Deserialize, Serialize},
-    solana_sdk_macro::CloneZeroed
+    solana_sdk_macro::CloneZeroed,
 };
 
 /// The default number of slots before an epoch starts to calculate the leader schedule.

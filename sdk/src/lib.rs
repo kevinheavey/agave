@@ -56,8 +56,8 @@ pub use solana_program::{
     unchecked_div_by_const, vote,
 };
 pub use {
-    solana_decode_error as decode_error, solana_sanitize as sanitize,
-    solana_wasm_bindgen as wasm_bindgen, solana_derivation_path as derivation_path,
+    solana_decode_error as decode_error, solana_derivation_path as derivation_path,
+    solana_sanitize as sanitize, solana_wasm_bindgen as wasm_bindgen,
 };
 
 pub mod account;
