@@ -74,6 +74,7 @@ sha2 = { workspace = true }
 sha3 = { workspace = true, optional = true }
 solana-clock = { workspace = true }
 solana-decode-error = { workspace = true }
+solana-derivation-path = { workspace = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
 solana-logger = { workspace = true, optional = true }

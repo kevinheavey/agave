@@ -2,7 +2,6 @@
 
 use {
     crate::{
-        derivation_path::DerivationPath,
         signature::Signature,
         signer::{EncodableKey, EncodableKeypair, SeedDerivable, Signer, SignerError},
     },
@@ -10,6 +9,7 @@ use {
     ed25519_dalek_bip32::Error as Bip32Error,
     hmac::Hmac,
     rand0_7::{rngs::OsRng, CryptoRng, RngCore},
+    solana_derivation_path::DerivationPath,
     solana_pubkey::Pubkey,
     std::{
         error,

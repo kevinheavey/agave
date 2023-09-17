@@ -57,7 +57,7 @@ pub use solana_program::{
 };
 pub use {
     solana_decode_error as decode_error, solana_sanitize as sanitize,
-    solana_wasm_bindgen as wasm_bindgen,
+    solana_wasm_bindgen as wasm_bindgen, solana_derivation_path as derivation_path
 };
 
 pub mod account;
@@ -65,7 +65,6 @@ pub mod account_utils;
 pub mod client;
 pub mod commitment_config;
 pub mod compute_budget;
-pub mod derivation_path;
 pub mod deserialize_utils;
 pub mod ed25519_instruction;
 pub mod entrypoint;

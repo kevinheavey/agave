@@ -4,11 +4,11 @@
 
 use {
     crate::{
-        derivation_path::DerivationPath,
         signature::{PresignerError, Signature},
         transaction::TransactionError,
     },
     itertools::Itertools,
+    solana_derivation_path::DerivationPath,
     solana_pubkey::Pubkey,
     std::{
         error,

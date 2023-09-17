@@ -1543,6 +1543,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-derivation-path"
+version = "1.17.0"
+dependencies = [
+ "assert_matches",
+ "derivation-path",
+ "qstring",
+ "thiserror",
+ "uriparse",
+]
+
+[[package]]
 name = "solana-frozen-abi"
 version = "1.16.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1968,6 +1979,7 @@ dependencies = [
  "sha3",
  "solana-clock",
  "solana-decode-error",
+ "solana-derivation-path",
  "solana-hash",
  "solana-instruction",
  "solana-logger 1.17.0",

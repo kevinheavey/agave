@@ -1,0 +1,17 @@
+[package]
+name = "solana-derivation-path"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+derivation-path = { workspace = true }
+qstring = { workspace = true }
+thiserror = { workspace = true }
+uriparse = { workspace = true }
+
+[dev-dependencies]
+assert_matches = { workspace = true }
