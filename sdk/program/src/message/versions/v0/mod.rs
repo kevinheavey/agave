@@ -11,14 +11,12 @@
 
 pub use loaded::*;
 use {
-    crate::{
-        address_lookup_table_account::AddressLookupTableAccount,
-        message::{
-            compiled_keys::{CompileError, CompiledKeys},
-            legacy::is_builtin_key_or_sysvar,
-            AccountKeys, MessageHeader, MESSAGE_VERSION_PREFIX,
-        },
+    crate::message::{
+        compiled_keys::{CompileError, CompiledKeys},
+        legacy::is_builtin_key_or_sysvar,
+        AccountKeys, MessageHeader, MESSAGE_VERSION_PREFIX,
     },
+    solana_address_lookup_table_core::AddressLookupTableAccount,
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
     solana_native_programs::bpf_loader_upgradeable,

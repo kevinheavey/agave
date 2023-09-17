@@ -504,7 +504,7 @@ pub mod wasm;
     note = "Please use `solana_sdk::address_lookup_table::AddressLookupTableAccount` instead"
 )]
 pub mod address_lookup_table_account {
-    pub use crate::address_lookup_table::AddressLookupTableAccount;
+    pub use solana_address_lookup_table_core::AddressLookupTableAccount;
 }
 
 pub mod incinerator {

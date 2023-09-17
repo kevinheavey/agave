@@ -1349,6 +1349,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ecab6c735a6bb4139c0caafd0cc3635748bbb3acf4550e8138122099251f309"
 
 [[package]]
+name = "solana-address-lookup-table-core"
+version = "1.17.0"
+dependencies = [
+ "serde",
+ "solana-clock",
+ "solana-instruction",
+ "solana-native-programs",
+ "solana-pubkey",
+ "solana-slot-hashes",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-alt-bn128"
 version = "1.17.0"
 dependencies = [
@@ -1606,6 +1619,7 @@ dependencies = [
  "serde_json",
  "sha2 0.10.7",
  "sha3",
+ "solana-address-lookup-table-core",
  "solana-alt-bn128",
  "solana-atomic-u64",
  "solana-big-mod-exp",

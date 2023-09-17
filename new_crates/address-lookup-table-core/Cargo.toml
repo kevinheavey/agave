@@ -1,0 +1,17 @@
+[package]
+name = "solana-address-lookup-table-core"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+serde = { workspace = true, features = ["derive"]}
+solana-clock = { workspace = true }
+solana-instruction = { workspace = true }
+solana-native-programs = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-slot-hashes = { workspace = true }
+thiserror = { workspace = true }

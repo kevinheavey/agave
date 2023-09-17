@@ -1,113 +1,13 @@
 use {
-    serde::{Deserialize, Serialize},
-    solana_clock::Slot,
-    solana_instruction::InstructionError,
-    solana_program::address_lookup_table::error::AddressLookupError,
-    solana_pubkey::Pubkey,
-    solana_slot_hashes::{SlotHashes, MAX_ENTRIES},
+    crate::address_lookup_table::error::AddressLookupError, solana_clock::Slot,
+    solana_instruction::InstructionError, solana_pubkey::Pubkey, solana_slot_hashes::SlotHashes,
     std::borrow::Cow,
 };
 
-/// The maximum number of addresses that a lookup table can hold
-pub const LOOKUP_TABLE_MAX_ADDRESSES: usize = 256;
-
-/// The serialized size of lookup table metadata
-pub const LOOKUP_TABLE_META_SIZE: usize = 56;
-
-/// Activation status of a lookup table
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub enum LookupTableStatus {
-    Activated,
-    Deactivating { remaining_blocks: usize },
-    Deactivated,
-}
-
-/// Address lookup table metadata
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
-pub struct LookupTableMeta {
-    /// Lookup tables cannot be closed until the deactivation slot is
-    /// no longer "recent" (not accessible in the `SlotHashes` sysvar).
-    pub deactivation_slot: Slot,
-    /// The slot that the table was last extended. Address tables may
-    /// only be used to lookup addresses that were extended before
-    /// the current bank's slot.
-    pub last_extended_slot: Slot,
-    /// The start index where the table was last extended from during
-    /// the `last_extended_slot`.
-    pub last_extended_slot_start_index: u8,
-    /// Authority address which must sign for each modification.
-    pub authority: Option<Pubkey>,
-    // Padding to keep addresses 8-byte aligned
-    pub _padding: u16,
-    // Raw list of addresses follows this serialized structure in
-    // the account's data, starting from `LOOKUP_TABLE_META_SIZE`.
-}
-
-impl Default for LookupTableMeta {
-    fn default() -> Self {
-        Self {
-            deactivation_slot: Slot::MAX,
-            last_extended_slot: 0,
-            last_extended_slot_start_index: 0,
-            authority: None,
-            _padding: 0,
-        }
-    }
-}
-
-impl LookupTableMeta {
-    pub fn new(authority: Pubkey) -> Self {
-        LookupTableMeta {
-            authority: Some(authority),
-            ..LookupTableMeta::default()
-        }
-    }
-
-    /// Returns whether the table is considered active for address lookups
-    pub fn is_active(&self, current_slot: Slot, slot_hashes: &SlotHashes) -> bool {
-        match self.status(current_slot, slot_hashes) {
-            LookupTableStatus::Activated => true,
-            LookupTableStatus::Deactivating { .. } => true,
-            LookupTableStatus::Deactivated => false,
-        }
-    }
-
-    /// Return the current status of the lookup table
-    pub fn status(&self, current_slot: Slot, slot_hashes: &SlotHashes) -> LookupTableStatus {
-        if self.deactivation_slot == Slot::MAX {
-            LookupTableStatus::Activated
-        } else if self.deactivation_slot == current_slot {
-            LookupTableStatus::Deactivating {
-                remaining_blocks: MAX_ENTRIES.saturating_add(1),
-            }
-        } else if let Some(slot_hash_position) = slot_hashes.position(&self.deactivation_slot) {
-            // Deactivation requires a cool-down period to give in-flight transactions
-            // enough time to land and to remove indeterminism caused by transactions loading
-            // addresses in the same slot when a table is closed. The cool-down period is
-            // equivalent to the amount of time it takes for a slot to be removed from the
-            // slot hash list.
-            //
-            // By using the slot hash to enforce the cool-down, there is a side effect
-            // of not allowing lookup tables to be recreated at the same derived address
-            // because tables must be created at an address derived from a recent slot.
-            LookupTableStatus::Deactivating {
-                remaining_blocks: MAX_ENTRIES.saturating_sub(slot_hash_position),
-            }
-        } else {
-            LookupTableStatus::Deactivated
-        }
-    }
-}
-
-/// Program account states
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
-#[allow(clippy::large_enum_variant)]
-pub enum ProgramState {
-    /// Account is not initialized.
-    Uninitialized,
-    /// Initialized `LookupTable` account.
-    LookupTable(LookupTableMeta),
-}
+pub use solana_address_lookup_table_core::state::{
+    LookupTableMeta, LookupTableStatus, ProgramState, LOOKUP_TABLE_MAX_ADDRESSES,
+    LOOKUP_TABLE_META_SIZE,
+};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AddressLookupTable<'a> {
@@ -215,7 +115,7 @@ impl<'a> AddressLookupTable<'a> {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_hash::Hash};
+    use {super::*, solana_hash::Hash, solana_slot_hashes::MAX_ENTRIES};
 
     impl AddressLookupTable<'_> {
         fn new_for_tests(meta: LookupTableMeta, num_addresses: usize) -> Self {
@@ -228,18 +128,16 @@ mod tests {
         }
     }
 
-    impl LookupTableMeta {
-        fn new_for_tests() -> Self {
-            Self {
-                authority: Some(Pubkey::new_unique()),
-                ..LookupTableMeta::default()
-            }
+    fn new_lookup_meta_for_tests() -> LookupTableMeta {
+        LookupTableMeta {
+            authority: Some(Pubkey::new_unique()),
+            ..LookupTableMeta::default()
         }
     }
 
     #[test]
     fn test_lookup_table_meta_size() {
-        let lookup_table = ProgramState::LookupTable(LookupTableMeta::new_for_tests());
+        let lookup_table = ProgramState::LookupTable(new_lookup_meta_for_tests());
         let meta_size = bincode::serialized_size(&lookup_table).unwrap();
         assert!(meta_size as usize <= LOOKUP_TABLE_META_SIZE);
         assert_eq!(meta_size as usize, 56);
@@ -320,7 +218,7 @@ mod tests {
 
     #[test]
     fn test_overwrite_meta_data() {
-        let meta = LookupTableMeta::new_for_tests();
+        let meta = new_lookup_meta_for_tests();
         let empty_table = ProgramState::LookupTable(meta.clone());
         let mut serialized_table_1 = bincode::serialize(&empty_table).unwrap();
         serialized_table_1.resize(LOOKUP_TABLE_META_SIZE, 0);
@@ -346,7 +244,7 @@ mod tests {
         );
 
         fn test_case(num_addresses: usize) {
-            let lookup_table_meta = LookupTableMeta::new_for_tests();
+            let lookup_table_meta = new_lookup_meta_for_tests();
             let address_table = AddressLookupTable::new_for_tests(lookup_table_meta, num_addresses);
             let address_table_data =
                 AddressLookupTable::serialize_for_tests(address_table.clone()).unwrap();
