@@ -29,6 +29,6 @@ wasm-bindgen = { workspace = true }
 solana-syscall-core = { workspace = true }
 
 [dev-dependencies]
-anyhow = { wokspace = true }
-solana-program = { wokspace = true }
-solana-sdk = { wokspace = true }
+anyhow = { workspace = true }
+solana-program = { workspace = true }
+solana-sdk = { workspace = true }
