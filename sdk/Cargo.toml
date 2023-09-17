@@ -86,6 +86,7 @@ solana-nonce-core = { workspace = true }
 solana-packet = { workspace = true }
 solana-program = { workspace = true }
 solana-program-utils = { workspace = true }
+solana-program-utils-sdk = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-rent = { workspace = true }
 solana-sanitize = { workspace = true }

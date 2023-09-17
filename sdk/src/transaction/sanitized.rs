@@ -12,7 +12,7 @@ use {
     solana_message::{
         legacy,
         v0::{self, LoadedAddresses},
-        LegacyMessage, SanitizedMessage, VersionedMessage, SanitizedVersionedMessage
+        LegacyMessage, SanitizedMessage, SanitizedVersionedMessage, VersionedMessage,
     },
     solana_pubkey::Pubkey,
     solana_sanitize::Sanitize,

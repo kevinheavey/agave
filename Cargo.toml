@@ -114,6 +114,7 @@ solana-packet = { path = "new_crates/packet" }
 solana-poseidon = { path = "new_crates/poseidon" }
 solana-program = { path = "sdk/program", version = "=1.17.0" }
 solana-program-utils = { path = "new_crates/program-utils" }
+solana-program-utils-sdk = { path = "new_crates/program-utils-sdk" }
 solana-pubkey = { path = "new_crates/pubkey" }
 solana-rent = { path = "new_crates/rent" }
 solana-sanitize = { path = "new_crates/sanitize" }

@@ -1715,6 +1715,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-program-utils-sdk"
+version = "1.17.0"
+dependencies = [
+ "bincode",
+ "serde",
+ "solana-instruction",
+ "solana-packet",
+ "solana-program-utils",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-pubkey"
 version = "1.17.0"
 dependencies = [
@@ -1815,6 +1827,7 @@ dependencies = [
  "solana-packet",
  "solana-program",
  "solana-program-utils",
+ "solana-program-utils-sdk",
  "solana-pubkey",
  "solana-rent",
  "solana-sanitize",

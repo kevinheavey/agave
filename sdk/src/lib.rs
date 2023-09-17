@@ -57,8 +57,8 @@ pub use solana_program::{
 };
 pub use {
     solana_decode_error as decode_error, solana_derivation_path as derivation_path,
+    solana_packet as packet, solana_program_utils_sdk as program_utils,
     solana_sanitize as sanitize, solana_signer as signer, solana_wasm_bindgen as wasm_bindgen,
-    solana_packet as packet,
 };
 
 pub mod account;
@@ -87,7 +87,6 @@ pub mod nonce_account;
 pub mod offchain_message;
 pub mod poh_config;
 pub mod precompiles;
-pub mod program_utils;
 pub mod pubkey;
 pub mod quic;
 pub mod recent_blockhashes_account;
