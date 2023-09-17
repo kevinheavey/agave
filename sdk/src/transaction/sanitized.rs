@@ -4,19 +4,18 @@ pub use solana_message::{AddressLoader, SimpleAddressLoader};
 use {
     super::SanitizedVersionedTransaction,
     crate::{
-        hash::Hash,
-        message::{
-            legacy,
-            v0::{self, LoadedAddresses},
-            LegacyMessage, SanitizedMessage, VersionedMessage,
-        },
         precompiles::verify_if_precompile,
-        sanitize::Sanitize,
         solana_sdk::feature_set,
         transaction::{Result, Transaction, VersionedTransaction},
     },
-    solana_message::SanitizedVersionedMessage,
+    solana_hash::Hash,
+    solana_message::{
+        legacy,
+        v0::{self, LoadedAddresses},
+        LegacyMessage, SanitizedMessage, VersionedMessage, SanitizedVersionedMessage
+    },
     solana_pubkey::Pubkey,
+    solana_sanitize::Sanitize,
     solana_signature_core::Signature,
     solana_transaction_error::TransactionError,
 };

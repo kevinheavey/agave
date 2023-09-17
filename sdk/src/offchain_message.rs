@@ -45,11 +45,9 @@ pub enum MessageFormat {
 pub mod v0 {
     use {
         super::{is_printable_ascii, is_utf8, MessageFormat, OffchainMessage as Base},
-        crate::{
-            hash::{Hash, Hasher},
-            packet::PACKET_DATA_SIZE,
-            sanitize::SanitizeError,
-        },
+        solana_hash::{Hash, Hasher},
+        solana_packet::PACKET_DATA_SIZE,
+        solana_sanitize::SanitizeError,
     };
 
     /// OffchainMessage Version 0.

@@ -1593,6 +1593,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-packet"
+version = "1.17.0"
+dependencies = [
+ "bincode",
+ "bitflags 2.3.3",
+ "serde",
+ "serde_with",
+ "static_assertions",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-poseidon"
 version = "1.17.0"
 dependencies = [
@@ -1800,6 +1812,7 @@ dependencies = [
  "solana-msg-and-friends",
  "solana-native-programs",
  "solana-nonce-core",
+ "solana-packet",
  "solana-program",
  "solana-program-utils",
  "solana-pubkey",

@@ -1,0 +1,18 @@
+[package]
+name = "solana-packet"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+bincode = { workspace = true }
+bitflags = { workspace = true }
+serde = { workspace = true, features = ["derive"]}
+serde_with = { workspace = true, features = ["macros"] }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+static_assertions = { workspace = true }

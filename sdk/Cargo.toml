@@ -83,6 +83,7 @@ solana-message = { workspace = true }
 solana-msg-and-friends = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-nonce-core = { workspace = true }
+solana-packet = { workspace = true }
 solana-program = { workspace = true }
 solana-program-utils = { workspace = true }
 solana-pubkey = { workspace = true }

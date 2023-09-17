@@ -110,6 +110,7 @@ solana-message = { path = "new_crates/message" }
 solana-msg-and-friends = { path = "new_crates/msg-and-friends" }
 solana-native-programs = { path = "new_crates/native-programs" }
 solana-nonce-core = { path = "new_crates/nonce-core" }
+solana-packet = { path = "new_crates/packet" }
 solana-poseidon = { path = "new_crates/poseidon" }
 solana-program = { path = "sdk/program", version = "=1.17.0" }
 solana-program-utils = { path = "new_crates/program-utils" }
