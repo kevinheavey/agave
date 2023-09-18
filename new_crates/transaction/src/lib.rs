@@ -52,7 +52,7 @@
 //! [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
 //! [`anyhow`]: https://docs.rs/anyhow
 //!
-//! ```
+//! ```ignore
 //! # use solana_sdk::example_mocks::solana_rpc_client;
 //! use anyhow::Result;
 //! use borsh::{BorshSerialize, BorshDeserialize};
@@ -109,10 +109,8 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-#![cfg(feature = "full")]
-
 use {
-    serde::Serialize,
+    serde::{Deserialize, Serialize},
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
     solana_message::Message,
@@ -207,7 +205,7 @@ impl Transaction {
     /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
@@ -286,7 +284,7 @@ impl Transaction {
     /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
@@ -365,7 +363,7 @@ impl Transaction {
     /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
@@ -441,7 +439,7 @@ impl Transaction {
     /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
@@ -649,7 +647,7 @@ impl Transaction {
     /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
@@ -787,7 +785,7 @@ impl Transaction {
     /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
-    /// ```
+    /// ```ignore
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
@@ -1111,12 +1109,10 @@ mod tests {
 
     use {
         super::*,
-        crate::{
-            hash::hash,
-            signature::{Keypair, Presigner, Signer},
-        },
         bincode::{deserialize, serialize, serialized_size},
+        solana_hash::hash,
         solana_instruction::AccountMeta,
+        solana_signer::{keypair::Keypair, presigner::Presigner, Signer},
         std::mem::size_of,
     };
 
@@ -1129,10 +1125,10 @@ mod tests {
     #[test]
     fn test_refs() {
         let key = Keypair::new();
-        let key1 = solana_sdk::pubkey::new_rand();
-        let key2 = solana_sdk::pubkey::new_rand();
-        let prog1 = solana_sdk::pubkey::new_rand();
-        let prog2 = solana_sdk::pubkey::new_rand();
+        let key1 = solana_pubkey_sdk::new_rand();
+        let key2 = solana_pubkey_sdk::new_rand();
+        let prog1 = solana_pubkey_sdk::new_rand();
+        let prog2 = solana_pubkey_sdk::new_rand();
         let instructions = vec![
             CompiledInstruction::new(3, &(), vec![0, 1]),
             CompiledInstruction::new(4, &(), vec![0, 2]),
@@ -1200,7 +1196,7 @@ mod tests {
     fn test_sanitize_txs() {
         let key = Keypair::new();
         let id0 = Pubkey::default();
-        let program_id = solana_sdk::pubkey::new_rand();
+        let program_id = solana_pubkey_sdk::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,
@@ -1299,7 +1295,7 @@ mod tests {
     fn test_transaction_minimum_serialized_size() {
         let alice_keypair = Keypair::new();
         let alice_pubkey = alice_keypair.pubkey();
-        let bob_pubkey = solana_sdk::pubkey::new_rand();
+        let bob_pubkey = solana_pubkey_sdk::new_rand();
         let ix = solana_system_instruction_core::transfer(&alice_pubkey, &bob_pubkey, 42);
 
         let expected_data_size = size_of::<u32>() + size_of::<u64>();
@@ -1377,7 +1373,7 @@ mod tests {
     #[should_panic]
     fn test_partial_sign_mismatched_key() {
         let keypair = Keypair::new();
-        let fee_payer = solana_sdk::pubkey::new_rand();
+        let fee_payer = solana_pubkey_sdk::new_rand();
         let ix = Instruction::new_with_bincode(
             Pubkey::default(),
             &0,
@@ -1460,7 +1456,7 @@ mod tests {
         let program_id = Pubkey::default();
         let keypair0 = Keypair::new();
         let id0 = keypair0.pubkey();
-        let id1 = solana_sdk::pubkey::new_rand();
+        let id1 = solana_pubkey_sdk::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,
@@ -1511,7 +1507,7 @@ mod tests {
         assert_eq!(tx.signatures[1], presigner_sig);
 
         // Wrong key should error, not panic
-        let another_pubkey = solana_sdk::pubkey::new_rand();
+        let another_pubkey = solana_pubkey_sdk::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,

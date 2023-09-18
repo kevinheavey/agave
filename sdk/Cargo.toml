@@ -91,6 +91,7 @@ solana-program = { workspace = true }
 solana-program-utils = { workspace = true }
 solana-program-utils-sdk = { workspace = true }
 solana-pubkey = { workspace = true }
+solana-pubkey-sdk = { workspace = true }
 solana-rent = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
@@ -101,6 +102,7 @@ solana-signer = { workspace = true }
 solana-stake-history = { workspace = true }
 solana-system-instruction-core = { workspace = true }
 solana-sysvar-core = { workspace = true }
+solana-transaction = { workspace = true }
 solana-transaction-error = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }

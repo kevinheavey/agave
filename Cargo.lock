@@ -1801,6 +1801,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-pubkey-sdk"
+version = "1.17.0"
+dependencies = [
+ "rand 0.8.5",
+ "serde_json",
+ "solana-pubkey",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-rent"
 version = "1.17.0"
 dependencies = [
@@ -1880,6 +1890,7 @@ dependencies = [
  "solana-program-utils",
  "solana-program-utils-sdk",
  "solana-pubkey",
+ "solana-pubkey-sdk",
  "solana-rent",
  "solana-sanitize",
  "solana-sdk",
@@ -1891,6 +1902,7 @@ dependencies = [
  "solana-stake-history",
  "solana-system-instruction-core",
  "solana-sysvar-core",
+ "solana-transaction",
  "solana-transaction-error",
  "solana-wasm-bindgen",
  "static_assertions",
@@ -2083,6 +2095,36 @@ dependencies = [
  "solana-slot-hashes",
  "solana-slot-history",
  "solana-stake-history",
+]
+
+[[package]]
+name = "solana-transaction"
+version = "1.17.0"
+dependencies = [
+ "anyhow",
+ "bincode",
+ "borsh 0.10.3",
+ "serde",
+ "solana-feature-set",
+ "solana-hash",
+ "solana-instruction",
+ "solana-message",
+ "solana-native-programs",
+ "solana-nonce-core",
+ "solana-precompiles",
+ "solana-program-utils-sdk",
+ "solana-pubkey",
+ "solana-pubkey-sdk",
+ "solana-sanitize",
+ "solana-short-vec",
+ "solana-signature-core",
+ "solana-signer",
+ "solana-system-instruction-core",
+ "solana-sysvar-core",
+ "solana-transaction-error",
+ "solana-wasm-bindgen",
+ "thiserror",
+ "wasm-bindgen",
 ]
 
 [[package]]

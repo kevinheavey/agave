@@ -1,0 +1,38 @@
+[package]
+name = "solana-transaction"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+serde = { workspace = true, features = ["derive"] }
+solana-feature-set = { workspace = true }
+solana-hash = { workspace = true }
+solana-instruction = { workspace = true }
+solana-message = { workspace = true }
+solana-native-programs = { workspace = true }
+solana-nonce-core = { workspace = true }
+solana-precompiles = { workspace = true }
+solana-program-utils-sdk = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-sanitize = { workspace = true }
+solana-short-vec = { workspace = true }
+solana-signature-core = { workspace = true }
+solana-signer = { workspace = true }
+solana-system-instruction-core = { workspace = true }
+solana-transaction-error = { workspace = true }
+solana-wasm-bindgen = { workspace = true }
+thiserror = { workspace = true }
+wasm-bindgen = { workspace = true }
+
+[dev-dependencies]
+anyhow = { workspace = true }
+bincode = { workspace = true }
+borsh = { workspace = true }
+solana-hash = { workspace = true }
+solana-signer = { workspace = true }
+solana-pubkey-sdk = { workspace = true }
+solana-sysvar-core = { workspace = true }

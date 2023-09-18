@@ -1,10 +1,7 @@
 //! Defines a transaction which supports multiple versions of messages.
-
-#![cfg(feature = "full")]
-
 use {
-    crate::transaction::{Result, Transaction},
-    serde::Serialize,
+    crate::{Result, Transaction},
+    serde::{Deserialize, Serialize},
     solana_hash::Hash,
     solana_message::VersionedMessage,
     solana_sanitize::SanitizeError,
@@ -216,12 +213,10 @@ impl VersionedTransaction {
 mod tests {
     use {
         super::*,
-        crate::{
-            message::Message as LegacyMessage,
-            signer::{keypair::Keypair, Signer},
-        },
         solana_instruction::{AccountMeta, Instruction},
+        solana_message::Message as LegacyMessage,
         solana_pubkey::Pubkey,
+        solana_signer::{keypair::Keypair, Signer},
     };
 
     #[test]

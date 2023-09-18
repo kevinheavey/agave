@@ -120,6 +120,7 @@ solana-program = { path = "sdk/program", version = "=1.17.0" }
 solana-program-utils = { path = "new_crates/program-utils" }
 solana-program-utils-sdk = { path = "new_crates/program-utils-sdk" }
 solana-pubkey = { path = "new_crates/pubkey" }
+solana-pubkey-sdk = { path = "new_crates/pubkey-sdk" }
 solana-rent = { path = "new_crates/rent" }
 solana-sanitize = { path = "new_crates/sanitize" }
 solana-secp256k1-instruction = { path = "new_crates/secp256k1-instruction" }
@@ -137,6 +138,7 @@ solana-stake-history = { path = "new_crates/stake-history" }
 solana-syscall-core = { path = "new_crates/syscall-core" }
 solana-system-instruction-core = { path = "new_crates/system-instruction-core" }
 solana-sysvar-core = { path = "new_crates/sysvar-core" }
+solana-transaction = { path = "new_crates/transaction"}
 solana-transaction-error = { path = "new_crates/transaction-error"}
 solana-wasm-bindgen = { path = "new_crates/wasm-bindgen" }
 static_assertions = "1.1.0"
