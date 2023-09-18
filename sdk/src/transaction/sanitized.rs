@@ -3,17 +3,14 @@
 pub use solana_message::{AddressLoader, SimpleAddressLoader};
 use {
     super::SanitizedVersionedTransaction,
-    crate::{
-        precompiles::verify_if_precompile,
-        solana_sdk::feature_set,
-        transaction::{Result, Transaction, VersionedTransaction},
-    },
+    crate::transaction::{Result, Transaction, VersionedTransaction},
     solana_hash::Hash,
     solana_message::{
         legacy,
         v0::{self, LoadedAddresses},
         LegacyMessage, SanitizedMessage, SanitizedVersionedMessage, VersionedMessage,
     },
+    solana_precompiles::verify_if_precompile,
     solana_pubkey::Pubkey,
     solana_sanitize::Sanitize,
     solana_signature_core::Signature,
@@ -269,7 +266,7 @@ impl SanitizedTransaction {
     }
 
     /// Verify the precompiled programs in this transaction
-    pub fn verify_precompiles(&self, feature_set: &feature_set::FeatureSet) -> Result<()> {
+    pub fn verify_precompiles(&self, feature_set: &solana_feature_set::FeatureSet) -> Result<()> {
         for (program_id, instruction) in self.message.program_instructions_iter() {
             verify_if_precompile(
                 program_id,

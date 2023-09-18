@@ -1441,6 +1441,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-ed25519-instruction"
+version = "1.17.0"
+dependencies = [
+ "bytemuck",
+ "ed25519-dalek",
+ "solana-feature-set",
+ "solana-instruction",
+ "solana-native-programs",
+ "solana-precompile-error",
+]
+
+[[package]]
 name = "solana-epoch-rewards"
 version = "1.17.0"
 dependencies = [
@@ -1454,6 +1466,20 @@ dependencies = [
  "serde",
  "solana-clock",
  "solana-sdk-macro",
+]
+
+[[package]]
+name = "solana-feature-set"
+version = "1.17.0"
+dependencies = [
+ "lazy_static",
+ "solana-clock",
+ "solana-epoch-schedule",
+ "solana-hash",
+ "solana-pubkey",
+ "solana-sdk-macro",
+ "solana-stake-history",
+ "thiserror",
 ]
 
 [[package]]
@@ -1613,6 +1639,28 @@ dependencies = [
  "solana-program",
  "solana-syscall-core",
  "thiserror",
+]
+
+[[package]]
+name = "solana-precompile-error"
+version = "1.17.0"
+dependencies = [
+ "solana-decode-error",
+ "thiserror",
+]
+
+[[package]]
+name = "solana-precompiles"
+version = "1.17.0"
+dependencies = [
+ "lazy_static",
+ "solana-ed25519-instruction",
+ "solana-feature-set",
+ "solana-instruction",
+ "solana-native-programs",
+ "solana-precompile-error",
+ "solana-pubkey",
+ "solana-secp256k1-instruction",
 ]
 
 [[package]]
@@ -1816,7 +1864,9 @@ dependencies = [
  "solana-clock",
  "solana-decode-error",
  "solana-derivation-path",
+ "solana-ed25519-instruction",
  "solana-epoch-schedule",
+ "solana-feature-set",
  "solana-hash",
  "solana-instruction",
  "solana-logger",
@@ -1825,6 +1875,7 @@ dependencies = [
  "solana-native-programs",
  "solana-nonce-core",
  "solana-packet",
+ "solana-precompiles",
  "solana-program",
  "solana-program-utils",
  "solana-program-utils-sdk",
@@ -1833,6 +1884,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk",
  "solana-sdk-macro",
+ "solana-secp256k1-instruction",
  "solana-short-vec",
  "solana-signature-core",
  "solana-signer",
@@ -1857,6 +1909,24 @@ dependencies = [
  "quote",
  "rustversion",
  "syn 2.0.33",
+]
+
+[[package]]
+name = "solana-secp256k1-instruction"
+version = "1.17.0"
+dependencies = [
+ "anyhow",
+ "bincode",
+ "digest 0.10.7",
+ "hex",
+ "libsecp256k1",
+ "rand 0.7.3",
+ "serde",
+ "sha3",
+ "solana-feature-set",
+ "solana-instruction",
+ "solana-native-programs",
+ "solana-precompile-error",
 ]
 
 [[package]]

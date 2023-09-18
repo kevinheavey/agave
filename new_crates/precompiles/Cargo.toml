@@ -1,0 +1,18 @@
+[package]
+name = "solana-precompiles"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+lazy_static = { workspace = true }
+solana-feature-set = { workspace = true }
+solana-ed25519-instruction = { workspace = true }
+solana-instruction = { workspace = true }
+solana-native-programs = { workspace = true }
+solana-precompile-error = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-secp256k1-instruction = { workspace = true }

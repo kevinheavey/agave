@@ -75,7 +75,9 @@ sha3 = { workspace = true, optional = true }
 solana-clock = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-derivation-path = { workspace = true }
+solana-ed25519-instruction = { workspace = true }
 solana-epoch-schedule = { workspace = true }
+solana-feature-set = { workspace = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
 solana-logger = { workspace = true, optional = true }
@@ -84,6 +86,7 @@ solana-msg-and-friends = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-nonce-core = { workspace = true }
 solana-packet = { workspace = true }
+solana-precompiles = { workspace = true }
 solana-program = { workspace = true }
 solana-program-utils = { workspace = true }
 solana-program-utils-sdk = { workspace = true }
@@ -91,6 +94,7 @@ solana-pubkey = { workspace = true }
 solana-rent = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
+solana-secp256k1-instruction = { workspace = true }
 solana-short-vec = { workspace = true }
 solana-signature-core = { workspace = true }
 solana-signer = { workspace = true }

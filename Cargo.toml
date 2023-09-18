@@ -99,8 +99,10 @@ solana-clock = { path = "new_crates/clock" }
 solana-decode-error = { path = "new_crates/decode-error" }
 solana-derivation-path = { path = "new_crates/derivation-path" }
 solana-download-utils = { path = "download-utils", version = "=1.17.0" }
+solana-ed25519-instruction = { path = "new_crates/ed25519-instruction" }
 solana-epoch-schedule = { path = "new_crates/epoch-schedule" }
 solana-epoch-rewards = { path = "new_crates/epoch-rewards" }
+solana-feature-set = { path = "new_crates/feature-set" }
 solana-hash = { path = "new_crates/hash" }
 solana-instruction = { path = "new_crates/instruction" }
 solana-keccak = { path = "new_crates/keccak" }
@@ -112,12 +114,15 @@ solana-native-programs = { path = "new_crates/native-programs" }
 solana-nonce-core = { path = "new_crates/nonce-core" }
 solana-packet = { path = "new_crates/packet" }
 solana-poseidon = { path = "new_crates/poseidon" }
+solana-precompiles = { path = "new_crates/precompiles" }
+solana-precompile-error = { path = "new_crates/precompile-error" }
 solana-program = { path = "sdk/program", version = "=1.17.0" }
 solana-program-utils = { path = "new_crates/program-utils" }
 solana-program-utils-sdk = { path = "new_crates/program-utils-sdk" }
 solana-pubkey = { path = "new_crates/pubkey" }
 solana-rent = { path = "new_crates/rent" }
 solana-sanitize = { path = "new_crates/sanitize" }
+solana-secp256k1-instruction = { path = "new_crates/secp256k1-instruction" }
 solana-secp256k1-recover = { path = "new_crates/secp256k1-recover" }
 solana-serialize-utils = { path = "new_crates/serialize-utils" }
 solana-sdk = { path = "sdk", version = "=1.17.0" }

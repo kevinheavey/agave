@@ -1,31 +1,10 @@
 //! Solana precompiled programs.
 
-#![cfg(feature = "full")]
-
 use {
-    crate::feature_set::FeatureSet, lazy_static::lazy_static, solana_decode_error::DecodeError,
-    solana_instruction::CompiledInstruction, solana_pubkey::Pubkey, thiserror::Error,
+    lazy_static::lazy_static, solana_feature_set::FeatureSet,
+    solana_instruction::CompiledInstruction, solana_precompile_error::PrecompileError,
+    solana_pubkey::Pubkey,
 };
-
-/// Precompile errors
-#[derive(Error, Debug, Clone, PartialEq, Eq)]
-pub enum PrecompileError {
-    #[error("public key is not valid")]
-    InvalidPublicKey,
-    #[error("id is not valid")]
-    InvalidRecoveryId,
-    #[error("signature is not valid")]
-    InvalidSignature,
-    #[error("offset not valid")]
-    InvalidDataOffsets,
-    #[error("instruction is incorrect size")]
-    InvalidInstructionDataSize,
-}
-impl<T> DecodeError<T> for PrecompileError {
-    fn type_of() -> &'static str {
-        "PrecompileError"
-    }
-}
 
 /// All precompiled programs must implement the `Verify` function
 pub type Verify = fn(&[u8], &[&[u8]], &FeatureSet) -> std::result::Result<(), PrecompileError>;
@@ -75,12 +54,12 @@ lazy_static! {
         Precompile::new(
             solana_native_programs::secp256k1_program::id(),
             None, // always enabled
-            crate::secp256k1_instruction::verify,
+            solana_secp256k1_instruction::verify,
         ),
         Precompile::new(
             solana_native_programs::ed25519_program::id(),
             None, // always enabled
-            crate::ed25519_instruction::verify,
+            solana_ed25519_instruction::verify,
         ),
     ];
 }

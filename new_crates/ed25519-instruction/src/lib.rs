@@ -2,13 +2,12 @@
 //!
 //! [np]: https://docs.solana.com/developing/runtime-facilities/programs#ed25519-program
 
-#![cfg(feature = "full")]
-
 use {
-    crate::{feature_set::FeatureSet, precompiles::PrecompileError},
     bytemuck::{bytes_of, Pod, Zeroable},
     ed25519_dalek::{ed25519::signature::Signature, Signer, Verifier},
+    solana_feature_set::FeatureSet,
     solana_instruction::Instruction,
+    solana_precompile_error::PrecompileError,
 };
 
 pub const PUBKEY_SERIALIZED_SIZE: usize = 32;
@@ -180,7 +179,7 @@ fn get_data_slice<'a>(
 
 #[cfg(test)]
 pub mod test {
-    use {super::*, crate::feature_set::FeatureSet};
+    use {super::*, solana_feature_set::FeatureSet};
 
     fn test_case(
         num_signatures: u16,

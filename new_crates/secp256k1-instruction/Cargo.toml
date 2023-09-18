@@ -1,0 +1,24 @@
+[package]
+name = "solana-secp256k1-instruction"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+bincode = { workspace = true }
+digest = { workspace = true }
+libsecp256k1 = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+sha3 = { workspace = true }
+solana-feature-set = { workspace = true }
+solana-instruction = { workspace = true }
+solana-native-programs = { workspace = true }
+solana-precompile-error = { workspace = true }
+
+[dev-dependencies]
+anyhow = { workspace = true }
+hex = { workspace = true }
+rand0-7 = { workspace = true }

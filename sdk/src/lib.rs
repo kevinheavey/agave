@@ -57,8 +57,11 @@ pub use solana_program::{
 };
 pub use {
     solana_decode_error as decode_error, solana_derivation_path as derivation_path,
-    solana_packet as packet, solana_program_utils_sdk as program_utils,
-    solana_sanitize as sanitize, solana_signer as signer, solana_wasm_bindgen as wasm_bindgen,
+    solana_ed25519_instruction as ed25519_instruction, solana_feature_set as feature_set,
+    solana_packet as packet, solana_precompiles as precompiles,
+    solana_program_utils_sdk as program_utils, solana_sanitize as sanitize,
+    solana_secp256k1_instruction as secp256k1_instruction, solana_signer as signer,
+    solana_wasm_bindgen as wasm_bindgen,
 };
 
 pub mod account;
@@ -67,14 +70,12 @@ pub mod client;
 pub mod commitment_config;
 pub mod compute_budget;
 pub mod deserialize_utils;
-pub mod ed25519_instruction;
 pub mod entrypoint;
 pub mod entrypoint_deprecated;
 pub mod epoch_info;
 pub mod example_mocks;
 pub mod exit;
 pub mod feature;
-pub mod feature_set;
 pub mod fee;
 pub mod genesis_config;
 pub mod hard_forks;
@@ -86,13 +87,11 @@ pub mod net;
 pub mod nonce_account;
 pub mod offchain_message;
 pub mod poh_config;
-pub mod precompiles;
 pub mod pubkey;
 pub mod quic;
 pub mod recent_blockhashes_account;
 pub mod reward_type;
 pub mod rpc_port;
-pub mod secp256k1_instruction;
 pub mod shred_version;
 pub mod signature;
 pub mod system_transaction;

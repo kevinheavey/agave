@@ -205,7 +205,7 @@
 //! Both of the following examples make use of the following module definition
 //! to parse the secp256k1 instruction data from within a Solana program.
 //!
-//! ```no_run
+//! ```ignore
 //! mod secp256k1_defs {
 //!     use solana_program::program_error::ProgramError;
 //!     use std::iter::Iterator;
@@ -271,7 +271,7 @@
 //! The Solana program. Note that it uses `libsecp256k1` version 0.7.0 to parse
 //! the secp256k1 signature to prevent malleability.
 //!
-//! ```no_run
+//! ```ignore
 //! # mod secp256k1_defs {
 //! #     use solana_program::program_error::ProgramError;
 //! #     use std::iter::Iterator;
@@ -416,7 +416,7 @@
 //!
 //! The client program:
 //!
-//! ```no_run
+//! ```ignore
 //! # use solana_sdk::example_mocks::solana_rpc_client;
 //! use anyhow::Result;
 //! use solana_rpc_client::rpc_client::RpcClient;
@@ -484,7 +484,7 @@
 //!
 //! The Solana program:
 //!
-//! ```no_run
+//! ```ignore
 //! # mod secp256k1_defs {
 //! #     use solana_program::program_error::ProgramError;
 //! #     use std::iter::Iterator;
@@ -632,7 +632,7 @@
 //!
 //! The client program:
 //!
-//! ```no_run
+//! ```ignore
 //! # use solana_sdk::example_mocks::solana_rpc_client;
 //! use anyhow::Result;
 //! use solana_rpc_client::rpc_client::RpcClient;
@@ -785,19 +785,15 @@
 //! }
 //! ```
 
-#![cfg(feature = "full")]
-
 use {
-    crate::{
-        feature_set::{
-            libsecp256k1_0_5_upgrade_enabled, libsecp256k1_fail_on_bad_count,
-            libsecp256k1_fail_on_bad_count2, FeatureSet,
-        },
-        precompiles::PrecompileError,
-    },
     digest::Digest,
-    serde_derive::{Deserialize, Serialize},
+    serde::{Deserialize, Serialize},
+    solana_feature_set::{
+        libsecp256k1_0_5_upgrade_enabled, libsecp256k1_fail_on_bad_count,
+        libsecp256k1_fail_on_bad_count2, FeatureSet,
+    },
     solana_instruction::Instruction,
+    solana_precompile_error::PrecompileError,
 };
 
 pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -1045,7 +1041,7 @@ fn get_data_slice<'a>(
 
 #[cfg(test)]
 pub mod test {
-    use {super::*, crate::secp256k1_instruction::SecpSignatureOffsets};
+    use super::*;
 
     fn test_case(
         num_signatures: u8,

@@ -112,17 +112,16 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::precompiles::verify_if_precompile,
     serde::Serialize,
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
     solana_message::Message,
     solana_native_programs::system_program,
     solana_nonce_core::NONCED_TX_MARKER_IX_INDEX,
+    solana_precompiles::verify_if_precompile,
     solana_program_utils_sdk::limited_deserialize,
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
-    solana_sdk::feature_set,
     solana_short_vec as short_vec,
     solana_signature_core::Signature,
     solana_signer::{signers::Signers, SignerError},
@@ -1008,7 +1007,7 @@ impl Transaction {
     }
 
     /// Verify the precompiled programs in this transaction.
-    pub fn verify_precompiles(&self, feature_set: &feature_set::FeatureSet) -> Result<()> {
+    pub fn verify_precompiles(&self, feature_set: &solana_feature_set::FeatureSet) -> Result<()> {
         for instruction in &self.message().instructions {
             // The Transaction may not be sanitized at this point
             if instruction.program_id_index as usize >= self.message().account_keys.len() {
