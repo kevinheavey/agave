@@ -116,7 +116,6 @@ use {
     solana_message::Message,
     solana_native_programs::system_program,
     solana_nonce_core::NONCED_TX_MARKER_IX_INDEX,
-    solana_precompiles::verify_if_precompile,
     solana_program_utils_sdk::limited_deserialize,
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
@@ -1004,6 +1003,7 @@ impl Transaction {
             .collect()
     }
 
+    #[cfg(feature = "verify_precompiles")]
     /// Verify the precompiled programs in this transaction.
     pub fn verify_precompiles(&self, feature_set: &solana_feature_set::FeatureSet) -> Result<()> {
         for instruction in &self.message().instructions {
@@ -1013,7 +1013,7 @@ impl Transaction {
             }
             let program_id = &self.message().account_keys[instruction.program_id_index as usize];
 
-            verify_if_precompile(
+            solana_precompiles::verify_if_precompile(
                 program_id,
                 instruction,
                 &self.message().instructions,

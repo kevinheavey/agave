@@ -102,7 +102,7 @@ solana-signer = { workspace = true }
 solana-stake-history = { workspace = true }
 solana-system-instruction-core = { workspace = true }
 solana-sysvar-core = { workspace = true }
-solana-transaction = { workspace = true }
+solana-transaction = { workspace = true, features = ["verify-precompiles"] }
 solana-transaction-error = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }

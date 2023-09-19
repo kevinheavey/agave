@@ -9,13 +9,13 @@ edition = { workspace = true }
 
 [dependencies]
 serde = { workspace = true, features = ["derive"] }
-solana-feature-set = { workspace = true }
+solana-feature-set = { workspace = true, optional = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
 solana-message = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-nonce-core = { workspace = true }
-solana-precompiles = { workspace = true }
+solana-precompiles = { workspace = true, optional = true }
 solana-program-utils-sdk = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-sanitize = { workspace = true }
@@ -36,3 +36,6 @@ solana-hash = { workspace = true }
 solana-signer = { workspace = true }
 solana-pubkey-sdk = { workspace = true }
 solana-sysvar-core = { workspace = true }
+
+[features]
+verify-precompiles = ["solana-feature-set", "solana-precompiles"]

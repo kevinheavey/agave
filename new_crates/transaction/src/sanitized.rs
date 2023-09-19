@@ -8,7 +8,6 @@ use {
         v0::{self, LoadedAddresses},
         LegacyMessage, SanitizedMessage, SanitizedVersionedMessage, VersionedMessage,
     },
-    solana_precompiles::verify_if_precompile,
     solana_pubkey::Pubkey,
     solana_sanitize::Sanitize,
     solana_signature_core::Signature,
@@ -263,10 +262,11 @@ impl SanitizedTransaction {
         }
     }
 
+    #[cfg(feature = "verify_precompiles")]
     /// Verify the precompiled programs in this transaction
     pub fn verify_precompiles(&self, feature_set: &solana_feature_set::FeatureSet) -> Result<()> {
         for (program_id, instruction) in self.message.program_instructions_iter() {
-            verify_if_precompile(
+            solana_precompiles::verify_if_precompile(
                 program_id,
                 instruction,
                 self.message().instructions(),
