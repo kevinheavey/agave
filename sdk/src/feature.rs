@@ -2,7 +2,7 @@
 
 pub use solana_program::feature::*;
 use {
-    crate::account::{AccountSharedData, ReadableAccount, WritableAccount},
+    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
     solana_native_programs::feature::id,
 };
 

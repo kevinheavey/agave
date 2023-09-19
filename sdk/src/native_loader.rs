@@ -1,7 +1,7 @@
 //! The native loader native program.
 
 use {
-    crate::account::{
+    solana_account::{
         Account, AccountSharedData, InheritableAccountFields, DUMMY_INHERITABLE_ACCOUNT_FIELDS,
     },
     solana_clock::INITIAL_RENT_EPOCH,

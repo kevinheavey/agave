@@ -5,7 +5,7 @@ use solana_program::sysvar::recent_blockhashes::{
     IntoIterSorted, IterItem, RecentBlockhashes, MAX_ENTRIES,
 };
 use {
-    crate::account::{
+    solana_account::{
         create_account_shared_data_with_fields, to_account, AccountSharedData,
         InheritableAccountFields, DUMMY_INHERITABLE_ACCOUNT_FIELDS,
     },
@@ -85,8 +85,8 @@ mod tests {
     #![allow(deprecated)]
     use {
         super::*,
-        crate::account::from_account,
         rand::{seq::SliceRandom, thread_rng},
+        solana_account::from_account,
         solana_hash::{Hash, HASH_BYTES},
         solana_program::sysvar::recent_blockhashes::Entry,
     };

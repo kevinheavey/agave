@@ -56,16 +56,15 @@ pub use solana_program::{
     unchecked_div_by_const, vote,
 };
 pub use {
-    solana_decode_error as decode_error, solana_derivation_path as derivation_path,
-    solana_ed25519_instruction as ed25519_instruction, solana_feature_set as feature_set,
-    solana_packet as packet, solana_precompiles as precompiles,
+    solana_account as account, solana_decode_error as decode_error,
+    solana_derivation_path as derivation_path, solana_ed25519_instruction as ed25519_instruction,
+    solana_feature_set as feature_set, solana_packet as packet, solana_precompiles as precompiles,
     solana_program_utils_sdk as program_utils, solana_pubkey_sdk as pubkey,
     solana_sanitize as sanitize, solana_secp256k1_instruction as secp256k1_instruction,
     solana_signer as signer, solana_transaction as transaction,
-    solana_wasm_bindgen as wasm_bindgen,
+    solana_transaction_context as transaction_context, solana_wasm_bindgen as wasm_bindgen,
 };
 
-pub mod account;
 pub mod account_utils;
 pub mod client;
 pub mod commitment_config;
@@ -96,7 +95,6 @@ pub mod shred_version;
 pub mod signature;
 pub mod system_transaction;
 pub mod timing;
-pub mod transaction_context;
 pub mod transport;
 pub mod wasm;
 

@@ -43,6 +43,7 @@ solana-epoch-rewards = { workspace = true }
 solana-epoch-schedule = { workspace = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
+solana-lamports = { workspace = true }
 solana-keccak = { workspace = true }
 solana-last-restart-slot = { workspace = true }
 solana-message = { workspace = true }

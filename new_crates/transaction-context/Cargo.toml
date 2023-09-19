@@ -1,0 +1,22 @@
+[package]
+name = "solana-transaction-context"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+bincode = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+solana-account = { workspace = true }
+solana-instruction = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-rent = { workspace = true }
+thiserror = { workspace = true }
+
+[target.'cfg(not(target_os = "solana"))'.dependencies]
+solana-msg-and-friends = { workspace = true }
+solana-signature-core = { workspace = true }
+solana-system-instruction-core = { workspace = true }

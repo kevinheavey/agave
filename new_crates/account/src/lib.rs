@@ -3,12 +3,12 @@
 #[cfg(feature = "dev-context-only-utils")]
 use qualifier_attr::qualifiers;
 use {
-    crate::lamports::LamportsError,
     serde::{
         ser::{Serialize, Serializer},
         Deserialize,
     },
     solana_clock::{Epoch, INITIAL_RENT_EPOCH},
+    solana_lamports::LamportsError,
     solana_msg_and_friends::{account_info::AccountInfo, debug_account_data::*},
     solana_pubkey::Pubkey,
     solana_sysvar_core::Sysvar,
@@ -43,7 +43,7 @@ pub struct Account {
 // mod because we need 'Account' below to have the name 'Account' to match expected serialization
 mod account_serialize {
     use {
-        crate::account::ReadableAccount,
+        crate::ReadableAccount,
         serde::{ser::Serializer, Serialize},
         solana_clock::Epoch,
         solana_pubkey::Pubkey,
@@ -86,7 +86,7 @@ impl Serialize for Account {
     where
         S: Serializer,
     {
-        crate::account::account_serialize::serialize_account(self, serializer)
+        crate::account_serialize::serialize_account(self, serializer)
     }
 }
 
@@ -95,7 +95,7 @@ impl Serialize for AccountSharedData {
     where
         S: Serializer,
     {
-        crate::account::account_serialize::serialize_account(self, serializer)
+        crate::account_serialize::serialize_account(self, serializer)
     }
 }
 
@@ -720,7 +720,7 @@ pub fn to_account<S: Sysvar, T: WritableAccount>(sysvar: &S, account: &mut T) ->
 
 /// Return the information required to construct an `AccountInfo`.  Used by the
 /// `AccountInfo` conversion implementations.
-impl solana_program::account_info::Account for Account {
+impl solana_msg_and_friends::account_info::Account for Account {
     fn get(&mut self) -> (&mut u64, &mut [u8], &Pubkey, bool, Epoch) {
         (
             &mut self.lamports,

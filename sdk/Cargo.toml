@@ -33,7 +33,7 @@ full = [
     "sha3",
     "digest",
 ]
-dev-context-only-utils = []
+dev-context-only-utils = ["solana-account/dev-context-only-utils"]
 
 [dependencies]
 base64 = { workspace = true }
@@ -72,6 +72,7 @@ serde_json = { workspace = true, optional = true }
 serde_with = { workspace = true, features = ["macros"] }
 sha2 = { workspace = true }
 sha3 = { workspace = true, optional = true }
+solana-account = { workspace = true }
 solana-clock = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-derivation-path = { workspace = true }
@@ -103,6 +104,7 @@ solana-stake-history = { workspace = true }
 solana-system-instruction-core = { workspace = true }
 solana-sysvar-core = { workspace = true }
 solana-transaction = { workspace = true, features = ["verify-precompiles"] }
+solana-transaction-context = { workspace = true }
 solana-transaction-error = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }

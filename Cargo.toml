@@ -90,6 +90,7 @@ serde_json = "1.0.107"
 serde_with = { version = "2.3.3", default-features = false }
 sha2 = "0.10.7"
 sha3 = "0.10.4"
+solana-account = { path = "new_crates/account" }
 solana-address-lookup-table-core = { path = "new_crates/address-lookup-table-core" }
 solana-alt-bn128 = { path = "new_crates/alt-bn128" }
 solana-atomic-u64 = { path = "new_crates/atomic-u64" }
@@ -105,6 +106,7 @@ solana-epoch-rewards = { path = "new_crates/epoch-rewards" }
 solana-feature-set = { path = "new_crates/feature-set" }
 solana-hash = { path = "new_crates/hash" }
 solana-instruction = { path = "new_crates/instruction" }
+solana-lamports = { path = "new_crates/lamports" }
 solana-keccak = { path = "new_crates/keccak" }
 solana-last-restart-slot = { path = "new_crates/last-restart-slot" }
 solana-logger = { path = "logger", version = "=1.17.0" }
@@ -142,6 +144,7 @@ solana-syscall-core = { path = "new_crates/syscall-core" }
 solana-system-instruction-core = { path = "new_crates/system-instruction-core" }
 solana-sysvar-core = { path = "new_crates/sysvar-core" }
 solana-transaction = { path = "new_crates/transaction"}
+solana-transaction-context = { path = "new_crates/transaction-context"}
 solana-transaction-error = { path = "new_crates/transaction-error"}
 solana-wasm-bindgen = { path = "new_crates/wasm-bindgen" }
 static_assertions = "1.1.0"

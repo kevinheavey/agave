@@ -4,7 +4,8 @@
 #[cfg(all(not(target_os = "solana"), debug_assertions))]
 use solana_signature_core::Signature;
 use {
-    crate::account::{AccountSharedData, ReadableAccount},
+    serde::{Deserialize, Serialize},
+    solana_account::{AccountSharedData, ReadableAccount},
     solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
     std::{
@@ -16,8 +17,9 @@ use {
 };
 #[cfg(not(target_os = "solana"))]
 use {
-    crate::{account::WritableAccount, rent::Rent},
-    solana_program::entrypoint::MAX_PERMITTED_DATA_INCREASE,
+    solana_account::WritableAccount,
+    solana_msg_and_friends::entrypoint::MAX_PERMITTED_DATA_INCREASE,
+    solana_rent::Rent,
     solana_system_instruction_core::{
         MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION, MAX_PERMITTED_DATA_LENGTH,
     },

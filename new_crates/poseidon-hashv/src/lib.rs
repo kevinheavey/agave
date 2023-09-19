@@ -3,10 +3,9 @@
 //! [Poseidon]: https://www.poseidon-hash.info/
 
 use {
-    solana_poseidon_core::{Parameters, Endianness, PoseidonHash},
+    solana_poseidon_core::{Endianness, Parameters, PoseidonHash},
     solana_poseidon_syscall_error::PoseidonSyscallError,
 };
-
 
 /// Return a Poseidon hash for the given data with the given elliptic curve and
 /// endianness.

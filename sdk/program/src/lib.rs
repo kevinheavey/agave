@@ -479,7 +479,6 @@ pub mod compute_units;
 pub mod entrypoint_deprecated;
 pub mod feature;
 pub mod fee_calculator;
-pub mod lamports;
 pub mod loader_instruction;
 pub mod loader_upgradeable_instruction;
 pub mod loader_v4;
@@ -518,7 +517,8 @@ pub use {
     solana_clock as clock, solana_decode_error as decode_error,
     solana_epoch_rewards as epoch_rewards, solana_epoch_schedule as epoch_schedule,
     solana_hash as hash, solana_instruction as instruction, solana_keccak as keccak,
-    solana_last_restart_slot as last_restart_slot, solana_message as message,
+    solana_lamports as lamports, solana_last_restart_slot as last_restart_slot,
+    solana_message as message,
     solana_msg_and_friends::{
         account_info, custom_heap_default, custom_panic_default, debug_account_data, entrypoint,
         log, msg, program_error, program_memory, program_stubs,

@@ -3,7 +3,7 @@
 //! [Poseidon]: https://www.poseidon-hash.info/
 
 pub use {
-    solana_poseidon_core::{HASH_BYTES, Parameters, Endianness, PoseidonHash},
+    solana_poseidon_core::{Endianness, Parameters, PoseidonHash, HASH_BYTES},
     solana_poseidon_hashv::hashv,
     solana_poseidon_syscall_error::PoseidonSyscallError,
 };

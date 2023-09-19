@@ -1,0 +1,24 @@
+[package]
+name = "solana-account"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+bincode = { workspace = true }
+qualifier_attr = { workspace = true, optional = true }
+serde = { workspace = true, features = ["derive"] }
+serde_bytes = { workspace = true }
+solana-clock = { workspace = true }
+solana-lamports = { workspace = true }
+solana-msg-and-friends = { workspace = true }
+solana-native-programs = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-sysvar-core = { workspace = true }
+thiserror = { workspace = true }
+
+[features]
+dev-context-only-utils = ["qualifier_attr"]

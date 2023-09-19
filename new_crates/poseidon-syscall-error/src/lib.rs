@@ -79,9 +79,7 @@ impl From<light_poseidon::PoseidonError> for PoseidonSyscallError {
                 len: _,
                 modulus_bytes_len: _,
             } => PoseidonSyscallError::InvalidInputLength,
-            PoseidonError::InputLargerThanModulus => {
-                PoseidonSyscallError::InputLargerThanModulus
-            }
+            PoseidonError::InputLargerThanModulus => PoseidonSyscallError::InputLargerThanModulus,
             PoseidonError::VecToArray => PoseidonSyscallError::VecToArray,
             PoseidonError::U64Tou8 => PoseidonSyscallError::U64Tou8,
             PoseidonError::InvalidWidthCircom {
