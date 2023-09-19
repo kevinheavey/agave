@@ -114,6 +114,9 @@ solana-native-programs = { path = "new_crates/native-programs" }
 solana-nonce-core = { path = "new_crates/nonce-core" }
 solana-packet = { path = "new_crates/packet" }
 solana-poseidon = { path = "new_crates/poseidon" }
+solana-poseidon-core = { path = "new_crates/poseidon-core" }
+solana-poseidon-hashv = { path = "new_crates/poseidon-hashv" }
+solana-poseidon-syscall-error = { path = "new_crates/poseidon-syscall-error" }
 solana-precompiles = { path = "new_crates/precompiles" }
 solana-precompile-error = { path = "new_crates/precompile-error" }
 solana-program = { path = "sdk/program", version = "=1.17.0" }

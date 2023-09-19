@@ -1636,8 +1636,41 @@ version = "1.17.0"
 dependencies = [
  "ark-bn254",
  "light-poseidon",
+ "solana-poseidon-core",
+ "solana-poseidon-hashv",
+ "solana-poseidon-syscall-error",
  "solana-program",
  "solana-syscall-core",
+]
+
+[[package]]
+name = "solana-poseidon-core"
+version = "1.17.0"
+dependencies = [
+ "ark-bn254",
+ "light-poseidon",
+ "solana-poseidon-syscall-error",
+ "solana-program",
+ "solana-syscall-core",
+]
+
+[[package]]
+name = "solana-poseidon-hashv"
+version = "1.17.0"
+dependencies = [
+ "ark-bn254",
+ "light-poseidon",
+ "solana-poseidon-core",
+ "solana-poseidon-syscall-error",
+ "solana-program",
+ "solana-syscall-core",
+]
+
+[[package]]
+name = "solana-poseidon-syscall-error"
+version = "1.17.0"
+dependencies = [
+ "light-poseidon",
  "thiserror",
 ]
 
