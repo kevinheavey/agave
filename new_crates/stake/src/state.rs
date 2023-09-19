@@ -4,7 +4,7 @@
 #![allow(deprecated)]
 
 use {
-    crate::stake::{
+    crate::{
         instruction::{LockupArgs, StakeError},
         stake_flags::StakeFlags,
     },
@@ -32,7 +32,7 @@ pub fn warmup_cooldown_rate(current_epoch: Epoch, new_rate_activation_epoch: Opt
     }
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy)]
+#[derive(Debug, Default, serde::Serialize, serde::Deserialize, PartialEq, Clone, Copy)]
 #[allow(clippy::large_enum_variant)]
 #[deprecated(
     since = "1.17.0",
@@ -125,7 +125,7 @@ impl StakeState {
     }
 }
 
-#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy)]
+#[derive(Debug, Default, serde::Serialize, serde::Deserialize, PartialEq, Clone, Copy)]
 #[allow(clippy::large_enum_variant)]
 pub enum StakeStateV2 {
     #[default]
@@ -219,7 +219,7 @@ impl StakeStateV2 {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, PartialEq, Eq, Clone, Copy)]
 pub enum StakeAuthorize {
     Staker,
     Withdrawer,
@@ -228,8 +228,8 @@ pub enum StakeAuthorize {
 #[derive(
     Default,
     Debug,
-    Serialize,
-    Deserialize,
+    serde::Serialize,
+    serde::Deserialize,
     PartialEq,
     Eq,
     Clone,
@@ -262,8 +262,8 @@ impl Lockup {
 #[derive(
     Default,
     Debug,
-    Serialize,
-    Deserialize,
+    serde::Serialize,
+    serde::Deserialize,
     PartialEq,
     Eq,
     Clone,
@@ -341,8 +341,8 @@ impl Authorized {
 #[derive(
     Default,
     Debug,
-    Serialize,
-    Deserialize,
+    serde::Serialize,
+    serde::Deserialize,
     PartialEq,
     Eq,
     Clone,
@@ -396,8 +396,8 @@ impl Meta {
 
 #[derive(
     Debug,
-    Serialize,
-    Deserialize,
+    serde::Serialize,
+    serde::Deserialize,
     PartialEq,
     Clone,
     Copy,
@@ -642,8 +642,8 @@ impl Delegation {
 #[derive(
     Debug,
     Default,
-    Serialize,
-    Deserialize,
+    serde::Serialize,
+    serde::Deserialize,
     PartialEq,
     Clone,
     Copy,
@@ -700,8 +700,8 @@ impl Stake {
 #[cfg(test)]
 mod test {
     use {
-        super::*, crate::borsh0_10::try_from_slice_unchecked, assert_matches::assert_matches,
-        bincode::serialize,
+        super::*, assert_matches::assert_matches, bincode::serialize,
+        solana_borsh0_10::try_from_slice_unchecked,
     };
 
     fn check_borsh_deserialization(stake: StakeStateV2) {

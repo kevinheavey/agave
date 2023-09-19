@@ -96,7 +96,10 @@ solana-alt-bn128 = { path = "new_crates/alt-bn128" }
 solana-atomic-u64 = { path = "new_crates/atomic-u64" }
 solana-big-mod-exp = { path = "new_crates/big-mod-exp" }
 solana-blake3 = { path = "new_crates/blake3" }
+solana-borsh = { path = "new_crates/borsh" }
+solana-borsh0-10 = { path = "new_crates/borsh0-10" }
 solana-clock = { path = "new_crates/clock" }
+solana-cpi = { path = "new_crates/cpi" }
 solana-decode-error = { path = "new_crates/decode-error" }
 solana-derivation-path = { path = "new_crates/derivation-path" }
 solana-download-utils = { path = "download-utils", version = "=1.17.0" }
@@ -139,6 +142,7 @@ solana-signer = { path = "new_crates/signer" }
 solana-slot-hashes = { path = "new_crates/slot-hashes" }
 solana-slot-history = { path = "new_crates/slot-history" }
 solana-stable-layout = { path = "new_crates/stable-layout" }
+solana-stake = { path = "new_crates/stake" }
 solana-stake-history = { path = "new_crates/stake-history" }
 solana-syscall-core = { path = "new_crates/syscall-core" }
 solana-system-instruction-core = { path = "new_crates/system-instruction-core" }

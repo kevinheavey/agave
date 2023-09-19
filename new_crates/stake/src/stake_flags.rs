@@ -1,4 +1,7 @@
-use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+use {
+    borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
+    serde::{Deserialize, Serialize},
+};
 
 /// Additional flags for stake state.
 #[allow(dead_code)]

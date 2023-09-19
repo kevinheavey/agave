@@ -5,7 +5,7 @@
 //! borsh 0.9, even though this crate canonically uses borsh 0.10.
 //!
 //! [borsh]: https://borsh.io/
-use crate::borsh::{
+use solana_borsh::{
     impl_get_instance_packed_len, impl_get_packed_len, impl_try_from_slice_unchecked,
 };
 

@@ -37,7 +37,10 @@ solana-alt-bn128 = { workspace = true }
 solana-atomic-u64 = { workspace = true }
 solana-big-mod-exp = { workspace = true }
 solana-blake3 = { workspace = true }
+solana-borsh = { workspace = true }
+solana-borsh0-10 = { workspace = true }
 solana-clock = { workspace = true }
+solana-cpi = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-epoch-rewards = { workspace = true }
 solana-epoch-schedule = { workspace = true }
@@ -63,6 +66,7 @@ solana-signature-core = { workspace = true }
 solana-slot-hashes = { workspace = true }
 solana-slot-history = { workspace = true }
 solana-stable-layout = { workspace = true }
+solana-stake = { workspace = true }
 solana-stake-history = { workspace = true }
 solana-syscall-core = { workspace = true }
 solana-system-instruction-core = { workspace = true }

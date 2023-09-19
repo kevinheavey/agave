@@ -1,6 +1,6 @@
 //! Utility functions
 use {
-    crate::stake::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION, solana_clock::Epoch,
+    crate::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION, solana_clock::Epoch,
     solana_msg_and_friends::program_error::ProgramError,
 };
 
@@ -10,10 +10,10 @@ use {
 /// calls [`get_return_data()`] to fetch the return data.
 ///
 /// [`GetMinimumDelegation`]: super::instruction::StakeInstruction::GetMinimumDelegation
-/// [`get_return_data()`]: crate::program::get_return_data
+/// [`get_return_data()`]: solana_cpi::get_return_data
 pub fn get_minimum_delegation() -> Result<u64, ProgramError> {
     let instruction = super::instruction::get_minimum_delegation();
-    crate::program::invoke_unchecked(&instruction, &[])?;
+    solana_cpi::invoke_unchecked(&instruction, &[])?;
     get_minimum_delegation_return_data()
 }
 
@@ -23,9 +23,9 @@ pub fn get_minimum_delegation() -> Result<u64, ProgramError> {
 /// program, and returns the correct type.
 ///
 /// [`GetMinimumDelegation`]: super::instruction::StakeInstruction::GetMinimumDelegation
-/// [`get_return_data()`]: crate::program::get_return_data
+/// [`get_return_data()`]: solana_cpi::get_return_data
 fn get_minimum_delegation_return_data() -> Result<u64, ProgramError> {
-    crate::program::get_return_data()
+    solana_cpi::get_return_data()
         .ok_or(ProgramError::InvalidInstructionData)
         .and_then(|(program_id, return_data)| {
             (program_id == solana_native_programs::stake::id())

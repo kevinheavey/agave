@@ -1,0 +1,32 @@
+[package]
+name = "solana-stake"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+borsh = { workspace = true }
+log = { workspace = true }
+num-derive = { workspace = true }
+num-traits = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+solana-borsh0-10 = { workspace = true }
+solana-clock = { workspace = true }
+solana-cpi = { workspace = true }
+solana-decode-error = { workspace = true }
+solana-instruction = { workspace = true }
+solana-msg-and-friends = { workspace = true }
+solana-native-programs = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-sdk-macro = { workspace = true }
+solana-stake-history = { workspace = true }
+solana-system-instruction-core = { workspace = true }
+solana-sysvar-core = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+assert_matches = { workspace = true }
+bincode = { workspace = true }

@@ -92,7 +92,7 @@ use {
 ///
 /// A simple example of transferring lamports via CPI:
 ///
-/// ```
+/// ```ignore
 /// use solana_program::{
 ///     account_info::{next_account_info, AccountInfo},
 ///     entrypoint,
@@ -185,7 +185,7 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 ///
 /// A simple example of creating an account for a PDA:
 ///
-/// ```
+/// ```ignore
 /// use solana_program::{
 ///     account_info::{next_account_info, AccountInfo},
 ///     entrypoint,
@@ -306,7 +306,7 @@ pub fn invoke_signed_unchecked(
             )
         };
         match result {
-            crate::entrypoint::SUCCESS => Ok(()),
+            solana_msg_and_friends::entrypoint::SUCCESS => Ok(()),
             _ => Err(result.into()),
         }
     }

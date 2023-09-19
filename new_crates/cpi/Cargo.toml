@@ -1,0 +1,19 @@
+[package]
+name = "solana-cpi"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+memoffset = { workspace = true }
+solana-clock = { workspace = true }
+solana-instruction = { workspace = true }
+solana-msg-and-friends = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-stable-layout = { workspace = true }
+
+[target.'cfg(target_os = "solana")'.dependencies]
+solana-syscall-core = { workspace = true }

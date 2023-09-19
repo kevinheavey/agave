@@ -472,7 +472,6 @@ extern crate self as solana_program;
 
 pub mod address_lookup_table;
 pub mod borsh;
-pub mod borsh0_10;
 pub mod borsh0_9;
 pub mod bpf_loader_upgradeable;
 pub mod compute_units;
@@ -485,11 +484,9 @@ pub mod loader_v4;
 pub mod loader_v4_instruction;
 pub mod native_token;
 pub mod nonce;
-pub mod program;
 pub mod program_option;
 pub mod program_pack;
 pub mod serde_varint;
-pub mod stake;
 pub mod syscalls;
 pub mod system_instruction;
 pub mod sysvar;
@@ -514,11 +511,11 @@ pub mod secp256k1_program {
 
 pub use {
     solana_alt_bn128 as alt_bn128, solana_big_mod_exp as big_mod_exp, solana_blake3 as blake3,
-    solana_clock as clock, solana_decode_error as decode_error,
-    solana_epoch_rewards as epoch_rewards, solana_epoch_schedule as epoch_schedule,
-    solana_hash as hash, solana_instruction as instruction, solana_keccak as keccak,
-    solana_lamports as lamports, solana_last_restart_slot as last_restart_slot,
-    solana_message as message,
+    solana_borsh0_10 as borsh0_10, solana_clock as clock, solana_cpi as program,
+    solana_decode_error as decode_error, solana_epoch_rewards as epoch_rewards,
+    solana_epoch_schedule as epoch_schedule, solana_hash as hash,
+    solana_instruction as instruction, solana_keccak as keccak, solana_lamports as lamports,
+    solana_last_restart_slot as last_restart_slot, solana_message as message,
     solana_msg_and_friends::{
         account_info, custom_heap_default, custom_panic_default, debug_account_data, entrypoint,
         log, msg, program_error, program_memory, program_stubs,
@@ -528,7 +525,7 @@ pub use {
     solana_rent as rent, solana_secp256k1_recover as secp256k1_recover,
     solana_serialize_utils as serialize_utils, solana_slot_hashes as slot_hashes,
     solana_slot_history as slot_history, solana_stable_layout as stable_layout,
-    solana_stake_history as stake_history,
+    solana_stake as stake, solana_stake_history as stake_history,
     solana_sysvar_core::{declare_deprecated_sysvar_id, declare_sysvar_id, impl_sysvar_get},
     solana_wasm_bindgen::wasm_bindgen,
 };

@@ -1430,12 +1430,41 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-borsh"
+version = "1.17.0"
+dependencies = [
+ "thiserror",
+]
+
+[[package]]
+name = "solana-borsh0-10"
+version = "1.17.0"
+dependencies = [
+ "borsh 0.10.3",
+ "solana-borsh",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-clock"
 version = "1.17.0"
 dependencies = [
  "serde",
  "solana-sdk-macro",
  "static_assertions",
+]
+
+[[package]]
+name = "solana-cpi"
+version = "1.17.0"
+dependencies = [
+ "memoffset",
+ "solana-clock",
+ "solana-instruction",
+ "solana-msg-and-friends",
+ "solana-pubkey",
+ "solana-stable-layout",
+ "solana-syscall-core",
 ]
 
 [[package]]
@@ -1771,7 +1800,10 @@ dependencies = [
  "solana-atomic-u64",
  "solana-big-mod-exp",
  "solana-blake3",
+ "solana-borsh",
+ "solana-borsh0-10",
  "solana-clock",
+ "solana-cpi",
  "solana-decode-error",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
@@ -1798,6 +1830,7 @@ dependencies = [
  "solana-slot-hashes",
  "solana-slot-history",
  "solana-stable-layout",
+ "solana-stake",
  "solana-stake-history",
  "solana-syscall-core",
  "solana-system-instruction-core",
@@ -2096,6 +2129,32 @@ dependencies = [
  "solana-instruction",
  "solana-program",
  "solana-pubkey",
+ "thiserror",
+]
+
+[[package]]
+name = "solana-stake"
+version = "1.17.0"
+dependencies = [
+ "assert_matches",
+ "bincode",
+ "borsh 0.10.3",
+ "log",
+ "num-derive",
+ "num-traits",
+ "serde",
+ "solana-borsh0-10",
+ "solana-clock",
+ "solana-cpi",
+ "solana-decode-error",
+ "solana-instruction",
+ "solana-msg-and-friends",
+ "solana-native-programs",
+ "solana-pubkey",
+ "solana-sdk-macro",
+ "solana-stake-history",
+ "solana-system-instruction-core",
+ "solana-sysvar-core",
  "thiserror",
 ]
 

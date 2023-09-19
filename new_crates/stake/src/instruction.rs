@@ -1,10 +1,10 @@
 #[allow(deprecated)]
-use crate::stake::config;
+use crate::config;
 use {
-    crate::stake::state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
+    crate::state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
     log::*,
     num_derive::{FromPrimitive, ToPrimitive},
-    serde_derive::{Deserialize, Serialize},
+    serde::{Deserialize, Serialize},
     solana_clock::{Epoch, UnixTimestamp},
     solana_decode_error::DecodeError,
     solana_instruction::{AccountMeta, Instruction},
