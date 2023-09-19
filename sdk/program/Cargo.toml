@@ -61,6 +61,7 @@ solana-serialize-utils = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
+solana-serde-varint = { workspace = true }
 solana-short-vec = { workspace = true }
 solana-signature-core = { workspace = true }
 solana-slot-hashes = { workspace = true }
@@ -71,6 +72,7 @@ solana-stake-history = { workspace = true }
 solana-syscall-core = { workspace = true }
 solana-system-instruction-core = { workspace = true }
 solana-sysvar-core = { workspace = true }
+solana-vote = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 

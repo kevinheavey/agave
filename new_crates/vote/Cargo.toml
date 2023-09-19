@@ -1,0 +1,33 @@
+[package]
+name = "solana-vote"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+num-derive = { workspace = true }
+num-traits = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+solana-clock = { workspace = true }
+solana-decode-error = { workspace = true }
+solana-hash = { workspace = true }
+solana-instruction = { workspace = true }
+solana-native-programs = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-rent = { workspace = true }
+solana-serde-varint = { workspace = true }
+solana-short-vec = { workspace = true }
+solana-system-instruction-core = { workspace = true }
+solana-sysvar-core = { workspace = true }
+thiserror = { workspace = true }
+
+[target.'cfg(not(target_os = "solana"))'.dependencies]
+bincode = { workspace = true }
+
+[dev-dependencies]
+itertools = { workspace = true }
+rand = { workspace = true }
+solana-epoch-schedule = { workspace = true }

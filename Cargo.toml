@@ -136,6 +136,7 @@ solana-secp256k1-recover = { path = "new_crates/secp256k1-recover" }
 solana-serialize-utils = { path = "new_crates/serialize-utils" }
 solana-sdk = { path = "sdk", version = "=1.17.0" }
 solana-sdk-macro = { path = "sdk/macro", version = "=1.17.0" }
+solana-serde-varint = { path = "new_crates/serde-varint" }
 solana-short-vec = { path = "new_crates/short-vec" }
 solana-signature-core = { path = "new_crates/signature-core" }
 solana-signer = { path = "new_crates/signer" }
@@ -150,6 +151,7 @@ solana-sysvar-core = { path = "new_crates/sysvar-core" }
 solana-transaction = { path = "new_crates/transaction"}
 solana-transaction-context = { path = "new_crates/transaction-context"}
 solana-transaction-error = { path = "new_crates/transaction-error"}
+solana-vote = { path = "new_crates/vote" }
 solana-wasm-bindgen = { path = "new_crates/wasm-bindgen" }
 static_assertions = "1.1.0"
 syn = "2.0"

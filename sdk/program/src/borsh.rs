@@ -52,4 +52,3 @@ pub fn try_from_slice_unchecked<T: BorshDeserialize>(data: &[u8]) -> Result<T, E
 pub fn get_instance_packed_len<T: BorshSerialize>(instance: &T) -> Result<usize, Error> {
     solana_borsh0_10::get_instance_packed_len(instance)
 }
-

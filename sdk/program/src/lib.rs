@@ -486,11 +486,9 @@ pub mod native_token;
 pub mod nonce;
 pub mod program_option;
 pub mod program_pack;
-pub mod serde_varint;
 pub mod syscalls;
 pub mod system_instruction;
 pub mod sysvar;
-pub mod vote;
 pub mod wasm;
 
 #[deprecated(
@@ -523,10 +521,12 @@ pub use {
     solana_native_programs::system_program,
     solana_poseidon as poseidon, solana_program_utils as program_utils, solana_pubkey as pubkey,
     solana_rent as rent, solana_secp256k1_recover as secp256k1_recover,
-    solana_serialize_utils as serialize_utils, solana_slot_hashes as slot_hashes,
-    solana_slot_history as slot_history, solana_stable_layout as stable_layout,
-    solana_stake as stake, solana_stake_history as stake_history,
+    solana_serde_varint as serde_varint, solana_serialize_utils as serialize_utils,
+    solana_slot_hashes as slot_hashes, solana_slot_history as slot_history,
+    solana_stable_layout as stable_layout, solana_stake as stake,
+    solana_stake_history as stake_history,
     solana_sysvar_core::{declare_deprecated_sysvar_id, declare_sysvar_id, impl_sysvar_get},
+    solana_vote as vote,
     solana_wasm_bindgen::wasm_bindgen,
 };
 

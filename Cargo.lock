@@ -1824,6 +1824,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk-macro",
  "solana-secp256k1-recover",
+ "solana-serde-varint",
  "solana-serialize-utils",
  "solana-short-vec",
  "solana-signature-core",
@@ -1835,6 +1836,7 @@ dependencies = [
  "solana-syscall-core",
  "solana-system-instruction-core",
  "solana-sysvar-core",
+ "solana-vote",
  "solana-wasm-bindgen",
  "static_assertions",
  "thiserror",
@@ -2044,6 +2046,17 @@ dependencies = [
  "serde",
  "solana-program",
  "solana-syscall-core",
+ "thiserror",
+]
+
+[[package]]
+name = "solana-serde-varint"
+version = "1.17.0"
+dependencies = [
+ "bincode",
+ "rand 0.8.5",
+ "serde",
+ "solana-short-vec",
  "thiserror",
 ]
 
@@ -2271,6 +2284,31 @@ dependencies = [
  "solana-instruction",
  "solana-message",
  "solana-sanitize",
+ "thiserror",
+]
+
+[[package]]
+name = "solana-vote"
+version = "1.17.0"
+dependencies = [
+ "bincode",
+ "itertools",
+ "num-derive",
+ "num-traits",
+ "rand 0.8.5",
+ "serde",
+ "solana-clock",
+ "solana-decode-error",
+ "solana-epoch-schedule",
+ "solana-hash",
+ "solana-instruction",
+ "solana-native-programs",
+ "solana-pubkey",
+ "solana-rent",
+ "solana-serde-varint",
+ "solana-short-vec",
+ "solana-system-instruction-core",
+ "solana-sysvar-core",
  "thiserror",
 ]
 

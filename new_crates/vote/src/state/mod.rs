@@ -1,13 +1,13 @@
 //! Vote state
 
-#[cfg(test)]
-use crate::epoch_schedule::MAX_LEADER_SCHEDULE_EPOCH_OFFSET;
 #[cfg(not(target_os = "solana"))]
 use bincode::deserialize;
+#[cfg(test)]
+use solana_epoch_schedule::MAX_LEADER_SCHEDULE_EPOCH_OFFSET;
 use {
-    crate::vote::{authorized_voters::AuthorizedVoters, error::VoteError},
+    crate::{authorized_voters::AuthorizedVoters, error::VoteError},
     bincode::{serialize_into, ErrorKind},
-    serde_derive::{Deserialize, Serialize},
+    serde::{Deserialize, Serialize},
     solana_clock::{Clock, Epoch, Slot, UnixTimestamp},
     solana_hash::Hash,
     solana_instruction::InstructionError,
@@ -698,7 +698,7 @@ impl VoteState {
 pub mod serde_compact_vote_state_update {
     use {
         super::*,
-        crate::{serde_varint, vote::state::Lockout},
+        crate::state::Lockout,
         serde::{Deserialize, Deserializer, Serialize, Serializer},
         solana_clock::{Slot, UnixTimestamp},
         solana_short_vec as short_vec,
@@ -706,7 +706,7 @@ pub mod serde_compact_vote_state_update {
 
     #[derive(Deserialize, Serialize)]
     struct LockoutOffset {
-        #[serde(with = "serde_varint")]
+        #[serde(with = "solana_serde_varint")]
         offset: Slot,
         confirmation_count: u8,
     }
@@ -1242,7 +1242,7 @@ mod tests {
 
     #[test]
     fn test_minimum_balance() {
-        let rent = solana_program::rent::Rent::default();
+        let rent = solana_rent::Rent::default();
         let minimum_balance = rent.minimum_balance(VoteState::size_of());
         // golden, may need updating when vote_state grows
         assert!(minimum_balance as f64 / 10f64.powf(9.0) < 0.04)

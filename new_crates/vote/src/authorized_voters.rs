@@ -1,5 +1,5 @@
 use {
-    serde_derive::{Deserialize, Serialize},
+    serde::{Deserialize, Serialize},
     solana_clock::Epoch,
     solana_pubkey::Pubkey,
     std::collections::BTreeMap,

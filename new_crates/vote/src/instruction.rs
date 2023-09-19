@@ -1,11 +1,11 @@
 //! Vote program instructions
 
 use {
-    crate::vote::state::{
+    crate::state::{
         serde_compact_vote_state_update, Vote, VoteAuthorize, VoteAuthorizeCheckedWithSeedArgs,
         VoteAuthorizeWithSeedArgs, VoteInit, VoteStateUpdate, VoteStateVersions,
     },
-    serde_derive::{Deserialize, Serialize},
+    serde::{Deserialize, Serialize},
     solana_clock::{Slot, UnixTimestamp},
     solana_hash::Hash,
     solana_instruction::{AccountMeta, Instruction},
