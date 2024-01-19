@@ -165,8 +165,8 @@ pub fn bytes_are_curve_point<T: AsRef<[u8]>>(_bytes: T) -> bool {
     #[cfg(not(target_os = "solana"))]
     {
         curve25519_dalek::edwards::CompressedEdwardsY::from_slice(_bytes.as_ref())
-            .decompress()
-            .is_some()
+            .unwrap()
+            .is_curve_point()
     }
     #[cfg(target_os = "solana")]
     unimplemented!();
@@ -919,9 +919,8 @@ mod tests {
             {
                 let is_on_curve = curve25519_dalek::edwards::CompressedEdwardsY::from_slice(
                     &program_address.to_bytes(),
-                )
-                .decompress()
-                .is_some();
+                ).unwrap()
+                .is_curve_point();
                 assert!(!is_on_curve);
                 assert!(!addresses.contains(&program_address));
                 addresses.push(program_address);

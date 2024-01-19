@@ -504,6 +504,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "curve25519-dalek"
+version = "4.1.1"
+source = "git+https://github.com/kevinheavey/curve25519-dalek?rev=03d66c8751ec0b319bffc8dcf78f2d3229910082#03d66c8751ec0b319bffc8dcf78f2d3229910082"
+dependencies = [
+ "cfg-if",
+ "curve25519-dalek-derive",
+ "fiat-crypto",
+ "platforms",
+ "rustc_version",
+ "subtle",
+]
+
+[[package]]
+name = "curve25519-dalek-derive"
+version = "0.1.1"
+source = "git+https://github.com/kevinheavey/curve25519-dalek?rev=03d66c8751ec0b319bffc8dcf78f2d3229910082#03d66c8751ec0b319bffc8dcf78f2d3229910082"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.33",
+]
+
+[[package]]
 name = "darling"
 version = "0.20.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -590,7 +613,7 @@ version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c762bae6dcaf24c4c84667b8579785430908723d5c889f469d76a41d59cc7a9d"
 dependencies = [
- "curve25519-dalek",
+ "curve25519-dalek 3.2.1",
  "ed25519",
  "rand 0.7.3",
  "serde",
@@ -634,6 +657,12 @@ name = "feature-probe"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "835a3dc7d1ec9e75e2b5fb4ba75396837112d2060b03f7d43bc1897c7f7211da"
+
+[[package]]
+name = "fiat-crypto"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "27573eac26f4dd11e2b1916c3fe1baa56407c83c71a773a8ba17ec0bca03b6b7"
 
 [[package]]
 name = "fnv"
@@ -1028,6 +1057,12 @@ name = "percent-encoding"
 version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b2a4787296e9989611394c33f193f676704af1686e70b8f8033ab5ba9a35a94"
+
+[[package]]
+name = "platforms"
+version = "3.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "626dec3cac7cc0e1577a2ec3fc496277ec2baa084bebad95bb6fdbfae235f84c"
 
 [[package]]
 name = "ppv-lite86"
@@ -1773,7 +1808,7 @@ dependencies = [
  "cc",
  "console_error_panic_hook",
  "console_log",
- "curve25519-dalek",
+ "curve25519-dalek 3.2.1",
  "getrandom 0.2.10",
  "itertools",
  "js-sys",
@@ -1877,7 +1912,7 @@ dependencies = [
  "borsh 0.9.3",
  "bs58",
  "bytemuck",
- "curve25519-dalek",
+ "curve25519-dalek 4.1.1",
  "num-derive",
  "num-traits",
  "rand 0.8.5",
@@ -1934,7 +1969,7 @@ dependencies = [
  "bytemuck",
  "byteorder",
  "chrono",
- "curve25519-dalek",
+ "curve25519-dalek 3.2.1",
  "derivation-path",
  "digest 0.10.7",
  "ed25519-dalek",
@@ -2083,7 +2118,7 @@ name = "solana-signature-core"
 version = "1.17.0"
 dependencies = [
  "bs58",
- "curve25519-dalek",
+ "curve25519-dalek 3.2.1",
  "ed25519-dalek",
  "generic-array",
  "rand 0.8.5",
