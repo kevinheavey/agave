@@ -12,7 +12,7 @@ borsh = { workspace = true }
 borsh0-9 = { package = "borsh", version = "0.9.3" }
 bs58 = { workspace = true }
 bytemuck = { workspace = true }
-curve25519-dalek = { git = "https://github.com/kevinheavey/curve25519-dalek", rev = "03d66c8751ec0b319bffc8dcf78f2d3229910082" }
+curve25519-dalek = { git = "https://github.com/kevinheavey/curve25519-dalek", rev = "9951bf4ae333d90d0d349dcfd9057b42ec0e0931" }
 num-derive = { workspace = true }
 num-traits = { workspace = true }
 rand = { workspace = true }

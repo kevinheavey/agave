@@ -506,24 +506,13 @@ dependencies = [
 [[package]]
 name = "curve25519-dalek"
 version = "4.1.1"
-source = "git+https://github.com/kevinheavey/curve25519-dalek?rev=03d66c8751ec0b319bffc8dcf78f2d3229910082#03d66c8751ec0b319bffc8dcf78f2d3229910082"
+source = "git+https://github.com/kevinheavey/curve25519-dalek?rev=9951bf4ae333d90d0d349dcfd9057b42ec0e0931#9951bf4ae333d90d0d349dcfd9057b42ec0e0931"
 dependencies = [
  "cfg-if",
- "curve25519-dalek-derive",
  "fiat-crypto",
  "platforms",
  "rustc_version",
  "subtle",
-]
-
-[[package]]
-name = "curve25519-dalek-derive"
-version = "0.1.1"
-source = "git+https://github.com/kevinheavey/curve25519-dalek?rev=03d66c8751ec0b319bffc8dcf78f2d3229910082#03d66c8751ec0b319bffc8dcf78f2d3229910082"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.33",
 ]
 
 [[package]]
