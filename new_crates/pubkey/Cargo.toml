@@ -8,22 +8,27 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-borsh = { workspace = true }
-borsh0-9 = { package = "borsh", version = "0.9.3" }
+borsh = { workspace = true, optional = true }
+borsh0-9 = { package = "borsh", version = "0.9.3", optional = true }
 bs58 = { workspace = true }
 bytemuck = { workspace = true }
 curve25519-dalek = { git = "https://github.com/kevinheavey/curve25519-dalek", rev = "9951bf4ae333d90d0d349dcfd9057b42ec0e0931" }
 num-derive = { workspace = true }
 num-traits = { workspace = true }
 rand = { workspace = true }
-serde = { workspace = true }
+serde = { workspace = true, optional = true, features = ["derive"]}
 solana-atomic-u64 = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-hash = { workspace = true }
 solana-sanitize = { workspace = true }
-solana-wasm-bindgen = { workspace = true }
+solana-wasm-bindgen = { workspace = true, optional = true }
 thiserror = { workspace = true }
-wasm-bindgen = { workspace = true }
+wasm-bindgen = { workspace = true, optional = true }
+
+[features]
+serde = ["dep:serde", "solana-hash/serde"]
+borsh = ["dep:borsh", "dep:borsh0-9", "solana-hash/borsh"]
+wasm-bindgen = ["dep:wasm-bindgen", "dep:solana-wasm-bindgen", "solana-hash/wasm-bindgen"]
 
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-syscall-core = { workspace = true }

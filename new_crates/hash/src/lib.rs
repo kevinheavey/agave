@@ -4,12 +4,9 @@
 //! [`Hash`]: struct@Hash
 
 use {
-    borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
-    serde::{Deserialize, Serialize},
     sha2::{Digest, Sha256},
     solana_sanitize::Sanitize,
-    solana_wasm_bindgen::wasm_bindgen,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
     thiserror::Error,
 };
@@ -29,13 +26,10 @@ const MAX_BASE58_LEN: usize = 44;
 /// [blake3]: https://github.com/BLAKE3-team/BLAKE3
 /// [`blake3`]: crate::blake3
 /// [`Message::hash`]: crate::message::Message::hash
-#[wasm_bindgen]
+#[cfg_attr(feature = "wasm-bindgen", solana_wasm_bindgen::wasm_bindgen)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshSerialize, borsh::BorshDeserialize, borsh::BorshSchema))]
 #[derive(
-    Serialize,
-    Deserialize,
-    BorshSerialize,
-    BorshDeserialize,
-    BorshSchema,
     Clone,
     Copy,
     Default,

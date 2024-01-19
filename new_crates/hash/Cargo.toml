@@ -8,16 +8,21 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-borsh = { workspace = true }
+borsh = { workspace = true, optional = true }
 bs58 = { workspace = true }
 bytemuck = { workspace = true, features = ["derive"] }
 sha2 = { workspace = true }
-serde = { workspace = true, features = ["derive"] }
+serde = { workspace = true, features = ["derive"], optional = true }
 solana-atomic-u64 = { workspace = true }
 solana-sanitize = { workspace = true }
-solana-wasm-bindgen = { workspace = true }
+solana-wasm-bindgen = { workspace = true, optional = true }
 thiserror = { workspace = true }
-wasm-bindgen = { workspace = true }
+wasm-bindgen = { workspace = true, optional = true }
+
+[features]
+serde = ["dep:serde"]
+borsh = ["dep:borsh"]
+wasm-bindgen = ["dep:solana-wasm-bindgen", "dep:wasm-bindgen"]
 
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-syscall-core = { workspace = true }

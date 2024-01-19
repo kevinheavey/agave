@@ -2,13 +2,10 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     bytemuck::{Pod, Zeroable},
     num_derive::{FromPrimitive, ToPrimitive},
-    serde::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
     solana_hash::hashv,
-    solana_wasm_bindgen::wasm_bindgen,
     std::{
         convert::{Infallible, TryFrom},
         fmt, mem,
@@ -28,7 +25,8 @@ const MAX_BASE58_LEN: usize = 44;
 
 const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 
-#[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
+#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum PubkeyError {
     /// Length of the seed is too long for address generation
     #[error("Length of the seed is too long for address generation")]
@@ -67,30 +65,28 @@ impl From<u64> for PubkeyError {
 /// [ed25519]: https://ed25519.cr.yp.to/
 /// [pdas]: https://docs.solana.com/developing/programming-model/calling-between-programs#program-derived-addresses
 /// [`Keypair`]: https://docs.rs/solana-sdk/latest/solana_sdk/signer/keypair/struct.Keypair.html
-#[wasm_bindgen]
+#[cfg_attr(feature = "wasm-bindgen", solana_wasm_bindgen::wasm_bindgen)]
 #[repr(transparent)]
+#[cfg_attr(feature = "borsh", derive(borsh::BorshDeserialize, borsh::BorshSchema, borsh::BorshSerialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
     Clone,
     Copy,
     Default,
-    Deserialize,
     Eq,
     Hash,
     Ord,
     PartialEq,
     PartialOrd,
     Pod,
-    Serialize,
     Zeroable,
 )]
 pub struct Pubkey(pub(crate) [u8; 32]);
 
 impl solana_sanitize::Sanitize for Pubkey {}
 
-#[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
+#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum ParsePubkeyError {
     #[error("String is the wrong size")]
     WrongSize,
@@ -670,11 +666,14 @@ impl fmt::Display for Pubkey {
     }
 }
 
+#[cfg(feature = "borsh")]
 impl borsh0_9::de::BorshDeserialize for Pubkey {
     fn deserialize(buf: &mut &[u8]) -> ::core::result::Result<Self, borsh0_9::maybestd::io::Error> {
         Ok(Self(borsh0_9::BorshDeserialize::deserialize(buf)?))
     }
 }
+
+#[cfg(feature = "borsh")]
 impl borsh0_9::BorshSchema for Pubkey
 where
     [u8; 32]: borsh0_9::BorshSchema,
@@ -702,6 +701,8 @@ where
         <[u8; 32] as borsh0_9::BorshSchema>::add_definitions_recursively(definitions);
     }
 }
+
+#[cfg(feature = "borsh")]
 impl borsh0_9::ser::BorshSerialize for Pubkey {
     fn serialize<W: borsh0_9::maybestd::io::Write>(
         &self,
