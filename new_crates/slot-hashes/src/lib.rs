@@ -8,7 +8,7 @@
 
 pub use solana_clock::Slot;
 use {
-    serde::{Deserialize, Serialize},
+    serde::{Serialize, Deserialize},
     solana_hash::Hash,
     std::{
         iter::FromIterator,

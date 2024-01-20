@@ -1,16 +1,9 @@
-use {
-    borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
-    serde::{Deserialize, Serialize},
-};
+use serde::{Serialize, Deserialize};
 
 /// Additional flags for stake state.
+#[cfg_attr(feature = "borsh", derive(borsh::BorshDeserialize, borsh::BorshSchema, borsh::BorshSerialize))]
 #[allow(dead_code)]
 #[derive(
-    Serialize,
-    Deserialize,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
     Copy,
     PartialEq,
     Eq,
@@ -19,6 +12,8 @@ use {
     Ord,
     Hash,
     Debug,
+    Serialize,
+    Deserialize
 )]
 pub struct StakeFlags {
     bits: u8,

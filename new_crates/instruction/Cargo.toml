@@ -11,7 +11,7 @@ edition = { workspace = true }
 bincode = { workspace = true }
 borsh = { workspace = true }
 num-traits ={ workspace = true }
-serde = { workspace = true, features = ["derive"] }
+serde = { workspace = true, features = ["derive"], optional = true }
 solana-pubkey = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-short-vec = { workspace = true }
@@ -19,6 +19,9 @@ solana-syscall-core = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 wasm-bindgen = { workspace = true }
+
+[features]
+serde = ["dep:serde", "solana-pubkey/serde"]
 
 [dev-dependencies]
 anyhow = { workspace = true }

@@ -21,9 +21,9 @@ use {
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_short_vec as short_vec,
-    solana_wasm_bindgen::wasm_bindgen,
     std::{convert::TryFrom, str::FromStr},
 };
+use solana_wasm_bindgen::wasm_bindgen;
 
 lazy_static! {
     // Copied keys over since direct references create cyclical dependency.

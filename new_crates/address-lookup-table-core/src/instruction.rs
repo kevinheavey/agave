@@ -1,5 +1,5 @@
 use {
-    serde::{Deserialize, Serialize},
+    serde::{Serialize, Deserialize},
     solana_clock::Slot,
     solana_instruction::{AccountMeta, Instruction},
     solana_native_programs::address_lookup_table::id,

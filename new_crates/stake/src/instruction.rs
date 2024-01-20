@@ -4,7 +4,7 @@ use {
     crate::state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
     log::*,
     num_derive::{FromPrimitive, ToPrimitive},
-    serde::{Deserialize, Serialize},
+    serde::{Serialize, Deserialize},
     solana_clock::{Epoch, UnixTimestamp},
     solana_decode_error::DecodeError,
     solana_instruction::{AccountMeta, Instruction},
@@ -74,7 +74,7 @@ impl<E> DecodeError<E> for StakeError {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum StakeInstruction {
     /// Initialize a stake with lockup and authorization information
     ///
@@ -291,20 +291,20 @@ pub enum StakeInstruction {
     Redelegate,
 }
 
-#[derive(Default, Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
+#[derive(Default, Debug, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
 pub struct LockupArgs {
     pub unix_timestamp: Option<UnixTimestamp>,
     pub epoch: Option<Epoch>,
     pub custodian: Option<Pubkey>,
 }
 
-#[derive(Default, Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
+#[derive(Default, Debug, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
 pub struct LockupCheckedArgs {
     pub unix_timestamp: Option<UnixTimestamp>,
     pub epoch: Option<Epoch>,
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct AuthorizeWithSeedArgs {
     pub new_authorized_pubkey: Pubkey,
     pub stake_authorize: StakeAuthorize,
@@ -312,7 +312,7 @@ pub struct AuthorizeWithSeedArgs {
     pub authority_owner: Pubkey,
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct AuthorizeCheckedWithSeedArgs {
     pub stake_authorize: StakeAuthorize,
     pub authority_seed: String,

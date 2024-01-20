@@ -17,7 +17,6 @@ use {
     bincode::serialize,
     borsh::BorshSerialize,
     num_traits::ToPrimitive,
-    serde::{Deserialize, Serialize},
     solana_pubkey::Pubkey,
     solana_sanitize::Sanitize,
     solana_short_vec as short_vec,
@@ -33,7 +32,8 @@ use {
 /// an error be consistent across software versions.  For example, it is
 /// dangerous to include error strings from 3rd party crates because they could
 /// change at any time and changes to them are difficult to detect.
-#[derive(Serialize, Deserialize, Debug, Error, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Error, PartialEq, Eq, Clone)]
 pub enum InstructionError {
     /// Deprecated! Use CustomError instead!
     /// The program instruction returned an error
@@ -329,7 +329,8 @@ pub enum InstructionError {
 /// should be specified as signers during `Instruction` construction. The
 /// program must still validate during execution that the account is a signer.
 #[wasm_bindgen]
-#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Instruction {
     /// Pubkey of the program that executes this instruction.
     #[wasm_bindgen(skip)]
@@ -364,9 +365,9 @@ impl Instruction {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use borsh::{BorshSerialize, BorshDeserialize};
+    /// # use borsh::{Borshserde::Serialize, BorshDeserialize};
     /// #
-    /// #[derive(BorshSerialize, BorshDeserialize)]
+    /// #[derive(Borshserde::Serialize, BorshDeserialize)]
     /// pub struct MyInstruction {
     ///     pub lamports: u64,
     /// }
@@ -416,9 +417,9 @@ impl Instruction {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use serde::{Serialize, Deserialize};
+    /// # use serde::{serde::Serialize, Deserialize};
     /// #
-    /// #[derive(Serialize, Deserialize)]
+    /// #[derive(serde::Serialize, Deserialize)]
     /// pub struct MyInstruction {
     ///     pub lamports: u64,
     /// }
@@ -441,7 +442,8 @@ impl Instruction {
     ///    )
     /// }
     /// ```
-    pub fn new_with_bincode<T: Serialize>(
+    #[cfg(feature = "serde")]
+    pub fn new_with_bincode<T: serde::Serialize>(
         program_id: Pubkey,
         data: &T,
         accounts: Vec<AccountMeta>,
@@ -469,10 +471,10 @@ impl Instruction {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use borsh::{BorshSerialize, BorshDeserialize};
+    /// # use borsh::{Borshserde::Serialize, BorshDeserialize};
     /// # use anyhow::Result;
     /// #
-    /// #[derive(BorshSerialize, BorshDeserialize)]
+    /// #[derive(Borshserde::Serialize, BorshDeserialize)]
     /// pub struct MyInstruction {
     ///     pub lamports: u64,
     /// }
@@ -506,11 +508,12 @@ impl Instruction {
         }
     }
 
+    #[cfg(feature = "serde")]
     #[deprecated(
         since = "1.6.0",
         note = "Please use another Instruction constructor instead, such as `Instruction::new_with_borsh`"
     )]
-    pub fn new<T: Serialize>(program_id: Pubkey, data: &T, accounts: Vec<AccountMeta>) -> Self {
+    pub fn new<T: serde::Serialize>(program_id: Pubkey, data: &T, accounts: Vec<AccountMeta>) -> Self {
         Self::new_with_bincode(program_id, data, accounts)
     }
 }
@@ -538,7 +541,8 @@ pub fn checked_add(a: u64, b: u64) -> Result<u64, InstructionError> {
 /// a minor hazard: use [`AccountMeta::new_readonly`] to specify that an account
 /// is not writable.
 #[repr(C)]
-#[derive(Debug, Default, PartialEq, Eq, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Default, PartialEq, Eq, Clone)]
 pub struct AccountMeta {
     /// An account's public key.
     pub pubkey: Pubkey,
@@ -558,9 +562,9 @@ impl AccountMeta {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use borsh::{BorshSerialize, BorshDeserialize};
+    /// # use borsh::{Borshserde::Serialize, BorshDeserialize};
     /// #
-    /// # #[derive(BorshSerialize, BorshDeserialize)]
+    /// # #[derive(Borshserde::Serialize, BorshDeserialize)]
     /// # pub struct MyInstruction;
     /// #
     /// # let instruction = MyInstruction;
@@ -593,9 +597,9 @@ impl AccountMeta {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use borsh::{BorshSerialize, BorshDeserialize};
+    /// # use borsh::{Borshserde::Serialize, BorshDeserialize};
     /// #
-    /// # #[derive(BorshSerialize, BorshDeserialize)]
+    /// # #[derive(Borshserde::Serialize, BorshDeserialize)]
     /// # pub struct MyInstruction;
     /// #
     /// # let instruction = MyInstruction;
@@ -629,23 +633,24 @@ impl AccountMeta {
 /// construction of `Message`. Most users will not interact with it directly.
 ///
 /// [`Message`]: crate::message::Message
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize), serde(rename_all = "camelCase"))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct CompiledInstruction {
     /// Index into the transaction keys array indicating the program account that executes this instruction.
     pub program_id_index: u8,
     /// Ordered indices into the transaction keys array indicating which accounts to pass to the program.
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub accounts: Vec<u8>,
     /// The program input data.
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub data: Vec<u8>,
 }
 
 impl Sanitize for CompiledInstruction {}
 
 impl CompiledInstruction {
-    pub fn new<T: Serialize>(program_ids_index: u8, data: &T, accounts: Vec<u8>) -> Self {
+    #[cfg(feature = "serde")]
+    pub fn new<T: serde::Serialize>(program_ids_index: u8, data: &T, accounts: Vec<u8>) -> Self {
         let data = serialize(data).unwrap();
         Self {
             program_id_index: program_ids_index,

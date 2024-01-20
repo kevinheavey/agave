@@ -943,7 +943,9 @@ mod tests {
         }
     }
 
+    #[cfg(feature = "borsh")]
     fn pubkey_from_seed_by_marker(marker: &[u8]) -> Result<Pubkey, PubkeyError> {
+        use borsh::BorshDeserialize;
         let key = Pubkey::new_unique();
         let owner = Pubkey::default();
 
@@ -956,6 +958,7 @@ mod tests {
         Pubkey::create_with_seed(&key, seed, base)
     }
 
+    #[cfg(feature = "borsh")]
     #[test]
     fn test_create_with_seed_rejects_illegal_owner() {
         assert_eq!(

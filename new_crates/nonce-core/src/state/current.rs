@@ -1,11 +1,9 @@
-use {
-    serde::{Deserialize, Serialize},
-    solana_hash::{hashv, Hash},
-};
+use solana_hash::{hashv, Hash};
 
 const DURABLE_NONCE_HASH_PREFIX: &[u8] = "DURABLE_NONCE".as_bytes();
 
-#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Deserialize, Serialize)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
 pub struct DurableNonce(Hash);
 
 impl DurableNonce {

@@ -3,12 +3,13 @@
 // warnings from uses of deprecated types during trait derivations.
 #![allow(deprecated)]
 
+use serde::{Serialize, Deserialize};
+
 use {
     crate::{
         instruction::{LockupArgs, StakeError},
         stake_flags::StakeFlags,
     },
-    borsh::{maybestd::io, BorshDeserialize, BorshSchema, BorshSerialize},
     solana_clock::{Clock, Epoch, UnixTimestamp},
     solana_instruction::InstructionError,
     solana_pubkey::Pubkey,
@@ -32,7 +33,7 @@ pub fn warmup_cooldown_rate(current_epoch: Epoch, new_rate_activation_epoch: Opt
     }
 }
 
-#[derive(Debug, Default, serde::Serialize, serde::Deserialize, PartialEq, Clone, Copy)]
+#[derive(Debug, Default, PartialEq, Clone, Copy, Serialize, Deserialize)]
 #[allow(clippy::large_enum_variant)]
 #[deprecated(
     since = "1.17.0",
@@ -45,8 +46,9 @@ pub enum StakeState {
     Stake(Meta, Stake),
     RewardsPool,
 }
-impl BorshDeserialize for StakeState {
-    fn deserialize_reader<R: io::Read>(reader: &mut R) -> io::Result<Self> {
+#[cfg(feature = "borsh")]
+impl borsh::BorshDeserialize for StakeState {
+    fn deserialize_reader<R: borsh::maybestd::io::Read>(reader: &mut R) -> borsh::maybestd::io::Result<Self> {
         let enum_value = u32::deserialize_reader(reader)?;
         match enum_value {
             0 => Ok(StakeState::Uninitialized),
@@ -55,30 +57,33 @@ impl BorshDeserialize for StakeState {
                 Ok(StakeState::Initialized(meta))
             }
             2 => {
-                let meta: Meta = BorshDeserialize::deserialize_reader(reader)?;
-                let stake: Stake = BorshDeserialize::deserialize_reader(reader)?;
+                let meta: Meta = borsh::BorshDeserialize::deserialize_reader(reader)?;
+                let stake: Stake = borsh::BorshDeserialize::deserialize_reader(reader)?;
                 Ok(StakeState::Stake(meta, stake))
             }
             3 => Ok(StakeState::RewardsPool),
-            _ => Err(io::Error::new(
-                io::ErrorKind::InvalidData,
+            _ => Err(borsh::maybestd::io::Error::new(
+                borsh::maybestd::io::ErrorKind::InvalidData,
                 "Invalid enum value",
             )),
         }
     }
 }
-impl BorshSerialize for StakeState {
-    fn serialize<W: io::Write>(&self, writer: &mut W) -> io::Result<()> {
+
+#[cfg(feature = "borsh")]
+impl borsh::BorshSerialize for StakeState {
+    fn serialize<W: borsh::maybestd::io::Write>(&self, writer: &mut W) -> borsh::maybestd::io::Result<()> {
+        use borsh::BorshSerialize;
         match self {
             StakeState::Uninitialized => writer.write_all(&0u32.to_le_bytes()),
             StakeState::Initialized(meta) => {
                 writer.write_all(&1u32.to_le_bytes())?;
-                meta.serialize(writer)
+                BorshSerialize::serialize(&meta, writer)
             }
             StakeState::Stake(meta, stake) => {
                 writer.write_all(&2u32.to_le_bytes())?;
-                meta.serialize(writer)?;
-                stake.serialize(writer)
+                BorshSerialize::serialize(&meta, writer)?;
+                BorshSerialize::serialize(&stake, writer)
             }
             StakeState::RewardsPool => writer.write_all(&3u32.to_le_bytes()),
         }
@@ -125,7 +130,7 @@ impl StakeState {
     }
 }
 
-#[derive(Debug, Default, serde::Serialize, serde::Deserialize, PartialEq, Clone, Copy)]
+#[derive(Debug, Default, PartialEq, Clone, Copy, Serialize, Deserialize)]
 #[allow(clippy::large_enum_variant)]
 pub enum StakeStateV2 {
     #[default]
@@ -135,8 +140,9 @@ pub enum StakeStateV2 {
     RewardsPool,
 }
 
-impl BorshDeserialize for StakeStateV2 {
-    fn deserialize_reader<R: io::Read>(reader: &mut R) -> io::Result<Self> {
+#[cfg(feature = "borsh")]
+impl borsh::BorshDeserialize for StakeStateV2 {
+    fn deserialize_reader<R: borsh::maybestd::io::Read>(reader: &mut R) -> borsh::maybestd::io::Result<Self> {
         let enum_value = u32::deserialize_reader(reader)?;
         match enum_value {
             0 => Ok(StakeStateV2::Uninitialized),
@@ -145,33 +151,35 @@ impl BorshDeserialize for StakeStateV2 {
                 Ok(StakeStateV2::Initialized(meta))
             }
             2 => {
-                let meta: Meta = BorshDeserialize::deserialize_reader(reader)?;
-                let stake: Stake = BorshDeserialize::deserialize_reader(reader)?;
-                let stake_flags: StakeFlags = BorshDeserialize::deserialize_reader(reader)?;
+                let meta: Meta = borsh::BorshDeserialize::deserialize_reader(reader)?;
+                let stake: Stake = borsh::BorshDeserialize::deserialize_reader(reader)?;
+                let stake_flags: StakeFlags = borsh::BorshDeserialize::deserialize_reader(reader)?;
                 Ok(StakeStateV2::Stake(meta, stake, stake_flags))
             }
             3 => Ok(StakeStateV2::RewardsPool),
-            _ => Err(io::Error::new(
-                io::ErrorKind::InvalidData,
+            _ => Err(borsh::maybestd::io::Error::new(
+                borsh::maybestd::io::ErrorKind::InvalidData,
                 "Invalid enum value",
             )),
         }
     }
 }
 
-impl BorshSerialize for StakeStateV2 {
-    fn serialize<W: io::Write>(&self, writer: &mut W) -> io::Result<()> {
+#[cfg(feature = "borsh")]
+impl borsh::BorshSerialize for StakeStateV2 {
+    fn serialize<W: borsh::maybestd::io::Write>(&self, writer: &mut W) -> borsh::maybestd::io::Result<()> {
+        use borsh::BorshSerialize;
         match self {
             StakeStateV2::Uninitialized => writer.write_all(&0u32.to_le_bytes()),
             StakeStateV2::Initialized(meta) => {
                 writer.write_all(&1u32.to_le_bytes())?;
-                meta.serialize(writer)
+                BorshSerialize::serialize(&meta, writer)
             }
             StakeStateV2::Stake(meta, stake, stake_flags) => {
                 writer.write_all(&2u32.to_le_bytes())?;
-                meta.serialize(writer)?;
-                stake.serialize(writer)?;
-                stake_flags.serialize(writer)
+                BorshSerialize::serialize(&meta, writer)?;
+                BorshSerialize::serialize(&stake, writer)?;
+                BorshSerialize::serialize(&stake_flags, writer)
             }
             StakeStateV2::RewardsPool => writer.write_all(&3u32.to_le_bytes()),
         }
@@ -219,24 +227,22 @@ impl StakeStateV2 {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
 pub enum StakeAuthorize {
     Staker,
     Withdrawer,
 }
 
+#[cfg_attr(feature = "borsh", derive(borsh::BorshDeserialize, borsh::BorshSchema, borsh::BorshSerialize))]
 #[derive(
     Default,
     Debug,
-    serde::Serialize,
-    serde::Deserialize,
     PartialEq,
     Eq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
+    Serialize,
+    Deserialize
 )]
 pub struct Lockup {
     /// UnixTimestamp at which this stake will allow withdrawal, unless the
@@ -259,18 +265,16 @@ impl Lockup {
     }
 }
 
+#[cfg_attr(feature = "borsh", derive(borsh::BorshDeserialize, borsh::BorshSchema, borsh::BorshSerialize))]
 #[derive(
     Default,
     Debug,
-    serde::Serialize,
-    serde::Deserialize,
     PartialEq,
     Eq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
+    Serialize,
+    Deserialize
 )]
 pub struct Authorized {
     pub staker: Pubkey,
@@ -338,18 +342,16 @@ impl Authorized {
     }
 }
 
+#[cfg_attr(feature = "borsh", derive(borsh::BorshDeserialize, borsh::BorshSchema, borsh::BorshSerialize))]
 #[derive(
     Default,
     Debug,
-    serde::Serialize,
-    serde::Deserialize,
     PartialEq,
     Eq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
+    Serialize,
+    Deserialize
 )]
 pub struct Meta {
     pub rent_exempt_reserve: u64,
@@ -394,16 +396,14 @@ impl Meta {
     }
 }
 
+#[cfg_attr(feature = "borsh", derive(borsh::BorshDeserialize, borsh::BorshSchema, borsh::BorshSerialize))]
 #[derive(
     Debug,
-    serde::Serialize,
-    serde::Deserialize,
     PartialEq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
+    Serialize,
+    Deserialize
 )]
 pub struct Delegation {
     /// to whom the stake is delegated
@@ -639,17 +639,15 @@ impl Delegation {
     }
 }
 
+#[cfg_attr(feature = "borsh", derive(borsh::BorshDeserialize, borsh::BorshSchema, borsh::BorshSerialize))]
 #[derive(
     Debug,
     Default,
-    serde::Serialize,
-    serde::Deserialize,
     PartialEq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
+    Serialize,
+    Deserialize
 )]
 pub struct Stake {
     pub delegation: Delegation,
@@ -699,19 +697,20 @@ impl Stake {
 
 #[cfg(test)]
 mod test {
-    use {
-        super::*, assert_matches::assert_matches, bincode::serialize,
-        solana_borsh0_10::try_from_slice_unchecked,
-    };
+    use super::*;
 
+    #[cfg(feature = "borsh")]
     fn check_borsh_deserialization(stake: StakeStateV2) {
-        let serialized = serialize(&stake).unwrap();
+        use borsh::BorshDeserialize;
+        let serialized = bincode::serialize(&stake).unwrap();
         let deserialized = StakeStateV2::try_from_slice(&serialized).unwrap();
         assert_eq!(stake, deserialized);
     }
 
+    #[cfg(feature = "borsh")]
     fn check_borsh_serialization(stake: StakeStateV2) {
-        let bincode_serialized = serialize(&stake).unwrap();
+        use borsh::BorshSerialize;
+        let bincode_serialized = bincode::serialize(&stake).unwrap();
         let borsh_serialized = StakeStateV2::try_to_vec(&stake).unwrap();
         assert_eq!(bincode_serialized, borsh_serialized);
     }
@@ -721,6 +720,7 @@ mod test {
         assert_eq!(StakeStateV2::size_of(), std::mem::size_of::<StakeStateV2>());
     }
 
+    #[cfg(feature = "borsh")]
     #[test]
     fn bincode_vs_borsh_deserialization() {
         check_borsh_deserialization(StakeStateV2::Uninitialized);
@@ -756,6 +756,7 @@ mod test {
         ));
     }
 
+    #[cfg(feature = "borsh")]
     #[test]
     fn bincode_vs_borsh_serialization() {
         check_borsh_serialization(StakeStateV2::Uninitialized);
@@ -791,6 +792,7 @@ mod test {
         ));
     }
 
+    #[cfg(feature = "borsh")]
     #[test]
     fn borsh_deserialization_live_data() {
         let data = [
@@ -806,8 +808,8 @@ mod test {
         ];
         // As long as we get the 4-byte enum and the first field right, then
         // we're sure the rest works out
-        let deserialized = try_from_slice_unchecked::<StakeStateV2>(&data).unwrap();
-        assert_matches!(
+        let deserialized = solana_borsh0_10::try_from_slice_unchecked::<StakeStateV2>(&data).unwrap();
+        assert_matches::assert_matches!(
             deserialized,
             StakeStateV2::Initialized(Meta {
                 rent_exempt_reserve: 2282880,
@@ -818,14 +820,18 @@ mod test {
 
     mod deprecated {
         use super::*;
+        #[cfg(feature = "borsh")]
         fn check_borsh_deserialization(stake: StakeState) {
-            let serialized = serialize(&stake).unwrap();
+            use borsh::BorshDeserialize;
+            let serialized = bincode::serialize(&stake).unwrap();
             let deserialized = StakeState::try_from_slice(&serialized).unwrap();
             assert_eq!(stake, deserialized);
         }
 
+        #[cfg(feature = "borsh")]
         fn check_borsh_serialization(stake: StakeState) {
-            let bincode_serialized = serialize(&stake).unwrap();
+            use borsh::BorshSerialize;
+            let bincode_serialized = bincode::serialize(&stake).unwrap();
             let borsh_serialized = StakeState::try_to_vec(&stake).unwrap();
             assert_eq!(bincode_serialized, borsh_serialized);
         }
@@ -836,6 +842,7 @@ mod test {
         }
 
         #[test]
+        #[cfg(feature = "borsh")]
         fn bincode_vs_borsh_deserialization() {
             check_borsh_deserialization(StakeState::Uninitialized);
             check_borsh_deserialization(StakeState::RewardsPool);
@@ -869,6 +876,7 @@ mod test {
             ));
         }
 
+        #[cfg(feature = "borsh")]
         #[test]
         fn bincode_vs_borsh_serialization() {
             check_borsh_serialization(StakeState::Uninitialized);
@@ -903,6 +911,7 @@ mod test {
             ));
         }
 
+        #[cfg(feature = "borsh")]
         #[test]
         fn borsh_deserialization_live_data() {
             let data = [
@@ -918,8 +927,8 @@ mod test {
             ];
             // As long as we get the 4-byte enum and the first field right, then
             // we're sure the rest works out
-            let deserialized = try_from_slice_unchecked::<StakeState>(&data).unwrap();
-            assert_matches!(
+            let deserialized = solana_borsh0_10::try_from_slice_unchecked::<StakeState>(&data).unwrap();
+            assert_matches::assert_matches!(
                 deserialized,
                 StakeState::Initialized(Meta {
                     rent_exempt_reserve: 2282880,
