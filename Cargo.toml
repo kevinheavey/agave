@@ -48,7 +48,7 @@ cc = "1.0.83"
 chrono = { version = "0.4.30", default-features = false }
 console_error_panic_hook = "0.1.7"
 console_log = "0.2.2"
-curve25519-dalek = "3.2.1"
+curve25519-dalek = { git = "https://github.com/kevinheavey/curve25519-dalek", rev = "9951bf4ae333d90d0d349dcfd9057b42ec0e0931" }
 derivation-path = { version = "0.2.0", default-features = false }
 digest = "0.10.7"
 ed25519-dalek = "=1.0.1"
