@@ -26,3 +26,4 @@ serde = ["dep:serde", "solana-pubkey/serde"]
 [dev-dependencies]
 anyhow = { workspace = true }
 solana-program = { workspace = true }
+serde = { workspace = true, features = ["derive"] }

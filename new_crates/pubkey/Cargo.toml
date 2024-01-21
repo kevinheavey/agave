@@ -35,5 +35,6 @@ solana-syscall-core = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
+borsh = { workspace = true }
 solana-program = { workspace = true }
 solana-sdk = { workspace = true }

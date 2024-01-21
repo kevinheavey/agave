@@ -365,9 +365,9 @@ impl Instruction {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use borsh::{Borshserde::Serialize, BorshDeserialize};
+    /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
-    /// #[derive(Borshserde::Serialize, BorshDeserialize)]
+    /// #[derive(BorshSerialize, BorshDeserialize)]
     /// pub struct MyInstruction {
     ///     pub lamports: u64,
     /// }
@@ -417,9 +417,9 @@ impl Instruction {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use serde::{serde::Serialize, Deserialize};
+    /// # use serde::{Serialize, Deserialize};
     /// #
-    /// #[derive(serde::Serialize, Deserialize)]
+    /// #[derive(Serialize, Deserialize)]
     /// pub struct MyInstruction {
     ///     pub lamports: u64,
     /// }
@@ -471,10 +471,10 @@ impl Instruction {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use borsh::{Borshserde::Serialize, BorshDeserialize};
+    /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// # use anyhow::Result;
     /// #
-    /// #[derive(Borshserde::Serialize, BorshDeserialize)]
+    /// #[derive(BorshSerialize, BorshDeserialize)]
     /// pub struct MyInstruction {
     ///     pub lamports: u64,
     /// }
@@ -562,9 +562,9 @@ impl AccountMeta {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use borsh::{Borshserde::Serialize, BorshDeserialize};
+    /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
-    /// # #[derive(Borshserde::Serialize, BorshDeserialize)]
+    /// # #[derive(BorshSerialize, BorshDeserialize)]
     /// # pub struct MyInstruction;
     /// #
     /// # let instruction = MyInstruction;
@@ -597,9 +597,9 @@ impl AccountMeta {
     /// #     pubkey::Pubkey,
     /// #     instruction::{AccountMeta, Instruction},
     /// # };
-    /// # use borsh::{Borshserde::Serialize, BorshDeserialize};
+    /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
-    /// # #[derive(Borshserde::Serialize, BorshDeserialize)]
+    /// # #[derive(BorshSerialize, BorshDeserialize)]
     /// # pub struct MyInstruction;
     /// #
     /// # let instruction = MyInstruction;

@@ -174,7 +174,7 @@ mod tests {
         let mut off_curve_bits = [0u8; 32];
         off_curve_bits.copy_from_slice(&off_curve_bytes);
         let off_curve_point = curve25519_dalek::edwards::CompressedEdwardsY(off_curve_bits);
-        assert_eq!(off_curve_point.decompress(), None);
+        assert!(!off_curve_point.is_curve_point());
 
         let pubkey = Pubkey::try_from(off_curve_bytes).unwrap();
         let signature = Signature::default();
