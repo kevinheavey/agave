@@ -236,6 +236,7 @@ impl SanitizedTransaction {
         }
     }
 
+    #[cfg(feature = "nonce")]
     /// If the transaction uses a durable nonce, return the pubkey of the nonce account
     pub fn get_durable_nonce(&self) -> Option<&Pubkey> {
         self.message.get_durable_nonce()

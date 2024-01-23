@@ -39,4 +39,5 @@ solana-sysvar-core = { workspace = true }
 
 [features]
 blake3 = ["solana-message/blake3"]
+nonce = ["solana-message/nonce"]
 verify-precompiles = ["solana-feature-set", "solana-precompiles"]

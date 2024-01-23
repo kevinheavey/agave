@@ -17,12 +17,12 @@ solana-hash = { workspace = true, features = ["wasm-bindgen"]}
 solana-instruction = { workspace = true }
 solana-message-error = { workspace = true }
 solana-native-programs = { workspace = true }
-solana-nonce-core = { workspace = true }
-solana-program-utils = { workspace = true }
+solana-nonce-core = { workspace = true, optional = true }
+solana-program-utils = { workspace = true, optional = true }
 solana-pubkey = { workspace = true, features = ["wasm-bindgen"] }
 solana-sanitize = { workspace = true }
 solana-short-vec = { workspace = true }
-solana-system-instruction-core = { workspace = true }
+solana-system-instruction-core = { workspace = true, optional = true }
 solana-sysvar-core = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
@@ -30,6 +30,11 @@ wasm-bindgen = { workspace = true }
 
 [features]
 blake3 = ["dep:blake3"]
+nonce = [
+    "dep:solana-nonce-core", 
+    "dep:solana-program-utils", 
+    "dep:solana-system-instruction-core"
+]
 
 [dev-dependencies]
 anyhow = { workspace = true }

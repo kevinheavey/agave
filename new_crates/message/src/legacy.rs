@@ -431,6 +431,7 @@ impl Message {
     /// # create_offline_initialize_tx(&client, program_id, &payer)?;
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    #[cfg(feature = "nonce")]
     pub fn new_with_nonce(
         mut instructions: Vec<Instruction>,
         payer: Option<&Pubkey>,
