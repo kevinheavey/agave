@@ -974,6 +974,7 @@ impl Transaction {
     /// # Errors
     ///
     /// Returns [`TransactionError::SignatureFailure`] on error.
+    #[cfg(feature = "blake3")]
     pub fn verify_and_hash_message(&self) -> Result<Hash> {
         let message_bytes = self.message_data();
         if !self

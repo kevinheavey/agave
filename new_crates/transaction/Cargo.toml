@@ -38,4 +38,5 @@ solana-pubkey-sdk = { workspace = true }
 solana-sysvar-core = { workspace = true }
 
 [features]
+blake3 = ["solana-message/blake3"]
 verify-precompiles = ["solana-feature-set", "solana-precompiles"]

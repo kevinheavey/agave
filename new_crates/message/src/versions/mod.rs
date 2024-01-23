@@ -133,12 +133,14 @@ impl VersionedMessage {
         bincode::serialize(self).unwrap()
     }
 
+    #[cfg(feature = "blake3")]
     /// Compute the blake3 hash of this transaction's message
     pub fn hash(&self) -> Hash {
         let message_bytes = self.serialize();
         Self::hash_raw_message(&message_bytes)
     }
 
+    #[cfg(feature = "blake3")]
     /// Compute the blake3 hash of a raw transaction message
     pub fn hash_raw_message(message_bytes: &[u8]) -> Hash {
         use blake3::traits::digest::Digest;

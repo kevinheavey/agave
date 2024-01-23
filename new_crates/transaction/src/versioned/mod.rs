@@ -1,14 +1,12 @@
 //! Defines a transaction which supports multiple versions of messages.
 use {
-    crate::{Result, Transaction},
+    crate::Transaction,
     serde::{Deserialize, Serialize},
-    solana_hash::Hash,
     solana_message::VersionedMessage,
     solana_sanitize::SanitizeError,
     solana_short_vec as short_vec,
     solana_signature_core::Signature,
     solana_signer::{signers::Signers, SignerError},
-    solana_transaction_error::TransactionError,
     std::cmp::Ordering,
 };
 
@@ -152,14 +150,15 @@ impl VersionedTransaction {
     }
 
     /// Verify the transaction and hash its message
-    pub fn verify_and_hash_message(&self) -> Result<Hash> {
+    #[cfg(feature = "blake3")]
+    pub fn verify_and_hash_message(&self) -> crate::Result<solana_hash::Hash> {
         let message_bytes = self.message.serialize();
         if !self
             ._verify_with_results(&message_bytes)
             .iter()
             .all(|verify_result| *verify_result)
         {
-            Err(TransactionError::SignatureFailure)
+            Err(solana_transaction_error::TransactionError::SignatureFailure)
         } else {
             Ok(VersionedMessage::hash_raw_message(&message_bytes))
         }
@@ -273,7 +272,7 @@ mod tests {
             solana_system_instruction_core::transfer(&from_pubkey, &nonce_pubkey, 42),
         ];
         let message = LegacyMessage::new(&instructions, Some(&nonce_pubkey));
-        let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());
+        let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, solana_hash::Hash::default());
         (from_pubkey, nonce_pubkey, tx.into())
     }
 
@@ -311,7 +310,7 @@ mod tests {
             solana_system_instruction_core::advance_nonce_account(&nonce_pubkey, &nonce_pubkey),
         ];
         let message = LegacyMessage::new(&instructions, Some(&from_pubkey));
-        let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());
+        let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, solana_hash::Hash::default());
         let tx = VersionedTransaction::from(tx);
         assert!(!tx.uses_durable_nonce());
     }
@@ -337,7 +336,7 @@ mod tests {
             &[nonce_instruction],
             Some(&from_pubkey),
             &[&from_keypair, &nonce_keypair],
-            Hash::default(),
+            solana_hash::Hash::default(),
         );
         let tx = VersionedTransaction::from(tx);
         assert!(!tx.uses_durable_nonce());
@@ -359,7 +358,7 @@ mod tests {
             solana_system_instruction_core::transfer(&from_pubkey, &nonce_pubkey, 42),
         ];
         let message = LegacyMessage::new(&instructions, Some(&nonce_pubkey));
-        let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, Hash::default());
+        let tx = Transaction::new(&[&from_keypair, &nonce_keypair], message, solana_hash::Hash::default());
         let tx = VersionedTransaction::from(tx);
         assert!(!tx.uses_durable_nonce());
     }

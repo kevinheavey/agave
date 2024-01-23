@@ -9,7 +9,7 @@ edition = { workspace = true }
 
 [dependencies]
 bincode = { workspace = true }
-blake3 = { workspace = true, features = ["traits-preview"] }
+blake3 = { workspace = true, features = ["traits-preview"], optional = true }
 lazy_static = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 solana-address-lookup-table-core = { workspace = true }
@@ -26,6 +26,9 @@ solana-sysvar-core = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
 wasm-bindgen = { workspace = true }
+
+[features]
+blake3 = ["dep:blake3"]
 
 [dev-dependencies]
 anyhow = { workspace = true }

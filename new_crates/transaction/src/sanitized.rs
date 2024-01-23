@@ -1,7 +1,7 @@
 pub use solana_message::{AddressLoader, SimpleAddressLoader};
 use {
     super::SanitizedVersionedTransaction,
-    crate::{Result, Transaction, VersionedTransaction},
+    crate::{Result, VersionedTransaction},
     solana_hash::Hash,
     solana_message::{
         legacy,
@@ -9,7 +9,6 @@ use {
         LegacyMessage, SanitizedMessage, SanitizedVersionedMessage, VersionedMessage,
     },
     solana_pubkey::Pubkey,
-    solana_sanitize::Sanitize,
     solana_signature_core::Signature,
     solana_transaction_error::TransactionError,
 };
@@ -84,12 +83,14 @@ impl SanitizedTransaction {
     /// Create a sanitized transaction from an un-sanitized versioned
     /// transaction.  If the input transaction uses address tables, attempt to
     /// lookup the address for each table index.
+    #[cfg(feature = "blake3")]
     pub fn try_create(
         tx: VersionedTransaction,
         message_hash: impl Into<MessageHash>,
         is_simple_vote_tx: Option<bool>,
         address_loader: impl AddressLoader,
     ) -> Result<Self> {
+        use solana_sanitize::Sanitize;
         tx.sanitize()?;
 
         let message_hash = match message_hash.into() {
@@ -130,7 +131,9 @@ impl SanitizedTransaction {
         })
     }
 
-    pub fn try_from_legacy_transaction(tx: Transaction) -> Result<Self> {
+    #[cfg(feature = "blake3")]
+    pub fn try_from_legacy_transaction(tx: crate::Transaction) -> Result<Self> {
+        use solana_sanitize::Sanitize;
         tx.sanitize()?;
 
         Ok(Self {
@@ -142,7 +145,8 @@ impl SanitizedTransaction {
     }
 
     /// Create a sanitized transaction from a legacy transaction. Used for tests only.
-    pub fn from_transaction_for_tests(tx: Transaction) -> Self {
+    #[cfg(feature = "blake3")]
+    pub fn from_transaction_for_tests(tx: crate::Transaction) -> Self {
         Self::try_from_legacy_transaction(tx).unwrap()
     }
 
