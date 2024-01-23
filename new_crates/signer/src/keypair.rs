@@ -1,5 +1,5 @@
 use {
-    crate::{EncodableKey, EncodableKeypair, SeedDerivable, Signer, SignerError},
+    crate::{SeedDerivable, Signer, SignerError},
     ed25519_dalek::Signer as DalekSigner,
     ed25519_dalek_bip32::Error as Bip32Error,
     hmac::Hmac,
@@ -7,11 +7,7 @@ use {
     solana_derivation_path::DerivationPath,
     solana_pubkey::Pubkey,
     solana_signature_core::Signature,
-    std::{
-        error,
-        io::{Read, Write},
-        path::Path,
-    },
+    std::error,
     wasm_bindgen::prelude::*,
 };
 
@@ -123,12 +119,13 @@ where
     }
 }
 
-impl EncodableKey for Keypair {
-    fn read<R: Read>(reader: &mut R) -> Result<Self, Box<dyn error::Error>> {
+#[cfg(feature = "serde_json")]
+impl crate::EncodableKey for Keypair {
+    fn read<R: std::io::Read>(reader: &mut R) -> Result<Self, Box<dyn error::Error>> {
         read_keypair(reader)
     }
 
-    fn write<W: Write>(&self, writer: &mut W) -> Result<String, Box<dyn error::Error>> {
+    fn write<W: std::io::Write>(&self, writer: &mut W) -> Result<String, Box<dyn error::Error>> {
         write_keypair(self, writer)
     }
 }
@@ -153,7 +150,8 @@ impl SeedDerivable for Keypair {
     }
 }
 
-impl EncodableKeypair for Keypair {
+#[cfg(feature = "serde_json")]
+impl crate::EncodableKeypair for Keypair {
     type Pubkey = Pubkey;
 
     /// Returns the associated pubkey. Use this function specifically for settings that involve
@@ -163,20 +161,23 @@ impl EncodableKeypair for Keypair {
     }
 }
 
+#[cfg(feature = "serde_json")]
 /// Reads a JSON-encoded `Keypair` from a `Reader` implementor
-pub fn read_keypair<R: Read>(reader: &mut R) -> Result<Keypair, Box<dyn error::Error>> {
+pub fn read_keypair<R: std::io::Read>(reader: &mut R) -> Result<Keypair, Box<dyn error::Error>> {
     let bytes: Vec<u8> = serde_json::from_reader(reader)?;
     Keypair::from_bytes(&bytes)
         .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e.to_string()).into())
 }
 
+#[cfg(feature = "serde_json")]
 /// Reads a `Keypair` from a file
-pub fn read_keypair_file<F: AsRef<Path>>(path: F) -> Result<Keypair, Box<dyn error::Error>> {
+pub fn read_keypair_file<F: AsRef<std::path::Path>>(path: F) -> Result<Keypair, Box<dyn error::Error>> {
     Keypair::read_from_file(path)
 }
 
+#[cfg(feature = "serde_json")]
 /// Writes a `Keypair` to a `Write` implementor with JSON-encoding
-pub fn write_keypair<W: Write>(
+pub fn write_keypair<W: std::io::Write>(
     keypair: &Keypair,
     writer: &mut W,
 ) -> Result<String, Box<dyn error::Error>> {
@@ -186,8 +187,9 @@ pub fn write_keypair<W: Write>(
     Ok(serialized)
 }
 
+#[cfg(feature = "serde_json")]
 /// Writes a `Keypair` to a file with JSON-encoding
-pub fn write_keypair_file<F: AsRef<Path>>(
+pub fn write_keypair_file<F: AsRef<std::path::Path>>(
     keypair: &Keypair,
     outfile: F,
 ) -> Result<String, Box<dyn error::Error>> {
@@ -264,12 +266,9 @@ mod tests {
     use {
         super::*,
         bip39::{Language, Mnemonic, MnemonicType, Seed},
-        std::{
-            fs::{self, File},
-            mem,
-        },
     };
 
+    #[cfg(feature = "serde_json")]
     fn tmp_file_path(name: &str) -> String {
         use std::env;
         let out_dir = env::var("FARF_DIR").unwrap_or_else(|_| "farf".to_string());
@@ -278,12 +277,13 @@ mod tests {
         format!("{}/tmp/{}-{}", out_dir, name, keypair.pubkey())
     }
 
+    #[cfg(feature = "serde_json")]
     #[test]
     fn test_write_keypair_file() {
         let outfile = tmp_file_path("test_write_keypair_file.json");
         let serialized_keypair = write_keypair_file(&Keypair::new(), &outfile).unwrap();
         let keypair_vec: Vec<u8> = serde_json::from_str(&serialized_keypair).unwrap();
-        assert!(Path::new(&outfile).exists());
+        assert!(std::path::Path::new(&outfile).exists());
         assert_eq!(
             keypair_vec,
             read_keypair_file(&outfile).unwrap().0.to_bytes().to_vec()
@@ -293,7 +293,7 @@ mod tests {
         {
             use std::os::unix::fs::PermissionsExt;
             assert_eq!(
-                File::open(&outfile)
+                std::fs::File::open(&outfile)
                     .expect("open")
                     .metadata()
                     .expect("metadata")
@@ -306,12 +306,13 @@ mod tests {
 
         assert_eq!(
             read_keypair_file(&outfile).unwrap().pubkey().as_ref().len(),
-            mem::size_of::<Pubkey>()
+            std::mem::size_of::<Pubkey>()
         );
-        fs::remove_file(&outfile).unwrap();
-        assert!(!Path::new(&outfile).exists());
+        std::fs::remove_file(&outfile).unwrap();
+        assert!(!std::path::Path::new(&outfile).exists());
     }
 
+    #[cfg(feature = "serde_json")]
     #[test]
     fn test_write_keypair_file_overwrite_ok() {
         let outfile = tmp_file_path("test_write_keypair_file_overwrite_ok.json");
@@ -320,6 +321,7 @@ mod tests {
         write_keypair_file(&Keypair::new(), &outfile).unwrap();
     }
 
+    #[cfg(feature = "serde_json")]
     #[test]
     fn test_write_keypair_file_truncate() {
         let outfile = tmp_file_path("test_write_keypair_file_truncate.json");
@@ -329,7 +331,7 @@ mod tests {
 
         // Ensure outfile is truncated
         {
-            let mut f = File::create(&outfile).unwrap();
+            let mut f = std::fs::File::create(&outfile).unwrap();
             f.write_all(String::from_utf8([b'a'; 2048].to_vec()).unwrap().as_bytes())
                 .unwrap();
         }
