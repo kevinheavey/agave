@@ -1643,6 +1643,7 @@ dependencies = [
  "solana-address-lookup-table-core",
  "solana-hash",
  "solana-instruction",
+ "solana-message-error",
  "solana-msg-and-friends",
  "solana-native-programs",
  "solana-nonce-core",
@@ -1655,6 +1656,14 @@ dependencies = [
  "solana-wasm-bindgen",
  "thiserror",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "solana-message-error"
+version = "1.17.0"
+dependencies = [
+ "solana-sanitize",
+ "thiserror",
 ]
 
 [[package]]
@@ -1834,6 +1843,7 @@ dependencies = [
  "solana-last-restart-slot",
  "solana-logger",
  "solana-message",
+ "solana-message-error",
  "solana-msg-and-friends",
  "solana-native-programs",
  "solana-nonce-core",
@@ -2299,7 +2309,7 @@ version = "1.17.0"
 dependencies = [
  "serde",
  "solana-instruction",
- "solana-message",
+ "solana-message-error",
  "solana-sanitize",
  "thiserror",
 ]

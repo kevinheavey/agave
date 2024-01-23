@@ -2,20 +2,20 @@ use {
     crate::{
         legacy,
         v0::{self, LoadedAddresses},
-        AccountKeys, AddressLoader, AddressLoaderError, MessageHeader, SanitizedVersionedMessage,
+        AccountKeys, AddressLoader, MessageHeader, SanitizedVersionedMessage,
         VersionedMessage,
     },
     solana_hash::Hash,
     solana_instruction::CompiledInstruction,
+    solana_message_error::SanitizeMessageError,
     solana_native_programs::{ed25519_program, secp256k1_program, system_program},
     solana_nonce_core::NONCED_TX_MARKER_IX_INDEX,
     solana_program_utils::limited_deserialize,
     solana_pubkey::Pubkey,
-    solana_sanitize::{Sanitize, SanitizeError},
+    solana_sanitize::Sanitize,
     solana_system_instruction_core::SystemInstruction,
     solana_sysvar_core::instructions::{BorrowedAccountMeta, BorrowedInstruction},
     std::{borrow::Cow, convert::TryFrom},
-    thiserror::Error,
 };
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -71,28 +71,6 @@ pub enum SanitizedMessage {
     Legacy(LegacyMessage<'static>),
     /// Sanitized version #0 message with dynamically loaded addresses
     V0(v0::LoadedMessage<'static>),
-}
-
-#[derive(PartialEq, Debug, Error, Eq, Clone)]
-pub enum SanitizeMessageError {
-    #[error("index out of bounds")]
-    IndexOutOfBounds,
-    #[error("value out of bounds")]
-    ValueOutOfBounds,
-    #[error("invalid value")]
-    InvalidValue,
-    #[error("{0}")]
-    AddressLoaderError(#[from] AddressLoaderError),
-}
-
-impl From<SanitizeError> for SanitizeMessageError {
-    fn from(err: SanitizeError) -> Self {
-        match err {
-            SanitizeError::IndexOutOfBounds => Self::IndexOutOfBounds,
-            SanitizeError::ValueOutOfBounds => Self::ValueOutOfBounds,
-            SanitizeError::InvalidValue => Self::InvalidValue,
-        }
-    }
 }
 
 impl TryFrom<legacy::Message> for SanitizedMessage {
@@ -820,7 +798,7 @@ mod tests {
         let serialized = serialize_instructions(&message.decompile_instructions());
         assert_eq!(
             deserialize_instruction(instructions.len(), &serialized).unwrap_err(),
-            SanitizeError::IndexOutOfBounds,
+            solana_sanitize::SanitizeError::IndexOutOfBounds,
         );
     }
 }

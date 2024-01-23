@@ -1,5 +1,5 @@
 [package]
-name = "solana-transaction-error"
+name = "solana-message-error"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -8,8 +8,5 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-serde = { workspace = true, features = ["derive"] }
-solana-instruction = { workspace = true }
-solana-message-error = { workspace = true }
 solana-sanitize = { workspace = true }
 thiserror = { workspace = true }

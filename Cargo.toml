@@ -115,6 +115,7 @@ solana-keccak = { path = "new_crates/keccak" }
 solana-last-restart-slot = { path = "new_crates/last-restart-slot" }
 solana-logger = { path = "logger", version = "=1.17.0" }
 solana-message = { path = "new_crates/message" }
+solana-message-error = { path = "new_crates/message-error" }
 solana-msg-and-friends = { path = "new_crates/msg-and-friends" }
 solana-native-programs = { path = "new_crates/native-programs" }
 solana-nonce-core = { path = "new_crates/nonce-core" }

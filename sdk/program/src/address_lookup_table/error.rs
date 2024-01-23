@@ -1,5 +1,5 @@
 #[cfg(not(target_os = "solana"))]
-use solana_message::AddressLoaderError;
+use solana_message_error::AddressLoaderError;
 use thiserror::Error;
 
 #[derive(Debug, Error, PartialEq, Eq, Clone)]

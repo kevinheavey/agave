@@ -1,7 +1,7 @@
 use {
     serde::{Deserialize, Serialize},
     solana_instruction::InstructionError,
-    solana_message::{AddressLoaderError, SanitizeMessageError},
+    solana_message_error::{AddressLoaderError, SanitizeMessageError},
     solana_sanitize::SanitizeError,
     thiserror::Error,
 };

@@ -15,6 +15,7 @@ serde = { workspace = true, features = ["derive"] }
 solana-address-lookup-table-core = { workspace = true }
 solana-hash = { workspace = true, features = ["wasm-bindgen"]}
 solana-instruction = { workspace = true }
+solana-message-error = { workspace = true }
 solana-native-programs = { workspace = true }
 solana-nonce-core = { workspace = true }
 solana-program-utils = { workspace = true }
