@@ -74,6 +74,7 @@ sha2 = { workspace = true }
 sha3 = { workspace = true, optional = true }
 solana-account = { workspace = true }
 solana-clock = { workspace = true }
+solana-consts = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-derivation-path = { workspace = true }
 solana-ed25519-instruction = { workspace = true }

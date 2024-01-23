@@ -46,7 +46,7 @@ pub mod v0 {
     use {
         super::{is_printable_ascii, is_utf8, MessageFormat, OffchainMessage as Base},
         solana_hash::{Hash, Hasher},
-        solana_packet::PACKET_DATA_SIZE,
+        solana_consts::PACKET_DATA_SIZE,
         solana_sanitize::SanitizeError,
     };
 

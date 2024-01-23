@@ -1478,6 +1478,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-consts"
+version = "1.17.0"
+dependencies = [
+ "static_assertions",
+]
+
+[[package]]
 name = "solana-cpi"
 version = "1.17.0"
 dependencies = [
@@ -1703,7 +1710,7 @@ dependencies = [
  "bitflags 2.3.3",
  "serde",
  "serde_with",
- "static_assertions",
+ "solana-consts",
  "thiserror",
 ]
 
@@ -1884,8 +1891,8 @@ version = "1.17.0"
 dependencies = [
  "bincode",
  "serde",
+ "solana-consts",
  "solana-instruction",
- "solana-packet",
  "solana-program-utils",
  "thiserror",
 ]
@@ -1989,6 +1996,7 @@ dependencies = [
  "sha3",
  "solana-account",
  "solana-clock",
+ "solana-consts",
  "solana-decode-error",
  "solana-derivation-path",
  "solana-ed25519-instruction",
