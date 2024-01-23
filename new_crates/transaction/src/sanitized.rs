@@ -90,7 +90,6 @@ impl SanitizedTransaction {
         is_simple_vote_tx: Option<bool>,
         address_loader: impl AddressLoader,
     ) -> Result<Self> {
-        use solana_sanitize::Sanitize;
         tx.sanitize()?;
 
         let message_hash = match message_hash.into() {

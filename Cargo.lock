@@ -1429,13 +1429,11 @@ name = "solana-big-mod-exp"
 version = "1.17.0"
 dependencies = [
  "array-bytes",
- "bytemuck",
  "num-bigint",
  "num-traits",
  "serde",
  "serde_json",
  "solana-syscall-core",
- "thiserror",
 ]
 
 [[package]]
@@ -1455,9 +1453,6 @@ dependencies = [
 [[package]]
 name = "solana-borsh"
 version = "1.17.0"
-dependencies = [
- "thiserror",
-]
 
 [[package]]
 name = "solana-borsh0-10"
@@ -1465,7 +1460,6 @@ version = "1.17.0"
 dependencies = [
  "borsh 0.10.3",
  "solana-borsh",
- "thiserror",
 ]
 
 [[package]]
@@ -1711,7 +1705,6 @@ dependencies = [
  "serde",
  "serde_with",
  "solana-consts",
- "thiserror",
 ]
 
 [[package]]
@@ -1789,7 +1782,6 @@ dependencies = [
  "ark-ec",
  "ark-ff",
  "ark-serialize",
- "array-bytes",
  "assert_matches",
  "base64 0.21.4",
  "bincode",
@@ -1821,7 +1813,6 @@ dependencies = [
  "serde",
  "serde_bytes",
  "serde_derive",
- "serde_json",
  "sha2 0.10.7",
  "sha3",
  "solana-address-lookup-table-core",
@@ -1856,7 +1847,6 @@ dependencies = [
  "solana-serde-varint",
  "solana-serialize-utils",
  "solana-short-vec",
- "solana-signature-core",
  "solana-slot-hashes",
  "solana-slot-history",
  "solana-stable-layout",
@@ -1869,7 +1859,6 @@ dependencies = [
  "solana-wasm-bindgen",
  "static_assertions",
  "thiserror",
- "tiny-bip39",
  "wasm-bindgen",
  "zeroize",
 ]
@@ -1982,7 +1971,6 @@ dependencies = [
  "num_enum",
  "pbkdf2 0.11.0",
  "qstring",
- "qualifier_attr",
  "rand 0.7.3",
  "rand 0.8.5",
  "rustc_version",
@@ -2087,7 +2075,6 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "solana-short-vec",
- "thiserror",
 ]
 
 [[package]]

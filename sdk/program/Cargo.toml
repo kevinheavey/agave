@@ -29,7 +29,6 @@ rustversion = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_bytes = { workspace = true }
 serde_derive = { workspace = true }
-serde_json = { workspace = true }
 sha2 = { workspace = true }
 sha3 = { workspace = true }
 solana-address-lookup-table-core = { workspace = true }
@@ -63,7 +62,6 @@ solana-sanitize = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-serde-varint = { workspace = true }
 solana-short-vec = { workspace = true }
-solana-signature-core = { workspace = true }
 solana-slot-hashes = { workspace = true }
 solana-slot-history = { workspace = true }
 solana-stable-layout = { workspace = true }
@@ -90,7 +88,6 @@ ark-bn254 = { workspace = true }
 ark-ec = { workspace = true }
 ark-ff = { workspace = true }
 ark-serialize = { workspace = true }
-array-bytes = { workspace = true }
 bitflags = { workspace = true }
 base64 = { workspace = true, features = ["alloc", "std"] }
 itertools = { workspace = true }
@@ -98,7 +95,6 @@ libc = { workspace = true, features = ["extra_traits"] }
 libsecp256k1 = { workspace = true }
 num-bigint = { workspace = true }
 rand = { workspace = true }
-tiny-bip39 = { workspace = true }
 wasm-bindgen = { workspace = true }
 zeroize = { workspace = true, features = ["default", "zeroize_derive"] }
 
@@ -117,7 +113,6 @@ parking_lot = { workspace = true }
 [dev-dependencies]
 anyhow = { workspace = true }
 assert_matches = { workspace = true }
-serde_json = { workspace = true }
 static_assertions = { workspace = true }
 
 [build-dependencies]

@@ -10,4 +10,3 @@ edition = { workspace = true }
 [dependencies]
 borsh = { workspace = true }
 solana-borsh = { workspace = true }
-thiserror = { workspace = true }
