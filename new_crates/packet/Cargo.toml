@@ -12,7 +12,5 @@ bincode = { workspace = true }
 bitflags = { workspace = true }
 serde = { workspace = true, features = ["derive"]}
 serde_with = { workspace = true, features = ["macros"] }
+solana-consts.workspace = true
 thiserror = { workspace = true }
-
-[dev-dependencies]
-static_assertions = { workspace = true }

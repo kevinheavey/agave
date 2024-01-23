@@ -9,8 +9,8 @@ edition = { workspace = true }
 
 [dependencies]
 serde = { workspace = true }
+solana-consts = { workspace = true }
 solana-instruction = { workspace = true }
-solana-packet = { workspace = true }
 solana-program-utils = { workspace = true }
 thiserror = { workspace = true }
 

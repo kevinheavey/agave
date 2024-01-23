@@ -12,7 +12,7 @@ where
 {
     solana_program_utils::limited_deserialize(
         instruction_data,
-        solana_packet::PACKET_DATA_SIZE as u64,
+        solana_consts::PACKET_DATA_SIZE as u64,
     )
 }
 
