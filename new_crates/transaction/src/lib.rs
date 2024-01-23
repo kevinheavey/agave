@@ -114,15 +114,11 @@ use {
     solana_hash::Hash,
     solana_instruction::{CompiledInstruction, Instruction},
     solana_message::Message,
-    solana_native_programs::system_program,
-    solana_nonce_core::NONCED_TX_MARKER_IX_INDEX,
-    solana_program_utils_sdk::limited_deserialize,
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_short_vec as short_vec,
     solana_signature_core::Signature,
     solana_signer::{signers::Signers, SignerError},
-    solana_system_instruction_core::SystemInstruction,
     solana_wasm_bindgen::wasm_bindgen,
     std::result,
 };
@@ -1069,21 +1065,22 @@ impl Transaction {
     }
 }
 
+#[cfg(feature = "nonce")]
 pub fn uses_durable_nonce(tx: &Transaction) -> Option<&CompiledInstruction> {
     let message = tx.message();
     message
         .instructions
-        .get(NONCED_TX_MARKER_IX_INDEX as usize)
+        .get(solana_nonce_core::NONCED_TX_MARKER_IX_INDEX as usize)
         .filter(|instruction| {
             // Is system program
             matches!(
                 message.account_keys.get(instruction.program_id_index as usize),
-                Some(program_id) if system_program::check_id(program_id)
+                Some(program_id) if solana_native_programs::system_program::check_id(program_id)
             )
             // Is a nonce advance instruction
             && matches!(
-                limited_deserialize(&instruction.data),
-                Ok(SystemInstruction::AdvanceNonceAccount)
+                solana_program_utils_sdk::limited_deserialize(&instruction.data),
+                Ok(solana_system_instruction_core::SystemInstruction::AdvanceNonceAccount)
             )
             // Nonce account is writable
             && matches!(
@@ -1528,6 +1525,7 @@ mod tests {
         );
     }
 
+    #[cfg(feature = "nonce")]
     fn nonced_transfer_tx() -> (Pubkey, Pubkey, Transaction) {
         let from_keypair = Keypair::new();
         let from_pubkey = from_keypair.pubkey();
@@ -1542,17 +1540,20 @@ mod tests {
         (from_pubkey, nonce_pubkey, tx)
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn tx_uses_nonce_ok() {
         let (_, _, tx) = nonced_transfer_tx();
         assert!(uses_durable_nonce(&tx).is_some());
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn tx_uses_nonce_empty_ix_fail() {
         assert!(uses_durable_nonce(&Transaction::default()).is_none());
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn tx_uses_nonce_bad_prog_id_idx_fail() {
         let (_, _, mut tx) = nonced_transfer_tx();
@@ -1560,6 +1561,7 @@ mod tests {
         assert!(uses_durable_nonce(&tx).is_none());
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn tx_uses_nonce_first_prog_id_not_nonce_fail() {
         let from_keypair = Keypair::new();
@@ -1575,6 +1577,7 @@ mod tests {
         assert!(uses_durable_nonce(&tx).is_none());
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn tx_uses_ro_nonce_account() {
         let from_keypair = Keypair::new();
@@ -1601,6 +1604,7 @@ mod tests {
         assert!(uses_durable_nonce(&tx).is_none());
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn tx_uses_nonce_wrong_first_nonce_ix_fail() {
         let from_keypair = Keypair::new();
@@ -1621,6 +1625,7 @@ mod tests {
         assert!(uses_durable_nonce(&tx).is_none());
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn get_nonce_pub_from_ix_ok() {
         let (_, nonce_pubkey, tx) = nonced_transfer_tx();
@@ -1631,6 +1636,7 @@ mod tests {
         );
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn get_nonce_pub_from_ix_no_accounts_fail() {
         let (_, _, tx) = nonced_transfer_tx();
@@ -1640,6 +1646,7 @@ mod tests {
         assert_eq!(get_nonce_pubkey_from_instruction(&nonce_ix, &tx), None,);
     }
 
+    #[cfg(feature = "nonce")]
     #[test]
     fn get_nonce_pub_from_ix_bad_acc_idx_fail() {
         let (_, _, tx) = nonced_transfer_tx();

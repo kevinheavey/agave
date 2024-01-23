@@ -13,16 +13,16 @@ solana-feature-set = { workspace = true, optional = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
 solana-message = { workspace = true }
-solana-native-programs = { workspace = true }
-solana-nonce-core = { workspace = true }
+solana-native-programs = { workspace = true, optional = true }
+solana-nonce-core = { workspace = true, optional = true }
 solana-precompiles = { workspace = true, optional = true }
-solana-program-utils-sdk = { workspace = true }
+solana-program-utils-sdk = { workspace = true, optional = true }
 solana-pubkey = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-short-vec = { workspace = true }
 solana-signature-core = { workspace = true }
 solana-signer = { workspace = true }
-solana-system-instruction-core = { workspace = true }
+solana-system-instruction-core = { workspace = true, optional = true }
 solana-transaction-error = { workspace = true }
 solana-wasm-bindgen = { workspace = true }
 thiserror = { workspace = true }
@@ -35,9 +35,16 @@ borsh = { workspace = true }
 solana-hash = { workspace = true }
 solana-signer = { workspace = true }
 solana-pubkey-sdk = { workspace = true }
+solana-system-instruction-core = { workspace = true }
 solana-sysvar-core = { workspace = true }
 
 [features]
 blake3 = ["solana-message/blake3"]
-nonce = ["solana-message/nonce"]
+nonce = [
+    "dep:solana-native-programs",
+    "dep:solana-nonce-core",
+    "dep:solana-program-utils-sdk",
+    "dep:solana-system-instruction-core", 
+    "solana-message/nonce"
+]
 verify-precompiles = ["solana-feature-set", "solana-precompiles"]
