@@ -4908,7 +4908,18 @@ dependencies = [
  "chrono",
  "serde",
  "serde_derive",
+ "solana-config-program-api",
  "solana-program-runtime",
+ "solana-sdk",
+]
+
+[[package]]
+name = "solana-config-program-api"
+version = "0.0.1"
+dependencies = [
+ "bincode",
+ "serde",
+ "serde_derive",
  "solana-sdk",
 ]
 

@@ -1,0 +1,19 @@
+[package]
+name = "solana-config-program-api"
+description = "Solana Config program API"
+documentation = "https://docs.rs/solana-config-program-api"
+version = "0.0.1"
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+bincode = { workspace = true }
+serde = { workspace = true }
+serde_derive = { workspace = true }
+solana-sdk = { workspace = true }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
