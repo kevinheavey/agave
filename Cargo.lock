@@ -1906,6 +1906,7 @@ dependencies = [
  "bs58",
  "bytemuck",
  "curve25519-dalek 4.1.1",
+ "getrandom 0.2.10",
  "num-derive",
  "num-traits",
  "rand 0.8.5",
