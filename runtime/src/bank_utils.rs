@@ -7,9 +7,7 @@ use {
     solana_sdk::{pubkey::Pubkey, signature::Signer},
 };
 use {
-    solana_sdk::transaction::SanitizedTransaction,
-    solana_svm::transaction_results::TransactionResults,
-    solana_vote::{vote_parser, vote_sender_types::ReplayVoteSender},
+    log::{debug, log_enabled, trace}, solana_program_runtime::loaded_programs::Stats, solana_sdk::{clock::Slot, transaction::SanitizedTransaction}, solana_svm::transaction_results::TransactionResults, solana_vote::{vote_parser, vote_sender_types::ReplayVoteSender}, std::sync::atomic::Ordering
 };
 
 #[cfg(feature = "dev-context-only-utils")]
@@ -57,5 +55,57 @@ pub fn find_and_send_votes(
                     }
                 }
             });
+    }
+}
+
+/// Logs the measurement values
+pub fn submit_loaded_programs_stats(stats: &Stats, slot: Slot) {
+    let hits = stats.hits.load(Ordering::Relaxed);
+    let misses = stats.misses.load(Ordering::Relaxed);
+    let evictions: u64 = stats.evictions.values().sum();
+    let reloads = stats.reloads.load(Ordering::Relaxed);
+    let insertions = stats.insertions.load(Ordering::Relaxed);
+    let lost_insertions = stats.lost_insertions.load(Ordering::Relaxed);
+    let replacements = stats.replacements.load(Ordering::Relaxed);
+    let one_hit_wonders = stats.one_hit_wonders.load(Ordering::Relaxed);
+    let prunes_orphan = stats.prunes_orphan.load(Ordering::Relaxed);
+    let prunes_environment = stats.prunes_environment.load(Ordering::Relaxed);
+    let empty_entries = stats.empty_entries.load(Ordering::Relaxed);
+    datapoint_info!(
+        "loaded-programs-cache-stats",
+        ("slot", slot, i64),
+        ("hits", hits, i64),
+        ("misses", misses, i64),
+        ("evictions", evictions, i64),
+        ("reloads", reloads, i64),
+        ("insertions", insertions, i64),
+        ("lost_insertions", lost_insertions, i64),
+        ("replace_entry", replacements, i64),
+        ("one_hit_wonders", one_hit_wonders, i64),
+        ("prunes_orphan", prunes_orphan, i64),
+        ("prunes_environment", prunes_environment, i64),
+        ("empty_entries", empty_entries, i64),
+    );
+    debug!(
+            "Loaded Programs Cache Stats -- Hits: {}, Misses: {}, Evictions: {}, Reloads: {}, Insertions: {} Lost-Insertions: {}, Replacements: {}, One-Hit-Wonders: {}, Prunes-Orphan: {}, Prunes-Environment: {}, Empty: {}",
+            hits, misses, evictions, reloads, insertions, lost_insertions, replacements, one_hit_wonders, prunes_orphan, prunes_environment, empty_entries
+        );
+    if log_enabled!(log::Level::Trace) && !stats.evictions.is_empty() {
+        let mut evictions = stats.evictions.iter().collect::<Vec<_>>();
+        evictions.sort_by_key(|e| e.1);
+        let evictions = evictions
+            .into_iter()
+            .rev()
+            .map(|(program_id, evictions)| {
+                format!("  {:<44}  {}", program_id.to_string(), evictions)
+            })
+            .collect::<Vec<_>>();
+        let evictions = evictions.join("\n");
+        trace!(
+            "Eviction Details:\n  {:<44}  {}\n{}",
+            "Program",
+            "Count",
+            evictions
+        );
     }
 }
