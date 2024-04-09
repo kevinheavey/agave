@@ -27,7 +27,10 @@ use {
     },
     solana_measure::{measure, measure::Measure},
     solana_metrics::datapoint_error,
-    solana_program_runtime::timings::{ExecuteTimingType, ExecuteTimings, ThreadExecuteTimings},
+    solana_program_runtime::{
+        report_execute_timings,
+        timings::{ExecuteTimingType, ExecuteTimings},
+    },
     solana_rayon_threadlimit::{get_max_thread_count, get_thread_count},
     solana_runtime::{
         accounts_background_service::{AbsRequestSender, SnapshotRequestKind},
@@ -66,6 +69,7 @@ use {
     std::{
         borrow::Cow,
         collections::{HashMap, HashSet},
+        ops::Index,
         path::PathBuf,
         result,
         sync::{
@@ -212,6 +216,38 @@ pub fn execute_batch(
 
     let first_err = get_first_error(batch, fee_collection_results);
     first_err.map(|(result, _)| result).unwrap_or(Ok(()))
+}
+
+#[derive(Debug, Default)]
+pub struct ThreadExecuteTimings {
+    pub total_thread_us: u64,
+    pub total_transactions_executed: u64,
+    pub execute_timings: ExecuteTimings,
+}
+
+impl ThreadExecuteTimings {
+    pub fn report_stats(&self, slot: Slot) {
+        lazy! {
+            datapoint_info!(
+                "replay-slot-end-to-end-stats",
+                ("slot", slot as i64, i64),
+                ("total_thread_us", self.total_thread_us as i64, i64),
+                ("total_transactions_executed", self.total_transactions_executed as i64, i64),
+                // Everything inside the `eager!` block will be eagerly expanded before
+                // evaluation of the rest of the surrounding macro.
+                eager!{report_execute_timings!(self.execute_timings)}
+            );
+        };
+    }
+
+    pub fn accumulate(&mut self, other: &ThreadExecuteTimings) {
+        self.execute_timings.accumulate(&other.execute_timings);
+        saturating_add_assign!(self.total_thread_us, other.total_thread_us);
+        saturating_add_assign!(
+            self.total_transactions_executed,
+            other.total_transactions_executed
+        );
+    }
 }
 
 #[derive(Default)]

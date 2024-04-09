@@ -6337,6 +6337,7 @@ dependencies = [
  "chrono-humanize",
  "crossbeam-channel",
  "dashmap",
+ "eager",
  "fs_extra",
  "futures 0.3.30",
  "itertools",
