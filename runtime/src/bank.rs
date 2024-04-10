@@ -36,8 +36,6 @@
 #[allow(deprecated)]
 use solana_sdk::recent_blockhashes_account;
 pub use solana_sdk::reward_type::RewardType;
-use crate::bank_utils::submit_loaded_programs_stats;
-
 use {
     crate::{
         bank::{
@@ -48,6 +46,7 @@ use {
             },
         },
         bank_forks::BankForks,
+        bank_utils::submit_loaded_programs_stats,
         epoch_stakes::{EpochStakes, NodeVoteAccounts},
         installed_scheduler_pool::{BankWithScheduler, InstalledSchedulerRwLock},
         runtime_config::RuntimeConfig,
