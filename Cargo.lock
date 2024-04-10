@@ -5956,7 +5956,6 @@ dependencies = [
  "chrono",
  "crossbeam-channel",
  "dashmap",
- "eager",
  "etcd-client",
  "fs_extra",
  "futures 0.3.30",
