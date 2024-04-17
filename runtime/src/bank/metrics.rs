@@ -1,6 +1,6 @@
 use {
     crate::bank::Bank,
-    solana_program_runtime::loaded_programs::{LoadedProgramStats, LoadedProgramStatsCalculated},
+    solana_program_runtime::loaded_programs::LoadedProgramStats,
     solana_sdk::clock::{Epoch, Slot},
     std::sync::atomic::{
         AtomicU64,
