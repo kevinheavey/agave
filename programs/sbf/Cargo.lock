@@ -5348,7 +5348,6 @@ dependencies = [
  "serde",
  "solana-compute-budget",
  "solana-measure",
- "solana-metrics",
  "solana-sdk",
  "solana-type-overrides",
  "solana-vote",
