@@ -177,7 +177,7 @@ pub struct LoadedProgram {
 
 /// Global cache statistics for [ProgramCache].
 #[derive(Debug, Default)]
-pub struct Stats {
+pub struct LoadedProgramStats {
     /// a program was already in the cache
     pub hits: AtomicU64,
     /// a program was not found and loaded instead
@@ -202,9 +202,9 @@ pub struct Stats {
     pub empty_entries: AtomicU64,
 }
 
-impl Stats {
+impl LoadedProgramStats {
     pub fn reset(&mut self) {
-        *self = Stats::default();
+        *self = LoadedProgramStats::default();
     }
 }
 
@@ -561,7 +561,7 @@ pub struct ProgramCache<FG: ForkGraph> {
     /// List of loaded programs which should be recompiled before the next epoch (but don't have to).
     pub programs_to_recompile: Vec<(Pubkey, Arc<LoadedProgram>)>,
     /// Statistics counters
-    pub stats: Stats,
+    pub stats: LoadedProgramStats,
     /// Reference to the block store
     pub fork_graph: Option<Arc<RwLock<FG>>>,
     /// Coordinates TX batches waiting for others to complete their task during cooperative loading
@@ -706,7 +706,7 @@ impl<FG: ForkGraph> ProgramCache<FG> {
             environments: ProgramRuntimeEnvironments::default(),
             upcoming_environments: None,
             programs_to_recompile: Vec::default(),
-            stats: Stats::default(),
+            stats: LoadedProgramStats::default(),
             fork_graph: None,
             loading_task_waiter: Arc::new(LoadingTaskWaiter::default()),
         }

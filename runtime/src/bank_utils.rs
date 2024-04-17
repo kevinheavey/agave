@@ -8,7 +8,7 @@ use {
 };
 use {
     log::{debug, log_enabled, trace},
-    solana_program_runtime::loaded_programs::Stats,
+    solana_program_runtime::loaded_programs::LoadedProgramStats,
     solana_sdk::{clock::Slot, transaction::SanitizedTransaction},
     solana_svm::transaction_results::TransactionResults,
     solana_vote::{vote_parser, vote_sender_types::ReplayVoteSender},
@@ -64,7 +64,7 @@ pub fn find_and_send_votes(
 }
 
 /// Logs the measurement values
-pub fn submit_loaded_programs_stats(stats: &Stats, slot: Slot) {
+pub fn submit_loaded_programs_stats(stats: &LoadedProgramStats, slot: Slot) {
     let hits = stats.hits.load(Ordering::Relaxed);
     let misses = stats.misses.load(Ordering::Relaxed);
     let evictions: u64 = stats.evictions.values().sum();
