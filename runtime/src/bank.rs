@@ -46,7 +46,6 @@ use {
             },
         },
         bank_forks::BankForks,
-        bank_utils::submit_loaded_programs_stats,
         epoch_stakes::{EpochStakes, NodeVoteAccounts},
         installed_scheduler_pool::{BankWithScheduler, InstalledSchedulerRwLock},
         runtime_config::RuntimeConfig,
@@ -1361,7 +1360,7 @@ impl Bank {
             },
         );
 
-        submit_loaded_programs_stats(
+        report_loaded_programs_stats(
             &parent
                 .transaction_processor
                 .program_cache
