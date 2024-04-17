@@ -1,7 +1,7 @@
 use {
     crate::bank::Bank,
     log::{debug, log_enabled, trace},
-    solana_program_runtime::loaded_programs::LoadedProgramStats,
+    solana_program_runtime::loaded_programs::{LoadedProgramStats, LoadedProgramStatsCalculated},
     solana_sdk::clock::{Epoch, Slot},
     std::sync::atomic::{
         AtomicU64,
@@ -233,26 +233,17 @@ pub(crate) fn report_loaded_programs_stats(stats: &LoadedProgramStats, slot: Slo
         ("prunes_environment", prunes_environment, i64),
         ("empty_entries", empty_entries, i64),
     );
-    debug!(
-            "Loaded Programs Cache Stats -- Hits: {}, Misses: {}, Evictions: {}, Reloads: {}, Insertions: {} Lost-Insertions: {}, Replacements: {}, One-Hit-Wonders: {}, Prunes-Orphan: {}, Prunes-Environment: {}, Empty: {}",
-            hits, misses, evictions, reloads, insertions, lost_insertions, replacements, one_hit_wonders, prunes_orphan, prunes_environment, empty_entries
-        );
-    if log_enabled!(log::Level::Trace) && !stats.evictions.is_empty() {
-        let mut evictions = stats.evictions.iter().collect::<Vec<_>>();
-        evictions.sort_by_key(|e| e.1);
-        let evictions = evictions
-            .into_iter()
-            .rev()
-            .map(|(program_id, evictions)| {
-                format!("  {:<44}  {}", program_id.to_string(), evictions)
-            })
-            .collect::<Vec<_>>();
-        let evictions = evictions.join("\n");
-        trace!(
-            "Eviction Details:\n  {:<44}  {}\n{}",
-            "Program",
-            "Count",
-            evictions
-        );
-    }
+    stats.log(LoadedProgramStatsCalculated {
+        hits,
+        misses,
+        evictions,
+        reloads,
+        insertions,
+        lost_insertions,
+        replacements,
+        one_hit_wonders,
+        prunes_orphan,
+        prunes_environment,
+        empty_entries,
+    });
 }

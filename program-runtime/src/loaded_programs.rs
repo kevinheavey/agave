@@ -3,7 +3,7 @@ use {
         invoke_context::{BuiltinFunctionWithContext, InvokeContext},
         timings::ExecuteDetailsTimings,
     },
-    log::error,
+    log::{debug, error, log_enabled, trace},
     percentage::PercentageInteger,
     rand::{thread_rng, Rng},
     solana_measure::measure::Measure,
@@ -206,6 +206,71 @@ impl LoadedProgramStats {
     pub fn reset(&mut self) {
         *self = LoadedProgramStats::default();
     }
+    pub fn log(&self, stats_calculated: LoadedProgramStatsCalculated) {
+        let LoadedProgramStatsCalculated {
+            hits,
+            misses,
+            evictions,
+            reloads,
+            insertions,
+            lost_insertions,
+            replacements,
+            one_hit_wonders,
+            prunes_orphan,
+            prunes_environment,
+            empty_entries,
+        } = stats_calculated;
+        debug!(
+            "Loaded Programs Cache Stats -- Hits: {}, Misses: {}, Evictions: {}, Reloads: {}, Insertions: {} Lost-Insertions: {}, Replacements: {}, One-Hit-Wonders: {}, Prunes-Orphan: {}, Prunes-Environment: {}, Empty: {}",
+            hits, misses, evictions, reloads, insertions, lost_insertions, replacements, one_hit_wonders, prunes_orphan, prunes_environment, empty_entries
+        );
+        if log_enabled!(log::Level::Trace) && !self.evictions.is_empty() {
+            let mut evictions = self.evictions.iter().collect::<Vec<_>>();
+            evictions.sort_by_key(|e| e.1);
+            let evictions = evictions
+                .into_iter()
+                .rev()
+                .map(|(program_id, evictions)| {
+                    format!("  {:<44}  {}", program_id.to_string(), evictions)
+                })
+                .collect::<Vec<_>>();
+            let evictions = evictions.join("\n");
+            trace!(
+                "Eviction Details:\n  {:<44}  {}\n{}",
+                "Program",
+                "Count",
+                evictions
+            );
+        }
+    }
+}
+
+/// Like [LoadedProgramStats], but the `AtomicU64` fields are already loaded
+/// and the `evictions` field is summed.
+#[derive(Debug, Default)]
+pub struct LoadedProgramStatsCalculated {
+    /// a program was already in the cache
+    pub hits: u64,
+    /// a program was not found and loaded instead
+    pub misses: u64,
+    /// a compiled executable was unloaded
+    pub evictions: u64,
+    /// an unloaded program was loaded again (opposite of eviction)
+    pub reloads: u64,
+    /// a program was loaded or un/re/deployed
+    pub insertions: u64,
+    /// a program was loaded but can not be extracted on its own fork anymore
+    pub lost_insertions: u64,
+    /// a program which was already in the cache was reloaded by mistake
+    pub replacements: u64,
+    /// a program was only used once before being unloaded
+    pub one_hit_wonders: u64,
+    /// a program became unreachable in the fork graph because of rerooting
+    pub prunes_orphan: u64,
+    /// a program got pruned because it was not recompiled for the next epoch
+    pub prunes_environment: u64,
+    /// the [SecondLevel] was empty because all slot versions got pruned
+    pub empty_entries: u64,
 }
 
 /// Time measurements for loading a single [LoadedProgram].
