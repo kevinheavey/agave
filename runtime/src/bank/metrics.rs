@@ -1,6 +1,5 @@
 use {
     crate::bank::Bank,
-    log::{debug, log_enabled, trace},
     solana_program_runtime::loaded_programs::{LoadedProgramStats, LoadedProgramStatsCalculated},
     solana_sdk::clock::{Epoch, Slot},
     std::sync::atomic::{
@@ -233,17 +232,5 @@ pub(crate) fn report_loaded_programs_stats(stats: &LoadedProgramStats, slot: Slo
         ("prunes_environment", prunes_environment, i64),
         ("empty_entries", empty_entries, i64),
     );
-    stats.log(LoadedProgramStatsCalculated {
-        hits,
-        misses,
-        evictions,
-        reloads,
-        insertions,
-        lost_insertions,
-        replacements,
-        one_hit_wonders,
-        prunes_orphan,
-        prunes_environment,
-        empty_entries,
-    });
+    stats.log();
 }
