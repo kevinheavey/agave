@@ -206,20 +206,18 @@ impl LoadedProgramStats {
     pub fn reset(&mut self) {
         *self = LoadedProgramStats::default();
     }
-    pub fn log(&self, stats_calculated: LoadedProgramStatsCalculated) {
-        let LoadedProgramStatsCalculated {
-            hits,
-            misses,
-            evictions,
-            reloads,
-            insertions,
-            lost_insertions,
-            replacements,
-            one_hit_wonders,
-            prunes_orphan,
-            prunes_environment,
-            empty_entries,
-        } = stats_calculated;
+    pub fn log(&self) {
+        let hits = self.hits.load(Ordering::Relaxed);
+        let misses = self.misses.load(Ordering::Relaxed);
+        let evictions: u64 = self.evictions.values().sum();
+        let reloads = self.reloads.load(Ordering::Relaxed);
+        let insertions = self.insertions.load(Ordering::Relaxed);
+        let lost_insertions = self.lost_insertions.load(Ordering::Relaxed);
+        let replacements = self.replacements.load(Ordering::Relaxed);
+        let one_hit_wonders = self.one_hit_wonders.load(Ordering::Relaxed);
+        let prunes_orphan = self.prunes_orphan.load(Ordering::Relaxed);
+        let prunes_environment = self.prunes_environment.load(Ordering::Relaxed);
+        let empty_entries = self.empty_entries.load(Ordering::Relaxed);
         debug!(
             "Loaded Programs Cache Stats -- Hits: {}, Misses: {}, Evictions: {}, Reloads: {}, Insertions: {} Lost-Insertions: {}, Replacements: {}, One-Hit-Wonders: {}, Prunes-Orphan: {}, Prunes-Environment: {}, Empty: {}",
             hits, misses, evictions, reloads, insertions, lost_insertions, replacements, one_hit_wonders, prunes_orphan, prunes_environment, empty_entries
@@ -243,34 +241,6 @@ impl LoadedProgramStats {
             );
         }
     }
-}
-
-/// Like [LoadedProgramStats], but the `AtomicU64` fields are already loaded
-/// and the `evictions` field is summed.
-#[derive(Debug, Default)]
-pub struct LoadedProgramStatsCalculated {
-    /// a program was already in the cache
-    pub hits: u64,
-    /// a program was not found and loaded instead
-    pub misses: u64,
-    /// a compiled executable was unloaded
-    pub evictions: u64,
-    /// an unloaded program was loaded again (opposite of eviction)
-    pub reloads: u64,
-    /// a program was loaded or un/re/deployed
-    pub insertions: u64,
-    /// a program was loaded but can not be extracted on its own fork anymore
-    pub lost_insertions: u64,
-    /// a program which was already in the cache was reloaded by mistake
-    pub replacements: u64,
-    /// a program was only used once before being unloaded
-    pub one_hit_wonders: u64,
-    /// a program became unreachable in the fork graph because of rerooting
-    pub prunes_orphan: u64,
-    /// a program got pruned because it was not recompiled for the next epoch
-    pub prunes_environment: u64,
-    /// the [SecondLevel] was empty because all slot versions got pruned
-    pub empty_entries: u64,
 }
 
 /// Time measurements for loading a single [LoadedProgram].
