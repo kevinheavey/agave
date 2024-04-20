@@ -2,7 +2,6 @@
 use {
     crate::version_req::VersionReq,
     solana_sdk::account::{AccountSharedData, ReadableAccount},
-    spl_token_2022::{generic_token_account::GenericTokenAccount, state::Account},
     std::borrow::Cow,
     thiserror::Error,
 };
@@ -76,14 +75,6 @@ impl RpcFilterType {
                 }
             }
             RpcFilterType::TokenAccountState => Ok(()),
-        }
-    }
-
-    pub fn allows(&self, account: &AccountSharedData) -> bool {
-        match self {
-            RpcFilterType::DataSize(size) => account.data().len() as u64 == *size,
-            RpcFilterType::Memcmp(compare) => compare.bytes_match(account.data()),
-            RpcFilterType::TokenAccountState => Account::valid_account_data(account.data()),
         }
     }
 }
