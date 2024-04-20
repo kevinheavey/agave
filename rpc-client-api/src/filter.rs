@@ -1,10 +1,5 @@
 #![allow(deprecated)]
-use {
-    crate::version_req::VersionReq,
-    solana_sdk::account::{AccountSharedData, ReadableAccount},
-    std::borrow::Cow,
-    thiserror::Error,
-};
+use {crate::version_req::VersionReq, std::borrow::Cow, thiserror::Error};
 
 const MAX_DATA_SIZE: usize = 128;
 const MAX_DATA_BASE58_SIZE: usize = 175;
