@@ -1,4 +1,4 @@
-use {super::pod, crate::curve25519::ristretto::PodRistrettoPoint};
+use {super::pod, solana_curve25519::ristretto::PodRistrettoPoint};
 
 impl From<(pod::PedersenCommitment, pod::DecryptHandle)> for pod::ElGamalCiphertext {
     fn from((commitment, handle): (pod::PedersenCommitment, pod::DecryptHandle)) -> Self {
@@ -49,24 +49,8 @@ impl From<PodRistrettoPoint> for pod::DecryptHandle {
 mod target_arch {
     use {
         super::pod,
-        crate::{curve25519::scalar::PodScalar, errors::ElGamalError},
-        curve25519_dalek::{ristretto::CompressedRistretto, scalar::Scalar},
-        std::convert::TryFrom,
+        curve25519_dalek::ristretto::CompressedRistretto,
     };
-
-    impl From<Scalar> for PodScalar {
-        fn from(scalar: Scalar) -> Self {
-            Self(scalar.to_bytes())
-        }
-    }
-
-    impl TryFrom<PodScalar> for Scalar {
-        type Error = ElGamalError;
-
-        fn try_from(pod: PodScalar) -> Result<Self, Self::Error> {
-            Scalar::from_canonical_bytes(pod.0).ok_or(ElGamalError::CiphertextDeserialization)
-        }
-    }
 
     impl From<CompressedRistretto> for pod::CompressedRistretto {
         fn from(cr: CompressedRistretto) -> Self {
