@@ -86,8 +86,6 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use solana_ui_account::UiAccount;
-
 pub use crate::nonblocking::pubsub_client::PubsubClientError;
 use {
     crossbeam_channel::{unbounded, Receiver, Sender},
@@ -111,6 +109,7 @@ use {
         },
     },
     solana_sdk::{clock::Slot, pubkey::Pubkey, signature::Signature},
+    solana_ui_account::UiAccount,
     std::{
         marker::PhantomData,
         net::TcpStream,

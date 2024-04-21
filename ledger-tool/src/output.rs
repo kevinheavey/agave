@@ -1,19 +1,31 @@
 use {
-    crate::ledger_utils::get_program_ids, chrono::{Local, TimeZone}, serde::{
+    crate::ledger_utils::get_program_ids,
+    chrono::{Local, TimeZone},
+    serde::{
         ser::{Impossible, SerializeSeq, SerializeStruct, Serializer},
         Deserialize, Serialize,
-    }, solana_account_decoder::encode_ui_account, solana_accounts_db::accounts_index::ScanConfig, solana_cli_output::{
+    },
+    solana_account_decoder::encode_ui_account,
+    solana_accounts_db::accounts_index::ScanConfig,
+    solana_cli_output::{
         display::writeln_transaction, CliAccount, CliAccountNewConfig, OutputFormat, QuietDisplay,
         VerboseDisplay,
-    }, solana_entry::entry::Entry, solana_ledger::blockstore::Blockstore, solana_runtime::bank::{Bank, TotalAccountsStats}, solana_sdk::{
+    },
+    solana_entry::entry::Entry,
+    solana_ledger::blockstore::Blockstore,
+    solana_runtime::bank::{Bank, TotalAccountsStats},
+    solana_sdk::{
         account::{AccountSharedData, ReadableAccount},
         clock::{Slot, UnixTimestamp},
         hash::Hash,
         native_token::lamports_to_sol,
         pubkey::Pubkey,
-    }, solana_transaction_status::{
+    },
+    solana_transaction_status::{
         EncodedConfirmedBlock, EncodedTransactionWithStatusMeta, EntrySummary, Rewards,
-    }, solana_ui_account::{UiAccountData, UiAccountEncoding}, std::{
+    },
+    solana_ui_account::{UiAccountData, UiAccountEncoding},
+    std::{
         cell::RefCell,
         collections::HashMap,
         fmt::{self, Display, Formatter},
@@ -21,7 +33,7 @@ use {
         rc::Rc,
         result::Result,
         sync::Arc,
-    }
+    },
 };
 
 #[derive(Serialize, Debug, Default)]

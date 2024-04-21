@@ -1,13 +1,23 @@
 use {
-    bincode::serialize, crossbeam_channel::unbounded, futures_util::StreamExt, log::*, reqwest::{self, header::CONTENT_TYPE}, serde_json::{json, Value}, solana_client::{
+    bincode::serialize,
+    crossbeam_channel::unbounded,
+    futures_util::StreamExt,
+    log::*,
+    reqwest::{self, header::CONTENT_TYPE},
+    serde_json::{json, Value},
+    solana_client::{
         connection_cache::ConnectionCache,
         tpu_client::{TpuClient, TpuClientConfig},
-    }, solana_pubsub_client::nonblocking::pubsub_client::PubsubClient, solana_rpc_client::rpc_client::RpcClient, solana_rpc_client_api::{
+    },
+    solana_pubsub_client::nonblocking::pubsub_client::PubsubClient,
+    solana_rpc_client::rpc_client::RpcClient,
+    solana_rpc_client_api::{
         client_error::{ErrorKind as ClientErrorKind, Result as ClientResult},
         config::{RpcAccountInfoConfig, RpcSignatureSubscribeConfig, RpcSimulateTransactionConfig},
         request::RpcError,
         response::{Response as RpcResponse, RpcSignatureResult, SlotUpdate},
-    }, solana_sdk::{
+    },
+    solana_sdk::{
         commitment_config::CommitmentConfig,
         hash::Hash,
         pubkey::Pubkey,
@@ -15,7 +25,13 @@ use {
         signature::{Keypair, Signature, Signer},
         system_transaction,
         transaction::Transaction,
-    }, solana_streamer::socket::SocketAddrSpace, solana_test_validator::TestValidator, solana_tpu_client::tpu_client::DEFAULT_TPU_CONNECTION_POOL_SIZE, solana_transaction_status::TransactionStatus, solana_ui_account::UiAccount, std::{
+    },
+    solana_streamer::socket::SocketAddrSpace,
+    solana_test_validator::TestValidator,
+    solana_tpu_client::tpu_client::DEFAULT_TPU_CONNECTION_POOL_SIZE,
+    solana_transaction_status::TransactionStatus,
+    solana_ui_account::UiAccount,
+    std::{
         collections::HashSet,
         net::UdpSocket,
         sync::{
@@ -24,7 +40,8 @@ use {
         },
         thread::sleep,
         time::{Duration, Instant},
-    }, tokio::runtime::Runtime
+    },
+    tokio::runtime::Runtime,
 };
 
 macro_rules! json_req {
@@ -105,8 +122,7 @@ fn test_rpc_send_tx() {
     assert!(confirmed_tx);
 
     use {
-        solana_ui_account::UiAccountEncoding,
-        solana_rpc_client_api::config::RpcAccountInfoConfig,
+        solana_rpc_client_api::config::RpcAccountInfoConfig, solana_ui_account::UiAccountEncoding,
     };
     let config = RpcAccountInfoConfig {
         encoding: Some(UiAccountEncoding::Base64),

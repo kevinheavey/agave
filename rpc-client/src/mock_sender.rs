@@ -1,7 +1,12 @@
 //! A nonblocking [`RpcSender`] used for unit testing [`RpcClient`](crate::rpc_client::RpcClient).
 
 use {
-    crate::rpc_sender::*, async_trait::async_trait, base64::{prelude::BASE64_STANDARD, Engine}, serde_json::{json, Number, Value}, solana_account_decoder::encode_ui_account, solana_rpc_client_api::{
+    crate::rpc_sender::*,
+    async_trait::async_trait,
+    base64::{prelude::BASE64_STANDARD, Engine},
+    serde_json::{json, Number, Value},
+    solana_account_decoder::encode_ui_account,
+    solana_rpc_client_api::{
         client_error::Result,
         config::RpcBlockProductionConfig,
         request::RpcRequest,
@@ -13,7 +18,8 @@ use {
             RpcSnapshotSlotInfo, RpcStakeActivation, RpcSupply, RpcVersionInfo, RpcVoteAccountInfo,
             RpcVoteAccountStatus, StakeActivationState,
         },
-    }, solana_sdk::{
+    },
+    solana_sdk::{
         account::Account,
         clock::{Slot, UnixTimestamp},
         epoch_info::EpochInfo,
@@ -24,13 +30,17 @@ use {
         signature::Signature,
         sysvar::epoch_schedule::EpochSchedule,
         transaction::{self, Transaction, TransactionError, TransactionVersion},
-    }, solana_transaction_status::{
+    },
+    solana_transaction_status::{
         option_serializer::OptionSerializer, EncodedConfirmedBlock,
         EncodedConfirmedTransactionWithStatusMeta, EncodedTransaction,
         EncodedTransactionWithStatusMeta, Rewards, TransactionBinaryEncoding,
         TransactionConfirmationStatus, TransactionStatus, UiCompiledInstruction, UiMessage,
         UiRawMessage, UiTransaction, UiTransactionStatusMeta,
-    }, solana_ui_account::UiAccountEncoding, solana_version::Version, std::{collections::HashMap, net::SocketAddr, str::FromStr, sync::RwLock}
+    },
+    solana_ui_account::UiAccountEncoding,
+    solana_version::Version,
+    std::{collections::HashMap, net::SocketAddr, str::FromStr, sync::RwLock},
 };
 
 pub const PUBKEY: &str = "7RoSF9fUmdphVCpabEoefH81WwrW7orsWonXWqTXkKV8";

@@ -115,16 +115,24 @@ impl Default for BlockhashQuery {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, crate::nonblocking::blockhash_query, clap::App, serde_json::{self, json}, solana_account_decoder::encode_ui_account, solana_rpc_client_api::{
+        super::*,
+        crate::nonblocking::blockhash_query,
+        clap::App,
+        serde_json::{self, json},
+        solana_account_decoder::encode_ui_account,
+        solana_rpc_client_api::{
             request::RpcRequest,
             response::{Response, RpcBlockhash, RpcResponseContext},
-        }, solana_sdk::{
+        },
+        solana_sdk::{
             account::Account,
             fee_calculator::FeeCalculator,
             hash::hash,
             nonce::{self, state::DurableNonce},
             system_program,
-        }, solana_ui_account::UiAccountEncoding, std::collections::HashMap
+        },
+        solana_ui_account::UiAccountEncoding,
+        std::collections::HashMap,
     };
 
     #[test]

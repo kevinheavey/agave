@@ -10,12 +10,10 @@
 //! in [`crate::nonblocking::rpc_client`].
 
 pub use crate::mock_sender::Mocks;
-use solana_account_decoder::encode_ui_account;
 #[allow(deprecated)]
 use solana_rpc_client_api::deprecated_config::{
     RpcConfirmedBlockConfig, RpcConfirmedTransactionConfig,
 };
-use solana_ui_account::UiAccountEncoding;
 use {
     crate::{
         http_sender::HttpSender,
@@ -25,7 +23,10 @@ use {
     },
     serde::Serialize,
     serde_json::Value,
-    solana_account_decoder::parse_token::{UiTokenAccount, UiTokenAmount},
+    solana_account_decoder::{
+        encode_ui_account,
+        parse_token::{UiTokenAccount, UiTokenAmount},
+    },
     solana_rpc_client_api::{
         client_error::{Error as ClientError, ErrorKind, Result as ClientResult},
         config::{RpcAccountInfoConfig, *},
@@ -50,6 +51,7 @@ use {
         EncodedConfirmedBlock, EncodedConfirmedTransactionWithStatusMeta, TransactionStatus,
         UiConfirmedBlock, UiTransactionEncoding,
     },
+    solana_ui_account::UiAccountEncoding,
     std::{net::SocketAddr, str::FromStr, sync::Arc, time::Duration},
 };
 
