@@ -2,7 +2,7 @@
 name = "solana-ui-account"
 description = "Solana UI Account"
 documentation = "https://docs.rs/solana-ui-account"
-version = { workspace = true }
+version = "0.0.1"
 authors = { workspace = true }
 repository = { workspace = true }
 homepage = { workspace = true }
