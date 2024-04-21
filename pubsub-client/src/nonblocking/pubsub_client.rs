@@ -171,12 +171,7 @@ use {
         future::{ready, BoxFuture, FutureExt},
         sink::SinkExt,
         stream::{BoxStream, StreamExt},
-    },
-    log::*,
-    serde::de::DeserializeOwned,
-    serde_json::{json, Map, Value},
-    solana_account_decoder::UiAccount,
-    solana_rpc_client_api::{
+    }, log::*, serde::de::DeserializeOwned, serde_json::{json, Map, Value}, solana_rpc_client_api::{
         config::{
             RpcAccountInfoConfig, RpcBlockSubscribeConfig, RpcBlockSubscribeFilter,
             RpcProgramAccountsConfig, RpcSignatureSubscribeConfig, RpcTransactionLogsConfig,
@@ -188,26 +183,19 @@ use {
             Response as RpcResponse, RpcBlockUpdate, RpcKeyedAccount, RpcLogsResponse,
             RpcSignatureResult, RpcVersionInfo, RpcVote, SlotInfo, SlotUpdate,
         },
-    },
-    solana_sdk::{clock::Slot, pubkey::Pubkey, signature::Signature},
-    std::collections::BTreeMap,
-    thiserror::Error,
-    tokio::{
+    }, solana_sdk::{clock::Slot, pubkey::Pubkey, signature::Signature}, solana_ui_account::UiAccount, std::collections::BTreeMap, thiserror::Error, tokio::{
         net::TcpStream,
         sync::{mpsc, oneshot, RwLock},
         task::JoinHandle,
         time::{sleep, Duration},
-    },
-    tokio_stream::wrappers::UnboundedReceiverStream,
-    tokio_tungstenite::{
+    }, tokio_stream::wrappers::UnboundedReceiverStream, tokio_tungstenite::{
         connect_async,
         tungstenite::{
             protocol::frame::{coding::CloseCode, CloseFrame},
             Message,
         },
         MaybeTlsStream, WebSocketStream,
-    },
-    url::Url,
+    }, url::Url
 };
 
 pub type PubsubClientResult<T = ()> = Result<T, PubsubClientError>;

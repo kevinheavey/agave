@@ -10,10 +10,12 @@
 //! in [`crate::nonblocking::rpc_client`].
 
 pub use crate::mock_sender::Mocks;
+use solana_account_decoder::encode_ui_account;
 #[allow(deprecated)]
 use solana_rpc_client_api::deprecated_config::{
     RpcConfirmedBlockConfig, RpcConfirmedTransactionConfig,
 };
+use solana_ui_account::UiAccountEncoding;
 use {
     crate::{
         http_sender::HttpSender,
@@ -23,10 +25,7 @@ use {
     },
     serde::Serialize,
     serde_json::Value,
-    solana_account_decoder::{
-        parse_token::{UiTokenAccount, UiTokenAmount},
-        UiAccount, UiAccountEncoding,
-    },
+    solana_account_decoder::parse_token::{UiTokenAccount, UiTokenAmount},
     solana_rpc_client_api::{
         client_error::{Error as ClientError, ErrorKind, Result as ClientResult},
         config::{RpcAccountInfoConfig, *},
@@ -4079,7 +4078,7 @@ pub fn create_rpc_client_mocks() -> crate::mock_sender::Mocks {
                 executable: false,
                 rent_epoch: 0,
             };
-            UiAccount::encode(&pubkey, &account, UiAccountEncoding::Base64, None, None)
+            encode_ui_account(&pubkey, &account, UiAccountEncoding::Base64, None, None)
         },
     })
     .unwrap();
@@ -4356,7 +4355,7 @@ mod tests {
         };
         let keyed_account = RpcKeyedAccount {
             pubkey: pubkey.to_string(),
-            account: UiAccount::encode(&pubkey, &account, UiAccountEncoding::Base64, None, None),
+            account: encode_ui_account(&pubkey, &account, UiAccountEncoding::Base64, None, None),
         };
         let expected_result = vec![(pubkey, account)];
         // Test: without context

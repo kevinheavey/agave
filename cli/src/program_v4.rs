@@ -8,32 +8,20 @@ use {
             CliConfig, CliError, ProcessResult,
         },
         program::calculate_max_chunk_size,
-    },
-    clap::{App, AppSettings, Arg, ArgMatches, SubCommand},
-    log::*,
-    solana_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
-    solana_clap_utils::{
+    }, clap::{App, AppSettings, Arg, ArgMatches, SubCommand}, log::*, solana_clap_utils::{
         input_parsers::{pubkey_of, pubkey_of_signer, signer_of},
         input_validators::{is_valid_pubkey, is_valid_signer},
         keypair::{DefaultSigner, SignerIndex},
-    },
-    solana_cli_output::{CliProgramId, CliProgramV4, CliProgramsV4, OutputFormat},
-    solana_client::{
+    }, solana_cli_output::{CliProgramId, CliProgramV4, CliProgramsV4, OutputFormat}, solana_client::{
         connection_cache::ConnectionCache,
         send_and_confirm_transactions_in_parallel::{
             send_and_confirm_transactions_in_parallel_blocking, SendAndConfirmConfig,
         },
         tpu_client::{TpuClient, TpuClientConfig},
-    },
-    solana_program_runtime::{compute_budget::ComputeBudget, invoke_context::InvokeContext},
-    solana_rbpf::{elf::Executable, verifier::RequisiteVerifier},
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    }, solana_program_runtime::{compute_budget::ComputeBudget, invoke_context::InvokeContext}, solana_rbpf::{elf::Executable, verifier::RequisiteVerifier}, solana_remote_wallet::remote_wallet::RemoteWalletManager, solana_rpc_client::rpc_client::RpcClient, solana_rpc_client_api::{
         config::{RpcAccountInfoConfig, RpcProgramAccountsConfig, RpcSendTransactionConfig},
         filter::{Memcmp, RpcFilterType},
-    },
-    solana_sdk::{
+    }, solana_sdk::{
         account::Account,
         commitment_config::CommitmentConfig,
         hash::Hash,
@@ -47,15 +35,14 @@ use {
         signature::Signer,
         system_instruction::{self, SystemError},
         transaction::Transaction,
-    },
-    std::{
+    }, solana_ui_account::{UiAccountEncoding, UiDataSliceConfig}, std::{
         cmp::Ordering,
         fs::File,
         io::{Read, Write},
         mem::size_of,
         rc::Rc,
         sync::Arc,
-    },
+    }
 };
 
 #[derive(Debug, PartialEq, Eq)]

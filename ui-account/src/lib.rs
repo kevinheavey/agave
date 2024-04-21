@@ -1,21 +1,14 @@
 #![allow(clippy::arithmetic_side_effects)]
 #[macro_use]
-extern crate lazy_static;
-#[macro_use]
 extern crate serde_derive;
 
 use {
     base64::{prelude::BASE64_STANDARD, Engine},
+    serde_json::Value,
     solana_sdk::{
-        account::{ReadableAccount, WritableAccount},
-        clock::Epoch,
-        fee_calculator::FeeCalculator,
-        pubkey::Pubkey,
+        account::WritableAccount, clock::Epoch, fee_calculator::FeeCalculator, pubkey::Pubkey,
     },
-    std::{
-        io::{Read, Write},
-        str::FromStr,
-    },
+    std::{io::Read, str::FromStr},
 };
 
 pub type StringAmount = String;
@@ -86,17 +79,6 @@ pub enum UiAccountEncoding {
 }
 
 impl UiAccount {
-    fn encode_bs58<T: ReadableAccount>(
-        account: &T,
-        data_slice_config: Option<UiDataSliceConfig>,
-    ) -> String {
-        if account.data().len() <= MAX_BASE58_BYTES {
-            bs58::encode(slice_data(account.data(), data_slice_config)).into_string()
-        } else {
-            "error: data too large for bs58 encoding".to_string()
-        }
-    }
-
     pub fn decode<T: WritableAccount>(&self) -> Option<T> {
         let data = self.data.decode()?;
         Some(T::create(
@@ -138,7 +120,7 @@ pub struct UiDataSliceConfig {
     pub length: usize,
 }
 
-fn slice_data(data: &[u8], data_slice_config: Option<UiDataSliceConfig>) -> &[u8] {
+pub fn slice_data(data: &[u8], data_slice_config: Option<UiDataSliceConfig>) -> &[u8] {
     if let Some(UiDataSliceConfig { offset, length }) = data_slice_config {
         if offset >= data.len() {
             &[]
@@ -154,11 +136,7 @@ fn slice_data(data: &[u8], data_slice_config: Option<UiDataSliceConfig>) -> &[u8
 
 #[cfg(test)]
 mod test {
-    use {
-        super::*,
-        assert_matches::assert_matches,
-        solana_sdk::account::{Account, AccountSharedData},
-    };
+    use super::*;
 
     #[test]
     fn test_slice_data() {
@@ -186,28 +164,5 @@ mod test {
             length: 2,
         });
         assert_eq!(slice_data(&data, slice_config), &[] as &[u8]);
-    }
-
-    #[test]
-    fn test_base64_zstd() {
-        let encoded_account = UiAccount::encode(
-            &Pubkey::default(),
-            &AccountSharedData::from(Account {
-                data: vec![0; 1024],
-                ..Account::default()
-            }),
-            UiAccountEncoding::Base64Zstd,
-            None,
-            None,
-        );
-        assert_matches!(
-            encoded_account.data,
-            UiAccountData::Binary(_, UiAccountEncoding::Base64Zstd)
-        );
-
-        let decoded_account = encoded_account.decode::<Account>().unwrap();
-        assert_eq!(decoded_account.data(), &vec![0; 1024]);
-        let decoded_account = encoded_account.decode::<AccountSharedData>().unwrap();
-        assert_eq!(decoded_account.data(), &vec![0; 1024]);
     }
 }

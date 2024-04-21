@@ -7,11 +7,13 @@
 //! [JSON-RPC]: https://www.jsonrpc.org/specification
 
 pub use crate::mock_sender::Mocks;
+use solana_account_decoder::encode_ui_account;
 #[allow(deprecated)]
 use solana_rpc_client_api::deprecated_config::{
     RpcConfirmedBlockConfig, RpcConfirmedTransactionConfig,
     RpcGetConfirmedSignaturesForAddress2Config,
 };
+use solana_ui_account::{UiAccount, UiAccountData, UiAccountEncoding};
 #[cfg(feature = "spinner")]
 use {crate::spinner, solana_sdk::clock::MAX_HASH_AGE_IN_SECONDS, std::cmp::min};
 use {
@@ -28,10 +30,7 @@ use {
     bincode::serialize,
     log::*,
     serde_json::{json, Value},
-    solana_account_decoder::{
-        parse_token::{TokenAccountType, UiTokenAccount, UiTokenAmount},
-        UiAccount, UiAccountData, UiAccountEncoding,
-    },
+    solana_account_decoder::parse_token::{TokenAccountType, UiTokenAccount, UiTokenAmount},
     solana_rpc_client_api::{
         client_error::{
             Error as ClientError, ErrorKind as ClientErrorKind, Result as ClientResult,
@@ -5447,7 +5446,7 @@ pub fn create_rpc_client_mocks() -> crate::mock_sender::Mocks {
                 executable: false,
                 rent_epoch: 0,
             };
-            UiAccount::encode(&pubkey, &account, UiAccountEncoding::Base64, None, None)
+            encode_ui_account(&pubkey, &account, UiAccountEncoding::Base64, None, None)
         },
     })
     .unwrap();

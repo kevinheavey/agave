@@ -179,6 +179,7 @@ dependencies = [
  "solana-storage-bigtable",
  "solana-streamer",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-unified-scheduler-pool",
  "solana-version",
  "solana-vote-program",
@@ -5326,6 +5327,7 @@ dependencies = [
  "serde_json",
  "solana-config-program",
  "solana-sdk",
+ "solana-ui-account",
  "spl-pod",
  "spl-token",
  "spl-token-2022",
@@ -5785,6 +5787,7 @@ dependencies = [
  "solana-test-validator",
  "solana-tpu-client",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-version",
  "solana-vote-program",
  "solana_rbpf",
@@ -5832,6 +5835,7 @@ dependencies = [
  "solana-rpc-client-api",
  "solana-sdk",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-vote-program",
  "spl-memo",
 ]
@@ -6768,6 +6772,7 @@ dependencies = [
  "solana-account-decoder",
  "solana-rpc-client-api",
  "solana-sdk",
+ "solana-ui-account",
  "thiserror",
  "tokio",
  "tokio-stream",
@@ -6878,6 +6883,7 @@ dependencies = [
  "solana-svm",
  "solana-tpu-client",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-version",
  "solana-vote",
  "solana-vote-program",
@@ -6915,6 +6921,7 @@ dependencies = [
  "solana-rpc-client-api",
  "solana-sdk",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-version",
  "solana-vote-program",
  "tokio",
@@ -6935,6 +6942,7 @@ dependencies = [
  "solana-account-decoder",
  "solana-sdk",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-version",
  "spl-token-2022",
  "thiserror",
@@ -6953,6 +6961,7 @@ dependencies = [
  "solana-rpc-client",
  "solana-rpc-client-api",
  "solana-sdk",
+ "solana-ui-account",
  "thiserror",
  "tokio",
 ]
@@ -6981,6 +6990,7 @@ dependencies = [
  "solana-test-validator",
  "solana-tpu-client",
  "solana-transaction-status",
+ "solana-ui-account",
  "tokio",
 ]
 
@@ -7251,6 +7261,7 @@ dependencies = [
  "solana-account-decoder",
  "solana-sdk",
  "solana-transaction-status",
+ "solana-ui-account",
  "tonic-build",
 ]
 

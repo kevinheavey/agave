@@ -11,13 +11,7 @@ use {
             simulate_and_update_compute_unit_limit, ComputeUnitConfig,
             UpdateComputeUnitLimitResult, WithComputeUnitConfig,
         },
-    },
-    bip39::{Language, Mnemonic, MnemonicType, Seed},
-    clap::{App, AppSettings, Arg, ArgMatches, SubCommand},
-    log::*,
-    solana_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
-    solana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
-    solana_clap_utils::{
+    }, bip39::{Language, Mnemonic, MnemonicType, Seed}, clap::{App, AppSettings, Arg, ArgMatches, SubCommand}, log::*, solana_bpf_loader_program::syscalls::create_program_runtime_environment_v1, solana_clap_utils::{
         self,
         compute_unit_price::compute_unit_price_arg,
         fee_payer::{fee_payer_arg, FEE_PAYER_ARG},
@@ -26,31 +20,22 @@ use {
         input_validators::*,
         keypair::*,
         offline::{OfflineArgs, DUMP_TRANSACTION_MESSAGE, SIGN_ONLY_ARG},
-    },
-    solana_cli_output::{
+    }, solana_cli_output::{
         return_signers_with_config, CliProgram, CliProgramAccountType, CliProgramAuthority,
         CliProgramBuffer, CliProgramId, CliUpgradeableBuffer, CliUpgradeableBuffers,
         CliUpgradeableProgram, CliUpgradeableProgramClosed, CliUpgradeableProgramExtended,
         CliUpgradeablePrograms, ReturnSignersConfig,
-    },
-    solana_client::{
+    }, solana_client::{
         connection_cache::ConnectionCache,
         send_and_confirm_transactions_in_parallel::{
             send_and_confirm_transactions_in_parallel_blocking, SendAndConfirmConfig,
         },
         tpu_client::{TpuClient, TpuClientConfig},
-    },
-    solana_program_runtime::{compute_budget::ComputeBudget, invoke_context::InvokeContext},
-    solana_rbpf::{elf::Executable, verifier::RequisiteVerifier},
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    }, solana_program_runtime::{compute_budget::ComputeBudget, invoke_context::InvokeContext}, solana_rbpf::{elf::Executable, verifier::RequisiteVerifier}, solana_remote_wallet::remote_wallet::RemoteWalletManager, solana_rpc_client::rpc_client::RpcClient, solana_rpc_client_api::{
         client_error::ErrorKind as ClientErrorKind,
         config::{RpcAccountInfoConfig, RpcProgramAccountsConfig, RpcSendTransactionConfig},
         filter::{Memcmp, RpcFilterType},
-    },
-    solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
-    solana_sdk::{
+    }, solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery, solana_sdk::{
         account::Account,
         account_utils::StateMut,
         bpf_loader, bpf_loader_deprecated,
@@ -66,8 +51,7 @@ use {
         system_instruction::{self, SystemError},
         system_program,
         transaction::{Transaction, TransactionError},
-    },
-    std::{
+    }, solana_ui_account::{UiAccountEncoding, UiDataSliceConfig}, std::{
         fs::File,
         io::{Read, Write},
         mem::size_of,
@@ -75,7 +59,7 @@ use {
         rc::Rc,
         str::FromStr,
         sync::Arc,
-    },
+    }
 };
 
 pub const CLOSE_PROGRAM_WARNING: &str = "WARNING! Closed programs cannot be recreated at the same \

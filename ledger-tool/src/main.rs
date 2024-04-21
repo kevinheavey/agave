@@ -10,20 +10,13 @@ use {
             output_account, AccountsOutputConfig, AccountsOutputMode, AccountsOutputStreamer,
         },
         program::*,
-    },
-    clap::{
+    }, clap::{
         crate_description, crate_name, value_t, value_t_or_exit, values_t_or_exit, App,
         AppSettings, Arg, ArgMatches, SubCommand,
-    },
-    dashmap::DashMap,
-    log::*,
-    serde::Serialize,
-    solana_account_decoder::UiAccountEncoding,
-    solana_accounts_db::{
+    }, dashmap::DashMap, log::*, serde::Serialize, solana_accounts_db::{
         accounts_db::CalcAccountsHashDataSource, accounts_index::ScanConfig,
         hardened_unpack::MAX_GENESIS_ARCHIVE_UNPACKED_SIZE,
-    },
-    solana_clap_utils::{
+    }, solana_clap_utils::{
         hidden_unless_forced,
         input_parsers::{cluster_type_of, pubkey_of, pubkeys_of},
         input_validators::{
@@ -31,21 +24,15 @@ use {
             is_within_range, validate_maximum_full_snapshot_archives_to_retain,
             validate_maximum_incremental_snapshot_archives_to_retain,
         },
-    },
-    solana_cli_output::OutputFormat,
-    solana_core::{
+    }, solana_cli_output::OutputFormat, solana_core::{
         system_monitor_service::{SystemMonitorService, SystemMonitorStatsReportConfig},
         validator::BlockVerificationMethod,
-    },
-    solana_cost_model::{cost_model::CostModel, cost_tracker::CostTracker},
-    solana_ledger::{
+    }, solana_cost_model::{cost_model::CostModel, cost_tracker::CostTracker}, solana_ledger::{
         blockstore::{create_new_ledger, Blockstore},
         blockstore_options::{AccessType, LedgerColumnOptions},
         blockstore_processor::ProcessSlotCallback,
         use_snapshot_archives_at_startup,
-    },
-    solana_measure::{measure, measure::Measure},
-    solana_runtime::{
+    }, solana_measure::{measure, measure::Measure}, solana_runtime::{
         bank::{bank_hash_details, Bank, RewardCalculationEvent},
         bank_forks::BankForks,
         snapshot_archive_info::SnapshotArchiveInfoGetter,
@@ -55,8 +42,7 @@ use {
             ArchiveFormat, SnapshotVersion, DEFAULT_ARCHIVE_COMPRESSION,
             SUPPORTED_ARCHIVE_COMPRESSION,
         },
-    },
-    solana_sdk::{
+    }, solana_sdk::{
         account::{AccountSharedData, ReadableAccount, WritableAccount},
         account_utils::StateMut,
         clock::{Epoch, Slot},
@@ -72,14 +58,10 @@ use {
         stake::{self, state::StakeStateV2},
         system_program,
         transaction::{MessageHash, SanitizedTransaction, SimpleAddressLoader},
-    },
-    solana_stake_program::{points::PointValue, stake_state},
-    solana_unified_scheduler_pool::DefaultSchedulerPool,
-    solana_vote_program::{
+    }, solana_stake_program::{points::PointValue, stake_state}, solana_ui_account::UiAccountEncoding, solana_unified_scheduler_pool::DefaultSchedulerPool, solana_vote_program::{
         self,
         vote_state::{self, VoteState},
-    },
-    std::{
+    }, std::{
         collections::{HashMap, HashSet},
         ffi::OsStr,
         fs::File,
@@ -92,7 +74,7 @@ use {
             atomic::{AtomicBool, Ordering},
             Arc, Mutex, RwLock,
         },
-    },
+    }
 };
 
 mod args;
