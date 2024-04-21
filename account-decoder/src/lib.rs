@@ -17,14 +17,16 @@ pub mod parse_token_extension;
 pub mod parse_vote;
 pub mod validator_info;
 
+pub use solana_ui_account::{
+    ParsedAccount, StringAmount, StringDecimals, UiAccount, UiAccountData, UiAccountEncoding,
+    UiDataSliceConfig, UiFeeCalculator, MAX_BASE58_BYTES,
+};
+
 use {
     crate::parse_account_data::{parse_account_data, AccountAdditionalData},
     base64::{prelude::BASE64_STANDARD, Engine},
     solana_sdk::{account::ReadableAccount, pubkey::Pubkey},
-    solana_ui_account::{
-        slice_data, UiAccount, UiAccountData, UiAccountEncoding, UiDataSliceConfig,
-        MAX_BASE58_BYTES,
-    },
+    solana_ui_account::slice_data,
     std::io::Write,
 };
 
