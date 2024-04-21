@@ -111,6 +111,7 @@ members = [
     "transaction-status",
     "turbine",
     "udp-client",
+    "ui-account",
     "unified-scheduler-logic",
     "unified-scheduler-pool",
     "upload-perf",
