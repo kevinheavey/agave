@@ -21,7 +21,6 @@ pub use solana_ui_account::{
     ParsedAccount, StringAmount, StringDecimals, UiAccount, UiAccountData, UiAccountEncoding,
     UiDataSliceConfig, UiFeeCalculator, MAX_BASE58_BYTES,
 };
-
 use {
     crate::parse_account_data::{parse_account_data, AccountAdditionalData},
     base64::{prelude::BASE64_STANDARD, Engine},
