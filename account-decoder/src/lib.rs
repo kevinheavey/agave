@@ -103,65 +103,6 @@ impl UiAccount {
         }
     }
 
-    pub fn encode<T: ReadableAccount>(
-        pubkey: &Pubkey,
-        account: &T,
-        encoding: UiAccountEncoding,
-        additional_data: Option<AccountAdditionalData>,
-        data_slice_config: Option<UiDataSliceConfig>,
-    ) -> Self {
-        let space = account.data().len();
-        let data = match encoding {
-            UiAccountEncoding::Binary => {
-                let data = Self::encode_bs58(account, data_slice_config);
-                UiAccountData::LegacyBinary(data)
-            }
-            UiAccountEncoding::Base58 => {
-                let data = Self::encode_bs58(account, data_slice_config);
-                UiAccountData::Binary(data, encoding)
-            }
-            UiAccountEncoding::Base64 => UiAccountData::Binary(
-                BASE64_STANDARD.encode(slice_data(account.data(), data_slice_config)),
-                encoding,
-            ),
-            UiAccountEncoding::Base64Zstd => {
-                let mut encoder = zstd::stream::write::Encoder::new(Vec::new(), 0).unwrap();
-                match encoder
-                    .write_all(slice_data(account.data(), data_slice_config))
-                    .and_then(|()| encoder.finish())
-                {
-                    Ok(zstd_data) => {
-                        UiAccountData::Binary(BASE64_STANDARD.encode(zstd_data), encoding)
-                    }
-                    Err(_) => UiAccountData::Binary(
-                        BASE64_STANDARD.encode(slice_data(account.data(), data_slice_config)),
-                        UiAccountEncoding::Base64,
-                    ),
-                }
-            }
-            UiAccountEncoding::JsonParsed => {
-                if let Ok(parsed_data) =
-                    parse_account_data(pubkey, account.owner(), account.data(), additional_data)
-                {
-                    UiAccountData::Json(parsed_data)
-                } else {
-                    UiAccountData::Binary(
-                        BASE64_STANDARD.encode(slice_data(account.data(), data_slice_config)),
-                        UiAccountEncoding::Base64,
-                    )
-                }
-            }
-        };
-        UiAccount {
-            lamports: account.lamports(),
-            data,
-            owner: account.owner().to_string(),
-            executable: account.executable(),
-            rent_epoch: account.rent_epoch(),
-            space: Some(space as u64),
-        }
-    }
-
     pub fn decode<T: WritableAccount>(&self) -> Option<T> {
         let data = self.data.decode()?;
         Some(T::create(
@@ -171,6 +112,65 @@ impl UiAccount {
             self.executable,
             self.rent_epoch,
         ))
+    }
+}
+
+pub fn encode_ui_account<T: ReadableAccount>(
+    pubkey: &Pubkey,
+    account: &T,
+    encoding: UiAccountEncoding,
+    additional_data: Option<AccountAdditionalData>,
+    data_slice_config: Option<UiDataSliceConfig>,
+) -> UiAccount {
+    let space = account.data().len();
+    let data = match encoding {
+        UiAccountEncoding::Binary => {
+            let data = UiAccount::encode_bs58(account, data_slice_config);
+            UiAccountData::LegacyBinary(data)
+        }
+        UiAccountEncoding::Base58 => {
+            let data = UiAccount::encode_bs58(account, data_slice_config);
+            UiAccountData::Binary(data, encoding)
+        }
+        UiAccountEncoding::Base64 => UiAccountData::Binary(
+            BASE64_STANDARD.encode(slice_data(account.data(), data_slice_config)),
+            encoding,
+        ),
+        UiAccountEncoding::Base64Zstd => {
+            let mut encoder = zstd::stream::write::Encoder::new(Vec::new(), 0).unwrap();
+            match encoder
+                .write_all(slice_data(account.data(), data_slice_config))
+                .and_then(|()| encoder.finish())
+            {
+                Ok(zstd_data) => {
+                    UiAccountData::Binary(BASE64_STANDARD.encode(zstd_data), encoding)
+                }
+                Err(_) => UiAccountData::Binary(
+                    BASE64_STANDARD.encode(slice_data(account.data(), data_slice_config)),
+                    UiAccountEncoding::Base64,
+                ),
+            }
+        }
+        UiAccountEncoding::JsonParsed => {
+            if let Ok(parsed_data) =
+                parse_account_data(pubkey, account.owner(), account.data(), additional_data)
+            {
+                UiAccountData::Json(parsed_data)
+            } else {
+                UiAccountData::Binary(
+                    BASE64_STANDARD.encode(slice_data(account.data(), data_slice_config)),
+                    UiAccountEncoding::Base64,
+                )
+            }
+        }
+    };
+    UiAccount {
+        lamports: account.lamports(),
+        data,
+        owner: account.owner().to_string(),
+        executable: account.executable(),
+        rent_epoch: account.rent_epoch(),
+        space: Some(space as u64),
     }
 }
 
