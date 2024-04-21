@@ -6707,7 +6707,6 @@ dependencies = [
  "bytemuck",
  "byteorder 1.5.0",
  "curve25519-dalek",
- "getrandom 0.1.14",
  "itertools 0.12.1",
  "lazy_static",
  "merlin",

@@ -8075,7 +8075,6 @@ dependencies = [
  "bytemuck",
  "byteorder",
  "curve25519-dalek",
- "getrandom 0.1.16",
  "itertools 0.12.1",
  "lazy_static",
  "merlin",
@@ -8091,7 +8090,6 @@ dependencies = [
  "solana-sdk",
  "subtle",
  "thiserror",
- "tiny-bip39",
  "zeroize",
 ]
 
