@@ -6540,22 +6540,12 @@ dependencies = [
 name = "solana-ui-account"
 version = "0.0.1"
 dependencies = [
- "Inflector",
  "base64 0.22.0",
- "bincode",
  "bs58",
- "bv",
- "lazy_static",
  "serde",
  "serde_derive",
  "serde_json",
- "solana-config-program",
  "solana-sdk",
- "spl-token",
- "spl-token-2022",
- "spl-token-group-interface",
- "spl-token-metadata-interface",
- "thiserror",
  "zstd",
 ]
 
