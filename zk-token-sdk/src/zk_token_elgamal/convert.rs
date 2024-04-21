@@ -47,10 +47,7 @@ impl From<PodRistrettoPoint> for pod::DecryptHandle {
 
 #[cfg(not(target_os = "solana"))]
 mod target_arch {
-    use {
-        super::pod,
-        curve25519_dalek::ristretto::CompressedRistretto,
-    };
+    use {super::pod, curve25519_dalek::ristretto::CompressedRistretto};
 
     impl From<CompressedRistretto> for pod::CompressedRistretto {
         fn from(cr: CompressedRistretto) -> Self {

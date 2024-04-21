@@ -3,10 +3,7 @@ use crate::zk_token_elgamal::pod::{
     Zeroable,
 };
 #[cfg(not(target_os = "solana"))]
-use {
-    crate::instruction::transfer as decoded,
-    solana_curve25519::errors::ElGamalError,
-};
+use {crate::instruction::transfer as decoded, solana_curve25519::errors::ElGamalError};
 
 #[derive(Clone, Copy, Pod, Zeroable)]
 #[repr(C)]

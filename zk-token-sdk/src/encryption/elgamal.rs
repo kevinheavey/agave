@@ -31,6 +31,7 @@ use {
         traits::Identity,
     },
     serde::{Deserialize, Serialize},
+    solana_curve25519::errors::ElGamalError,
     solana_sdk::{
         derivation_path::DerivationPath,
         signature::Signature,
@@ -39,7 +40,6 @@ use {
             SeedDerivable, Signer, SignerError,
         },
     },
-    solana_curve25519::errors::ElGamalError,
     std::convert::TryInto,
     subtle::{Choice, ConstantTimeEq},
     zeroize::Zeroize,

@@ -4,9 +4,9 @@
 use crate::encryption::grouped_elgamal::GroupedElGamalCiphertext;
 use {
     crate::zk_token_elgamal::pod::{
-            elgamal::{ElGamalCiphertext, DECRYPT_HANDLE_LEN, ELGAMAL_CIPHERTEXT_LEN},
-            pedersen::{PedersenCommitment, PEDERSEN_COMMITMENT_LEN},
-            Pod, Zeroable,
+        elgamal::{ElGamalCiphertext, DECRYPT_HANDLE_LEN, ELGAMAL_CIPHERTEXT_LEN},
+        pedersen::{PedersenCommitment, PEDERSEN_COMMITMENT_LEN},
+        Pod, Zeroable,
     },
     solana_curve25519::errors::ElGamalError,
     std::fmt,

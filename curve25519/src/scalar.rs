@@ -6,7 +6,11 @@ pub struct PodScalar(pub [u8; 32]);
 
 #[cfg(not(target_os = "solana"))]
 mod target_arch {
-    use {super::*, crate::errors::{Curve25519Error, ElGamalError}, curve25519_dalek::scalar::Scalar};
+    use {
+        super::*,
+        crate::errors::{Curve25519Error, ElGamalError},
+        curve25519_dalek::scalar::Scalar,
+    };
 
     impl From<&Scalar> for PodScalar {
         fn from(scalar: &Scalar) -> Self {
