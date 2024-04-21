@@ -128,6 +128,7 @@ members = [
     "wen-restart",
     "zk-keygen",
     "zk-sdk",
+    "curve25519",
     "zk-token-sdk",
 ]
 
@@ -405,6 +406,7 @@ solana-wen-restart = { path = "wen-restart", version = "=2.0.0" }
 solana-zk-elgamal-proof-program = { path = "programs/zk-elgamal-proof", version = "=2.0.0" }
 solana-zk-keygen = { path = "zk-keygen", version = "=2.0.0" }
 solana-zk-sdk = { path = "zk-sdk", version = "=2.0.0" }
+solana-curve25519 = { path = "zk-token-curve25519", version = "=0.0.1" }
 solana-zk-token-proof-program = { path = "programs/zk-token-proof", version = "=2.0.0" }
 solana-zk-token-sdk = { path = "zk-token-sdk", version = "=2.0.0" }
 solana_rbpf = "=0.8.1"

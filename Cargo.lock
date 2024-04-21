@@ -5530,6 +5530,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana--curve25519"
+version = "0.0.1"
+dependencies = [
+ "bytemuck",
+ "curve25519-dalek",
+ "solana-program",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-account-decoder"
 version = "2.0.0"
 dependencies = [
