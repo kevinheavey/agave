@@ -4628,6 +4628,7 @@ dependencies = [
  "serde_json",
  "solana-config-program",
  "solana-sdk",
+ "solana-ui-account",
  "spl-token",
  "spl-token-2022",
  "spl-token-group-interface",
@@ -4852,6 +4853,7 @@ dependencies = [
  "solana-rpc-client-api",
  "solana-sdk",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-vote-program",
  "spl-memo",
 ]
@@ -5506,9 +5508,9 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-account-decoder",
  "solana-rpc-client-api",
  "solana-sdk",
+ "solana-ui-account",
  "thiserror",
  "tokio",
  "tokio-stream",
@@ -5612,6 +5614,7 @@ dependencies = [
  "solana-svm",
  "solana-tpu-client",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-version",
  "solana-vote",
  "solana-vote-program",
@@ -5642,6 +5645,7 @@ dependencies = [
  "solana-rpc-client-api",
  "solana-sdk",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-version",
  "solana-vote-program",
  "tokio",
@@ -5662,6 +5666,7 @@ dependencies = [
  "solana-account-decoder",
  "solana-sdk",
  "solana-transaction-status",
+ "solana-ui-account",
  "solana-version",
  "spl-token-2022",
  "thiserror",
@@ -6316,6 +6321,7 @@ dependencies = [
  "solana-account-decoder",
  "solana-sdk",
  "solana-transaction-status",
+ "solana-ui-account",
  "tonic-build",
 ]
 
@@ -6528,6 +6534,29 @@ dependencies = [
  "solana-streamer",
  "thiserror",
  "tokio",
+]
+
+[[package]]
+name = "solana-ui-account"
+version = "2.0.0"
+dependencies = [
+ "Inflector",
+ "base64 0.22.0",
+ "bincode",
+ "bs58",
+ "bv",
+ "lazy_static",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "solana-config-program",
+ "solana-sdk",
+ "spl-token",
+ "spl-token-2022",
+ "spl-token-group-interface",
+ "spl-token-metadata-interface",
+ "thiserror",
+ "zstd",
 ]
 
 [[package]]
