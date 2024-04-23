@@ -6607,6 +6607,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-poseidon"
+version = "0.0.1"
+dependencies = [
+ "ark-bn254",
+ "light-poseidon",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-program"
 version = "2.0.0"
 dependencies = [
