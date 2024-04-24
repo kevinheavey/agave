@@ -6613,6 +6613,7 @@ version = "0.0.1"
 dependencies = [
  "ark-bn254",
  "light-poseidon",
+ "solana-program",
  "thiserror",
 ]
 

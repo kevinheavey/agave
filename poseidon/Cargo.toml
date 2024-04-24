@@ -16,5 +16,8 @@ thiserror = { workspace = true }
 ark-bn254 = { workspace = true }
 light-poseidon = { workspace = true }
 
+[target.'cfg(target_os = "solana")'.dependencies]
+solana-program = { workspace = true }
+
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
