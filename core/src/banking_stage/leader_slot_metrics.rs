@@ -372,7 +372,7 @@ impl LeaderSlotMetrics {
         self.is_reported = true;
 
         self.timing_metrics.report(&self.id, self.slot);
-        self.transaction_error_metrics.report(&self.id, self.slot);
+        report_transaction_error_metrics(&self.transaction_error_metrics, &self.id, self.slot);
         self.packet_count_metrics.report(&self.id, self.slot);
         self.vote_packet_count_metrics.report(&self.id, self.slot);
         self.prioritization_fees_metric.report(&self.id, self.slot);
@@ -390,6 +390,93 @@ impl LeaderSlotMetrics {
     fn mark_slot_end_detected(&mut self) {
         self.timing_metrics.mark_slot_end_detected();
     }
+}
+
+fn report_transaction_error_metrics(metrics: &TransactionErrorMetrics, id: &str, slot: Slot) {
+    datapoint_info!(
+        "banking_stage-leader_slot_transaction_errors",
+        "id" => id,
+        ("slot", slot as i64, i64),
+        ("total", metrics.total as i64, i64),
+        ("account_in_use", metrics.account_in_use as i64, i64),
+        (
+            "too_many_account_locks",
+            metrics.too_many_account_locks as i64,
+            i64
+        ),
+        (
+            "account_loaded_twice",
+            metrics.account_loaded_twice as i64,
+            i64
+        ),
+        ("account_not_found", metrics.account_not_found as i64, i64),
+        ("blockhash_not_found", metrics.blockhash_not_found as i64, i64),
+        ("blockhash_too_old", metrics.blockhash_too_old as i64, i64),
+        ("call_chain_too_deep", metrics.call_chain_too_deep as i64, i64),
+        ("already_processed", metrics.already_processed as i64, i64),
+        ("instruction_error", metrics.instruction_error as i64, i64),
+        ("insufficient_funds", metrics.insufficient_funds as i64, i64),
+        (
+            "invalid_account_for_fee",
+            metrics.invalid_account_for_fee as i64,
+            i64
+        ),
+        (
+            "invalid_account_index",
+            metrics.invalid_account_index as i64,
+            i64
+        ),
+        (
+            "invalid_program_for_execution",
+            metrics.invalid_program_for_execution as i64,
+            i64
+        ),
+        (
+            "not_allowed_during_cluster_maintenance",
+            metrics.not_allowed_during_cluster_maintenance as i64,
+            i64
+        ),
+        (
+            "invalid_writable_account",
+            metrics.invalid_writable_account as i64,
+            i64
+        ),
+        (
+            "invalid_rent_paying_account",
+            metrics.invalid_rent_paying_account as i64,
+            i64
+        ),
+        (
+            "would_exceed_max_block_cost_limit",
+            metrics.would_exceed_max_block_cost_limit as i64,
+            i64
+        ),
+        (
+            "would_exceed_max_account_cost_limit",
+            metrics.would_exceed_max_account_cost_limit as i64,
+            i64
+        ),
+        (
+            "would_exceed_max_vote_cost_limit",
+            metrics.would_exceed_max_vote_cost_limit as i64,
+            i64
+        ),
+        (
+            "would_exceed_account_data_block_limit",
+            metrics.would_exceed_account_data_block_limit as i64,
+            i64
+        ),
+        (
+            "max_loaded_accounts_data_size_exceeded",
+            metrics.max_loaded_accounts_data_size_exceeded as i64,
+            i64
+        ),
+        (
+            "program_execution_temporarily_restricted",
+            metrics.program_execution_temporarily_restricted as i64,
+            i64
+        ),
+    );
 }
 
 // Metrics describing vote tx packets that were processed in the tpu vote thread as well as
