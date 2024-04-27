@@ -6669,7 +6669,6 @@ dependencies = [
  "solana-sdk-macro",
  "static_assertions",
  "thiserror",
- "tiny-bip39",
  "wasm-bindgen",
  "zeroize",
 ]

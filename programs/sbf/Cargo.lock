@@ -5415,7 +5415,6 @@ dependencies = [
  "solana-frozen-abi-macro",
  "solana-sdk-macro",
  "thiserror",
- "tiny-bip39",
  "wasm-bindgen",
  "zeroize",
 ]
