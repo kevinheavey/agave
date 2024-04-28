@@ -73,6 +73,9 @@ console_log = { workspace = true }
 getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
 js-sys = { workspace = true }
 
+[target.'cfg(target_arch = "wasm32")'.dependencies.rand]
+features = ["wasm-bindgen"]
+
 [target.'cfg(not(target_pointer_width = "64"))'.dependencies]
 parking_lot = { workspace = true }
 
