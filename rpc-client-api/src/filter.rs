@@ -1,7 +1,7 @@
 #![allow(deprecated)]
 use {
     crate::version_req::VersionReq,
-    solana_inline_spl::token::{Account, GenericTokenAccount},
+    solana_inline_spl::token_2022::{Account, GenericTokenAccount},
     solana_sdk::account::{AccountSharedData, ReadableAccount},
     std::borrow::Cow,
     thiserror::Error,
