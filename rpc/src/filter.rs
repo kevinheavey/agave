@@ -1,8 +1,7 @@
 use {
-    solana_rpc_client_api::filter::RpcFilterType,
     solana_inline_spl::token::{Account, GenericTokenAccount},
+    solana_rpc_client_api::filter::RpcFilterType,
     solana_sdk::account::{AccountSharedData, ReadableAccount},
-    spl_token_2022::{generic_token_account::GenericTokenAccount, state::Account},
 };
 
 pub fn filter_allows(filter: &RpcFilterType, account: &AccountSharedData) -> bool {
