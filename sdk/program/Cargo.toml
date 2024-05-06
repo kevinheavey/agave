@@ -72,7 +72,6 @@ console_error_panic_hook = { workspace = true }
 console_log = { workspace = true }
 getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
 js-sys = { workspace = true }
-rand = { version = "0.7.3", features = ["wasm-bindgen"] }
 
 [target.'cfg(not(target_pointer_width = "64"))'.dependencies]
 parking_lot = { workspace = true }

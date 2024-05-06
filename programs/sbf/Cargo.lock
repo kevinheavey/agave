@@ -5403,7 +5403,6 @@ dependencies = [
  "num-derive 0.4.2",
  "num-traits",
  "parking_lot 0.12.1",
- "rand 0.7.3",
  "rand 0.8.5",
  "rustc_version",
  "rustversion",
