@@ -1,6 +1,7 @@
 use solana_sdk::clock::Slot;
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, AbiExample, AbiEnumVisitor)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 enum CompressionType {
     Uncompressed,
     GZip,

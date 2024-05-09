@@ -82,7 +82,8 @@ impl Signable for CrdsValue {
 /// * Merge Strategy - Latest wallclock is picked
 /// * LowestSlot index is deprecated
 #[allow(clippy::large_enum_variant)]
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, AbiExample, AbiEnumVisitor)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum CrdsData {
     #[allow(private_interfaces)]
     LegacyContactInfo(LegacyContactInfo),
