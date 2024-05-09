@@ -36,6 +36,7 @@ full = [
 dev-context-only-utils = [
   "qualifier_attr"
 ]
+frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 
 [dependencies]
 bincode = { workspace = true }
@@ -72,8 +73,8 @@ serde_with = { workspace = true, features = ["macros"] }
 sha2 = { workspace = true }
 sha3 = { workspace = true, optional = true }
 siphasher = { workspace = true }
-solana-frozen-abi = { workspace = true }
-solana-frozen-abi-macro = { workspace = true }
+solana-frozen-abi = { workspace = true, optional = true }
+solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-program = { workspace = true }
 solana-sdk-macro = { workspace = true }
 thiserror = { workspace = true }
