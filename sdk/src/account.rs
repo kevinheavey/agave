@@ -27,8 +27,7 @@ use {
 
 /// An Account with data that is stored on chain
 #[repr(C)]
-#[frozen_abi(digest = "HawRVHh7t4d3H3bitWHFt25WhhoDmbJMCfWdESQQoYEy")]
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample), frozen_abi(digest = "HawRVHh7t4d3H3bitWHFt25WhhoDmbJMCfWdESQQoYEy"))]
 #[derive(Deserialize, PartialEq, Eq, Clone, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct Account {
@@ -52,8 +51,7 @@ mod account_serialize {
         serde::{ser::Serializer, Serialize},
     };
     #[repr(C)]
-    #[frozen_abi(digest = "HawRVHh7t4d3H3bitWHFt25WhhoDmbJMCfWdESQQoYEy")]
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+    #[cfg_attr(feature = "frozen-abi", derive(AbiExample), frozen_abi(digest = "HawRVHh7t4d3H3bitWHFt25WhhoDmbJMCfWdESQQoYEy"))]
     #[derive(Serialize)]
     #[serde(rename_all = "camelCase")]
     struct Account<'a> {
