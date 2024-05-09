@@ -272,7 +272,7 @@ fn discard_malformed_repair_requests(
 #[cfg_attr(
     feature = "frozen-abi",
     derive(AbiEnumVisitor, AbiExample),
-    frozen_abi(digest = "5cmSdmXMgkpUH5ZCmYYjxUVQfULe9iJqCqqfrADfsEmK")
+    frozen_abi(digest = "CkffjyMPCwuJgk9NiCMELXLCecAnTPZqpKEnUCb3VyVf")
 )]
 #[derive(Debug, Deserialize, Serialize)]
 pub(crate) enum RepairResponse {
