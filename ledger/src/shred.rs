@@ -170,6 +170,7 @@ pub enum Error {
 }
 
 #[repr(u8)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
 #[derive(
     Clone,
     Copy,
@@ -177,8 +178,6 @@ pub enum Error {
     Eq,
     Hash,
     PartialEq,
-    AbiEnumVisitor,
-    AbiExample,
     Deserialize,
     IntoPrimitive,
     Serialize,
