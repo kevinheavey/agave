@@ -57,7 +57,7 @@ pub struct UpdatedCosts {
     pub updated_costliest_account_cost: u64,
 }
 
-#[cfg(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Debug)]
 pub struct CostTracker {
     account_cost_limit: u64,

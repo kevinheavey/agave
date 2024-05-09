@@ -18,7 +18,7 @@ use {
 
 const PING_PONG_HASH_PREFIX: &[u8] = "SOLANA_PING_PONG".as_bytes();
 
-#[cfg(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Ping<T> {
     from: Pubkey,
@@ -26,7 +26,7 @@ pub struct Ping<T> {
     signature: Signature,
 }
 
-#[cfg(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Pong {
     from: Pubkey,

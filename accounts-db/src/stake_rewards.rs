@@ -7,7 +7,7 @@ use {
     },
 };
 
-#[cfg(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct StakeReward {
     pub stake_pubkey: Pubkey,
