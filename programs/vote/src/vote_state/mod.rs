@@ -28,7 +28,11 @@ use {
     },
 };
 
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor), frozen_abi(digest = "EcS3xgfomytEAQ1eVd8R76ZejwyHp2Ed8dHqQWh6zi5v"))]
+#[cfg_attr(
+    feature = "frozen-abi",
+    derive(AbiExample, AbiEnumVisitor),
+    frozen_abi(digest = "EcS3xgfomytEAQ1eVd8R76ZejwyHp2Ed8dHqQWh6zi5v")
+)]
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum VoteTransaction {
     Vote(Vote),

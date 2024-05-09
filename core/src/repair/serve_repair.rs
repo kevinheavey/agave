@@ -140,7 +140,11 @@ impl AncestorHashesRepairType {
     }
 }
 
-#[cfg_attr(feature = "frozen-abi", derive(AbiEnumVisitor, AbiExample), frozen_abi(digest = "AKpurCovzn6rsji4aQrP3hUdEHxjtXUfT7AatZXN7Rpz"))]
+#[cfg_attr(
+    feature = "frozen-abi",
+    derive(AbiEnumVisitor, AbiExample),
+    frozen_abi(digest = "AKpurCovzn6rsji4aQrP3hUdEHxjtXUfT7AatZXN7Rpz")
+)]
 #[derive(Debug, Deserialize, Serialize)]
 pub enum AncestorHashesResponse {
     Hashes(Vec<(Slot, Hash)>),
@@ -217,7 +221,11 @@ impl RepairRequestHeader {
 pub(crate) type Ping = ping_pong::Ping<[u8; REPAIR_PING_TOKEN_SIZE]>;
 
 /// Window protocol messages
-#[cfg_attr(feature = "frozen-abi", derive(AbiEnumVisitor, AbiExample), frozen_abi(digest = "5cmSdmXMgkpUH5ZCmYYjxUVQfULe9iJqCqqfrADfsEmK"))]
+#[cfg_attr(
+    feature = "frozen-abi",
+    derive(AbiEnumVisitor, AbiExample),
+    frozen_abi(digest = "5cmSdmXMgkpUH5ZCmYYjxUVQfULe9iJqCqqfrADfsEmK")
+)]
 #[derive(Debug, Deserialize, Serialize)]
 pub enum RepairProtocol {
     LegacyWindowIndex,
@@ -261,7 +269,11 @@ fn discard_malformed_repair_requests(
     requests.len()
 }
 
-#[cfg_attr(feature = "frozen-abi", derive(AbiEnumVisitor, AbiExample), frozen_abi(digest = "5cmSdmXMgkpUH5ZCmYYjxUVQfULe9iJqCqqfrADfsEmK"))]
+#[cfg_attr(
+    feature = "frozen-abi",
+    derive(AbiEnumVisitor, AbiExample),
+    frozen_abi(digest = "5cmSdmXMgkpUH5ZCmYYjxUVQfULe9iJqCqqfrADfsEmK")
+)]
 #[derive(Debug, Deserialize, Serialize)]
 pub(crate) enum RepairResponse {
     Ping(Ping),

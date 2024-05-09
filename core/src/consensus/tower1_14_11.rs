@@ -6,7 +6,11 @@ use {
     },
 };
 
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample), frozen_abi(digest = "4LayQwoKrE2jPhbNtg3TSpKrtEtjcPiwsVPJN7aCavri"))]
+#[cfg_attr(
+    feature = "frozen-abi",
+    derive(AbiExample),
+    frozen_abi(digest = "4LayQwoKrE2jPhbNtg3TSpKrtEtjcPiwsVPJN7aCavri")
+)]
 #[derive(Clone, Serialize, Deserialize, Debug, PartialEq)]
 pub struct Tower1_14_11 {
     pub(crate) node_pubkey: Pubkey,
