@@ -7,7 +7,8 @@ use {
     solana_sdk::{sanitize::Sanitize, serde_varint},
     std::{convert::TryInto, fmt},
 };
-#[macro_use]
+#[cfg_attr(feature = "frozen-abi", macro_use)]
+#[cfg(feature = "frozen-abi")]
 extern crate solana_frozen_abi_macro;
 
 mod legacy;
