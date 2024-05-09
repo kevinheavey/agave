@@ -21,8 +21,9 @@ pub const SIGNATURE_BYTES: usize = 64;
 const MAX_BASE58_SIGNATURE_LEN: usize = 88;
 
 #[repr(transparent)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(
-    Serialize, Deserialize, Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash, AbiExample,
+    Serialize, Deserialize, Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash
 )]
 pub struct Signature(GenericArray<u8, U64>);
 
