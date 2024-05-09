@@ -26,7 +26,8 @@ use {
 /// Distributing rewards to stake accounts begins AFTER this many blocks.
 const REWARD_CALCULATION_NUM_BLOCKS: u64 = 1;
 
-#[derive(AbiExample, Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[cfg(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub(crate) struct PartitionedStakeReward {
     /// Stake account address
     pub stake_pubkey: Pubkey,
@@ -54,7 +55,8 @@ impl PartitionedStakeReward {
 
 type PartitionedStakeRewards = Vec<PartitionedStakeReward>;
 
-#[derive(AbiExample, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[cfg(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub(crate) struct StartBlockHeightAndRewards {
     /// the block height of the slot at which rewards distribution began
     pub(crate) distribution_starting_block_height: u64,
