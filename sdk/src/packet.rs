@@ -57,10 +57,10 @@ impl ::solana_frozen_abi::abi_example::AbiExample for PacketFlags {
     }
 }
 
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
+#[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
 impl ::solana_frozen_abi::abi_example::IgnoreAsHelper for PacketFlags {}
 
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
+#[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
 impl ::solana_frozen_abi::abi_example::EvenAsOpaque for PacketFlags {
     const TYPE_NAME_MATCHER: &'static str = "::_::InternalBitFlags";
 }

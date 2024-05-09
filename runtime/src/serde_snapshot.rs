@@ -283,7 +283,7 @@ impl<'a> From<crate::bank::BankFieldsToSerialize<'a>> for SerializableVersionedB
     }
 }
 
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
+#[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
 impl<'a> solana_frozen_abi::abi_example::IgnoreAsHelper for SerializableVersionedBank<'a> {}
 
 /// Helper type to wrap BufReader streams when deserializing and reconstructing from either just a
@@ -831,8 +831,8 @@ impl<'a> Serialize for SerializableAccountsDb<'a> {
     }
 }
 
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
-impl<'a> solana_frozen_abi::abi_example::IgnoreAsHelper for SerializableAccountsDb<'a> {}
+#[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
+impl<'a, C> solana_frozen_abi::abi_example::IgnoreAsHelper for SerializableAccountsDb<'a, C> {}
 
 #[allow(clippy::too_many_arguments)]
 fn reconstruct_bank_from_fields<E>(

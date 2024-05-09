@@ -593,7 +593,7 @@ pub(crate) fn get_quic_socket(socket: &SocketAddr) -> Result<SocketAddr, Error> 
     ))
 }
 
-#[cfg(all(test, RUSTC_WITH_SPECIALIZATION))]
+#[cfg(all(test, RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
 impl solana_frozen_abi::abi_example::AbiExample for ContactInfo {
     fn example() -> Self {
         Self {
