@@ -106,7 +106,20 @@ rustc_version = { workspace = true }
 
 [features]
 dev-context-only-utils = []
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = [
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "solana-accounts-db/frozen-abi",
+    "solana-address-lookup-table-program/frozen-abi",
+    "solana-cost-model/frozen-abi",
+    "solana-perf/frozen-abi",
+    "solana-program-runtime/frozen-abi",
+    "solana-sdk/frozen-abi",
+    "solana-svm/frozen-abi",
+    "solana-version/frozen-abi",
+    "solana-vote/frozen-abi",
+    "solana-vote-program/frozen-abi",
+]
 
 [[bench]]
 name = "prioritization_fee_cache"

@@ -46,7 +46,12 @@ test-case = { workspace = true }
 rustc_version = { workspace = true }
 
 [features]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = [
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "solana-sdk/frozen-abi",
+    "solana-vote-program/frozen-abi",
+]
 
 [[bench]]
 name = "sigverify"

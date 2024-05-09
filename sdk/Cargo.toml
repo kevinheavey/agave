@@ -17,26 +17,28 @@ edition = { workspace = true }
 program = []
 
 default = [
-  "full" # functionality that is not compatible or needed for on-chain programs
+  "full", # functionality that is not compatible or needed for on-chain programs
 ]
 full = [
-    "byteorder",
-    "chrono",
-    "generic-array",
-    "memmap2",
-    "rand",
-    "rand0-7",
-    "serde_json",
-    "ed25519-dalek",
-    "ed25519-dalek-bip32",
-    "libsecp256k1",
-    "sha3",
-    "digest",
+  "byteorder",
+  "chrono",
+  "generic-array",
+  "memmap2",
+  "rand",
+  "rand0-7",
+  "serde_json",
+  "ed25519-dalek",
+  "ed25519-dalek-bip32",
+  "libsecp256k1",
+  "sha3",
+  "digest",
 ]
-dev-context-only-utils = [
-  "qualifier_attr"
+dev-context-only-utils = ["qualifier_attr"]
+frozen-abi = [
+  "dep:solana-frozen-abi",
+  "dep:solana-frozen-abi-macro",
+  "solana-program/frozen-abi",
 ]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 
 [dependencies]
 bincode = { workspace = true }
@@ -51,9 +53,12 @@ derivation-path = { workspace = true }
 digest = { workspace = true, optional = true }
 ed25519-dalek = { workspace = true, optional = true }
 ed25519-dalek-bip32 = { workspace = true, optional = true }
-generic-array = { workspace = true, features = ["serde", "more_lengths"], optional = true }
+generic-array = { workspace = true, features = [
+  "serde",
+  "more_lengths",
+], optional = true }
 hmac = { workspace = true }
-itertools =  { workspace = true }
+itertools = { workspace = true }
 lazy_static = { workspace = true }
 libsecp256k1 = { workspace = true, optional = true, features = ["hmac"] }
 log = { workspace = true }
