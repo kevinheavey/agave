@@ -13,7 +13,8 @@ use {
     thiserror::Error,
 };
 
-#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, AbiExample, Debug)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub struct RestartLastVotedForkSlots {
     pub from: Pubkey,
     pub wallclock: u64,
@@ -29,7 +30,8 @@ pub enum RestartLastVotedForkSlotsError {
     LastVotedForkEmpty,
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, AbiExample, Debug)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub struct RestartHeaviestFork {
     pub from: Pubkey,
     pub wallclock: u64,

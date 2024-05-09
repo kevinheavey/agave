@@ -86,7 +86,8 @@ pub struct ContactInfo {
     cache: [SocketAddr; SOCKET_CACHE_SIZE],
 }
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq, AbiExample, Deserialize, Serialize)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Deserialize, Serialize)]
 struct SocketEntry {
     key: u8,   // Protocol identifier, e.g. tvu, tpu, etc
     index: u8, // IpAddr index in the accompanying addrs vector.

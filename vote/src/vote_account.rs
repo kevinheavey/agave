@@ -16,7 +16,8 @@ use {
     thiserror::Error,
 };
 
-#[derive(Clone, Debug, PartialEq, AbiExample, Deserialize)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Debug, PartialEq, Deserialize)]
 #[serde(try_from = "AccountSharedData")]
 pub struct VoteAccount(Arc<VoteAccountInner>);
 

@@ -16,7 +16,8 @@ pub struct NodeVoteAccounts {
     pub total_stake: u64,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize, AbiExample, PartialEq)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct EpochStakes {
     #[serde(with = "crate::stakes::serde_stakes_enum_compat")]
     stakes: Arc<StakesEnum>,

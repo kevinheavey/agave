@@ -71,7 +71,8 @@ pub(crate) use {
 
 const MAX_STREAM_SIZE: u64 = 32 * 1024 * 1024 * 1024;
 
-#[derive(Clone, Debug, Deserialize, Serialize, AbiExample, PartialEq, Eq)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 pub struct AccountsDbFields<T>(
     HashMap<Slot, Vec<T>>,
     StoredMetaWriteVersion,
@@ -93,7 +94,8 @@ pub struct AccountsDbFields<T>(
 /// NOT be consistent with the bank's capitalization. It is not feasible to
 /// calculate a capitalization delta that is correct given just incremental
 /// slots account data and the full snapshot's capitalization.
-#[derive(Serialize, Deserialize, AbiExample, Clone, Debug, Default, PartialEq, Eq)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq, Eq)]
 pub struct BankIncrementalSnapshotPersistence {
     /// slot of full snapshot
     pub full_slot: Slot,

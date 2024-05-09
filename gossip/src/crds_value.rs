@@ -308,7 +308,8 @@ impl Sanitize for LowestSlot {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, AbiExample, Serialize)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct Vote {
     pub(crate) from: Pubkey,
     transaction: Transaction,
@@ -432,7 +433,8 @@ impl Version {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, AbiExample, Deserialize, Serialize)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct NodeInstance {
     from: Pubkey,
     wallclock: u64,
