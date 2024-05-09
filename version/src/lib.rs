@@ -22,7 +22,8 @@ enum ClientId {
     Unknown(u16),
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq)]
 pub struct Version {
     #[serde(with = "serde_varint")]
     pub major: u16,

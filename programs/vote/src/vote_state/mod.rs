@@ -29,7 +29,8 @@ use {
 };
 
 #[frozen_abi(digest = "EcS3xgfomytEAQ1eVd8R76ZejwyHp2Ed8dHqQWh6zi5v")]
-#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, AbiEnumVisitor, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, AbiEnumVisitor)]
 pub enum VoteTransaction {
     Vote(Vote),
     VoteStateUpdate(VoteStateUpdate),

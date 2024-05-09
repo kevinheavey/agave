@@ -40,7 +40,8 @@ bitflags! {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[repr(C)]
 pub struct Meta {
     pub size: usize,
@@ -90,7 +91,8 @@ impl ::solana_frozen_abi::abi_example::EvenAsOpaque for PacketFlags {
 // ryoqun's dirty experiments:
 //   https://github.com/ryoqun/serde-array-comparisons
 #[serde_as]
-#[derive(Clone, Eq, Serialize, Deserialize, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Eq, Serialize, Deserialize)]
 #[repr(C)]
 pub struct Packet {
     // Bytes past Packet.meta.size are not valid to read from.

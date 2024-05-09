@@ -45,15 +45,18 @@ enum SlotsOffsets {
     RawOffsets(RawOffsets),
 }
 
-#[derive(Deserialize, Serialize, Clone, Debug, PartialEq, Eq, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Deserialize, Serialize, Clone, Debug, PartialEq, Eq)]
 struct U16(#[serde(with = "serde_varint")] u16);
 
 // The vector always starts with 1. Encode number of 1's and 0's consecutively.
 // For example, 110000111 is [2, 4, 3].
-#[derive(Deserialize, Serialize, Clone, Debug, PartialEq, Eq, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Deserialize, Serialize, Clone, Debug, PartialEq, Eq)]
 struct RunLengthEncoding(Vec<U16>);
 
-#[derive(Deserialize, Serialize, Clone, Debug, PartialEq, Eq, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Deserialize, Serialize, Clone, Debug, PartialEq, Eq)]
 struct RawOffsets(BitVec<u8>);
 
 impl Sanitize for RestartLastVotedForkSlots {

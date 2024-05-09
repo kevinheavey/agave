@@ -14,7 +14,8 @@ use {
     },
 };
 
-#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq)]
 pub enum SavedTowerVersions {
     V1_17_14(SavedTower1_7_14),
     Current(SavedTower),
@@ -76,7 +77,8 @@ impl From<SavedTower1_7_14> for SavedTowerVersions {
 }
 
 #[frozen_abi(digest = "Gaxfwvx5MArn52mKZQgzHmDCyn5YfCuTHvp5Et3rFfpp")]
-#[derive(Default, Clone, Serialize, Deserialize, Debug, PartialEq, Eq, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Default, Clone, Serialize, Deserialize, Debug, PartialEq, Eq)]
 pub struct SavedTower {
     signature: Signature,
     data: Vec<u8>,

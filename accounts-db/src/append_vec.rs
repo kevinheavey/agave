@@ -228,7 +228,8 @@ impl AppendVecFileBacking {
 /// are serialized such that only one thread updates the internal `append_lock` at a time. No
 /// restrictions are placed on reading. That is, one may read items from one thread while another
 /// is appending new items.
-#[derive(Debug, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Debug)]
 pub struct AppendVec {
     /// The file path where the data is stored.
     path: PathBuf,

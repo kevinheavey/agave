@@ -41,7 +41,8 @@ pub const DEFAULT_GENESIS_DOWNLOAD_PATH: &str = "/genesis.tar.bz2";
 pub const UNUSED_DEFAULT: u64 = 1024;
 
 // The order can't align with release lifecycle only to remain ABI-compatible...
-#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, AbiEnumVisitor, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, AbiEnumVisitor)]
 pub enum ClusterType {
     Testnet,
     MainnetBeta,

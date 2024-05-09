@@ -13,7 +13,8 @@ impl Default for CompressionType {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq, Eq, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq, Eq)]
 pub(crate) struct EpochIncompleteSlots {
     first: Slot,
     compression: CompressionType,

@@ -107,14 +107,16 @@ pub struct BankIncrementalSnapshotPersistence {
     pub incremental_capitalization: u64,
 }
 
-#[derive(Clone, Default, Debug, Serialize, Deserialize, PartialEq, Eq, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Clone, Default, Debug, Serialize, Deserialize, PartialEq, Eq)]
 struct BankHashInfo {
     accounts_delta_hash: SerdeAccountsDeltaHash,
     accounts_hash: SerdeAccountsHash,
     stats: BankHashStats,
 }
 
-#[derive(Default, Clone, PartialEq, Eq, Debug, Deserialize, Serialize, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Default, Clone, PartialEq, Eq, Debug, Deserialize, Serialize)]
 struct UnusedAccounts {
     unused1: HashSet<Pubkey>,
     unused2: HashSet<Pubkey>,
