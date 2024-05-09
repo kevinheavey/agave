@@ -50,7 +50,7 @@ pub struct Meta {
     pub flags: PacketFlags,
 }
 
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
+#[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
 impl ::solana_frozen_abi::abi_example::AbiExample for PacketFlags {
     fn example() -> Self {
         Self::empty()

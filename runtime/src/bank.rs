@@ -311,10 +311,10 @@ pub struct BankRc {
     pub(crate) bank_id_generator: Arc<AtomicU64>,
 }
 
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
+#[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
 use solana_frozen_abi::abi_example::AbiExample;
 
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
+#[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
 impl AbiExample for BankRc {
     fn example() -> Self {
         BankRc {
@@ -653,7 +653,7 @@ pub trait DropCallback: fmt::Debug {
 #[derive(Debug, Default)]
 pub struct OptionalDropCallback(Option<Box<dyn DropCallback + Send + Sync>>);
 
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
+#[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
 impl AbiExample for OptionalDropCallback {
     fn example() -> Self {
         Self(None)
