@@ -4728,6 +4728,7 @@ name = "solana-banks-interface"
 version = "2.0.0"
 dependencies = [
  "serde",
+ "serde_derive",
  "solana-sdk",
  "tarpc",
 ]
@@ -4790,6 +4791,7 @@ version = "2.0.0"
 dependencies = [
  "array-bytes",
  "serde",
+ "serde_derive",
  "serde_json",
  "solana-program",
 ]
@@ -6665,6 +6667,7 @@ dependencies = [
  "num-traits",
  "rand 0.7.3",
  "serde",
+ "serde_derive",
  "serde_json",
  "sha3 0.9.1",
  "solana-program",
