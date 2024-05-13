@@ -209,7 +209,8 @@ enum InternalFileOrMmap<'a> {
     Mmap(&'a MmapMut),
 }
 
-#[derive(Debug, AbiExample)]
+#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[derive(Debug)]
 enum AppendVecFileBacking {
     /// A file-backed block of memory that is used to store the data for each appended item.
     MmapOnly(MmapMut),
