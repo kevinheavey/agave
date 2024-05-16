@@ -48,7 +48,6 @@ rustc_version = { workspace = true }
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
-    "solana-address-lookup-table-program/frozen-abi",
     "solana-program-runtime/frozen-abi",
     "solana-sdk/frozen-abi",
     "solana-vote-program/frozen-abi",
