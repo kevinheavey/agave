@@ -832,7 +832,7 @@ impl<'a> Serialize for SerializableAccountsDb<'a> {
 }
 
 #[cfg(all(RUSTC_WITH_SPECIALIZATION, feature = "frozen-abi"))]
-impl<'a, C> solana_frozen_abi::abi_example::IgnoreAsHelper for SerializableAccountsDb<'a, C> {}
+impl<'a> solana_frozen_abi::abi_example::IgnoreAsHelper for SerializableAccountsDb<'a> {}
 
 #[allow(clippy::too_many_arguments)]
 fn reconstruct_bank_from_fields<E>(
