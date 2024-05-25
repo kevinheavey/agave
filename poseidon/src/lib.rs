@@ -186,7 +186,7 @@ extern "C" {
 /// # Examples
 ///
 /// ```rust
-/// use solana_program::poseidon::{hashv, Endianness, Parameters};
+/// use solana_poseidon::{hashv, Endianness, Parameters};
 ///
 /// # fn test() {
 /// let input1 = [1u8; 32];
@@ -292,7 +292,7 @@ pub fn hashv(
 /// # Examples
 ///
 /// ```rust
-/// use solana_program::poseidon::{hash, Endianness, Parameters};
+/// use solana_poseidon::{hash, Endianness, Parameters};
 ///
 /// # fn test() {
 /// let input = [1u8; 32];
