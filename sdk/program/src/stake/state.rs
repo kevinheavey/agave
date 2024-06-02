@@ -3,6 +3,8 @@
 // warnings from uses of deprecated types during trait derivations.
 #![allow(deprecated)]
 
+#[cfg(feature = "borsh")]
+use borsh::{io, BorshDeserialize, BorshSchema, BorshSerialize};
 use {
     crate::{
         clock::{Clock, Epoch, UnixTimestamp},
@@ -16,8 +18,6 @@ use {
     },
     std::collections::HashSet,
 };
-#[cfg(feature = "borsh")]
-use borsh::{io, BorshDeserialize, BorshSchema, BorshSerialize};
 
 pub type StakeActivationStatus = StakeHistoryEntry;
 
@@ -254,16 +254,7 @@ pub enum StakeAuthorize {
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Default,
-    Debug,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    Eq,
-    Clone,
-    Copy,
-)]
+#[derive(Default, Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
 pub struct Lockup {
     /// UnixTimestamp at which this stake will allow withdrawal, unless the
     ///   transaction is signed by the custodian
@@ -352,16 +343,7 @@ impl borsh0_10::ser::BorshSerialize for Lockup {
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Default,
-    Debug,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    Eq,
-    Clone,
-    Copy,
-)]
+#[derive(Default, Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
 pub struct Authorized {
     pub staker: Pubkey,
     pub withdrawer: Pubkey,
@@ -489,16 +471,7 @@ impl borsh0_10::ser::BorshSerialize for Authorized {
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Default,
-    Debug,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    Eq,
-    Clone,
-    Copy,
-)]
+#[derive(Default, Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
 pub struct Meta {
     pub rent_exempt_reserve: u64,
     pub authorized: Authorized,
@@ -610,14 +583,7 @@ impl borsh0_10::ser::BorshSerialize for Meta {
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Debug,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    Clone,
-    Copy,
-)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone, Copy)]
 pub struct Delegation {
     /// to whom the stake is delegated
     pub voter_pubkey: Pubkey,
@@ -928,15 +894,7 @@ impl borsh0_10::ser::BorshSerialize for Delegation {
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Debug,
-    Default,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    Clone,
-    Copy,
-)]
+#[derive(Debug, Default, Serialize, Deserialize, PartialEq, Clone, Copy)]
 pub struct Stake {
     pub delegation: Delegation,
     /// credits observed is credits from vote account state when delegated or redeemed
@@ -1040,12 +998,9 @@ impl borsh0_10::ser::BorshSerialize for Stake {
 
 #[cfg(test)]
 mod test {
-    use {
-        super::*, assert_matches::assert_matches,
-        bincode::serialize,
-    };
     #[cfg(feature = "borsh")]
     use crate::borsh1::try_from_slice_unchecked;
+    use {super::*, assert_matches::assert_matches, bincode::serialize};
 
     #[cfg(feature = "borsh")]
     fn check_borsh_deserialization(stake: StakeStateV2) {

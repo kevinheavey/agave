@@ -1,14 +1,14 @@
 //! The [`ProgramError`] type and related definitions.
 
 #![allow(clippy::arithmetic_side_effects)]
+#[cfg(feature = "borsh")]
+use borsh::io::Error as BorshIoError;
 use {
     crate::{decode_error::DecodeError, instruction::InstructionError, msg, pubkey::PubkeyError},
     num_traits::{FromPrimitive, ToPrimitive},
     std::convert::TryFrom,
     thiserror::Error,
 };
-#[cfg(feature = "borsh")]
-use borsh::io::Error as BorshIoError;
 
 /// Reasons the program may fail
 #[derive(Clone, Debug, Deserialize, Eq, Error, PartialEq, Serialize)]

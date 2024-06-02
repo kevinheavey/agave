@@ -3,6 +3,8 @@
 //! [SHA-256]: https://en.wikipedia.org/wiki/SHA-2
 //! [`Hash`]: struct@Hash
 
+#[cfg(feature = "borsh")]
+use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use {
     crate::{sanitize::Sanitize, wasm_bindgen},
     bytemuck::{Pod, Zeroable},
@@ -10,8 +12,6 @@ use {
     std::{convert::TryFrom, fmt, mem, str::FromStr},
     thiserror::Error,
 };
-#[cfg(feature = "borsh")]
-use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 
 /// Size of a hash in bytes.
 pub const HASH_BYTES: usize = 32;

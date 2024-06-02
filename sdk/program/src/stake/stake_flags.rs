@@ -8,18 +8,7 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Serialize,
-    Deserialize,
-    Copy,
-    PartialEq,
-    Eq,
-    Clone,
-    PartialOrd,
-    Ord,
-    Hash,
-    Debug,
-)]
+#[derive(Serialize, Deserialize, Copy, PartialEq, Eq, Clone, PartialOrd, Ord, Hash, Debug)]
 pub struct StakeFlags {
     bits: u8,
 }

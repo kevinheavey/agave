@@ -13,14 +13,14 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
+#[cfg(feature = "borsh")]
+use borsh::BorshSerialize;
 use {
     crate::{pubkey::Pubkey, sanitize::Sanitize, short_vec, wasm_bindgen},
     bincode::serialize,
     serde::Serialize,
     thiserror::Error,
 };
-#[cfg(feature = "borsh")]
-use borsh::BorshSerialize;
 
 /// Reasons the runtime might have rejected an instruction.
 ///

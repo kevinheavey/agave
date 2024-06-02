@@ -4,6 +4,8 @@
 
 #[cfg(test)]
 use arbitrary::Arbitrary;
+#[cfg(feature = "borsh")]
+use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use {
     crate::{decode_error::DecodeError, hash::hashv, wasm_bindgen},
     bytemuck::{Pod, Zeroable},
@@ -15,8 +17,6 @@ use {
     },
     thiserror::Error,
 };
-#[cfg(feature = "borsh")]
-use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 
 /// Number of bytes in a pubkey
 pub const PUBKEY_BYTES: usize = 32;
