@@ -2,6 +2,7 @@
 
 #![cfg(feature = "full")]
 
+#[cfg(feature = "borsh")]
 use {
     crate::instruction::Instruction,
     borsh::{BorshDeserialize, BorshSerialize},
@@ -29,16 +30,19 @@ pub enum ComputeBudgetInstruction {
 }
 
 impl ComputeBudgetInstruction {
+    #[cfg(feature = "borsh")]
     /// Create a `ComputeBudgetInstruction::RequestHeapFrame` `Instruction`
     pub fn request_heap_frame(bytes: u32) -> Instruction {
         Instruction::new_with_borsh(id(), &Self::RequestHeapFrame(bytes), vec![])
     }
 
+    #[cfg(feature = "borsh")]
     /// Create a `ComputeBudgetInstruction::SetComputeUnitLimit` `Instruction`
     pub fn set_compute_unit_limit(units: u32) -> Instruction {
         Instruction::new_with_borsh(id(), &Self::SetComputeUnitLimit(units), vec![])
     }
 
+    #[cfg(feature = "borsh")]
     /// Create a `ComputeBudgetInstruction::SetComputeUnitPrice` `Instruction`
     pub fn set_compute_unit_price(micro_lamports: u64) -> Instruction {
         Instruction::new_with_borsh(id(), &Self::SetComputeUnitPrice(micro_lamports), vec![])
@@ -51,6 +55,7 @@ impl ComputeBudgetInstruction {
         borsh::to_vec(&self)
     }
 
+    #[cfg(feature = "borsh")]
     /// Create a `ComputeBudgetInstruction::SetLoadedAccountsDataSizeLimit` `Instruction`
     pub fn set_loaded_accounts_data_size_limit(bytes: u32) -> Instruction {
         Instruction::new_with_borsh(id(), &Self::SetLoadedAccountsDataSizeLimit(bytes), vec![])

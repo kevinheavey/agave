@@ -3,11 +3,12 @@
 #![allow(clippy::arithmetic_side_effects)]
 use {
     crate::{decode_error::DecodeError, instruction::InstructionError, msg, pubkey::PubkeyError},
-    borsh::io::Error as BorshIoError,
     num_traits::{FromPrimitive, ToPrimitive},
     std::convert::TryFrom,
     thiserror::Error,
 };
+#[cfg(feature = "borsh")]
+use borsh::io::Error as BorshIoError;
 
 /// Reasons the program may fail
 #[derive(Clone, Debug, Deserialize, Eq, Error, PartialEq, Serialize)]
@@ -343,6 +344,7 @@ impl From<PubkeyError> for ProgramError {
     }
 }
 
+#[cfg(feature = "borsh")]
 impl From<BorshIoError> for ProgramError {
     fn from(error: BorshIoError) -> Self {
         Self::BorshIoError(format!("{error}"))

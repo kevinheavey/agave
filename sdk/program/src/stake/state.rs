@@ -14,9 +14,10 @@ use {
         },
         stake_history::{StakeHistory, StakeHistoryEntry},
     },
-    borsh::{io, BorshDeserialize, BorshSchema, BorshSerialize},
     std::collections::HashSet,
 };
+#[cfg(feature = "borsh")]
+use borsh::{io, BorshDeserialize, BorshSchema, BorshSerialize};
 
 pub type StakeActivationStatus = StakeHistoryEntry;
 
@@ -34,6 +35,7 @@ pub fn warmup_cooldown_rate(current_epoch: Epoch, new_rate_activation_epoch: Opt
     }
 }
 
+#[cfg(feature = "borsh")]
 macro_rules! impl_borsh_stake_state {
     ($borsh:ident) => {
         impl $borsh::BorshDeserialize for StakeState {
@@ -91,7 +93,9 @@ pub enum StakeState {
     Stake(Meta, Stake),
     RewardsPool,
 }
+#[cfg(feature = "borsh")]
 impl_borsh_stake_state!(borsh);
+#[cfg(feature = "borsh")]
 impl_borsh_stake_state!(borsh0_10);
 impl StakeState {
     /// The fixed number of bytes used to serialize each stake account
@@ -144,6 +148,7 @@ pub enum StakeStateV2 {
     Stake(Meta, Stake, StakeFlags),
     RewardsPool,
 }
+#[cfg(feature = "borsh")]
 macro_rules! impl_borsh_stake_state_v2 {
     ($borsh:ident) => {
         impl $borsh::BorshDeserialize for StakeStateV2 {
@@ -190,7 +195,9 @@ macro_rules! impl_borsh_stake_state_v2 {
         }
     };
 }
+#[cfg(feature = "borsh")]
 impl_borsh_stake_state_v2!(borsh);
+#[cfg(feature = "borsh")]
 impl_borsh_stake_state_v2!(borsh0_10);
 
 impl StakeStateV2 {
@@ -242,6 +249,11 @@ pub enum StakeAuthorize {
 }
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(
+    feature = "borsh",
+    derive(BorshSerialize, BorshDeserialize, BorshSchema),
+    borsh(crate = "borsh")
+)]
 #[derive(
     Default,
     Debug,
@@ -251,11 +263,7 @@ pub enum StakeAuthorize {
     Eq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
 )]
-#[borsh(crate = "borsh")]
 pub struct Lockup {
     /// UnixTimestamp at which this stake will allow withdrawal, unless the
     ///   transaction is signed by the custodian
@@ -275,6 +283,7 @@ impl Lockup {
         self.unix_timestamp > clock.unix_timestamp || self.epoch > clock.epoch
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::de::BorshDeserialize for Lockup {
     fn deserialize_reader<R: borsh0_10::maybestd::io::Read>(
         reader: &mut R,
@@ -286,6 +295,7 @@ impl borsh0_10::de::BorshDeserialize for Lockup {
         })
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::BorshSchema for Lockup {
     fn declaration() -> borsh0_10::schema::Declaration {
         "Lockup".to_string()
@@ -323,6 +333,7 @@ impl borsh0_10::BorshSchema for Lockup {
         <Pubkey as borsh0_10::BorshSchema>::add_definitions_recursively(definitions);
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::ser::BorshSerialize for Lockup {
     fn serialize<W: borsh0_10::maybestd::io::Write>(
         &self,
@@ -336,6 +347,11 @@ impl borsh0_10::ser::BorshSerialize for Lockup {
 }
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(
+    feature = "borsh",
+    derive(BorshSerialize, BorshDeserialize, BorshSchema),
+    borsh(crate = "borsh")
+)]
 #[derive(
     Default,
     Debug,
@@ -345,11 +361,7 @@ impl borsh0_10::ser::BorshSerialize for Lockup {
     Eq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
 )]
-#[borsh(crate = "borsh")]
 pub struct Authorized {
     pub staker: Pubkey,
     pub withdrawer: Pubkey,
@@ -415,6 +427,7 @@ impl Authorized {
         Ok(())
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::de::BorshDeserialize for Authorized {
     fn deserialize_reader<R: borsh0_10::maybestd::io::Read>(
         reader: &mut R,
@@ -425,6 +438,7 @@ impl borsh0_10::de::BorshDeserialize for Authorized {
         })
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::BorshSchema for Authorized {
     fn declaration() -> borsh0_10::schema::Declaration {
         "Authorized".to_string()
@@ -457,6 +471,7 @@ impl borsh0_10::BorshSchema for Authorized {
         <Pubkey as borsh0_10::BorshSchema>::add_definitions_recursively(definitions);
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::ser::BorshSerialize for Authorized {
     fn serialize<W: borsh0_10::maybestd::io::Write>(
         &self,
@@ -469,6 +484,11 @@ impl borsh0_10::ser::BorshSerialize for Authorized {
 }
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(
+    feature = "borsh",
+    derive(BorshSerialize, BorshDeserialize, BorshSchema),
+    borsh(crate = "borsh")
+)]
 #[derive(
     Default,
     Debug,
@@ -478,11 +498,7 @@ impl borsh0_10::ser::BorshSerialize for Authorized {
     Eq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
 )]
-#[borsh(crate = "borsh")]
 pub struct Meta {
     pub rent_exempt_reserve: u64,
     pub authorized: Authorized,
@@ -525,6 +541,7 @@ impl Meta {
         }
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::de::BorshDeserialize for Meta {
     fn deserialize_reader<R: borsh0_10::maybestd::io::Read>(
         reader: &mut R,
@@ -536,6 +553,7 @@ impl borsh0_10::de::BorshDeserialize for Meta {
         })
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::BorshSchema for Meta {
     fn declaration() -> borsh0_10::schema::Declaration {
         "Meta".to_string()
@@ -573,6 +591,7 @@ impl borsh0_10::BorshSchema for Meta {
         <Lockup as borsh0_10::BorshSchema>::add_definitions_recursively(definitions);
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::ser::BorshSerialize for Meta {
     fn serialize<W: borsh0_10::maybestd::io::Write>(
         &self,
@@ -586,6 +605,11 @@ impl borsh0_10::ser::BorshSerialize for Meta {
 }
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(
+    feature = "borsh",
+    derive(BorshSerialize, BorshDeserialize, BorshSchema),
+    borsh(crate = "borsh")
+)]
 #[derive(
     Debug,
     Serialize,
@@ -593,11 +617,7 @@ impl borsh0_10::ser::BorshSerialize for Meta {
     PartialEq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
 )]
-#[borsh(crate = "borsh")]
 pub struct Delegation {
     /// to whom the stake is delegated
     pub voter_pubkey: Pubkey,
@@ -825,6 +845,7 @@ impl Delegation {
         }
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::de::BorshDeserialize for Delegation {
     fn deserialize_reader<R: borsh0_10::maybestd::io::Read>(
         reader: &mut R,
@@ -838,6 +859,7 @@ impl borsh0_10::de::BorshDeserialize for Delegation {
         })
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::BorshSchema for Delegation {
     fn declaration() -> borsh0_10::schema::Declaration {
         "Delegation".to_string()
@@ -885,6 +907,7 @@ impl borsh0_10::BorshSchema for Delegation {
         <f64 as borsh0_10::BorshSchema>::add_definitions_recursively(definitions);
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::ser::BorshSerialize for Delegation {
     fn serialize<W: borsh0_10::maybestd::io::Write>(
         &self,
@@ -900,6 +923,11 @@ impl borsh0_10::ser::BorshSerialize for Delegation {
 }
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(
+    feature = "borsh",
+    derive(BorshSerialize, BorshDeserialize, BorshSchema),
+    borsh(crate = "borsh")
+)]
 #[derive(
     Debug,
     Default,
@@ -908,11 +936,7 @@ impl borsh0_10::ser::BorshSerialize for Delegation {
     PartialEq,
     Clone,
     Copy,
-    BorshDeserialize,
-    BorshSchema,
-    BorshSerialize,
 )]
-#[borsh(crate = "borsh")]
 pub struct Stake {
     pub delegation: Delegation,
     /// credits observed is credits from vote account state when delegated or redeemed
@@ -958,6 +982,7 @@ impl Stake {
         }
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::de::BorshDeserialize for Stake {
     fn deserialize_reader<R: borsh0_10::maybestd::io::Read>(
         reader: &mut R,
@@ -968,6 +993,7 @@ impl borsh0_10::de::BorshDeserialize for Stake {
         })
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::BorshSchema for Stake {
     fn declaration() -> borsh0_10::schema::Declaration {
         "Stake".to_string()
@@ -1000,6 +1026,7 @@ impl borsh0_10::BorshSchema for Stake {
         <u64 as borsh0_10::BorshSchema>::add_definitions_recursively(definitions);
     }
 }
+#[cfg(feature = "borsh")]
 impl borsh0_10::ser::BorshSerialize for Stake {
     fn serialize<W: borsh0_10::maybestd::io::Write>(
         &self,
@@ -1014,27 +1041,33 @@ impl borsh0_10::ser::BorshSerialize for Stake {
 #[cfg(test)]
 mod test {
     use {
-        super::*, crate::borsh1::try_from_slice_unchecked, assert_matches::assert_matches,
+        super::*, assert_matches::assert_matches,
         bincode::serialize,
     };
+    #[cfg(feature = "borsh")]
+    use crate::borsh1::try_from_slice_unchecked;
 
+    #[cfg(feature = "borsh")]
     fn check_borsh_deserialization(stake: StakeStateV2) {
         let serialized = serialize(&stake).unwrap();
         let deserialized = StakeStateV2::try_from_slice(&serialized).unwrap();
         assert_eq!(stake, deserialized);
     }
 
+    #[cfg(feature = "borsh")]
     fn check_borsh_serialization(stake: StakeStateV2) {
         let bincode_serialized = serialize(&stake).unwrap();
         let borsh_serialized = borsh::to_vec(&stake).unwrap();
         assert_eq!(bincode_serialized, borsh_serialized);
     }
 
+    #[cfg(feature = "borsh")]
     #[test]
     fn test_size_of() {
         assert_eq!(StakeStateV2::size_of(), std::mem::size_of::<StakeStateV2>());
     }
 
+    #[cfg(feature = "borsh")]
     #[test]
     fn bincode_vs_borsh_deserialization() {
         check_borsh_deserialization(StakeStateV2::Uninitialized);
@@ -1070,6 +1103,7 @@ mod test {
         ));
     }
 
+    #[cfg(feature = "borsh")]
     #[test]
     fn bincode_vs_borsh_serialization() {
         check_borsh_serialization(StakeStateV2::Uninitialized);
@@ -1105,6 +1139,7 @@ mod test {
         ));
     }
 
+    #[cfg(feature = "borsh")]
     #[test]
     fn borsh_deserialization_live_data() {
         let data = [
@@ -1171,12 +1206,14 @@ mod test {
 
     mod deprecated {
         use super::*;
+        #[cfg(feature = "borsh")]
         fn check_borsh_deserialization(stake: StakeState) {
             let serialized = serialize(&stake).unwrap();
             let deserialized = StakeState::try_from_slice(&serialized).unwrap();
             assert_eq!(stake, deserialized);
         }
 
+        #[cfg(feature = "borsh")]
         fn check_borsh_serialization(stake: StakeState) {
             let bincode_serialized = serialize(&stake).unwrap();
             let borsh_serialized = borsh::to_vec(&stake).unwrap();
@@ -1188,6 +1225,7 @@ mod test {
             assert_eq!(StakeState::size_of(), std::mem::size_of::<StakeState>());
         }
 
+        #[cfg(feature = "borsh")]
         #[test]
         fn bincode_vs_borsh_deserialization() {
             check_borsh_deserialization(StakeState::Uninitialized);
@@ -1222,6 +1260,7 @@ mod test {
             ));
         }
 
+        #[cfg(feature = "borsh")]
         #[test]
         fn bincode_vs_borsh_serialization() {
             check_borsh_serialization(StakeState::Uninitialized);
@@ -1256,6 +1295,7 @@ mod test {
             ));
         }
 
+        #[cfg(feature = "borsh")]
         #[test]
         fn borsh_deserialization_live_data() {
             let data = [
