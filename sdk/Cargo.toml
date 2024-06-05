@@ -36,7 +36,6 @@ full = [
 ]
 borsh = ["dep:borsh", "solana-program/borsh"]
 dev-context-only-utils = [
-  "borsh",
   "qualifier_attr"
 ]
 frozen-abi = [

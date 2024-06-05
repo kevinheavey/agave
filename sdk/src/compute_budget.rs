@@ -50,7 +50,7 @@ impl ComputeBudgetInstruction {
 
     /// Serialize Instruction using borsh, this is only used in runtime::cost_model::tests but compilation
     /// can't be restricted as it's used across packages
-    #[cfg(feature = "dev-context-only-utils")]
+    #[cfg(all(feature = "dev-context-only-utils", feature = "borsh"))]
     pub fn pack(self) -> Result<Vec<u8>, borsh::io::Error> {
         borsh::to_vec(&self)
     }
