@@ -85,6 +85,16 @@ impl Secp256k1Pubkey {
     }
 }
 
+#[cfg(target_os = "solana")]
+extern "C" {
+    pub fn sol_secp256k1_recover(
+        hash: *const u8,
+        recovery_id: u64,
+        signature: *const u8,
+        result: *mut u8,
+    ) -> u64;
+}
+
 /// Recover the public key from a [secp256k1] ECDSA signature and
 /// cryptographically-hashed message.
 ///
@@ -399,7 +409,7 @@ pub fn secp256k1_recover(
     {
         let mut pubkey_buffer = [0u8; SECP256K1_PUBLIC_KEY_LENGTH];
         let result = unsafe {
-            crate::syscalls::sol_secp256k1_recover(
+            sol_secp256k1_recover(
                 hash.as_ptr(),
                 recovery_id as u64,
                 signature.as_ptr(),
