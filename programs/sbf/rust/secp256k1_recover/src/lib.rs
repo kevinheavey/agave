@@ -3,8 +3,9 @@
 
 extern crate solana_program;
 use solana_program::{
-    custom_heap_default, custom_panic_default, msg, secp256k1_recover::secp256k1_recover,
+    custom_heap_default, custom_panic_default, msg
 };
+use solana_secp256k1_recover::secp256k1_recover;
 
 fn test_secp256k1_recover() {
     let expected: [u8; 64] = [
