@@ -13,11 +13,17 @@ edition = { workspace = true }
 borsh = { workspace = true, optional = true }
 thiserror = { workspace = true }
 
-[target.'cfg(target_os = "solana")'.dependencies]
-solana-program = { workspace = true }
-
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 libsecp256k1 = { workspace = true }
+
+[dev-dependencies]
+anyhow = { workspace = true }
+solana-program = { workspace = true }
+solana-secp256k1-recover = { path = ".", features = ["borsh"] }
+
+[target.'cfg(not(target_os = "solana"))'.dev-dependencies]
+libsecp256k1 = { workspace = true, features = ["hmac"] }
+
 
 [features]
 borsh = ["dep:borsh"]
