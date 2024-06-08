@@ -272,8 +272,8 @@ extern "C" {
 ///     entrypoint::ProgramResult,
 ///     keccak, msg,
 ///     program_error::ProgramError,
-///     secp256k1_recover::secp256k1_recover,
 /// };
+/// use solana_secp256k1_recover::secp256k1_recover;
 ///
 /// /// The key we expect to sign secp256k1 messages,
 /// /// as serialized by `libsecp256k1::PublicKey::serialize`.
