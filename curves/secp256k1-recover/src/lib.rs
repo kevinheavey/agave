@@ -21,7 +21,7 @@
 //! also provides the [secp256k1 program][sp], which is more flexible, has lower CPU
 //! cost, and can validate many signatures at once.
 //!
-//! [sp]: crate::secp256k1_program
+//! [sp]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/
 //! [`ecrecover`]: https://docs.soliditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
 
 #[cfg(feature = "borsh")]
@@ -120,7 +120,7 @@ extern "C" {
 /// "overflowing" signature, and this function returns an error when parsing
 /// overflowing signatures.
 ///
-/// [`keccak`]: crate::keccak
+/// [`keccak`]: https://docs.rs/solana-program/latest/solana_program/keccak/
 /// [`wrapping_sub`]: https://doc.rust-lang.org/std/primitive.u8.html#method.wrapping_sub
 ///
 /// On success this function returns a [`Secp256k1Pubkey`], a wrapper around a
@@ -133,7 +133,7 @@ extern "C" {
 /// the [secp256k1 program][sp], which is more flexible, has lower CPU cost, and
 /// can validate many signatures at once.
 ///
-/// [sp]: crate::secp256k1_program
+/// [sp]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/
 ///
 /// The `secp256k1_recover` syscall is implemented with the [`libsecp256k1`]
 /// crate, which clients may also want to use.
