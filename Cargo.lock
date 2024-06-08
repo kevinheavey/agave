@@ -6806,7 +6806,6 @@ dependencies = [
  "itertools 0.12.1",
  "js-sys",
  "lazy_static",
- "libsecp256k1",
  "log",
  "memoffset 0.9.1",
  "num-bigint 0.4.6",
