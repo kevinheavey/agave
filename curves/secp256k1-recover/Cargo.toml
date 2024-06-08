@@ -19,8 +19,8 @@ libsecp256k1 = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
+borsh = { workspace = true }
 solana-program = { workspace = true }
-solana-secp256k1-recover = { path = ".", features = ["borsh"] }
 
 [target.'cfg(not(target_os = "solana"))'.dev-dependencies]
 libsecp256k1 = { workspace = true, features = ["hmac"] }

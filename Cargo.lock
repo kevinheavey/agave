@@ -7327,7 +7327,6 @@ dependencies = [
  "rustc_version 0.4.0",
  "solana-frozen-abi",
  "solana-program",
- "solana-secp256k1-recover",
  "thiserror",
 ]
 
