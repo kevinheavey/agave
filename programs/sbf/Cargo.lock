@@ -6029,6 +6029,7 @@ version = "2.1.0"
 dependencies = [
  "libsecp256k1 0.7.0",
  "solana-program",
+ "solana-secp256k1-recover",
 ]
 
 [[package]]
