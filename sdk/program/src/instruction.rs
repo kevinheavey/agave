@@ -13,10 +13,12 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
+#[cfg(target_arch = "wasm32")]
+use crate::wasm_bindgen;
 #[cfg(feature = "borsh")]
 use borsh::BorshSerialize;
 use {
-    crate::{pubkey::Pubkey, sanitize::Sanitize, short_vec, wasm_bindgen},
+    crate::{pubkey::Pubkey, sanitize::Sanitize, short_vec},
     bincode::serialize,
     serde::Serialize,
     thiserror::Error,
@@ -325,8 +327,19 @@ pub enum InstructionError {
 /// Programs may require signatures from some accounts, in which case they
 /// should be specified as signers during `Instruction` construction. The
 /// program must still validate during execution that the account is a signer.
-#[wasm_bindgen]
+#[cfg(not(target_arch = "wasm32"))]
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
+pub struct Instruction {
+    /// Pubkey of the program that executes this instruction.
+    pub program_id: Pubkey,
+    /// Metadata describing accounts that should be passed to the program.
+    pub accounts: Vec<AccountMeta>,
+    /// Opaque data passed to the program for its own interpretation.
+    pub data: Vec<u8>,
+}
+
+#[cfg(target_arch = "wasm32")]
+#[wasm_bindgen]
 pub struct Instruction {
     /// Pubkey of the program that executes this instruction.
     #[wasm_bindgen(skip)]

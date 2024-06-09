@@ -111,6 +111,8 @@
 
 #![cfg(feature = "full")]
 
+#[cfg(target_arch = "wasm32")]
+use crate::wasm_bindgen;
 use {
     crate::{
         hash::Hash,
@@ -124,7 +126,6 @@ use {
         short_vec,
         signature::{Signature, SignerError},
         signers::Signers,
-        wasm_bindgen,
     },
     serde::Serialize,
     solana_program::{system_instruction::SystemInstruction, system_program},
@@ -167,7 +168,31 @@ pub type Result<T> = result::Result<T, TransactionError>;
 /// if the caller has knowledge that the first account of the constructed
 /// transaction's `Message` is both a signer and the expected fee-payer, then
 /// redundantly specifying the fee-payer is not strictly required.
-#[wasm_bindgen]
+#[cfg(not(target_arch = "wasm32"))]
+#[cfg_attr(
+    feature = "frozen-abi",
+    derive(AbiExample),
+    frozen_abi(digest = "FZtncnS1Xk8ghHfKiXE5oGiUbw2wJhmfXQuNgQR3K6Mc")
+)]
+#[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize)]
+pub struct Transaction {
+    /// A set of signatures of a serialized [`Message`], signed by the first
+    /// keys of the `Message`'s [`account_keys`], where the number of signatures
+    /// is equal to [`num_required_signatures`] of the `Message`'s
+    /// [`MessageHeader`].
+    ///
+    /// [`account_keys`]: Message::account_keys
+    /// [`MessageHeader`]: crate::message::MessageHeader
+    /// [`num_required_signatures`]: crate::message::MessageHeader::num_required_signatures
+    // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
+    #[serde(with = "short_vec")]
+    pub signatures: Vec<Signature>,
+
+    /// The message to sign.
+    pub message: Message,
+}
+
+#[cfg(target_arch = "wasm32")]
 #[cfg_attr(
     feature = "frozen-abi",
     derive(AbiExample),
