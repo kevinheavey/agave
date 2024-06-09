@@ -193,6 +193,7 @@ pub struct Transaction {
 }
 
 #[cfg(target_arch = "wasm32")]
+#[wasm_bindgen]
 #[cfg_attr(
     feature = "frozen-abi",
     derive(AbiExample),
