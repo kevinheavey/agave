@@ -200,20 +200,10 @@ pub struct Transaction {
 )]
 #[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize)]
 pub struct Transaction {
-    /// A set of signatures of a serialized [`Message`], signed by the first
-    /// keys of the `Message`'s [`account_keys`], where the number of signatures
-    /// is equal to [`num_required_signatures`] of the `Message`'s
-    /// [`MessageHeader`].
-    ///
-    /// [`account_keys`]: Message::account_keys
-    /// [`MessageHeader`]: crate::message::MessageHeader
-    /// [`num_required_signatures`]: crate::message::MessageHeader::num_required_signatures
-    // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
     #[wasm_bindgen(skip)]
     #[serde(with = "short_vec")]
     pub signatures: Vec<Signature>,
 
-    /// The message to sign.
     #[wasm_bindgen(skip)]
     pub message: Message,
 }

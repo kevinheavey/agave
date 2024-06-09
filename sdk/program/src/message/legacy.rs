@@ -154,12 +154,9 @@ pub struct Message {
 #[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Message {
-    /// The message header, identifying signed and read-only `account_keys`.
-    // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
     #[wasm_bindgen(skip)]
     pub header: MessageHeader,
 
-    /// All the account keys used by this transaction.
     #[wasm_bindgen(skip)]
     #[serde(with = "short_vec")]
     pub account_keys: Vec<Pubkey>,
@@ -167,8 +164,6 @@ pub struct Message {
     /// The id of a recent ledger entry.
     pub recent_blockhash: Hash,
 
-    /// Programs that will be executed in sequence and committed in one atomic transaction if all
-    /// succeed.
     #[wasm_bindgen(skip)]
     #[serde(with = "short_vec")]
     pub instructions: Vec<CompiledInstruction>,

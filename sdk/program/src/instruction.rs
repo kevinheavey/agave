@@ -341,13 +341,10 @@ pub struct Instruction {
 #[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 pub struct Instruction {
-    /// Pubkey of the program that executes this instruction.
     #[wasm_bindgen(skip)]
     pub program_id: Pubkey,
-    /// Metadata describing accounts that should be passed to the program.
     #[wasm_bindgen(skip)]
     pub accounts: Vec<AccountMeta>,
-    /// Opaque data passed to the program for its own interpretation.
     #[wasm_bindgen(skip)]
     pub data: Vec<u8>,
 }
