@@ -146,6 +146,7 @@ pub struct Message {
 }
 
 #[cfg(target_arch = "wasm32")]
+#[wasm_bindgen]
 #[cfg_attr(
     feature = "frozen-abi",
     frozen_abi(digest = "2KnLEqfLcTBQqitE22Pp8JYkaqVVbAkGbCfdeHoyxcAU"),
