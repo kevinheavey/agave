@@ -991,6 +991,7 @@ mod tests {
         },
         solana_compute_budget::compute_budget_processor::ComputeBudgetLimits,
         solana_program_runtime::loaded_programs::{BlockRelation, ProgramCacheEntryType},
+        solana_rent_collector::{RentCollector, RENT_EXEMPT_RENT_EPOCH},
         solana_sdk::{
             account::{create_account_shared_data_for_test, WritableAccount},
             bpf_loader,
@@ -1003,8 +1004,6 @@ mod tests {
             hash::Hash,
             message::{LegacyMessage, Message, MessageHeader},
             nonce,
-            rent_collector::{RentCollector, RENT_EXEMPT_RENT_EPOCH},
-            rent_debits::RentDebits,
             reserved_account_keys::ReservedAccountKeys,
             signature::{Keypair, Signature},
             system_program,
