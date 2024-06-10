@@ -7004,6 +7004,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-rent-collector"
+version = "2.1.0"
+dependencies = [
+ "assert_matches",
+ "serde",
+ "serde_derive",
+ "solana-frozen-abi",
+ "solana-logger",
+ "solana-sdk",
+]
+
+[[package]]
 name = "solana-rpc"
 version = "2.1.0"
 dependencies = [
