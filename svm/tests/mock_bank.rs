@@ -1,5 +1,6 @@
 use {
     solana_program_runtime::loaded_programs::{BlockRelation, ForkGraph},
+    solana_rent_collector::RentCollector,
     solana_sdk::{
         account::{AccountSharedData, ReadableAccount},
         clock::Epoch,
