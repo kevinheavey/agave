@@ -18,11 +18,11 @@ use {
 };
 
 /// Manages the lifetime of the background processing threads.
-pub struct AccountsIndexStorage<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
+pub(crate) struct AccountsIndexStorage<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
     _bg_threads: BgThreads,
 
-    pub storage: Arc<BucketMapHolder<T, U>>,
-    pub in_mem: Vec<Arc<InMemAccountsIndex<T, U>>>,
+    pub(crate) storage: Arc<BucketMapHolder<T, U>>,
+    pub(crate) in_mem: Vec<Arc<InMemAccountsIndex<T, U>>>,
     exit: Arc<AtomicBool>,
 
     /// set_startup(true) creates bg threads which are kept alive until set_startup(false)
@@ -116,7 +116,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndexStorage<
     ///      in mem to act in a way that flushes to disk asap
     ///      also creates some additional bg threads to facilitate flushing to disk asap
     /// startup=false is 'normal' operation
-    pub fn set_startup(&self, startup: Startup) {
+    pub(crate) fn set_startup(&self, startup: Startup) {
         let value = !matches!(startup, Startup::Normal);
         if matches!(startup, Startup::StartupWithExtraThreads) {
             // create some additional bg threads to help get things to the disk index asap
@@ -139,7 +139,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndexStorage<
     }
 
     /// estimate how many items are still needing to be flushed to the disk cache.
-    pub fn get_startup_remaining_items_to_flush_estimate(&self) -> usize {
+    pub(crate) fn get_startup_remaining_items_to_flush_estimate(&self) -> usize {
         self.storage
             .disk
             .as_ref()
@@ -156,7 +156,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndexStorage<
     }
 
     /// allocate BucketMapHolder and InMemAccountsIndex[]
-    pub fn new(bins: usize, config: &Option<AccountsIndexConfig>, exit: Arc<AtomicBool>) -> Self {
+    pub(crate) fn new(bins: usize, config: &Option<AccountsIndexConfig>, exit: Arc<AtomicBool>) -> Self {
         let threads = config
             .as_ref()
             .and_then(|config| config.flush_threads)

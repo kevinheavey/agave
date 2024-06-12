@@ -17,13 +17,13 @@ use {
 
 /// The reader of a tiered storage instance.
 #[derive(Debug)]
-pub enum TieredStorageReader {
+pub(crate) enum TieredStorageReader {
     Hot(HotStorageReader),
 }
 
 impl TieredStorageReader {
     /// Creates a reader for the specified tiered storage accounts file.
-    pub fn new_from_path(path: impl AsRef<Path>) -> TieredStorageResult<Self> {
+    pub(crate) fn new_from_path(path: impl AsRef<Path>) -> TieredStorageResult<Self> {
         let file = TieredReadableFile::new(&path)?;
         let footer = TieredStorageFooter::new_from_footer_block(&file)?;
         match footer.account_meta_format {
@@ -32,41 +32,41 @@ impl TieredStorageReader {
     }
 
     /// Returns the size of the underlying storage.
-    pub fn len(&self) -> usize {
+    pub(crate) fn len(&self) -> usize {
         match self {
             Self::Hot(hot) => hot.len(),
         }
     }
 
     /// Returns whether the nderlying storage is empty.
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         match self {
             Self::Hot(hot) => hot.is_empty(),
         }
     }
 
-    pub fn capacity(&self) -> u64 {
+    pub(crate) fn capacity(&self) -> u64 {
         match self {
             Self::Hot(hot) => hot.capacity(),
         }
     }
 
     /// Returns the footer of the associated HotAccountsFile.
-    pub fn footer(&self) -> &TieredStorageFooter {
+    pub(crate) fn footer(&self) -> &TieredStorageFooter {
         match self {
             Self::Hot(hot) => hot.footer(),
         }
     }
 
     /// Returns the total number of accounts.
-    pub fn num_accounts(&self) -> usize {
+    pub(crate) fn num_accounts(&self) -> usize {
         match self {
             Self::Hot(hot) => hot.num_accounts(),
         }
     }
 
     /// Returns the account located at the specified index offset.
-    pub fn get_account_shared_data(
+    pub(crate) fn get_account_shared_data(
         &self,
         index_offset: IndexOffset,
     ) -> TieredStorageResult<Option<AccountSharedData>> {
@@ -76,7 +76,7 @@ impl TieredStorageReader {
     }
 
     /// calls `callback` with the account located at the specified index offset.
-    pub fn get_stored_account_meta_callback<Ret>(
+    pub(crate) fn get_stored_account_meta_callback<Ret>(
         &self,
         index_offset: IndexOffset,
         callback: impl for<'local> FnMut(StoredAccountMeta<'local>) -> Ret,
@@ -95,7 +95,7 @@ impl TieredStorageReader {
     /// Returns Err(MatchAccountOwnerError::UnableToLoad) if there is any internal
     /// error that causes the data unable to load, including `account_offset`
     /// causes a data overrun.
-    pub fn account_matches_owners(
+    pub(crate) fn account_matches_owners(
         &self,
         index_offset: IndexOffset,
         owners: &[Pubkey],
@@ -111,7 +111,7 @@ impl TieredStorageReader {
     }
 
     /// iterate over all pubkeys
-    pub fn scan_pubkeys(&self, callback: impl FnMut(&Pubkey)) -> TieredStorageResult<()> {
+    pub(crate) fn scan_pubkeys(&self, callback: impl FnMut(&Pubkey)) -> TieredStorageResult<()> {
         match self {
             Self::Hot(hot) => hot.scan_pubkeys(callback),
         }
@@ -145,7 +145,7 @@ impl TieredStorageReader {
     }
 
     /// Returns a slice suitable for use when archiving tiered storages
-    pub fn data_for_archive(&self) -> &[u8] {
+    pub(crate) fn data_for_archive(&self) -> &[u8] {
         match self {
             Self::Hot(hot) => hot.data_for_archive(),
         }

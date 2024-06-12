@@ -16,9 +16,9 @@ use {
 // if the key had different account data for the indexed key across different
 // slots. As this is rare, it should be ok to use a Vec here over a HashSet, even
 // though we are running some key existence checks.
-pub type SecondaryReverseIndexEntry = RwLock<Vec<Pubkey>>;
+pub(crate) type SecondaryReverseIndexEntry = RwLock<Vec<Pubkey>>;
 
-pub trait SecondaryIndexEntry: Debug {
+pub(crate) trait SecondaryIndexEntry: Debug {
     fn insert_if_not_exists(&self, key: &Pubkey, inner_keys_count: &AtomicU64);
     // Removes a value from the set. Returns whether the value was present in the set.
     fn remove_inner_key(&self, key: &Pubkey) -> bool;
@@ -28,13 +28,13 @@ pub trait SecondaryIndexEntry: Debug {
 }
 
 #[derive(Debug, Default)]
-pub struct SecondaryIndexStats {
+pub(crate) struct SecondaryIndexStats {
     last_report: AtomicInterval,
     num_inner_keys: AtomicU64,
 }
 
 #[derive(Debug, Default)]
-pub struct DashMapSecondaryIndexEntry {
+pub(crate) struct DashMapSecondaryIndexEntry {
     account_keys: DashMap<Pubkey, ()>,
 }
 
@@ -68,7 +68,7 @@ impl SecondaryIndexEntry for DashMapSecondaryIndexEntry {
 }
 
 #[derive(Debug, Default)]
-pub struct RwLockSecondaryIndexEntry {
+pub(crate) struct RwLockSecondaryIndexEntry {
     account_keys: RwLock<HashSet<Pubkey>>,
 }
 
@@ -103,25 +103,25 @@ impl SecondaryIndexEntry for RwLockSecondaryIndexEntry {
 }
 
 #[derive(Debug, Default)]
-pub struct SecondaryIndex<SecondaryIndexEntryType: SecondaryIndexEntry + Default + Sync + Send> {
+pub(crate) struct SecondaryIndex<SecondaryIndexEntryType: SecondaryIndexEntry + Default + Sync + Send> {
     metrics_name: &'static str,
     // Map from index keys to index values
-    pub index: DashMap<Pubkey, SecondaryIndexEntryType>,
-    pub reverse_index: DashMap<Pubkey, SecondaryReverseIndexEntry>,
+    pub(crate) index: DashMap<Pubkey, SecondaryIndexEntryType>,
+    pub(crate) reverse_index: DashMap<Pubkey, SecondaryReverseIndexEntry>,
     stats: SecondaryIndexStats,
 }
 
 impl<SecondaryIndexEntryType: SecondaryIndexEntry + Default + Sync + Send>
     SecondaryIndex<SecondaryIndexEntryType>
 {
-    pub fn new(metrics_name: &'static str) -> Self {
+    pub(crate) fn new(metrics_name: &'static str) -> Self {
         Self {
             metrics_name,
             ..Self::default()
         }
     }
 
-    pub fn insert(&self, key: &Pubkey, inner_key: &Pubkey) {
+    pub(crate) fn insert(&self, key: &Pubkey, inner_key: &Pubkey) {
         {
             let pubkeys_map = self
                 .index
@@ -191,7 +191,7 @@ impl<SecondaryIndexEntryType: SecondaryIndexEntry + Default + Sync + Send>
         }
     }
 
-    pub fn remove_by_inner_key(&self, inner_key: &Pubkey) {
+    pub(crate) fn remove_by_inner_key(&self, inner_key: &Pubkey) {
         // Save off which keys in `self.index` had slots removed so we can remove them
         // after we purge the reverse index
         let mut removed_outer_keys: HashSet<Pubkey> = HashSet::new();
@@ -218,7 +218,7 @@ impl<SecondaryIndexEntryType: SecondaryIndexEntry + Default + Sync + Send>
             .fetch_sub(removed_outer_keys.len() as u64, Ordering::Relaxed);
     }
 
-    pub fn get(&self, key: &Pubkey) -> Vec<Pubkey> {
+    pub(crate) fn get(&self, key: &Pubkey) -> Vec<Pubkey> {
         if let Some(inner_keys_map) = self.index.get(key) {
             inner_keys_map.keys()
         } else {
@@ -227,7 +227,7 @@ impl<SecondaryIndexEntryType: SecondaryIndexEntry + Default + Sync + Send>
     }
 
     /// log top 20 (owner, # accounts) in descending order of # accounts
-    pub fn log_contents(&self) {
+    pub(crate) fn log_contents(&self) {
         let mut entries = self
             .index
             .iter()

@@ -31,7 +31,7 @@ use {
     std::{io::Write, option::Option, path::Path},
 };
 
-pub const HOT_FORMAT: TieredStorageFormat = TieredStorageFormat {
+pub(crate) const HOT_FORMAT: TieredStorageFormat = TieredStorageFormat {
     meta_entry_size: std::mem::size_of::<HotAccountMeta>(),
     account_meta_format: AccountMetaFormat::Hot,
     owners_block_format: OwnersBlockFormat::AddressesOnly,
@@ -106,7 +106,7 @@ const _: () = assert!(std::mem::size_of::<HotMetaPackedFields>() == 4);
 /// The offset to access a hot account.
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Pod, Zeroable)]
-pub struct HotAccountOffset(u32);
+pub(crate) struct HotAccountOffset(u32);
 
 // Ensure there are no implicit padding bytes
 const _: () = assert!(std::mem::size_of::<HotAccountOffset>() == 4);
@@ -115,7 +115,7 @@ impl AccountOffset for HotAccountOffset {}
 
 impl HotAccountOffset {
     /// Creates a new AccountOffset instance
-    pub fn new(offset: usize) -> TieredStorageResult<Self> {
+    pub(crate) fn new(offset: usize) -> TieredStorageResult<Self> {
         if offset > MAX_HOT_ACCOUNT_OFFSET {
             return Err(TieredStorageError::OffsetOutOfBounds(
                 offset,
@@ -290,36 +290,36 @@ impl TieredAccountMeta for HotAccountMeta {
 #[derive(PartialEq, Eq, Debug)]
 pub struct HotAccount<'accounts_file, M: TieredAccountMeta> {
     /// TieredAccountMeta
-    pub meta: &'accounts_file M,
+    pub(crate) meta: &'accounts_file M,
     /// The address of the account
-    pub address: &'accounts_file Pubkey,
+    pub(crate) address: &'accounts_file Pubkey,
     /// The address of the account owner
-    pub owner: &'accounts_file Pubkey,
+    pub(crate) owner: &'accounts_file Pubkey,
     /// The index for accessing the account inside its belonging AccountsFile
-    pub index: IndexOffset,
+    pub(crate) index: IndexOffset,
     /// The account block that contains this account.  Note that this account
     /// block may be shared with other accounts.
-    pub account_block: &'accounts_file [u8],
+    pub(crate) account_block: &'accounts_file [u8],
 }
 
 impl<'accounts_file, M: TieredAccountMeta> HotAccount<'accounts_file, M> {
     /// Returns the address of this account.
-    pub fn address(&self) -> &'accounts_file Pubkey {
+    pub(crate) fn address(&self) -> &'accounts_file Pubkey {
         self.address
     }
 
     /// Returns the index to this account in its AccountsFile.
-    pub fn index(&self) -> IndexOffset {
+    pub(crate) fn index(&self) -> IndexOffset {
         self.index
     }
 
     /// Returns the data associated to this account.
-    pub fn data(&self) -> &'accounts_file [u8] {
+    pub(crate) fn data(&self) -> &'accounts_file [u8] {
         self.meta.account_data(self.account_block)
     }
 
     /// Returns the approximate stored size of this account.
-    pub fn stored_size(&self) -> usize {
+    pub(crate) fn stored_size(&self) -> usize {
         stored_size(self.meta.account_data_size(self.account_block))
     }
 }
@@ -358,13 +358,13 @@ impl<'accounts_file, M: TieredAccountMeta> ReadableAccount for HotAccount<'accou
 
 /// The reader to a hot accounts file.
 #[derive(Debug)]
-pub struct HotStorageReader {
+pub(crate) struct HotStorageReader {
     mmap: Mmap,
     footer: TieredStorageFooter,
 }
 
 impl HotStorageReader {
-    pub fn new(file: TieredReadableFile) -> TieredStorageResult<Self> {
+    pub(crate) fn new(file: TieredReadableFile) -> TieredStorageResult<Self> {
         let mmap = unsafe { MmapOptions::new().map(&file.0)? };
         // Here we are copying the footer, as accessing any data in a
         // TieredStorage instance requires accessing its Footer.
@@ -376,27 +376,27 @@ impl HotStorageReader {
     }
 
     /// Returns the size of the underlying storage.
-    pub fn len(&self) -> usize {
+    pub(crate) fn len(&self) -> usize {
         self.mmap.len()
     }
 
     /// Returns whether the nderlying storage is empty.
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
-    pub fn capacity(&self) -> u64 {
+    pub(crate) fn capacity(&self) -> u64 {
         self.len() as u64
     }
 
     /// Returns the footer of the underlying tiered-storage accounts file.
-    pub fn footer(&self) -> &TieredStorageFooter {
+    pub(crate) fn footer(&self) -> &TieredStorageFooter {
         &self.footer
     }
 
     /// Returns the number of files inside the underlying tiered-storage
     /// accounts file.
-    pub fn num_accounts(&self) -> usize {
+    pub(crate) fn num_accounts(&self) -> usize {
         self.footer.account_entry_count as usize
     }
 
@@ -452,7 +452,7 @@ impl HotStorageReader {
     /// Returns Err(MatchAccountOwnerError::UnableToLoad) if there is any internal
     /// error that causes the data unable to load, including `account_offset`
     /// causes a data overrun.
-    pub fn account_matches_owners(
+    pub(crate) fn account_matches_owners(
         &self,
         account_offset: HotAccountOffset,
         owners: &[Pubkey],
@@ -525,7 +525,7 @@ impl HotStorageReader {
     }
 
     /// calls `callback` with the account located at the specified index offset.
-    pub fn get_stored_account_meta_callback<Ret>(
+    pub(crate) fn get_stored_account_meta_callback<Ret>(
         &self,
         index_offset: IndexOffset,
         mut callback: impl for<'local> FnMut(StoredAccountMeta<'local>) -> Ret,
@@ -551,7 +551,7 @@ impl HotStorageReader {
     }
 
     /// Returns the account located at the specified index offset.
-    pub fn get_account_shared_data(
+    pub(crate) fn get_account_shared_data(
         &self,
         index_offset: IndexOffset,
     ) -> TieredStorageResult<Option<AccountSharedData>> {
@@ -575,7 +575,7 @@ impl HotStorageReader {
     }
 
     /// iterate over all pubkeys
-    pub fn scan_pubkeys(&self, mut callback: impl FnMut(&Pubkey)) -> TieredStorageResult<()> {
+    pub(crate) fn scan_pubkeys(&self, mut callback: impl FnMut(&Pubkey)) -> TieredStorageResult<()> {
         for i in 0..self.footer.account_entry_count {
             let address = self.get_account_address(IndexOffset(i))?;
             callback(address);
@@ -643,7 +643,7 @@ impl HotStorageReader {
     }
 
     /// Returns a slice suitable for use when archiving hot storages
-    pub fn data_for_archive(&self) -> &[u8] {
+    pub(crate) fn data_for_archive(&self) -> &[u8] {
         self.mmap.as_ref()
     }
 }
@@ -670,13 +670,13 @@ fn write_optional_fields(
 
 /// The writer that creates a hot accounts file.
 #[derive(Debug)]
-pub struct HotStorageWriter {
+pub(crate) struct HotStorageWriter {
     storage: TieredWritableFile,
 }
 
 impl HotStorageWriter {
     /// Create a new HotStorageWriter with the specified path.
-    pub fn new(file_path: impl AsRef<Path>) -> TieredStorageResult<Self> {
+    pub(crate) fn new(file_path: impl AsRef<Path>) -> TieredStorageResult<Self> {
         Ok(Self {
             storage: TieredWritableFile::new(file_path)?,
         })
@@ -720,7 +720,7 @@ impl HotStorageWriter {
     /// Persists `accounts` into the underlying hot accounts file associated
     /// with this HotStorageWriter.  The first `skip` number of accounts are
     /// *not* persisted.
-    pub fn write_accounts<'a>(
+    pub(crate) fn write_accounts<'a>(
         &mut self,
         accounts: &impl StorableAccounts<'a>,
         skip: usize,
@@ -808,7 +808,7 @@ impl HotStorageWriter {
     }
 
     /// Flushes any buffered data to the file
-    pub fn flush(&mut self) -> TieredStorageResult<()> {
+    pub(crate) fn flush(&mut self) -> TieredStorageResult<()> {
         self.storage
             .0
             .flush()

@@ -97,7 +97,7 @@ impl StakeReward {
         }
     }
 
-    pub fn credit(&mut self, amount: u64) {
+    pub(crate) fn credit(&mut self, amount: u64) {
         self.stake_reward_info.lamports = amount as i64;
         self.stake_reward_info.post_balance += amount;
         self.stake_account.checked_add_lamports(amount).unwrap();

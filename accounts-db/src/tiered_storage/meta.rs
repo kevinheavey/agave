@@ -13,9 +13,9 @@ use {
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Pod, Zeroable)]
 pub struct AccountMetaFlags {
     /// whether the account meta has rent epoch
-    pub has_rent_epoch: bool,
+    pub(crate) has_rent_epoch: bool,
     /// whether the account is executable
-    pub executable: bool,
+    pub(crate) executable: bool,
     /// the reserved bits.
     reserved: B30,
 }
@@ -90,7 +90,7 @@ pub trait TieredAccountMeta: Sized {
 }
 
 impl AccountMetaFlags {
-    pub fn new_from(optional_fields: &AccountMetaOptionalFields) -> Self {
+    pub(crate) fn new_from(optional_fields: &AccountMetaOptionalFields) -> Self {
         let mut flags = AccountMetaFlags::default();
         flags.set_has_rent_epoch(optional_fields.rent_epoch.is_some());
         flags.set_executable(false);
@@ -103,20 +103,20 @@ impl AccountMetaFlags {
 /// Note that the storage representation of the optional fields might be
 /// different from its in-memory representation.
 #[derive(Debug, PartialEq, Eq, Clone)]
-pub struct AccountMetaOptionalFields {
+pub(crate) struct AccountMetaOptionalFields {
     /// the epoch at which its associated account will next owe rent
-    pub rent_epoch: Option<Epoch>,
+    pub(crate) rent_epoch: Option<Epoch>,
 }
 
 impl AccountMetaOptionalFields {
     /// The size of the optional fields in bytes (excluding the boolean flags).
-    pub fn size(&self) -> usize {
+    pub(crate) fn size(&self) -> usize {
         self.rent_epoch.map_or(0, |_| std::mem::size_of::<Epoch>())
     }
 
     /// Given the specified AccountMetaFlags, returns the size of its
     /// associated AccountMetaOptionalFields.
-    pub fn size_from_flags(flags: &AccountMetaFlags) -> usize {
+    pub(crate) fn size_from_flags(flags: &AccountMetaFlags) -> usize {
         let mut fields_size = 0;
         if flags.has_rent_epoch() {
             fields_size += std::mem::size_of::<Epoch>();
@@ -127,7 +127,7 @@ impl AccountMetaOptionalFields {
 
     /// Given the specified AccountMetaFlags, returns the relative offset
     /// of its rent_epoch field to the offset of its optional fields entry.
-    pub fn rent_epoch_offset(_flags: &AccountMetaFlags) -> usize {
+    pub(crate) fn rent_epoch_offset(_flags: &AccountMetaFlags) -> usize {
         0
     }
 }
@@ -137,11 +137,11 @@ const MAX_ACCOUNT_ADDRESS: Pubkey = Pubkey::new_from_array([0xFFu8; 32]);
 
 #[derive(Debug)]
 /// A struct that maintains an address-range using its min and max fields.
-pub struct AccountAddressRange {
+pub(crate) struct AccountAddressRange {
     /// The minimum address observed via update()
-    pub min: Pubkey,
+    pub(crate) min: Pubkey,
     /// The maximum address observed via update()
-    pub max: Pubkey,
+    pub(crate) max: Pubkey,
 }
 
 impl Default for AccountAddressRange {
@@ -154,7 +154,7 @@ impl Default for AccountAddressRange {
 }
 
 impl AccountAddressRange {
-    pub fn update(&mut self, address: &Pubkey) {
+    pub(crate) fn update(&mut self, address: &Pubkey) {
         if self.min > *address {
             self.min = *address;
         }
@@ -165,7 +165,7 @@ impl AccountAddressRange {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use super::*;
 
     #[test]

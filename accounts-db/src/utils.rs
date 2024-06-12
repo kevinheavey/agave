@@ -185,7 +185,7 @@ mod tests {
     use {super::*, tempfile::TempDir};
 
     #[test]
-    pub fn test_create_all_accounts_run_and_snapshot_dirs() {
+    pub(crate) fn test_create_all_accounts_run_and_snapshot_dirs() {
         let (_tmp_dirs, account_paths): (Vec<TempDir>, Vec<PathBuf>) = (0..4)
             .map(|_| {
                 let tmp_dir = tempfile::TempDir::new().unwrap();

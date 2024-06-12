@@ -4,7 +4,7 @@ use {super::RollingBitField, std::ops::Range};
 
 /// Iterate over the 'set' bits of a RollingBitField
 #[derive(Debug)]
-pub struct RollingBitFieldOnesIter<'a> {
+pub(crate) struct RollingBitFieldOnesIter<'a> {
     rolling_bit_field: &'a RollingBitField,
     excess_iter: std::collections::hash_set::Iter<'a, u64>,
     bit_range: Range<u64>,
@@ -12,7 +12,7 @@ pub struct RollingBitFieldOnesIter<'a> {
 
 impl<'a> RollingBitFieldOnesIter<'a> {
     #[must_use]
-    pub fn new(rolling_bit_field: &'a RollingBitField) -> Self {
+    pub(crate) fn new(rolling_bit_field: &'a RollingBitField) -> Self {
         Self {
             rolling_bit_field,
             excess_iter: rolling_bit_field.excess.iter(),

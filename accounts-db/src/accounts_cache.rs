@@ -17,10 +17,10 @@ use {
     },
 };
 
-pub type SlotCache = Arc<SlotCacheInner>;
+pub(crate) type SlotCache = Arc<SlotCacheInner>;
 
 #[derive(Debug)]
-pub struct SlotCacheInner {
+pub(crate) struct SlotCacheInner {
     cache: DashMap<Pubkey, CachedAccount>,
     same_account_writes: AtomicU64,
     same_account_writes_size: AtomicU64,
@@ -39,7 +39,7 @@ impl Drop for SlotCacheInner {
 }
 
 impl SlotCacheInner {
-    pub fn report_slot_store_metrics(&self) {
+    pub(crate) fn report_slot_store_metrics(&self) {
         datapoint_info!(
             "slot_repeated_writes",
             (
@@ -61,11 +61,11 @@ impl SlotCacheInner {
         );
     }
 
-    pub fn get_all_pubkeys(&self) -> Vec<Pubkey> {
+    pub(crate) fn get_all_pubkeys(&self) -> Vec<Pubkey> {
         self.cache.iter().map(|item| *item.key()).collect()
     }
 
-    pub fn insert(&self, pubkey: &Pubkey, account: AccountSharedData) -> CachedAccount {
+    pub(crate) fn insert(&self, pubkey: &Pubkey, account: AccountSharedData) -> CachedAccount {
         let data_len = account.data().len() as u64;
         let item = Arc::new(CachedAccountInner {
             account,
@@ -98,7 +98,7 @@ impl SlotCacheInner {
         item
     }
 
-    pub fn get_cloned(&self, pubkey: &Pubkey) -> Option<CachedAccount> {
+    pub(crate) fn get_cloned(&self, pubkey: &Pubkey) -> Option<CachedAccount> {
         self.cache
             .get(pubkey)
             // 1) Maybe can eventually use a Cow to avoid a clone on every read
@@ -107,15 +107,15 @@ impl SlotCacheInner {
             .map(|account_ref| account_ref.value().clone())
     }
 
-    pub fn mark_slot_frozen(&self) {
+    pub(crate) fn mark_slot_frozen(&self) {
         self.is_frozen.store(true, Ordering::SeqCst);
     }
 
-    pub fn is_frozen(&self) -> bool {
+    pub(crate) fn is_frozen(&self) -> bool {
         self.is_frozen.load(Ordering::SeqCst)
     }
 
-    pub fn total_bytes(&self) -> u64 {
+    pub(crate) fn total_bytes(&self) -> u64 {
         self.unique_account_writes_size.load(Ordering::Relaxed)
             + self.same_account_writes_size.load(Ordering::Relaxed)
     }
@@ -128,17 +128,17 @@ impl Deref for SlotCacheInner {
     }
 }
 
-pub type CachedAccount = Arc<CachedAccountInner>;
+pub(crate) type CachedAccount = Arc<CachedAccountInner>;
 
 #[derive(Debug)]
 pub struct CachedAccountInner {
-    pub account: AccountSharedData,
+    pub(crate) account: AccountSharedData,
     hash: SeqLock<Option<AccountHash>>,
     pubkey: Pubkey,
 }
 
 impl CachedAccountInner {
-    pub fn hash(&self) -> AccountHash {
+    pub(crate) fn hash(&self) -> AccountHash {
         let hash = self.hash.read();
         match hash {
             Some(hash) => hash,
@@ -149,7 +149,7 @@ impl CachedAccountInner {
             }
         }
     }
-    pub fn pubkey(&self) -> &Pubkey {
+    pub(crate) fn pubkey(&self) -> &Pubkey {
         &self.pubkey
     }
 }
@@ -165,7 +165,7 @@ pub struct AccountsCache {
 }
 
 impl AccountsCache {
-    pub fn new_inner(&self) -> SlotCache {
+    pub(crate) fn new_inner(&self) -> SlotCache {
         Arc::new(SlotCacheInner {
             cache: DashMap::default(),
             same_account_writes: AtomicU64::default(),
@@ -187,10 +187,10 @@ impl AccountsCache {
             })
             .sum()
     }
-    pub fn size(&self) -> u64 {
+    pub(crate) fn size(&self) -> u64 {
         self.total_size.load(Ordering::Relaxed)
     }
-    pub fn report_size(&self) {
+    pub(crate) fn report_size(&self) {
         datapoint_info!(
             "accounts_cache_size",
             (
@@ -208,7 +208,7 @@ impl AccountsCache {
         );
     }
 
-    pub fn store(&self, slot: Slot, pubkey: &Pubkey, account: AccountSharedData) -> CachedAccount {
+    pub(crate) fn store(&self, slot: Slot, pubkey: &Pubkey, account: AccountSharedData) -> CachedAccount {
         let slot_cache = self.slot_cache(slot).unwrap_or_else(||
             // DashMap entry.or_insert() returns a RefMut, essentially a write lock,
             // which is dropped after this block ends, minimizing time held by the lock.
@@ -223,27 +223,27 @@ impl AccountsCache {
         slot_cache.insert(pubkey, account)
     }
 
-    pub fn load(&self, slot: Slot, pubkey: &Pubkey) -> Option<CachedAccount> {
+    pub(crate) fn load(&self, slot: Slot, pubkey: &Pubkey) -> Option<CachedAccount> {
         self.slot_cache(slot)
             .and_then(|slot_cache| slot_cache.get_cloned(pubkey))
     }
 
-    pub fn remove_slot(&self, slot: Slot) -> Option<SlotCache> {
+    pub(crate) fn remove_slot(&self, slot: Slot) -> Option<SlotCache> {
         self.cache.remove(&slot).map(|(_, slot_cache)| slot_cache)
     }
 
-    pub fn slot_cache(&self, slot: Slot) -> Option<SlotCache> {
+    pub(crate) fn slot_cache(&self, slot: Slot) -> Option<SlotCache> {
         self.cache.get(&slot).map(|result| result.value().clone())
     }
 
-    pub fn add_root(&self, root: Slot) {
+    pub(crate) fn add_root(&self, root: Slot) {
         let max_flushed_root = self.fetch_max_flush_root();
         if root > max_flushed_root || (root == max_flushed_root && root == 0) {
             self.maybe_unflushed_roots.write().unwrap().insert(root);
         }
     }
 
-    pub fn clear_roots(&self, max_root: Option<Slot>) -> BTreeSet<Slot> {
+    pub(crate) fn clear_roots(&self, max_root: Option<Slot>) -> BTreeSet<Slot> {
         let mut w_maybe_unflushed_roots = self.maybe_unflushed_roots.write().unwrap();
         if let Some(max_root) = max_root {
             // `greater_than_max_root` contains all slots >= `max_root + 1`, or alternatively,
@@ -258,11 +258,11 @@ impl AccountsCache {
         }
     }
 
-    pub fn contains_any_slots(&self, max_slot_inclusive: Slot) -> bool {
+    pub(crate) fn contains_any_slots(&self, max_slot_inclusive: Slot) -> bool {
         self.cache.iter().any(|e| e.key() <= &max_slot_inclusive)
     }
 
-    pub fn cached_frozen_slots(&self) -> Vec<Slot> {
+    pub(crate) fn cached_frozen_slots(&self) -> Vec<Slot> {
         let mut slots: Vec<_> = self
             .cache
             .iter()
@@ -279,11 +279,11 @@ impl AccountsCache {
         slots
     }
 
-    pub fn contains(&self, slot: Slot) -> bool {
+    pub(crate) fn contains(&self, slot: Slot) -> bool {
         self.cache.contains_key(&slot)
     }
 
-    pub fn num_slots(&self) -> usize {
+    pub(crate) fn num_slots(&self) -> usize {
         self.cache.len()
     }
 
@@ -291,19 +291,19 @@ impl AccountsCache {
         self.max_flushed_root.load(Ordering::Acquire)
     }
 
-    pub fn set_max_flush_root(&self, root: Slot) {
+    pub(crate) fn set_max_flush_root(&self, root: Slot) {
         self.max_flushed_root.fetch_max(root, Ordering::Release);
     }
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use super::*;
 
     impl AccountsCache {
         // Removes slots less than or equal to `max_root`. Only safe to pass in a rooted slot,
         // otherwise the slot removed could still be undergoing replay!
-        pub fn remove_slots_le(&self, max_root: Slot) -> Vec<(Slot, SlotCache)> {
+        pub(crate) fn remove_slots_le(&self, max_root: Slot) -> Vec<(Slot, SlotCache)> {
             let mut removed_slots = vec![];
             self.cache.retain(|slot, slot_cache| {
                 let should_remove = *slot <= max_root;

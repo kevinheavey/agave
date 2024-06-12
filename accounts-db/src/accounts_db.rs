@@ -122,13 +122,13 @@ const SCAN_SLOT_PAR_ITER_THRESHOLD: usize = 4000;
 
 const UNREF_ACCOUNTS_BATCH_SIZE: usize = 10_000;
 
-pub const DEFAULT_FILE_SIZE: u64 = PAGE_SIZE * 1024;
-pub const DEFAULT_NUM_THREADS: u32 = 8;
-pub const DEFAULT_NUM_DIRS: u32 = 4;
+pub(crate) const DEFAULT_FILE_SIZE: u64 = PAGE_SIZE * 1024;
+pub(crate) const DEFAULT_NUM_THREADS: u32 = 8;
+pub(crate) const DEFAULT_NUM_DIRS: u32 = 4;
 
 // When calculating hashes, it is helpful to break the pubkeys found into bins based on the pubkey value.
 // More bins means smaller vectors to sort, copy, etc.
-pub const PUBKEY_BINS_FOR_CALCULATING_HASHES: usize = 65536;
+pub(crate) const PUBKEY_BINS_FOR_CALCULATING_HASHES: usize = 65536;
 
 // Without chunks, we end up with 1 output vec for each outer snapshot storage.
 // This results in too many vectors to be efficient.
@@ -320,7 +320,7 @@ impl<'a> ShrinkCollectRefs<'a> for ShrinkCollectAliveSeparatedByRefs<'a> {
     }
 }
 
-pub enum StoreReclaims {
+pub(crate) enum StoreReclaims {
     /// normal reclaim mode
     Default,
     /// do not return reclaims from accounts index upsert
@@ -526,7 +526,7 @@ pub const ACCOUNTS_DB_CONFIG_FOR_BENCHMARKS: AccountsDbConfig = AccountsDbConfig
     storage_access: StorageAccess::Mmap,
 };
 
-pub type BinnedHashData = Vec<Vec<CalculateHashIntermediate>>;
+pub(crate) type BinnedHashData = Vec<Vec<CalculateHashIntermediate>>;
 
 struct LoadAccountsIndexForShrink<'a, T: ShrinkCollectRefs<'a>> {
     /// all alive accounts
@@ -543,9 +543,9 @@ struct LoadAccountsIndexForShrink<'a, T: ShrinkCollectRefs<'a>> {
 /// `StoredAccountMeta`
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct AccountFromStorage {
-    pub index_info: AccountInfo,
-    pub data_len: u64,
-    pub pubkey: Pubkey,
+    pub(crate) index_info: AccountInfo,
+    pub(crate) data_len: u64,
+    pub(crate) pubkey: Pubkey,
 }
 
 impl ZeroLamport for AccountFromStorage {
@@ -561,10 +561,10 @@ impl AccountFromStorage {
     pub fn stored_size(&self) -> usize {
         aligned_stored_size(self.data_len as usize)
     }
-    pub fn data_len(&self) -> usize {
+    pub(crate) fn data_len(&self) -> usize {
         self.data_len as usize
     }
-    pub fn new(account: &StoredAccountMeta) -> Self {
+    pub(crate) fn new(account: &StoredAccountMeta) -> Self {
         // the id is irrelevant in this account info. This structure is only used DURING shrink operations.
         // In those cases, there is only 1 append vec id per slot when we read the accounts.
         // Any value of storage id in account info works fine when we want the 'normal' storage.
@@ -582,7 +582,7 @@ impl AccountFromStorage {
 
 pub struct GetUniqueAccountsResult {
     pub stored_accounts: Vec<AccountFromStorage>,
-    pub capacity: u64,
+    pub(crate) capacity: u64,
 }
 
 pub struct AccountsAddRootTiming {
@@ -644,7 +644,7 @@ impl Default for AccountShrinkThreshold {
     }
 }
 
-pub enum ScanStorageResult<R, B> {
+pub(crate) enum ScanStorageResult<R, B> {
     Cached(Vec<R>),
     Stored(B),
 }
@@ -667,36 +667,36 @@ struct SlotIndexGenerationInfo {
 
 #[derive(Default, Debug)]
 struct GenerateIndexTimings {
-    pub total_time_us: u64,
-    pub index_time: u64,
-    pub scan_time: u64,
-    pub insertion_time_us: u64,
-    pub min_bin_size: usize,
-    pub max_bin_size: usize,
-    pub total_items: usize,
-    pub storage_size_storages_us: u64,
-    pub index_flush_us: u64,
-    pub rent_paying: AtomicUsize,
-    pub amount_to_top_off_rent: AtomicU64,
-    pub total_including_duplicates: u64,
-    pub accounts_data_len_dedup_time_us: u64,
-    pub total_duplicate_slot_keys: u64,
-    pub populate_duplicate_keys_us: u64,
-    pub total_slots: u64,
-    pub slots_to_clean: u64,
+    pub(crate) total_time_us: u64,
+    pub(crate) index_time: u64,
+    pub(crate) scan_time: u64,
+    pub(crate) insertion_time_us: u64,
+    pub(crate) min_bin_size: usize,
+    pub(crate) max_bin_size: usize,
+    pub(crate) total_items: usize,
+    pub(crate) storage_size_storages_us: u64,
+    pub(crate) index_flush_us: u64,
+    pub(crate) rent_paying: AtomicUsize,
+    pub(crate) amount_to_top_off_rent: AtomicU64,
+    pub(crate) total_including_duplicates: u64,
+    pub(crate) accounts_data_len_dedup_time_us: u64,
+    pub(crate) total_duplicate_slot_keys: u64,
+    pub(crate) populate_duplicate_keys_us: u64,
+    pub(crate) total_slots: u64,
+    pub(crate) slots_to_clean: u64,
 }
 
 #[derive(Default, Debug, PartialEq, Eq)]
 struct StorageSizeAndCount {
     /// total size stored, including both alive and dead bytes
-    pub stored_size: usize,
+    pub(crate) stored_size: usize,
     /// number of accounts in the storage including both alive and dead accounts
-    pub count: usize,
+    pub(crate) count: usize,
 }
 type StorageSizeAndCountMap = DashMap<AccountsFileId, StorageSizeAndCount>;
 
 impl GenerateIndexTimings {
-    pub fn report(&self, startup_stats: &StartupStats) {
+    pub(crate) fn report(&self, startup_stats: &StartupStats) {
         datapoint_info!(
             "generate_index",
             ("overall_us", self.total_time_us, i64),
@@ -852,7 +852,7 @@ pub enum LoadHint {
 }
 
 #[derive(Debug)]
-pub enum LoadedAccountAccessor<'a> {
+pub(crate) enum LoadedAccountAccessor<'a> {
     // StoredAccountMeta can't be held directly here due to its lifetime dependency to
     // AccountStorageEntry
     Stored(Option<(Arc<AccountStorageEntry>, usize)>),
@@ -973,21 +973,21 @@ pub enum LoadedAccount<'a> {
 }
 
 impl<'a> LoadedAccount<'a> {
-    pub fn loaded_hash(&self) -> AccountHash {
+    pub(crate) fn loaded_hash(&self) -> AccountHash {
         match self {
             LoadedAccount::Stored(stored_account_meta) => *stored_account_meta.hash(),
             LoadedAccount::Cached(cached_account) => cached_account.hash(),
         }
     }
 
-    pub fn pubkey(&self) -> &Pubkey {
+    pub(crate) fn pubkey(&self) -> &Pubkey {
         match self {
             LoadedAccount::Stored(stored_account_meta) => stored_account_meta.pubkey(),
             LoadedAccount::Cached(cached_account) => cached_account.pubkey(),
         }
     }
 
-    pub fn take_account(&self) -> AccountSharedData {
+    pub(crate) fn take_account(&self) -> AccountSharedData {
         match self {
             LoadedAccount::Stored(stored_account_meta) => {
                 stored_account_meta.to_account_shared_data()
@@ -999,7 +999,7 @@ impl<'a> LoadedAccount<'a> {
         }
     }
 
-    pub fn is_cached(&self) -> bool {
+    pub(crate) fn is_cached(&self) -> bool {
         match self {
             LoadedAccount::Stored(_) => false,
             LoadedAccount::Cached(_) => true,
@@ -1007,7 +1007,7 @@ impl<'a> LoadedAccount<'a> {
     }
 
     /// data_len can be calculated without having access to `&data` in future implementations
-    pub fn data_len(&self) -> usize {
+    pub(crate) fn data_len(&self) -> usize {
         self.data().len()
     }
 
@@ -1093,7 +1093,7 @@ pub struct AccountStorageEntry {
 }
 
 impl AccountStorageEntry {
-    pub fn new(
+    pub(crate) fn new(
         path: &Path,
         slot: Slot,
         id: AccountsFileId,
@@ -1143,7 +1143,7 @@ impl AccountStorageEntry {
         }
     }
 
-    pub fn set_status(&self, mut status: AccountStorageStatus) {
+    pub(crate) fn set_status(&self, mut status: AccountStorageStatus) {
         let mut count_and_status = self.count_and_status.lock_write();
 
         let count = count_and_status.0;
@@ -1164,23 +1164,23 @@ impl AccountStorageEntry {
         *count_and_status = (count, status);
     }
 
-    pub fn status(&self) -> AccountStorageStatus {
+    pub(crate) fn status(&self) -> AccountStorageStatus {
         self.count_and_status.read().1
     }
 
-    pub fn count(&self) -> usize {
+    pub(crate) fn count(&self) -> usize {
         self.count_and_status.read().0
     }
 
-    pub fn approx_stored_count(&self) -> usize {
+    pub(crate) fn approx_stored_count(&self) -> usize {
         self.approx_store_count.load(Ordering::Relaxed)
     }
 
-    pub fn alive_bytes(&self) -> usize {
+    pub(crate) fn alive_bytes(&self) -> usize {
         self.alive_bytes.load(Ordering::SeqCst)
     }
 
-    pub fn written_bytes(&self) -> u64 {
+    pub(crate) fn written_bytes(&self) -> u64 {
         self.accounts.len() as u64
     }
 
@@ -1188,7 +1188,7 @@ impl AccountStorageEntry {
         self.accounts.capacity()
     }
 
-    pub fn has_accounts(&self) -> bool {
+    pub(crate) fn has_accounts(&self) -> bool {
         self.count() > 0
     }
 
@@ -1292,15 +1292,15 @@ pub fn get_temp_accounts_paths(count: u32) -> IoResult<(Vec<TempDir>, Vec<PathBu
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Clone, Default, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct BankHashStats {
-    pub num_updated_accounts: u64,
-    pub num_removed_accounts: u64,
-    pub num_lamports_stored: u64,
-    pub total_data_len: u64,
-    pub num_executable_accounts: u64,
+    pub(crate) num_updated_accounts: u64,
+    pub(crate) num_removed_accounts: u64,
+    pub(crate) num_lamports_stored: u64,
+    pub(crate) total_data_len: u64,
+    pub(crate) num_executable_accounts: u64,
 }
 
 impl BankHashStats {
-    pub fn update<T: ReadableAccount + ZeroLamport>(&mut self, account: &T) {
+    pub(crate) fn update<T: ReadableAccount + ZeroLamport>(&mut self, account: &T) {
         if account.is_zero_lamport() {
             self.num_removed_accounts += 1;
         } else {
@@ -1315,7 +1315,7 @@ impl BankHashStats {
         self.num_lamports_stored = self.num_lamports_stored.wrapping_add(account.lamports());
     }
 
-    pub fn accumulate(&mut self, other: &BankHashStats) {
+    pub(crate) fn accumulate(&mut self, other: &BankHashStats) {
         self.num_updated_accounts += other.num_updated_accounts;
         self.num_removed_accounts += other.num_removed_accounts;
         self.total_data_len = self.total_data_len.wrapping_add(other.total_data_len);
@@ -1361,7 +1361,7 @@ pub struct AccountsDb {
 
     /// Some(offset) iff we want to squash old append vecs together into 'ancient append vecs'
     /// Some(offset) means for slots up to (max_slot - (slots_per_epoch - 'offset')), put them in ancient append vecs
-    pub ancient_append_vec_offset: Option<i64>,
+    pub(crate) ancient_append_vec_offset: Option<i64>,
 
     /// true iff we want to skip the initial hash calculation on startup
     pub skip_initial_hash_calc: bool,
@@ -1385,7 +1385,7 @@ pub struct AccountsDb {
     pub next_id: AtomicAccountsFileId,
 
     /// Set of shrinkable stores organized by map of slot to append_vec_id
-    pub shrink_candidate_slots: Mutex<ShrinkCandidates>,
+    pub(crate) shrink_candidate_slots: Mutex<ShrinkCandidates>,
 
     pub write_version: AtomicU64,
 
@@ -1427,11 +1427,11 @@ pub struct AccountsDb {
     // Stats for purges called outside of clean_accounts()
     external_purge_slots_stats: PurgeStats,
 
-    pub shrink_stats: ShrinkStats,
+    pub(crate) shrink_stats: ShrinkStats,
 
     pub(crate) shrink_ancient_stats: ShrinkAncientStats,
 
-    pub cluster_type: Option<ClusterType>,
+    pub(crate) cluster_type: Option<ClusterType>,
 
     pub account_indexes: AccountSecondaryIndexes,
 
@@ -1973,7 +1973,7 @@ impl ShrinkStatsSub {
     }
 }
 #[derive(Debug, Default)]
-pub struct ShrinkStats {
+pub(crate) struct ShrinkStats {
     last_report: AtomicInterval,
     pub(crate) num_slots_shrunk: AtomicUsize,
     storage_read_elapsed: AtomicU64,
@@ -2253,7 +2253,7 @@ pub fn quarter_thread_count() -> usize {
     std::cmp::max(2, num_cpus::get() / 4)
 }
 
-pub fn make_min_priority_thread_pool() -> ThreadPool {
+pub(crate) fn make_min_priority_thread_pool() -> ThreadPool {
     // Use lower thread count to reduce priority.
     let num_threads = quarter_thread_count();
     rayon::ThreadPoolBuilder::new()
@@ -2489,7 +2489,7 @@ impl AccountsDb {
         AccountsDb::new_for_tests(Vec::new(), &ClusterType::Development)
     }
 
-    pub fn new_single_for_tests_with_provider(file_provider: AccountsFileProvider) -> Self {
+    pub(crate) fn new_single_for_tests_with_provider(file_provider: AccountsFileProvider) -> Self {
         AccountsDb::new_for_tests_with_provider(
             Vec::new(),
             &ClusterType::Development,
@@ -2634,7 +2634,7 @@ impl AccountsDb {
         new
     }
 
-    pub fn file_size(&self) -> u64 {
+    pub(crate) fn file_size(&self) -> u64 {
         self.file_size
     }
 
@@ -2662,7 +2662,7 @@ impl AccountsDb {
         )
     }
 
-    pub fn expected_cluster_type(&self) -> ClusterType {
+    pub(crate) fn expected_cluster_type(&self) -> ClusterType {
         self.cluster_type
             .expect("Cluster type must be set at initialization")
     }
@@ -4872,7 +4872,7 @@ impl AccountsDb {
         }
     }
 
-    pub fn scan_accounts<F>(
+    pub(crate) fn scan_accounts<F>(
         &self,
         ancestors: &Ancestors,
         bank_id: BankId,
@@ -4900,7 +4900,7 @@ impl AccountsDb {
         Ok(())
     }
 
-    pub fn unchecked_scan_accounts<F>(
+    pub(crate) fn unchecked_scan_accounts<F>(
         &self,
         metric_name: &'static str,
         ancestors: &Ancestors,
@@ -4923,7 +4923,7 @@ impl AccountsDb {
     }
 
     /// Only guaranteed to be safe when called from rent collection
-    pub fn range_scan_accounts<F, R>(
+    pub(crate) fn range_scan_accounts<F, R>(
         &self,
         metric_name: &'static str,
         ancestors: &Ancestors,
@@ -4961,7 +4961,7 @@ impl AccountsDb {
         );
     }
 
-    pub fn index_scan_accounts<F>(
+    pub(crate) fn index_scan_accounts<F>(
         &self,
         ancestors: &Ancestors,
         bank_id: BankId,
@@ -5083,7 +5083,7 @@ impl AccountsDb {
         bank_hash_stats.insert(slot, BankHashStats::default());
     }
 
-    pub fn load(
+    pub(crate) fn load(
         &self,
         ancestors: &Ancestors,
         pubkey: &Pubkey,
@@ -6747,12 +6747,12 @@ impl AccountsDb {
         );
     }
 
-    pub fn checked_iterative_sum_for_capitalization(total_cap: u64, new_cap: u64) -> u64 {
+    pub(crate) fn checked_iterative_sum_for_capitalization(total_cap: u64, new_cap: u64) -> u64 {
         let new_total = total_cap as u128 + new_cap as u128;
         AccountsHasher::checked_cast_for_capitalization(new_total)
     }
 
-    pub fn checked_sum_for_capitalization<T: Iterator<Item = u64>>(balances: T) -> u64 {
+    pub(crate) fn checked_sum_for_capitalization<T: Iterator<Item = u64>>(balances: T) -> u64 {
         AccountsHasher::checked_cast_for_capitalization(balances.map(|b| b as u128).sum::<u128>())
     }
 
@@ -7347,7 +7347,7 @@ impl AccountsDb {
     /// Set the incremental accounts hash for `slot`
     ///
     /// returns the previous incremental accounts hash for `slot`
-    pub fn set_incremental_accounts_hash(
+    pub(crate) fn set_incremental_accounts_hash(
         &self,
         slot: Slot,
         incremental_accounts_hash: (IncrementalAccountsHash, /*capitalization*/ u64),
@@ -7637,7 +7637,7 @@ impl AccountsDb {
     /// If `base` is `None`, only calculates the full accounts hash for `[0, slot]`.
     /// If `base` is `Some`, calculate the full accounts hash for `[0, base slot]`
     /// and then calculate the incremental accounts hash for `(base slot, slot]`.
-    pub fn verify_accounts_hash_and_lamports(
+    pub(crate) fn verify_accounts_hash_and_lamports(
         &self,
         snapshot_storages_and_slots: (&[Arc<AccountStorageEntry>], &[Slot]),
         slot: Slot,
@@ -8336,7 +8336,7 @@ impl AccountsDb {
 
     /// Store the account update.
     /// only called by tests
-    pub fn store_uncached(&self, slot: Slot, accounts: &[(&Pubkey, &AccountSharedData)]) {
+    pub(crate) fn store_uncached(&self, slot: Slot, accounts: &[(&Pubkey, &AccountSharedData)]) {
         let storage = self.find_storage_candidate(slot);
         self.store(
             (slot, accounts),
@@ -9685,7 +9685,7 @@ pub mod test_utils {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {
         super::*,
         crate::{
@@ -12472,8 +12472,8 @@ pub mod tests {
 
     // something we can get a ref to
     lazy_static! {
-        pub static ref EPOCH_SCHEDULE: EpochSchedule = EpochSchedule::default();
-        pub static ref RENT_COLLECTOR: RentCollector = RentCollector::default();
+        pub(crate) static ref EPOCH_SCHEDULE: EpochSchedule = EpochSchedule::default();
+        pub(crate) static ref RENT_COLLECTOR: RentCollector = RentCollector::default();
     }
 
     impl<'a> CalcAccountsHashConfig<'a> {
@@ -17284,7 +17284,7 @@ pub mod tests {
             .for_each(|slot| assert!(db.storage.get_slot_storage_entry(slot).is_none()));
     }
 
-    pub fn get_account_from_account_from_storage(
+    pub(crate) fn get_account_from_account_from_storage(
         account: &AccountFromStorage,
         db: &AccountsDb,
         slot: Slot,

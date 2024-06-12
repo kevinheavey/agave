@@ -9,18 +9,18 @@ use {
 };
 
 #[derive(Default)]
-pub struct GeyserPluginNotifyAtSnapshotRestoreStats {
-    pub total_accounts: usize,
-    pub skipped_accounts: usize,
-    pub notified_accounts: usize,
-    pub elapsed_filtering_us: usize,
-    pub total_pure_notify: usize,
-    pub total_pure_bookeeping: usize,
-    pub elapsed_notifying_us: usize,
+pub(crate) struct GeyserPluginNotifyAtSnapshotRestoreStats {
+    pub(crate) total_accounts: usize,
+    pub(crate) skipped_accounts: usize,
+    pub(crate) notified_accounts: usize,
+    pub(crate) elapsed_filtering_us: usize,
+    pub(crate) total_pure_notify: usize,
+    pub(crate) total_pure_bookeeping: usize,
+    pub(crate) elapsed_notifying_us: usize,
 }
 
 impl GeyserPluginNotifyAtSnapshotRestoreStats {
-    pub fn report(&self) {
+    pub(crate) fn report(&self) {
         datapoint_info!(
             "accountsdb_plugin_notify_account_restore_from_snapshot_summary",
             ("total_accounts", self.total_accounts, i64),
@@ -57,7 +57,7 @@ impl AccountsDb {
         notify_stats.report();
     }
 
-    pub fn notify_account_at_accounts_update<P>(
+    pub(crate) fn notify_account_at_accounts_update<P>(
         &self,
         slot: Slot,
         account: &AccountSharedData,
@@ -163,7 +163,7 @@ impl AccountsDb {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {
         crate::{
             account_storage::meta::StoredAccountMeta,
@@ -186,15 +186,15 @@ pub mod tests {
     };
 
     impl AccountsDb {
-        pub fn set_geyser_plugin_notifer(&mut self, notifier: Option<AccountsUpdateNotifier>) {
+        pub(crate) fn set_geyser_plugin_notifer(&mut self, notifier: Option<AccountsUpdateNotifier>) {
             self.accounts_update_notifier = notifier;
         }
     }
 
     #[derive(Debug, Default)]
     struct GeyserTestPlugin {
-        pub accounts_notified: DashMap<Pubkey, Vec<(Slot, AccountSharedData)>>,
-        pub is_startup_done: AtomicBool,
+        pub(crate) accounts_notified: DashMap<Pubkey, Vec<(Slot, AccountSharedData)>>,
+        pub(crate) is_startup_done: AtomicBool,
     }
 
     impl AccountsUpdateNotifierInterface for GeyserTestPlugin {

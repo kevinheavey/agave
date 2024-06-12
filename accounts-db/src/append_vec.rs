@@ -41,13 +41,13 @@ use {
     thiserror::Error,
 };
 
-pub mod test_utils;
+pub(crate) mod test_utils;
 #[cfg(test)]
 use solana_sdk::account::accounts_equal;
 
 /// size of the fixed sized fields in an append vec
 /// we need to add data len and align it to get the actual stored size
-pub const STORE_META_OVERHEAD: usize = 136;
+pub(crate) const STORE_META_OVERHEAD: usize = 136;
 
 // Ensure the STORE_META_OVERHEAD constant remains accurate
 const _: () = assert!(
@@ -60,11 +60,11 @@ const _: () = assert!(
 /// Returns the size this item will take to store plus possible alignment padding bytes before the next entry.
 /// fixed-size portion of per-account data written
 /// plus 'data_len', aligned to next boundary
-pub fn aligned_stored_size(data_len: usize) -> usize {
+pub(crate) fn aligned_stored_size(data_len: usize) -> usize {
     u64_align!(STORE_META_OVERHEAD + data_len)
 }
 
-pub const MAXIMUM_APPEND_VEC_FILE_SIZE: u64 = 16 * 1024 * 1024 * 1024; // 16 GiB
+pub(crate) const MAXIMUM_APPEND_VEC_FILE_SIZE: u64 = 16 * 1024 * 1024 * 1024; // 16 GiB
 
 #[derive(Error, Debug)]
 /// An enum for AppendVec related errors.
@@ -91,9 +91,9 @@ struct ValidSlice<'a>(&'a [u8]);
 /// (see `StoredAccountMeta::clone_account()`).
 #[derive(PartialEq, Eq, Debug)]
 pub struct AppendVecStoredAccountMeta<'append_vec> {
-    pub meta: &'append_vec StoredMeta,
+    pub(crate) meta: &'append_vec StoredMeta,
     /// account data
-    pub account_meta: &'append_vec AccountMeta,
+    pub(crate) account_meta: &'append_vec AccountMeta,
     pub(crate) data: &'append_vec [u8],
     pub(crate) offset: usize,
     pub(crate) stored_size: usize,
@@ -101,35 +101,35 @@ pub struct AppendVecStoredAccountMeta<'append_vec> {
 }
 
 impl<'append_vec> AppendVecStoredAccountMeta<'append_vec> {
-    pub fn pubkey(&self) -> &'append_vec Pubkey {
+    pub(crate) fn pubkey(&self) -> &'append_vec Pubkey {
         &self.meta.pubkey
     }
 
-    pub fn hash(&self) -> &'append_vec AccountHash {
+    pub(crate) fn hash(&self) -> &'append_vec AccountHash {
         self.hash
     }
 
-    pub fn stored_size(&self) -> usize {
+    pub(crate) fn stored_size(&self) -> usize {
         self.stored_size
     }
 
-    pub fn offset(&self) -> usize {
+    pub(crate) fn offset(&self) -> usize {
         self.offset
     }
 
-    pub fn data(&self) -> &'append_vec [u8] {
+    pub(crate) fn data(&self) -> &'append_vec [u8] {
         self.data
     }
 
-    pub fn data_len(&self) -> u64 {
+    pub(crate) fn data_len(&self) -> u64 {
         self.meta.data_len
     }
 
-    pub fn write_version(&self) -> StoredMetaWriteVersion {
+    pub(crate) fn write_version(&self) -> StoredMetaWriteVersion {
         self.meta.write_version_obsolete
     }
 
-    pub fn meta(&self) -> &StoredMeta {
+    pub(crate) fn meta(&self) -> &StoredMeta {
         self.meta
     }
 
@@ -181,20 +181,20 @@ impl<'append_vec> ReadableAccount for AppendVecStoredAccountMeta<'append_vec> {
 pub(crate) struct IndexInfo {
     /// size of entry, aligned to next u64
     /// This matches the return of `get_account`
-    pub stored_size_aligned: usize,
+    pub(crate) stored_size_aligned: usize,
     /// info on the entry
-    pub index_info: IndexInfoInner,
+    pub(crate) index_info: IndexInfoInner,
 }
 
 /// info from an entry useful for building an index
 pub(crate) struct IndexInfoInner {
     /// offset to this entry
-    pub offset: usize,
-    pub pubkey: Pubkey,
-    pub lamports: u64,
-    pub rent_epoch: Epoch,
-    pub executable: bool,
-    pub data_len: u64,
+    pub(crate) offset: usize,
+    pub(crate) pubkey: Pubkey,
+    pub(crate) lamports: u64,
+    pub(crate) rent_epoch: Epoch,
+    pub(crate) executable: bool,
+    pub(crate) data_len: u64,
 }
 
 /// offsets to help navigate the persisted format of `AppendVec`
@@ -251,8 +251,8 @@ pub struct AppendVec {
 }
 
 lazy_static! {
-    pub static ref APPEND_VEC_MMAPPED_FILES_OPEN: AtomicU64 = AtomicU64::default();
-    pub static ref APPEND_VEC_MMAPPED_FILES_DIRTY: AtomicU64 = AtomicU64::default();
+    pub(crate) static ref APPEND_VEC_MMAPPED_FILES_OPEN: AtomicU64 = AtomicU64::default();
+    pub(crate) static ref APPEND_VEC_MMAPPED_FILES_DIRTY: AtomicU64 = AtomicU64::default();
 }
 
 impl Drop for AppendVec {
@@ -276,7 +276,7 @@ impl Drop for AppendVec {
 }
 
 impl AppendVec {
-    pub fn new(file: impl Into<PathBuf>, create: bool, size: usize) -> Self {
+    pub(crate) fn new(file: impl Into<PathBuf>, create: bool, size: usize) -> Self {
         let file = file.into();
         let initial_len = 0;
         AppendVec::sanitize_len_and_size(initial_len, size).unwrap();
@@ -356,7 +356,7 @@ impl AppendVec {
         }
     }
 
-    pub fn flush(&self) -> Result<()> {
+    pub(crate) fn flush(&self) -> Result<()> {
         match &self.backing {
             AppendVecFileBacking::MmapOnly(mmap_only) => {
                 // Check to see if the mmap is actually dirty before flushing.
@@ -370,7 +370,7 @@ impl AppendVec {
         }
     }
 
-    pub fn reset(&self) {
+    pub(crate) fn reset(&self) {
         // This mutex forces append to be single threaded, but concurrent with reads
         // See UNSAFE usage in `append_ptr`
         let _lock = self.append_lock.lock().unwrap();
@@ -385,16 +385,16 @@ impl AppendVec {
     }
 
     /// how many more bytes can be stored in this append vec
-    pub fn remaining_bytes(&self) -> u64 {
+    pub(crate) fn remaining_bytes(&self) -> u64 {
         self.capacity()
             .saturating_sub(u64_align!(self.len()) as u64)
     }
 
-    pub fn len(&self) -> usize {
+    pub(crate) fn len(&self) -> usize {
         self.current_len.load(Ordering::Acquire)
     }
 
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
@@ -402,7 +402,7 @@ impl AppendVec {
         self.file_size
     }
 
-    pub fn new_from_file(
+    pub(crate) fn new_from_file(
         path: impl Into<PathBuf>,
         current_len: usize,
         storage_access: StorageAccess,
@@ -423,7 +423,7 @@ impl AppendVec {
     }
 
     /// Creates an appendvec from file without performing sanitize checks or counting the number of accounts
-    pub fn new_from_file_unchecked(
+    pub(crate) fn new_from_file_unchecked(
         path: impl Into<PathBuf>,
         current_len: usize,
         _storage_access: StorageAccess,
@@ -575,7 +575,7 @@ impl AppendVec {
 
     /// calls `callback` with the stored account metadata for the account at `offset` if its data doesn't overrun
     /// the internal buffer. Otherwise return None.
-    pub fn get_stored_account_meta_callback<Ret>(
+    pub(crate) fn get_stored_account_meta_callback<Ret>(
         &self,
         offset: usize,
         mut callback: impl for<'local> FnMut(StoredAccountMeta<'local>) -> Ret,
@@ -612,7 +612,7 @@ impl AppendVec {
     /// Return Err(MatchAccountOwnerError::NoMatch) if the account has 0 lamports or the owner is not one of
     /// the pubkeys in `owners`.
     /// Return Err(MatchAccountOwnerError::UnableToLoad) if the `offset` value causes a data overrun.
-    pub fn account_matches_owners(
+    pub(crate) fn account_matches_owners(
         &self,
         offset: usize,
         owners: &[Pubkey],
@@ -631,7 +631,7 @@ impl AppendVec {
     }
 
     #[cfg(test)]
-    pub fn get_account_test(
+    pub(crate) fn get_account_test(
         &self,
         offset: usize,
     ) -> Option<(StoredMeta, solana_sdk::account::AccountSharedData)> {
@@ -655,7 +655,7 @@ impl AppendVec {
     }
 
     /// Returns the path to the file where the data is stored
-    pub fn path(&self) -> &Path {
+    pub(crate) fn path(&self) -> &Path {
         self.path.as_path()
     }
 
@@ -796,7 +796,7 @@ impl AppendVec {
     /// So, return.len() is 1 + (number of accounts written)
     /// After each account is appended, the internal `current_len` is updated
     /// and will be available to other threads.
-    pub fn append_accounts<'a>(
+    pub(crate) fn append_accounts<'a>(
         &self,
         accounts: &impl StorableAccounts<'a>,
         skip: usize,
@@ -894,7 +894,7 @@ impl AppendVec {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {
         super::{test_utils::*, *},
         assert_matches::assert_matches,

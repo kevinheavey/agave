@@ -479,7 +479,7 @@ impl Read for SharedBufferReader {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {
         super::*,
         crossbeam_channel::{unbounded, Receiver},
@@ -488,10 +488,10 @@ pub mod tests {
 
     type SimpleReaderReceiverType = Receiver<(Vec<u8>, Option<std::io::Error>)>;
     struct SimpleReader {
-        pub receiver: SimpleReaderReceiverType,
-        pub data: Vec<u8>,
-        pub done: bool,
-        pub err: Option<std::io::Error>,
+        pub(crate) receiver: SimpleReaderReceiverType,
+        pub(crate) data: Vec<u8>,
+        pub(crate) done: bool,
+        pub(crate) err: Option<std::io::Error>,
     }
     impl SimpleReader {
         fn new(receiver: SimpleReaderReceiverType) -> Self {

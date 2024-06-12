@@ -2,27 +2,27 @@
 use std::sync::atomic::{AtomicU64, AtomicUsize, Ordering};
 
 #[derive(Default, Debug)]
-pub struct CacheHashDataStats {
-    pub cache_file_size: AtomicUsize,
-    pub cache_file_count: AtomicUsize,
-    pub total_entries: AtomicUsize,
-    pub loaded_from_cache: AtomicUsize,
-    pub entries_loaded_from_cache: AtomicUsize,
-    pub save_us: AtomicU64,
-    pub saved_to_cache: AtomicUsize,
-    pub write_to_mmap_us: AtomicU64,
-    pub create_save_us: AtomicU64,
-    pub load_us: AtomicU64,
-    pub read_us: AtomicU64,
-    pub unused_cache_files: AtomicUsize,
+pub(crate) struct CacheHashDataStats {
+    pub(crate) cache_file_size: AtomicUsize,
+    pub(crate) cache_file_count: AtomicUsize,
+    pub(crate) total_entries: AtomicUsize,
+    pub(crate) loaded_from_cache: AtomicUsize,
+    pub(crate) entries_loaded_from_cache: AtomicUsize,
+    pub(crate) save_us: AtomicU64,
+    pub(crate) saved_to_cache: AtomicUsize,
+    pub(crate) write_to_mmap_us: AtomicU64,
+    pub(crate) create_save_us: AtomicU64,
+    pub(crate) load_us: AtomicU64,
+    pub(crate) read_us: AtomicU64,
+    pub(crate) unused_cache_files: AtomicUsize,
     /// the number of hash data files that were found in the cache and reused
-    pub hits: AtomicUsize,
+    pub(crate) hits: AtomicUsize,
     /// the number of hash data files that were not found in the cache
-    pub misses: AtomicUsize,
+    pub(crate) misses: AtomicUsize,
 }
 
 impl CacheHashDataStats {
-    pub fn report(&self) {
+    pub(crate) fn report(&self) {
         datapoint_info!(
             "cache_hash_data_stats",
             (

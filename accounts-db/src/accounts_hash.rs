@@ -30,7 +30,7 @@ use {
     },
     tempfile::tempfile_in,
 };
-pub const MERKLE_FANOUT: usize = 16;
+pub(crate) const MERKLE_FANOUT: usize = 16;
 
 /// 1 file containing account hashes sorted by pubkey, mapped into memory
 struct MmapAccountHashesFile {
@@ -178,7 +178,7 @@ pub struct CalcAccountsHashConfig<'a> {
 }
 
 // smallest, 3 quartiles, largest, average
-pub type StorageSizeQuartileStats = [usize; 6];
+pub(crate) type StorageSizeQuartileStats = [usize; 6];
 
 #[derive(Debug, Default)]
 pub struct HashStats {
@@ -233,7 +233,7 @@ impl HashStats {
         };
     }
 
-    pub fn log(&self) {
+    pub(crate) fn log(&self) {
         datapoint_info!(
             "calculate_accounts_hash_from_storages",
             ("total_us", self.total_us, i64),
@@ -315,10 +315,10 @@ impl HashStats {
 /// [CalculateHashIntermediate]
 #[repr(C)]
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Pod, Zeroable)]
-pub struct CalculateHashIntermediate {
-    pub hash: AccountHash,
-    pub lamports: u64,
-    pub pubkey: Pubkey,
+pub(crate) struct CalculateHashIntermediate {
+    pub(crate) hash: AccountHash,
+    pub(crate) lamports: u64,
+    pub(crate) pubkey: Pubkey,
 }
 
 // In order to safely guarantee CalculateHashIntermediate is Pod, it cannot have any padding
@@ -467,9 +467,9 @@ impl CumulativeOffsets {
 
 #[derive(Debug)]
 pub struct AccountsHasher<'a> {
-    pub zero_lamport_accounts: ZeroLamportAccounts,
+    pub(crate) zero_lamport_accounts: ZeroLamportAccounts,
     /// The directory where temporary cache files are put
-    pub dir_for_temp_cache_files: PathBuf,
+    pub(crate) dir_for_temp_cache_files: PathBuf,
     pub(crate) active_stats: &'a ActiveStats,
 }
 
@@ -492,7 +492,7 @@ struct ItemLocation<'a> {
 }
 
 impl<'a> AccountsHasher<'a> {
-    pub fn calculate_hash(hashes: Vec<Vec<Hash>>) -> (Hash, usize) {
+    pub(crate) fn calculate_hash(hashes: Vec<Vec<Hash>>) -> (Hash, usize) {
         let cumulative_offsets = CumulativeOffsets::from_raw(&hashes);
 
         let hash_total = cumulative_offsets.total_count;
@@ -511,7 +511,7 @@ impl<'a> AccountsHasher<'a> {
     }
 
     // this function avoids an infinite recursion compiler error
-    pub fn compute_merkle_root_recurse(hashes: Vec<Hash>, fanout: usize) -> Hash {
+    pub(crate) fn compute_merkle_root_recurse(hashes: Vec<Hash>, fanout: usize) -> Hash {
         Self::compute_merkle_root_loop(hashes, fanout, |t| t)
     }
 
@@ -525,7 +525,7 @@ impl<'a> AccountsHasher<'a> {
 
     // For the first iteration, there could be more items in the tuple than just hash and lamports.
     // Using extractor allows us to avoid an unnecessary array copy on the first iteration.
-    pub fn compute_merkle_root_loop<T, F>(hashes: Vec<T>, fanout: usize, extractor: F) -> Hash
+    pub(crate) fn compute_merkle_root_loop<T, F>(hashes: Vec<T>, fanout: usize, extractor: F) -> Hash
     where
         F: Fn(&T) -> &Hash + std::marker::Sync,
         T: std::marker::Sync,
@@ -777,7 +777,7 @@ impl<'a> AccountsHasher<'a> {
         Self::compute_merkle_root_loop(hashes, MERKLE_FANOUT, |i| &i.1 .0)
     }
 
-    pub fn compare_two_hash_entries(
+    pub(crate) fn compare_two_hash_entries(
         a: &CalculateHashIntermediate,
         b: &CalculateHashIntermediate,
     ) -> std::cmp::Ordering {
@@ -785,7 +785,7 @@ impl<'a> AccountsHasher<'a> {
         a.pubkey.partial_cmp(&b.pubkey).unwrap()
     }
 
-    pub fn checked_cast_for_capitalization(balance: u128) -> u64 {
+    pub(crate) fn checked_cast_for_capitalization(balance: u128) -> u64 {
         balance.try_into().unwrap_or_else(|_| {
             panic!("overflow is detected while summing capitalization: {balance}")
         })
@@ -1191,7 +1191,7 @@ impl<'a> AccountsHasher<'a> {
     /// input:
     /// vec: group of slot data, ordered by Slot (low to high)
     ///   vec: [..] - items found in that slot range Sorted by: Pubkey, higher Slot, higher Write version (if pubkey =)
-    pub fn rest_of_hash_calculation(
+    pub(crate) fn rest_of_hash_calculation(
         &self,
         sorted_data_by_pubkey: &[&[CalculateHashIntermediate]],
         stats: &mut HashStats,
@@ -1221,7 +1221,7 @@ impl<'a> AccountsHasher<'a> {
 
 /// How should zero-lamport accounts be treated by the accounts hasher?
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub enum ZeroLamportAccounts {
+pub(crate) enum ZeroLamportAccounts {
     Excluded,
     Included,
 }
@@ -1267,7 +1267,7 @@ pub struct AccountsHash(pub Hash);
 /// Hash of accounts that includes zero-lamport accounts
 /// Used with incremental snapshots
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub struct IncrementalAccountsHash(pub Hash);
+pub struct IncrementalAccountsHash(pub(crate) Hash);
 
 /// Hash of accounts written in a single slot
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
@@ -1276,7 +1276,7 @@ pub struct AccountsDeltaHash(pub Hash);
 /// Snapshot serde-safe accounts delta hash
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Clone, Default, Debug, Serialize, Deserialize, PartialEq, Eq)]
-pub struct SerdeAccountsDeltaHash(pub Hash);
+pub struct SerdeAccountsDeltaHash(pub(crate) Hash);
 
 impl From<SerdeAccountsDeltaHash> for AccountsDeltaHash {
     fn from(accounts_delta_hash: SerdeAccountsDeltaHash) -> Self {

@@ -66,7 +66,7 @@ impl Ancestors {
         self.ancestors.get_all()
     }
 
-    pub fn remove(&mut self, slot: &Slot) {
+    pub(crate) fn remove(&mut self, slot: &Slot) {
         self.ancestors.remove(slot);
     }
 
@@ -74,19 +74,19 @@ impl Ancestors {
         self.ancestors.contains(slot)
     }
 
-    pub fn len(&self) -> usize {
+    pub(crate) fn len(&self) -> usize {
         self.ancestors.len()
     }
 
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
-    pub fn min_slot(&self) -> Slot {
+    pub(crate) fn min_slot(&self) -> Slot {
         self.ancestors.min().unwrap_or_default()
     }
 
-    pub fn max_slot(&self) -> Slot {
+    pub(crate) fn max_slot(&self) -> Slot {
         self.ancestors.max_exclusive().saturating_sub(1)
     }
 }
@@ -121,7 +121,7 @@ impl Ancestors {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {
         super::*, crate::contains::Contains, log::*, solana_measure::measure::Measure,
         std::collections::HashSet,

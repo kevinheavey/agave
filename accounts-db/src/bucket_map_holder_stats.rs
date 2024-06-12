@@ -14,59 +14,59 @@ use {
 const STATS_INTERVAL_MS: u64 = 10_000;
 
 #[derive(Debug, Default)]
-pub struct BucketMapHeldInMemStats {
-    pub ref_count: AtomicU64,
-    pub slot_list_len: AtomicU64,
-    pub slot_list_cached: AtomicU64,
+pub(crate) struct BucketMapHeldInMemStats {
+    pub(crate) ref_count: AtomicU64,
+    pub(crate) slot_list_len: AtomicU64,
+    pub(crate) slot_list_cached: AtomicU64,
 }
 
 #[derive(Debug, Default)]
-pub struct BucketMapHolderStats {
-    pub held_in_mem: BucketMapHeldInMemStats,
-    pub get_mem_us: AtomicU64,
-    pub gets_from_mem: AtomicU64,
-    pub get_missing_us: AtomicU64,
-    pub gets_missing: AtomicU64,
-    pub entry_mem_us: AtomicU64,
-    pub entries_from_mem: AtomicU64,
-    pub entry_missing_us: AtomicU64,
-    pub entries_missing: AtomicU64,
-    pub load_disk_found_count: AtomicU64,
-    pub load_disk_found_us: AtomicU64,
-    pub load_disk_missing_count: AtomicU64,
-    pub load_disk_missing_us: AtomicU64,
-    pub updates_in_mem: AtomicU64,
-    pub items: AtomicU64,
-    pub items_us: AtomicU64,
-    pub failed_to_evict: AtomicU64,
-    pub keys: AtomicU64,
-    pub deletes: AtomicU64,
-    pub buckets_scanned: AtomicU64,
-    pub inserts: AtomicU64,
+pub(crate) struct BucketMapHolderStats {
+    pub(crate) held_in_mem: BucketMapHeldInMemStats,
+    pub(crate) get_mem_us: AtomicU64,
+    pub(crate) gets_from_mem: AtomicU64,
+    pub(crate) get_missing_us: AtomicU64,
+    pub(crate) gets_missing: AtomicU64,
+    pub(crate) entry_mem_us: AtomicU64,
+    pub(crate) entries_from_mem: AtomicU64,
+    pub(crate) entry_missing_us: AtomicU64,
+    pub(crate) entries_missing: AtomicU64,
+    pub(crate) load_disk_found_count: AtomicU64,
+    pub(crate) load_disk_found_us: AtomicU64,
+    pub(crate) load_disk_missing_count: AtomicU64,
+    pub(crate) load_disk_missing_us: AtomicU64,
+    pub(crate) updates_in_mem: AtomicU64,
+    pub(crate) items: AtomicU64,
+    pub(crate) items_us: AtomicU64,
+    pub(crate) failed_to_evict: AtomicU64,
+    pub(crate) keys: AtomicU64,
+    pub(crate) deletes: AtomicU64,
+    pub(crate) buckets_scanned: AtomicU64,
+    pub(crate) inserts: AtomicU64,
     count: AtomicUsize,
-    pub bg_waiting_us: AtomicU64,
-    pub bg_throttling_wait_us: AtomicU64,
-    pub count_in_mem: AtomicUsize,
-    pub per_bucket_count: Vec<AtomicUsize>,
-    pub flush_entries_updated_on_disk: AtomicU64,
-    pub flush_entries_evicted_from_mem: AtomicU64,
-    pub active_threads: AtomicU64,
-    pub get_range_us: AtomicU64,
+    pub(crate) bg_waiting_us: AtomicU64,
+    pub(crate) bg_throttling_wait_us: AtomicU64,
+    pub(crate) count_in_mem: AtomicUsize,
+    pub(crate) per_bucket_count: Vec<AtomicUsize>,
+    pub(crate) flush_entries_updated_on_disk: AtomicU64,
+    pub(crate) flush_entries_evicted_from_mem: AtomicU64,
+    pub(crate) active_threads: AtomicU64,
+    pub(crate) get_range_us: AtomicU64,
     last_age: AtomicAge,
     last_ages_flushed: AtomicU64,
-    pub flush_scan_us: AtomicU64,
-    pub flush_update_us: AtomicU64,
-    pub flush_evict_us: AtomicU64,
-    pub flush_grow_us: AtomicU64,
+    pub(crate) flush_scan_us: AtomicU64,
+    pub(crate) flush_update_us: AtomicU64,
+    pub(crate) flush_evict_us: AtomicU64,
+    pub(crate) flush_grow_us: AtomicU64,
     last_was_startup: AtomicBool,
     last_time: AtomicInterval,
     bins: u64,
-    pub estimate_mem: AtomicU64,
-    pub flush_should_evict_us: AtomicU64,
+    pub(crate) estimate_mem: AtomicU64,
+    pub(crate) flush_should_evict_us: AtomicU64,
 }
 
 impl BucketMapHolderStats {
-    pub fn new(bins: usize) -> BucketMapHolderStats {
+    pub(crate) fn new(bins: usize) -> BucketMapHolderStats {
         BucketMapHolderStats {
             bins: bins as u64,
             per_bucket_count: (0..bins).map(|_| AtomicUsize::default()).collect(),
@@ -74,35 +74,35 @@ impl BucketMapHolderStats {
         }
     }
 
-    pub fn inc_insert(&self) {
+    pub(crate) fn inc_insert(&self) {
         self.inc_insert_count(1);
     }
 
-    pub fn inc_insert_count(&self, count: u64) {
+    pub(crate) fn inc_insert_count(&self, count: u64) {
         self.inserts.fetch_add(count, Ordering::Relaxed);
         self.count.fetch_add(count as usize, Ordering::Relaxed);
     }
 
-    pub fn inc_delete(&self) {
+    pub(crate) fn inc_delete(&self) {
         self.deletes.fetch_add(1, Ordering::Relaxed);
         self.count.fetch_sub(1, Ordering::Relaxed);
     }
 
-    pub fn inc_mem_count(&self, bin: usize) {
+    pub(crate) fn inc_mem_count(&self, bin: usize) {
         self.add_mem_count(bin, 1);
     }
 
-    pub fn dec_mem_count(&self, bin: usize) {
+    pub(crate) fn dec_mem_count(&self, bin: usize) {
         self.sub_mem_count(bin, 1);
     }
 
-    pub fn add_mem_count(&self, bin: usize, count: usize) {
+    pub(crate) fn add_mem_count(&self, bin: usize, count: usize) {
         let per_bucket = self.per_bucket_count.get(bin);
         self.count_in_mem.fetch_add(count, Ordering::Relaxed);
         per_bucket.map(|stat| stat.fetch_add(count, Ordering::Relaxed));
     }
 
-    pub fn sub_mem_count(&self, bin: usize, count: usize) {
+    pub(crate) fn sub_mem_count(&self, bin: usize, count: usize) {
         let per_bucket = self.per_bucket_count.get(bin);
         self.count_in_mem.fetch_sub(count, Ordering::Relaxed);
         per_bucket.map(|stat| stat.fetch_sub(count, Ordering::Relaxed));
@@ -135,7 +135,7 @@ impl BucketMapHolderStats {
         0 // avoid crazy numbers
     }
 
-    pub fn remaining_until_next_interval(&self) -> u64 {
+    pub(crate) fn remaining_until_next_interval(&self) -> u64 {
         self.last_time
             .remaining_until_next_interval(STATS_INTERVAL_MS)
     }
@@ -163,11 +163,11 @@ impl BucketMapHolderStats {
         }
     }
 
-    pub fn total_count(&self) -> usize {
+    pub(crate) fn total_count(&self) -> usize {
         self.count.load(Ordering::Relaxed)
     }
 
-    pub fn count_in_bucket(&self, bucket: usize) -> usize {
+    pub(crate) fn count_in_bucket(&self, bucket: usize) -> usize {
         if bucket < self.per_bucket_count.len() {
             self.per_bucket_count[bucket].load(Ordering::Relaxed)
         } else {
@@ -178,7 +178,7 @@ impl BucketMapHolderStats {
     /// This is an estimate of the # of items in mem that are awaiting flushing to disk.
     /// returns (# items in mem) - (# items we intend to hold in mem for performance heuristics)
     /// The result is also an estimate because 'held_in_mem' is based on a stat that is swapped out when stats are reported.
-    pub fn get_remaining_items_to_flush_estimate(&self) -> usize {
+    pub(crate) fn get_remaining_items_to_flush_estimate(&self) -> usize {
         let in_mem = self.count_in_mem.load(Ordering::Relaxed) as u64;
         let held_in_mem = self.held_in_mem.slot_list_cached.load(Ordering::Relaxed)
             + self.held_in_mem.slot_list_len.load(Ordering::Relaxed)
@@ -186,7 +186,7 @@ impl BucketMapHolderStats {
         in_mem.saturating_sub(held_in_mem) as usize
     }
 
-    pub fn report_stats<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>>(
+    pub(crate) fn report_stats<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>>(
         &self,
         storage: &BucketMapHolder<T, U>,
     ) {

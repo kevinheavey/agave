@@ -28,7 +28,7 @@ pub enum UnpackError {
     Archive(String),
 }
 
-pub type Result<T> = std::result::Result<T, UnpackError>;
+pub(crate) type Result<T> = std::result::Result<T, UnpackError>;
 
 // 64 TiB; some safe margin to the max 128 TiB in amd64 linux userspace VmSize
 // (ref: https://unix.stackexchange.com/a/386555/364236)
@@ -79,7 +79,7 @@ fn check_unpack_result(unpack_result: bool, path: String) -> Result<()> {
 }
 
 #[derive(Debug, PartialEq, Eq)]
-pub enum UnpackPath<'a> {
+pub(crate) enum UnpackPath<'a> {
     Valid(&'a Path),
     Ignore,
     Invalid,
@@ -296,7 +296,7 @@ pub struct ParallelSelector {
 }
 
 impl ParallelSelector {
-    pub fn select_index(&self, index: usize) -> bool {
+    pub(crate) fn select_index(&self, index: usize) -> bool {
         index % self.divisions == self.index
     }
 }

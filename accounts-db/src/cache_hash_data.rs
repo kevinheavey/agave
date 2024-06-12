@@ -16,15 +16,15 @@ use {
     },
 };
 
-pub type EntryType = CalculateHashIntermediate;
-pub type SavedTypeSlice = [Vec<EntryType>];
+pub(crate) type EntryType = CalculateHashIntermediate;
+pub(crate) type SavedTypeSlice = [Vec<EntryType>];
 
 #[cfg(test)]
-pub type SavedType = Vec<Vec<EntryType>>;
+pub(crate) type SavedType = Vec<Vec<EntryType>>;
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy, Pod, Zeroable)]
-pub struct Header {
+pub(crate) struct Header {
     count: usize,
 }
 
@@ -112,13 +112,13 @@ impl CacheHashDataFileReference {
 
 impl CacheHashDataFile {
     /// return a slice of a reference to all the cache hash data from the mmapped file
-    pub fn get_cache_hash_data(&self) -> &[EntryType] {
+    pub(crate) fn get_cache_hash_data(&self) -> &[EntryType] {
         self.get_slice(0)
     }
 
     #[cfg(test)]
     /// Populate 'accumulator' from entire contents of the cache file.
-    pub fn load_all(
+    pub(crate) fn load_all(
         &self,
         accumulator: &mut SavedType,
         start_bin_index: usize,
@@ -196,7 +196,7 @@ pub(crate) struct CacheHashData {
     cache_dir: PathBuf,
     pre_existing_cache_files: Arc<Mutex<HashSet<PathBuf>>>,
     deletion_policy: DeletionPolicy,
-    pub stats: Arc<CacheHashDataStats>,
+    pub(crate) stats: Arc<CacheHashDataStats>,
 }
 
 impl Drop for CacheHashData {
@@ -383,12 +383,12 @@ impl CacheHashData {
 
 /// The values of each part of a cache hash data filename
 #[derive(Debug)]
-pub struct ParsedFilename {
-    pub slot_range_start: Slot,
-    pub _slot_range_end: Slot,
-    pub _bin_range_start: u64,
-    pub _bin_range_end: u64,
-    pub _hash: u64,
+pub(crate) struct ParsedFilename {
+    pub(crate) slot_range_start: Slot,
+    pub(crate) _slot_range_end: Slot,
+    pub(crate) _bin_range_start: u64,
+    pub(crate) _bin_range_end: u64,
+    pub(crate) _hash: u64,
 }
 
 /// Parses a cache hash data filename into its parts
@@ -418,7 +418,7 @@ fn parse_filename(cache_filename: impl AsRef<Path>) -> Option<ParsedFilename> {
 ///
 /// See `delete_old_cache_files()` for more info.
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
-pub enum DeletionPolicy {
+pub(crate) enum DeletionPolicy {
     /// Delete *all* the unused cache files
     /// Should be used when calculating full accounts hash
     AllUnused,

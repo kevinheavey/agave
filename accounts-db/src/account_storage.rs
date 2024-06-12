@@ -201,12 +201,12 @@ impl AccountStorage {
 }
 
 /// iterate contents of AccountStorage without exposing internals
-pub struct AccountStorageIter<'a> {
+pub(crate) struct AccountStorageIter<'a> {
     iter: dashmap::iter::Iter<'a, Slot, AccountStorageReference>,
 }
 
 impl<'a> AccountStorageIter<'a> {
-    pub fn new(storage: &'a AccountStorage) -> Self {
+    pub(crate) fn new(storage: &'a AccountStorage) -> Self {
         Self {
             iter: storage.map.iter(),
         }
@@ -275,7 +275,7 @@ impl<'a> ShrinkInProgress<'a> {
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
 #[derive(Debug, Eq, PartialEq, Copy, Clone, Deserialize, Serialize)]
-pub enum AccountStorageStatus {
+pub(crate) enum AccountStorageStatus {
     Available = 0,
     Full = 1,
     Candidate = 2,

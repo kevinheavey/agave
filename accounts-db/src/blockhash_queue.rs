@@ -49,7 +49,7 @@ impl Default for BlockhashQueue {
 }
 
 impl BlockhashQueue {
-    pub fn new(max_age: usize) -> Self {
+    pub(crate) fn new(max_age: usize) -> Self {
         Self {
             hashes: HashMap::new(),
             last_hash_index: 0,
@@ -70,7 +70,7 @@ impl BlockhashQueue {
 
     /// Check if the age of the hash is within the queue's max age
     #[deprecated(since = "2.0.0", note = "Please use `is_hash_valid_for_age` instead")]
-    pub fn is_hash_valid(&self, hash: &Hash) -> bool {
+    pub(crate) fn is_hash_valid(&self, hash: &Hash) -> bool {
         self.hashes.contains_key(hash)
     }
 
@@ -145,7 +145,7 @@ impl BlockhashQueue {
         since = "2.0.0",
         note = "Please use `solana_program::clock::MAX_PROCESSING_AGE`"
     )]
-    pub fn get_max_age(&self) -> usize {
+    pub(crate) fn get_max_age(&self) -> usize {
         self.max_age
     }
 }

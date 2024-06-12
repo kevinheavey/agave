@@ -15,16 +15,16 @@ use {
     thiserror::Error,
 };
 
-pub const FOOTER_FORMAT_VERSION: u64 = 1;
+pub(crate) const FOOTER_FORMAT_VERSION: u64 = 1;
 
 /// The size of the footer struct + the magic number at the end.
-pub const FOOTER_SIZE: usize =
+pub(crate) const FOOTER_SIZE: usize =
     mem::size_of::<TieredStorageFooter>() + mem::size_of::<TieredStorageMagicNumber>();
 static_assertions::const_assert_eq!(mem::size_of::<TieredStorageFooter>(), 160);
 
 /// The size of the ending part of the footer.  This size should remain unchanged
 /// even when the footer's format changes.
-pub const FOOTER_TAIL_SIZE: usize = 24;
+pub(crate) const FOOTER_TAIL_SIZE: usize = 24;
 
 #[repr(u16)]
 #[derive(
@@ -65,60 +65,60 @@ pub enum AccountBlockFormat {
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 #[repr(C)]
-pub struct TieredStorageFooter {
+pub(crate) struct TieredStorageFooter {
     // formats
     /// The format of the account meta entry.
-    pub account_meta_format: AccountMetaFormat,
+    pub(crate) account_meta_format: AccountMetaFormat,
     /// The format of the owners block.
-    pub owners_block_format: OwnersBlockFormat,
+    pub(crate) owners_block_format: OwnersBlockFormat,
     /// The format of the account index block.
-    pub index_block_format: IndexBlockFormat,
+    pub(crate) index_block_format: IndexBlockFormat,
     /// The format of the account block.
-    pub account_block_format: AccountBlockFormat,
+    pub(crate) account_block_format: AccountBlockFormat,
 
     // Account-block related
     /// The number of account entries.
-    pub account_entry_count: u32,
+    pub(crate) account_entry_count: u32,
     /// The size of each account meta entry in bytes.
-    pub account_meta_entry_size: u32,
+    pub(crate) account_meta_entry_size: u32,
     /// The default size of an account block before compression.
     ///
     /// If the size of one account (meta + data + optional fields) before
     /// compression is bigger than this number, than it is considered a
     /// blob account and it will have its own account block.
-    pub account_block_size: u64,
+    pub(crate) account_block_size: u64,
 
     // Owner-related
     /// The number of owners.
-    pub owner_count: u32,
+    pub(crate) owner_count: u32,
     /// The size of each owner entry.
-    pub owner_entry_size: u32,
+    pub(crate) owner_entry_size: u32,
 
     // Offsets
     // Note that offset to the account blocks is omitted as it's always 0.
     /// The offset pointing to the first byte of the account index block.
-    pub index_block_offset: u64,
+    pub(crate) index_block_offset: u64,
     /// The offset pointing to the first byte of the owners block.
-    pub owners_block_offset: u64,
+    pub(crate) owners_block_offset: u64,
 
     // account range
     /// The smallest account address in this file.
-    pub min_account_address: Pubkey,
+    pub(crate) min_account_address: Pubkey,
     /// The largest account address in this file.
-    pub max_account_address: Pubkey,
+    pub(crate) max_account_address: Pubkey,
 
     /// A hash that represents a tiered accounts file for consistency check.
-    pub hash: Hash,
+    pub(crate) hash: Hash,
 
     /// The format version of the tiered accounts file.
-    pub format_version: u64,
+    pub(crate) format_version: u64,
     // The below fields belong to footer tail.
     // The sum of their sizes should match FOOTER_TAIL_SIZE.
     /// The size of the footer including the magic number.
-    pub footer_size: u64,
+    pub(crate) footer_size: u64,
     // This field is persisted in the storage but not in this struct.
     // The number should match FILE_MAGIC_NUMBER.
-    // pub magic_number: u64,
+    // pub(crate) magic_number: u64,
 }
 
 // It is undefined behavior to read/write uninitialized bytes.
@@ -169,12 +169,12 @@ impl Default for TieredStorageFooter {
 }
 
 impl TieredStorageFooter {
-    pub fn new_from_path(path: impl AsRef<Path>) -> TieredStorageResult<Self> {
+    pub(crate) fn new_from_path(path: impl AsRef<Path>) -> TieredStorageResult<Self> {
         let file = TieredReadableFile::new(path)?;
         Self::new_from_footer_block(&file)
     }
 
-    pub fn write_footer_block(&self, file: &mut TieredWritableFile) -> TieredStorageResult<usize> {
+    pub(crate) fn write_footer_block(&self, file: &mut TieredWritableFile) -> TieredStorageResult<usize> {
         let mut bytes_written = 0;
 
         // SAFETY: The footer does not contain any uninitialized bytes.
@@ -184,7 +184,7 @@ impl TieredStorageFooter {
         Ok(bytes_written)
     }
 
-    pub fn new_from_footer_block(file: &TieredReadableFile) -> TieredStorageResult<Self> {
+    pub(crate) fn new_from_footer_block(file: &TieredReadableFile) -> TieredStorageResult<Self> {
         file.seek_from_end(-(FOOTER_TAIL_SIZE as i64))?;
 
         let mut footer_version: u64 = 0;
@@ -221,7 +221,7 @@ impl TieredStorageFooter {
         Ok(footer)
     }
 
-    pub fn new_from_mmap(mmap: &Mmap) -> TieredStorageResult<&TieredStorageFooter> {
+    pub(crate) fn new_from_mmap(mmap: &Mmap) -> TieredStorageResult<&TieredStorageFooter> {
         let offset = mmap.len().saturating_sub(FOOTER_TAIL_SIZE);
 
         let (footer_version, offset) = get_pod::<u64>(mmap, offset)?;

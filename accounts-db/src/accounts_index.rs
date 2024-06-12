@@ -42,11 +42,11 @@ use {
 };
 
 pub const ITER_BATCH_SIZE: usize = 1000;
-pub const BINS_DEFAULT: usize = 8192;
-pub const BINS_FOR_TESTING: usize = 2; // we want > 1, but each bin is a few disk files with a disk based index, so fewer is better
-pub const BINS_FOR_BENCHMARKS: usize = 8192;
-pub const FLUSH_THREADS_TESTING: usize = 1;
-pub const ACCOUNTS_INDEX_CONFIG_FOR_TESTING: AccountsIndexConfig = AccountsIndexConfig {
+pub(crate) const BINS_DEFAULT: usize = 8192;
+pub(crate) const BINS_FOR_TESTING: usize = 2; // we want > 1, but each bin is a few disk files with a disk based index, so fewer is better
+pub(crate) const BINS_FOR_BENCHMARKS: usize = 8192;
+pub(crate) const FLUSH_THREADS_TESTING: usize = 1;
+pub(crate) const ACCOUNTS_INDEX_CONFIG_FOR_TESTING: AccountsIndexConfig = AccountsIndexConfig {
     bins: Some(BINS_FOR_TESTING),
     flush_threads: Some(FLUSH_THREADS_TESTING),
     drives: None,
@@ -55,7 +55,7 @@ pub const ACCOUNTS_INDEX_CONFIG_FOR_TESTING: AccountsIndexConfig = AccountsIndex
     scan_results_limit_bytes: None,
     started_from_validator: false,
 };
-pub const ACCOUNTS_INDEX_CONFIG_FOR_BENCHMARKS: AccountsIndexConfig = AccountsIndexConfig {
+pub(crate) const ACCOUNTS_INDEX_CONFIG_FOR_BENCHMARKS: AccountsIndexConfig = AccountsIndexConfig {
     bins: Some(BINS_FOR_BENCHMARKS),
     flush_threads: Some(FLUSH_THREADS_TESTING),
     drives: None,
@@ -65,22 +65,22 @@ pub const ACCOUNTS_INDEX_CONFIG_FOR_BENCHMARKS: AccountsIndexConfig = AccountsIn
     started_from_validator: false,
 };
 pub type ScanResult<T> = Result<T, ScanError>;
-pub type SlotList<T> = Vec<(Slot, T)>;
-pub type SlotSlice<'s, T> = &'s [(Slot, T)];
-pub type RefCount = u64;
-pub type AccountMap<T, U> = Arc<InMemAccountsIndex<T, U>>;
+pub(crate) type SlotList<T> = Vec<(Slot, T)>;
+pub(crate) type SlotSlice<'s, T> = &'s [(Slot, T)];
+pub(crate) type RefCount = u64;
+pub(crate) type AccountMap<T, U> = Arc<InMemAccountsIndex<T, U>>;
 
 #[derive(Default, Debug, PartialEq, Eq)]
 pub(crate) struct GenerateIndexResult<T: IndexValue> {
     /// number of accounts inserted in the index
-    pub count: usize,
+    pub(crate) count: usize,
     /// pubkeys which were present multiple times in the insertion request.
-    pub duplicates: Option<Vec<(Pubkey, (Slot, T))>>,
+    pub(crate) duplicates: Option<Vec<(Pubkey, (Slot, T))>>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 /// how accounts index 'upsert' should handle reclaims
-pub enum UpsertReclaim {
+pub(crate) enum UpsertReclaim {
     /// previous entry for this slot in the index is expected to be cached, so irrelevant to reclaims
     PreviousSlotEntryWasCached,
     /// previous entry for this slot in the index may need to be reclaimed, so return it.
@@ -93,11 +93,11 @@ pub enum UpsertReclaim {
 #[derive(Debug, Default)]
 pub struct ScanConfig {
     /// checked by the scan. When true, abort scan.
-    pub abort: Option<Arc<AtomicBool>>,
+    pub(crate) abort: Option<Arc<AtomicBool>>,
 
     /// true to allow return of all matching items and allow them to be unsorted.
     /// This is more efficient.
-    pub collect_all_unsorted: bool,
+    pub(crate) collect_all_unsorted: bool,
 }
 
 impl ScanConfig {
@@ -109,14 +109,14 @@ impl ScanConfig {
     }
 
     /// mark the scan as aborted
-    pub fn abort(&self) {
+    pub(crate) fn abort(&self) {
         if let Some(abort) = self.abort.as_ref() {
             abort.store(true, Ordering::Relaxed)
         }
     }
 
     /// use existing 'abort' if available, otherwise allocate one
-    pub fn recreate_with_abort(&self) -> Self {
+    pub(crate) fn recreate_with_abort(&self) -> Self {
         ScanConfig {
             abort: Some(self.abort.clone().unwrap_or_default()),
             collect_all_unsorted: self.collect_all_unsorted,
@@ -124,7 +124,7 @@ impl ScanConfig {
     }
 
     /// true if scan should abort
-    pub fn is_aborted(&self) -> bool {
+    pub(crate) fn is_aborted(&self) -> bool {
         if let Some(abort) = self.abort.as_ref() {
             abort.load(Ordering::Relaxed)
         } else {
@@ -232,15 +232,15 @@ impl AccountSecondaryIndexes {
 #[derive(Debug, Default)]
 /// data per entry in in-mem accounts index
 /// used to keep track of consistency with disk index
-pub struct AccountMapEntryMeta {
+pub(crate) struct AccountMapEntryMeta {
     /// true if entry in in-mem idx has changes and needs to be written to disk
-    pub dirty: AtomicBool,
+    pub(crate) dirty: AtomicBool,
     /// 'age' at which this entry should be purged from the cache (implements lru)
-    pub age: AtomicAge,
+    pub(crate) age: AtomicAge,
 }
 
 impl AccountMapEntryMeta {
-    pub fn new_dirty<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>>(
+    pub(crate) fn new_dirty<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>>(
         storage: &Arc<BucketMapHolder<T, U>>,
         is_cached: bool,
     ) -> Self {
@@ -249,7 +249,7 @@ impl AccountMapEntryMeta {
             age: AtomicAge::new(storage.future_age_to_flush(is_cached)),
         }
     }
-    pub fn new_clean<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>>(
+    pub(crate) fn new_clean<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>>(
         storage: &Arc<BucketMapHolder<T, U>>,
     ) -> Self {
         AccountMapEntryMeta {
@@ -271,29 +271,29 @@ pub struct AccountMapEntryInner<T> {
     /// purge_slot() also removes non-rooted slots from this list
     pub slot_list: RwLock<SlotList<T>>,
     /// synchronization metadata for in-memory state since last flush to disk accounts index
-    pub meta: AccountMapEntryMeta,
+    pub(crate) meta: AccountMapEntryMeta,
 }
 
 impl<T: IndexValue> AccountMapEntryInner<T> {
-    pub fn new(slot_list: SlotList<T>, ref_count: RefCount, meta: AccountMapEntryMeta) -> Self {
+    pub(crate) fn new(slot_list: SlotList<T>, ref_count: RefCount, meta: AccountMapEntryMeta) -> Self {
         Self {
             slot_list: RwLock::new(slot_list),
             ref_count: AtomicU64::new(ref_count),
             meta,
         }
     }
-    pub fn ref_count(&self) -> RefCount {
+    pub(crate) fn ref_count(&self) -> RefCount {
         self.ref_count.load(Ordering::Acquire)
     }
 
-    pub fn addref(&self) {
+    pub(crate) fn addref(&self) {
         self.ref_count.fetch_add(1, Ordering::Release);
         self.set_dirty(true);
     }
 
     /// decrement the ref count
     /// return true if the old refcount was already 0. This indicates an under refcounting error in the system.
-    pub fn unref(&self) -> bool {
+    pub(crate) fn unref(&self) -> bool {
         let previous = self.ref_count.fetch_sub(1, Ordering::Release);
         self.set_dirty(true);
         if previous == 0 {
@@ -302,32 +302,32 @@ impl<T: IndexValue> AccountMapEntryInner<T> {
         previous == 0
     }
 
-    pub fn dirty(&self) -> bool {
+    pub(crate) fn dirty(&self) -> bool {
         self.meta.dirty.load(Ordering::Acquire)
     }
 
-    pub fn set_dirty(&self, value: bool) {
+    pub(crate) fn set_dirty(&self, value: bool) {
         self.meta.dirty.store(value, Ordering::Release)
     }
 
     /// set dirty to false, return true if was dirty
-    pub fn clear_dirty(&self) -> bool {
+    pub(crate) fn clear_dirty(&self) -> bool {
         self.meta
             .dirty
             .compare_exchange(true, false, Ordering::AcqRel, Ordering::Relaxed)
             .is_ok()
     }
 
-    pub fn age(&self) -> Age {
+    pub(crate) fn age(&self) -> Age {
         self.meta.age.load(Ordering::Acquire)
     }
 
-    pub fn set_age(&self, value: Age) {
+    pub(crate) fn set_age(&self, value: Age) {
         self.meta.age.store(value, Ordering::Release)
     }
 
     /// set age to 'next_age' if 'self.age' is 'expected_age'
-    pub fn try_exchange_age(&self, next_age: Age, expected_age: Age) {
+    pub(crate) fn try_exchange_age(&self, next_age: Age, expected_age: Age) {
         let _ = self.meta.age.compare_exchange(
             expected_age,
             next_age,
@@ -338,7 +338,7 @@ impl<T: IndexValue> AccountMapEntryInner<T> {
 }
 
 /// can be used to pre-allocate structures for insertion into accounts index outside of lock
-pub enum PreAllocatedAccountMapEntry<T: IndexValue> {
+pub(crate) enum PreAllocatedAccountMapEntry<T: IndexValue> {
     Entry(AccountMapEntry<T>),
     Raw((Slot, T)),
 }
@@ -368,7 +368,7 @@ impl<T: IndexValue> PreAllocatedAccountMapEntry<T> {
     /// 1. new empty (refcount=0, slot_list={})
     /// 2. update(slot, account_info)
     /// This code is called when the first entry [ie. (slot,account_info)] for a pubkey is inserted into the index.
-    pub fn new<U: DiskIndexValue + From<T> + Into<T>>(
+    pub(crate) fn new<U: DiskIndexValue + From<T> + Into<T>>(
         slot: Slot,
         account_info: T,
         storage: &Arc<BucketMapHolder<T, U>>,
@@ -396,7 +396,7 @@ impl<T: IndexValue> PreAllocatedAccountMapEntry<T> {
         ))
     }
 
-    pub fn into_account_map_entry<U: DiskIndexValue + From<T> + Into<T>>(
+    pub(crate) fn into_account_map_entry<U: DiskIndexValue + From<T> + Into<T>>(
         self,
         storage: &Arc<BucketMapHolder<T, U>>,
     ) -> AccountMapEntry<T> {
@@ -427,30 +427,30 @@ impl Default for RootsTracker {
 }
 
 impl RootsTracker {
-    pub fn new(max_width: u64) -> Self {
+    pub(crate) fn new(max_width: u64) -> Self {
         Self {
             alive_roots: RollingBitField::new(max_width),
             uncleaned_roots: IntSet::default(),
         }
     }
 
-    pub fn min_alive_root(&self) -> Option<Slot> {
+    pub(crate) fn min_alive_root(&self) -> Option<Slot> {
         self.alive_roots.min()
     }
 }
 
 #[derive(Debug, Default)]
-pub struct AccountsIndexRootsStats {
-    pub roots_len: Option<usize>,
-    pub uncleaned_roots_len: Option<usize>,
-    pub roots_range: Option<u64>,
-    pub rooted_cleaned_count: usize,
-    pub unrooted_cleaned_count: usize,
-    pub clean_unref_from_storage_us: u64,
-    pub clean_dead_slot_us: u64,
+pub(crate) struct AccountsIndexRootsStats {
+    pub(crate) roots_len: Option<usize>,
+    pub(crate) uncleaned_roots_len: Option<usize>,
+    pub(crate) roots_range: Option<u64>,
+    pub(crate) rooted_cleaned_count: usize,
+    pub(crate) unrooted_cleaned_count: usize,
+    pub(crate) clean_unref_from_storage_us: u64,
+    pub(crate) clean_dead_slot_us: u64,
 }
 
-pub struct AccountsIndexIterator<'a, T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
+pub(crate) struct AccountsIndexIterator<'a, T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
     account_maps: &'a LockMapTypeSlice<T, U>,
     bin_calculator: &'a PubkeyBinCalculator24,
     start_bound: Bound<Pubkey>,
@@ -518,7 +518,7 @@ impl<'a, T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndexIter
         (start_bin, bin_range)
     }
 
-    pub fn new<R>(
+    pub(crate) fn new<R>(
         index: &'a AccountsIndex<T, U>,
         range: Option<&R>,
         collect_all_unsorted: bool,
@@ -542,7 +542,7 @@ impl<'a, T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndexIter
         }
     }
 
-    pub fn hold_range_in_memory<R>(&self, range: &R, start_holding: bool, thread_pool: &ThreadPool)
+    pub(crate) fn hold_range_in_memory<R>(&self, range: &R, start_holding: bool, thread_pool: &ThreadPool)
     where
         R: RangeBounds<Pubkey> + Debug + Sync,
     {
@@ -605,22 +605,22 @@ type LockMapTypeSlice<T, U> = [MapType<T, U>];
 type AccountMaps<'a, T, U> = &'a MapType<T, U>;
 
 #[derive(Debug, Default)]
-pub struct ScanSlotTracker {
+pub(crate) struct ScanSlotTracker {
     is_removed: bool,
 }
 
 impl ScanSlotTracker {
-    pub fn is_removed(&self) -> bool {
+    pub(crate) fn is_removed(&self) -> bool {
         self.is_removed
     }
 
-    pub fn mark_removed(&mut self) {
+    pub(crate) fn mark_removed(&mut self) {
         self.is_removed = true;
     }
 }
 
 #[derive(Copy, Clone)]
-pub enum AccountsIndexScanResult {
+pub(crate) enum AccountsIndexScanResult {
     /// if the entry is not in the in-memory index, do not add it unless the entry becomes dirty
     OnlyKeepInMemoryIfDirty,
     /// keep the entry in the in-memory index
@@ -633,8 +633,8 @@ pub enum AccountsIndexScanResult {
 /// T: account info type to interact in in-memory items
 /// U: account info type to be persisted to disk
 pub struct AccountsIndex<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
-    pub account_maps: LockMapType<T, U>,
-    pub bin_calculator: PubkeyBinCalculator24,
+    pub(crate) account_maps: LockMapType<T, U>,
+    pub(crate) bin_calculator: PubkeyBinCalculator24,
     program_id_index: SecondaryIndex<RwLockSecondaryIndexEntry>,
     spl_token_mint_index: SecondaryIndex<RwLockSecondaryIndexEntry>,
     spl_token_owner_index: SecondaryIndex<RwLockSecondaryIndexEntry>,
@@ -650,7 +650,7 @@ pub struct AccountsIndex<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
     // `removed_bank_ids` tracks all the slot ids that were removed via `remove_unrooted_slots()` so any attempted scans
     // on any of these slots fails. This is safe to purge once the associated Bank is dropped and
     // scanning the fork with that Bank at the tip is no longer possible.
-    pub removed_bank_ids: Mutex<HashSet<BankId>>,
+    pub(crate) removed_bank_ids: Mutex<HashSet<BankId>>,
 
     storage: AccountsIndexStorage<T, U>,
 
@@ -658,24 +658,24 @@ pub struct AccountsIndex<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
     pub scan_results_limit_bytes: Option<usize>,
 
     /// # roots added since last check
-    pub roots_added: AtomicUsize,
+    pub(crate) roots_added: AtomicUsize,
     /// # roots removed since last check
-    pub roots_removed: AtomicUsize,
+    pub(crate) roots_removed: AtomicUsize,
     /// # scans active currently
-    pub active_scans: AtomicUsize,
+    pub(crate) active_scans: AtomicUsize,
     /// # of slots between latest max and latest scan
-    pub max_distance_to_min_scan_slot: AtomicU64,
+    pub(crate) max_distance_to_min_scan_slot: AtomicU64,
 
     /// populated at generate_index time - accounts that could possibly be rent paying
     pub rent_paying_accounts_by_partition: OnceLock<RentPayingAccountsByPartition>,
 }
 
 impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
-    pub fn default_for_tests() -> Self {
+    pub(crate) fn default_for_tests() -> Self {
         Self::new(Some(ACCOUNTS_INDEX_CONFIG_FOR_TESTING), Arc::default())
     }
 
-    pub fn new(config: Option<AccountsIndexConfig>, exit: Arc<AtomicBool>) -> Self {
+    pub(crate) fn new(config: Option<AccountsIndexConfig>, exit: Arc<AtomicBool>) -> Self {
         let scan_results_limit_bytes = config
             .as_ref()
             .and_then(|config| config.scan_results_limit_bytes);
@@ -734,7 +734,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
     }
 
     /// is the accounts index using disk as a backing store
-    pub fn is_disk_index_enabled(&self) -> bool {
+    pub(crate) fn is_disk_index_enabled(&self) -> bool {
         self.storage.storage.is_disk_index_enabled()
     }
 
@@ -1126,7 +1126,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
     /// Gets the index's entry for `pubkey` and clones it
     ///
     /// Prefer `get_and_then()` whenever possible.
-    pub fn get_cloned(&self, pubkey: &Pubkey) -> Option<AccountMapEntry<T>> {
+    pub(crate) fn get_cloned(&self, pubkey: &Pubkey) -> Option<AccountMapEntry<T>> {
         self.get_bin(pubkey)
             .get_internal_cloned(pubkey, |entry| entry)
     }
@@ -1160,7 +1160,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
     /// Remove keys from the account index if the key's slot list is empty.
     /// Returns the keys that were removed from the index. These keys should not be accessed again in the current code path.
     #[must_use]
-    pub fn handle_dead_keys(
+    pub(crate) fn handle_dead_keys(
         &self,
         dead_keys: &[&Pubkey],
         account_indexes: &AccountSecondaryIndexes,
@@ -1261,7 +1261,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         )
     }
 
-    pub fn get_rooted_entries(
+    pub(crate) fn get_rooted_entries(
         &self,
         slice: SlotSlice<T>,
         max_inclusive: Option<Slot>,
@@ -1302,7 +1302,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         .unwrap_or(true)
     }
 
-    pub fn min_ongoing_scan_root(&self) -> Option<Slot> {
+    pub(crate) fn min_ongoing_scan_root(&self) -> Option<Slot> {
         Self::min_ongoing_scan_root_from_btree(&self.ongoing_scan_roots.read().unwrap())
     }
 
@@ -1347,7 +1347,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         rv.map(|index| slice.len() - 1 - index)
     }
 
-    pub fn hold_range_in_memory<R>(&self, range: &R, start_holding: bool, thread_pool: &ThreadPool)
+    pub(crate) fn hold_range_in_memory<R>(&self, range: &R, start_holding: bool, thread_pool: &ThreadPool)
     where
         R: RangeBounds<Pubkey> + Debug + Sync,
     {
@@ -1360,11 +1360,11 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         &self.storage.storage.startup_stats
     }
 
-    pub fn set_startup(&self, value: Startup) {
+    pub(crate) fn set_startup(&self, value: Startup) {
         self.storage.set_startup(value);
     }
 
-    pub fn get_startup_remaining_items_to_flush_estimate(&self) -> usize {
+    pub(crate) fn get_startup_remaining_items_to_flush_estimate(&self) -> usize {
         self.storage.get_startup_remaining_items_to_flush_estimate()
     }
 
@@ -1577,7 +1577,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         &self.account_maps[self.bin_calculator.bin_from_pubkey(pubkey)]
     }
 
-    pub fn bins(&self) -> usize {
+    pub(crate) fn bins(&self) -> usize {
         self.account_maps.len()
     }
 
@@ -1737,7 +1737,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
 
     /// Updates the given pubkey at the given slot with the new account information.
     /// on return, the index's previous account info may be returned in 'reclaims' depending on 'previous_slot_entry_was_cached'
-    pub fn upsert(
+    pub(crate) fn upsert(
         &self,
         new_slot: Slot,
         old_slot: Slot,
@@ -1839,7 +1839,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
     ///  or does not exist in the accounts index
     /// This means it should NOT be unref'd later.
     #[must_use]
-    pub fn clean_rooted_entries(
+    pub(crate) fn clean_rooted_entries(
         &self,
         pubkey: &Pubkey,
         reclaims: &mut SlotList<T>,
@@ -1886,7 +1886,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
     }
 
     /// Given a list of slots, return a new list of only the slots that are rooted
-    pub fn get_rooted_from_list<'a>(&self, slots: impl Iterator<Item = &'a Slot>) -> Vec<Slot> {
+    pub(crate) fn get_rooted_from_list<'a>(&self, slots: impl Iterator<Item = &'a Slot>) -> Vec<Slot> {
         let roots_tracker = self.roots_tracker.read().unwrap();
         slots
             .filter_map(|s| {
@@ -1916,7 +1916,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         w_roots_tracker.alive_roots.insert(slot);
     }
 
-    pub fn add_uncleaned_roots<I>(&self, roots: I)
+    pub(crate) fn add_uncleaned_roots<I>(&self, roots: I)
     where
         I: IntoIterator<Item = Slot>,
     {
@@ -1924,7 +1924,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         w_roots_tracker.uncleaned_roots.extend(roots);
     }
 
-    pub fn max_root_inclusive(&self) -> Slot {
+    pub(crate) fn max_root_inclusive(&self) -> Slot {
         self.roots_tracker
             .read()
             .unwrap()
@@ -1935,7 +1935,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
     /// Remove the slot when the storage for the slot is freed
     /// Accounts no longer reference this slot.
     /// return true if slot was a root
-    pub fn clean_dead_slot(&self, slot: Slot) -> bool {
+    pub(crate) fn clean_dead_slot(&self, slot: Slot) -> bool {
         let mut w_roots_tracker = self.roots_tracker.write().unwrap();
         let removed_from_unclean_roots = w_roots_tracker.uncleaned_roots.remove(&slot);
         if !w_roots_tracker.alive_roots.remove(&slot) {
@@ -1958,7 +1958,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         stats.roots_range = Some(roots_tracker.alive_roots.range_width());
     }
 
-    pub fn min_alive_root(&self) -> Option<Slot> {
+    pub(crate) fn min_alive_root(&self) -> Option<Slot> {
         self.roots_tracker.read().unwrap().min_alive_root()
     }
 
@@ -1973,20 +1973,20 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         });
     }
 
-    pub fn num_alive_roots(&self) -> usize {
+    pub(crate) fn num_alive_roots(&self) -> usize {
         self.roots_tracker.read().unwrap().alive_roots.len()
     }
 
-    pub fn all_alive_roots(&self) -> Vec<Slot> {
+    pub(crate) fn all_alive_roots(&self) -> Vec<Slot> {
         let tracker = self.roots_tracker.read().unwrap();
         tracker.alive_roots.get_all()
     }
 
-    pub fn clone_uncleaned_roots(&self) -> IntSet<Slot> {
+    pub(crate) fn clone_uncleaned_roots(&self) -> IntSet<Slot> {
         self.roots_tracker.read().unwrap().uncleaned_roots.clone()
     }
 
-    pub fn uncleaned_roots_len(&self) -> usize {
+    pub(crate) fn uncleaned_roots_len(&self) -> usize {
         self.roots_tracker.read().unwrap().uncleaned_roots.len()
     }
 
@@ -2006,7 +2006,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {
         super::*,
         solana_inline_spl::token::SPL_TOKEN_ACCOUNT_OWNER_OFFSET,
@@ -2027,7 +2027,7 @@ pub mod tests {
         DashMap(&'a SecondaryIndex<DashMapSecondaryIndexEntry>),
     }
 
-    pub fn spl_token_mint_index_enabled() -> AccountSecondaryIndexes {
+    pub(crate) fn spl_token_mint_index_enabled() -> AccountSecondaryIndexes {
         let mut account_indexes = HashSet::new();
         account_indexes.insert(AccountIndex::SplTokenMint);
         AccountSecondaryIndexes {
@@ -2036,7 +2036,7 @@ pub mod tests {
         }
     }
 
-    pub fn spl_token_owner_index_enabled() -> AccountSecondaryIndexes {
+    pub(crate) fn spl_token_owner_index_enabled() -> AccountSecondaryIndexes {
         let mut account_indexes = HashSet::new();
         account_indexes.insert(AccountIndex::SplTokenOwner);
         AccountSecondaryIndexes {
@@ -3958,7 +3958,7 @@ pub mod tests {
             assert!(gc.is_empty());
         }
 
-        pub fn clear_uncleaned_roots(&self, max_clean_root: Option<Slot>) -> HashSet<Slot> {
+        pub(crate) fn clear_uncleaned_roots(&self, max_clean_root: Option<Slot>) -> HashSet<Slot> {
             let mut cleaned_roots = HashSet::new();
             let mut w_roots_tracker = self.roots_tracker.write().unwrap();
             w_roots_tracker.uncleaned_roots.retain(|root| {
@@ -3982,7 +3982,7 @@ pub mod tests {
                 .contains(&slot)
         }
 
-        pub fn clear_roots(&self) {
+        pub(crate) fn clear_roots(&self) {
             self.roots_tracker.write().unwrap().alive_roots.clear()
         }
     }

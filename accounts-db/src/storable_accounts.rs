@@ -93,7 +93,7 @@ lazy_static! {
 }
 
 #[derive(Default, Debug)]
-pub struct StorableAccountsCacher {
+pub(crate) struct StorableAccountsCacher {
     slot: Slot,
     storage: Option<Arc<AccountStorageEntry>>,
 }
@@ -289,7 +289,7 @@ impl<'a> StorableAccounts<'a> for StorableAccountsBySlot<'a> {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {
         super::*,
         crate::{
@@ -432,7 +432,7 @@ pub mod tests {
         assert!(!test3.contains_multiple_slots());
     }
 
-    pub fn build_accounts_from_storage<'a>(
+    pub(crate) fn build_accounts_from_storage<'a>(
         accounts: impl Iterator<Item = &'a StoredAccountMeta<'a>>,
     ) -> Vec<AccountFromStorage> {
         accounts

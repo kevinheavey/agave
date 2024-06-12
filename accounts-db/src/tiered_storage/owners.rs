@@ -14,7 +14,7 @@ use {
 /// Note that as its internal type is u32, it means the maximum number of
 /// unique owners in one TieredStorageFile is 2^32.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd)]
-pub struct OwnerOffset(pub u32);
+pub struct OwnerOffset(pub(crate) u32);
 
 /// Owner block holds a set of unique addresses of account owners,
 /// and an account meta has a owner_offset field for accessing
@@ -41,7 +41,7 @@ pub enum OwnersBlockFormat {
 
 impl OwnersBlockFormat {
     /// Persists the provided owners' addresses into the specified file.
-    pub fn write_owners_block(
+    pub(crate) fn write_owners_block(
         &self,
         file: &mut TieredWritableFile,
         owners_table: &OwnersTable,
@@ -60,7 +60,7 @@ impl OwnersBlockFormat {
 
     /// Returns the owner address associated with the specified owner_offset
     /// and footer inside the input mmap.
-    pub fn get_owner_address<'a>(
+    pub(crate) fn get_owner_address<'a>(
         &self,
         mmap: &'a Mmap,
         footer: &TieredStorageFooter,
@@ -81,7 +81,7 @@ impl OwnersBlockFormat {
 /// The in-memory representation of owners block for write.
 /// It manages a set of unique addresses of account owners.
 #[derive(Debug, Default)]
-pub struct OwnersTable {
+pub(crate) struct OwnersTable {
     owners_set: IndexSet<Pubkey>,
 }
 
@@ -92,19 +92,19 @@ impl OwnersTable {
     /// Add the specified pubkey as the owner into the OwnersWriterTable
     /// if the specified pubkey has not existed in the OwnersWriterTable
     /// yet.  In any case, the function returns its OwnerOffset.
-    pub fn insert(&mut self, pubkey: &Pubkey) -> OwnerOffset {
+    pub(crate) fn insert(&mut self, pubkey: &Pubkey) -> OwnerOffset {
         let (offset, _existed) = self.owners_set.insert_full(*pubkey);
 
         OwnerOffset(offset as u32)
     }
 
     /// Returns the number of unique owner addresses in the table.
-    pub fn len(&self) -> usize {
+    pub(crate) fn len(&self) -> usize {
         self.owners_set.len()
     }
 
     /// Returns true if the OwnersTable is empty
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.len() == 0
     }
 }

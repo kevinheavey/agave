@@ -42,7 +42,7 @@ impl PartialEq<RollingBitField> for RollingBitField {
 /// Relies on there being a sliding window of key values. The key values continue to increase.
 /// Old key values are removed from the lesser values and do not accumulate.
 impl RollingBitField {
-    pub fn new(max_width: u64) -> Self {
+    pub(crate) fn new(max_width: u64) -> Self {
         assert!(max_width > 0);
         assert!(max_width.is_power_of_two()); // power of 2 to make dividing a shift
         let bits = BitVec::new_fill(false, max_width);
@@ -61,12 +61,12 @@ impl RollingBitField {
         key % self.max_width
     }
 
-    pub fn range_width(&self) -> u64 {
+    pub(crate) fn range_width(&self) -> u64 {
         // note that max isn't updated on remove, so it can be above the current max
         self.max_exclusive - self.min
     }
 
-    pub fn min(&self) -> Option<u64> {
+    pub(crate) fn min(&self) -> Option<u64> {
         if self.is_empty() {
             None
         } else if self.excess.is_empty() {
@@ -212,7 +212,7 @@ impl RollingBitField {
 
     // This is the 99% use case.
     // This needs be fast for the most common case of asking for key >= min.
-    pub fn contains(&self, key: &u64) -> bool {
+    pub(crate) fn contains(&self, key: &u64) -> bool {
         if key < &self.max_exclusive {
             if key >= &self.min {
                 // in the bitfield range
@@ -225,24 +225,24 @@ impl RollingBitField {
         }
     }
 
-    pub fn len(&self) -> usize {
+    pub(crate) fn len(&self) -> usize {
         self.count
     }
 
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
-    pub fn max_exclusive(&self) -> u64 {
+    pub(crate) fn max_exclusive(&self) -> u64 {
         self.max_exclusive
     }
 
-    pub fn max_inclusive(&self) -> u64 {
+    pub(crate) fn max_inclusive(&self) -> u64 {
         self.max_exclusive.saturating_sub(1)
     }
 
     /// return all items < 'max_slot_exclusive'
-    pub fn get_all_less_than(&self, max_slot_exclusive: Slot) -> Vec<u64> {
+    pub(crate) fn get_all_less_than(&self, max_slot_exclusive: Slot) -> Vec<u64> {
         let mut all = Vec::with_capacity(self.count);
         self.excess.iter().for_each(|slot| {
             if slot < &max_slot_exclusive {
@@ -262,7 +262,7 @@ impl RollingBitField {
     }
 
     /// return highest item < 'max_slot_exclusive'
-    pub fn get_prior(&self, max_slot_exclusive: Slot) -> Option<Slot> {
+    pub(crate) fn get_prior(&self, max_slot_exclusive: Slot) -> Option<Slot> {
         let mut slot = max_slot_exclusive.saturating_sub(1);
         self.min().and_then(|min| {
             loop {
@@ -278,7 +278,7 @@ impl RollingBitField {
         })
     }
 
-    pub fn get_all(&self) -> Vec<u64> {
+    pub(crate) fn get_all(&self) -> Vec<u64> {
         let mut all = Vec::with_capacity(self.count);
         self.excess.iter().for_each(|slot| all.push(*slot));
         for key in self.min..self.max_exclusive {
@@ -293,17 +293,17 @@ impl RollingBitField {
     ///
     /// The iterator yields all the 'set' bits.
     /// Note, the iteration order of the bits in 'excess' is not deterministic.
-    pub fn iter_ones(&self) -> RollingBitFieldOnesIter<'_> {
+    pub(crate) fn iter_ones(&self) -> RollingBitFieldOnesIter<'_> {
         RollingBitFieldOnesIter::new(self)
     }
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {super::*, log::*, solana_measure::measure::Measure, std::collections::HashSet};
 
     impl RollingBitField {
-        pub fn clear(&mut self) {
+        pub(crate) fn clear(&mut self) {
             *self = Self::new(self.max_width);
         }
     }
@@ -505,8 +505,8 @@ pub mod tests {
     }
 
     struct RollingBitFieldTester {
-        pub bitfield: RollingBitField,
-        pub hash_set: HashSet<u64>,
+        pub(crate) bitfield: RollingBitField,
+        pub(crate) hash_set: HashSet<u64>,
     }
 
     impl RollingBitFieldTester {

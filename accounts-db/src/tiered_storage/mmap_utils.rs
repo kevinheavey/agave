@@ -8,7 +8,7 @@ use {
 /// Borrows a value of type `T` from `mmap`
 ///
 /// Type T must be plain ol' data to ensure no undefined behavior.
-pub fn get_pod<T: bytemuck::AnyBitPattern>(mmap: &Mmap, offset: usize) -> IoResult<(&T, usize)> {
+pub(crate) fn get_pod<T: bytemuck::AnyBitPattern>(mmap: &Mmap, offset: usize) -> IoResult<(&T, usize)> {
     // SAFETY: Since T is AnyBitPattern, it is safe to cast bytes to T.
     unsafe { get_type::<T>(mmap, offset) }
 }
@@ -22,7 +22,7 @@ pub fn get_pod<T: bytemuck::AnyBitPattern>(mmap: &Mmap, offset: usize) -> IoResu
 /// Caller must ensure casting bytes to T is safe.
 /// Refer to the Safety sections in std::slice::from_raw_parts()
 /// and bytemuck's Pod and AnyBitPattern for more information.
-pub unsafe fn get_type<T>(mmap: &Mmap, offset: usize) -> IoResult<(&T, usize)> {
+pub(crate) unsafe fn get_type<T>(mmap: &Mmap, offset: usize) -> IoResult<(&T, usize)> {
     let (data, next) = get_slice(mmap, offset, std::mem::size_of::<T>())?;
     let ptr = data.as_ptr().cast();
     debug_assert!(ptr as usize % std::mem::align_of::<T>() == 0);
@@ -36,7 +36,7 @@ pub unsafe fn get_type<T>(mmap: &Mmap, offset: usize) -> IoResult<(&T, usize)> {
 /// doesn't overrun the internal buffer. Otherwise return an Error.
 /// Also return the offset of the first byte after the requested data that
 /// falls on a 64-byte boundary.
-pub fn get_slice(mmap: &Mmap, offset: usize, size: usize) -> IoResult<(&[u8], usize)> {
+pub(crate) fn get_slice(mmap: &Mmap, offset: usize, size: usize) -> IoResult<(&[u8], usize)> {
     let (next, overflow) = offset.overflowing_add(size);
     if overflow || next > mmap.len() {
         error!(

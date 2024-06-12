@@ -42,7 +42,7 @@ pub enum TestPartitionedEpochRewards {
 }
 
 impl PartitionedEpochRewardsConfig {
-    pub fn new(test: TestPartitionedEpochRewards) -> Self {
+    pub(crate) fn new(test: TestPartitionedEpochRewards) -> Self {
         match test {
             TestPartitionedEpochRewards::None => Self::default(),
             TestPartitionedEpochRewards::CompareResults => {

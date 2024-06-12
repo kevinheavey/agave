@@ -40,15 +40,15 @@ struct ReadOnlyAccountCacheEntry {
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct ReadOnlyCacheStats {
-    pub hits: u64,
-    pub misses: u64,
-    pub evicts: u64,
-    pub load_us: u64,
-    pub store_us: u64,
-    pub evict_us: u64,
-    pub evictor_wakeup_count_all: u64,
-    pub evictor_wakeup_count_productive: u64,
+pub(crate) struct ReadOnlyCacheStats {
+    pub(crate) hits: u64,
+    pub(crate) misses: u64,
+    pub(crate) evicts: u64,
+    pub(crate) load_us: u64,
+    pub(crate) store_us: u64,
+    pub(crate) evict_us: u64,
+    pub(crate) evictor_wakeup_count_all: u64,
+    pub(crate) evictor_wakeup_count_productive: u64,
 }
 
 #[derive(Default, Debug)]
@@ -426,7 +426,7 @@ mod tests {
 
         /// reset the read only accounts cache
         #[cfg(feature = "dev-context-only-utils")]
-        pub fn reset_for_tests(&self) {
+        pub(crate) fn reset_for_tests(&self) {
             self.cache.clear();
             self.queue.lock().unwrap().clear();
             self.data_size.store(0, Ordering::Relaxed);

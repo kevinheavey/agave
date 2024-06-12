@@ -12,21 +12,21 @@ use {
 };
 
 /// offset within an append vec to account data
-pub type Offset = usize;
+pub(crate) type Offset = usize;
 
 /// bytes used to store this account in append vec
 /// Note this max needs to be big enough to handle max data len of 10MB, which is a const
-pub type StoredSize = u32;
+pub(crate) type StoredSize = u32;
 
 /// specify where account data is located
 #[derive(Debug, PartialEq, Eq)]
-pub enum StorageLocation {
+pub(crate) enum StorageLocation {
     AppendVec(AccountsFileId, Offset),
     Cached,
 }
 
 impl StorageLocation {
-    pub fn is_offset_equal(&self, other: &StorageLocation) -> bool {
+    pub(crate) fn is_offset_equal(&self, other: &StorageLocation) -> bool {
         match self {
             StorageLocation::Cached => {
                 matches!(other, StorageLocation::Cached) // technically, 2 cached entries match in offset
@@ -41,7 +41,7 @@ impl StorageLocation {
             }
         }
     }
-    pub fn is_store_id_equal(&self, other: &StorageLocation) -> bool {
+    pub(crate) fn is_store_id_equal(&self, other: &StorageLocation) -> bool {
         match self {
             StorageLocation::Cached => {
                 matches!(other, StorageLocation::Cached) // 2 cached entries are same store id
@@ -61,7 +61,7 @@ impl StorageLocation {
 /// how large the offset we store in AccountInfo is
 /// Note this is a smaller datatype than 'Offset'
 /// AppendVecs store accounts aligned to u64, so offset is always a multiple of 8 (sizeof(u64))
-pub type OffsetReduced = u32;
+pub(crate) type OffsetReduced = u32;
 
 /// This is an illegal value for 'offset'.
 /// Account size on disk would have to be pointing to the very last 8 byte value in the max sized append vec.
@@ -75,7 +75,7 @@ const CACHED_OFFSET: OffsetReduced = (1 << (OffsetReduced::BITS - 1)) - 1;
 #[bitfield(bits = 32)]
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
-pub struct PackedOffsetAndFlags {
+pub(crate) struct PackedOffsetAndFlags {
     /// this provides 2^31 bits, which when multiplied by 8 (sizeof(u64)) = 16G, which is the maximum size of an append vec
     offset_reduced: B31,
     /// use 1 bit to specify that the entry is zero lamport
@@ -91,7 +91,7 @@ pub struct AccountInfo {
 }
 
 #[derive(Default, Debug, PartialEq, Eq, Clone, Copy)]
-pub struct AccountOffsetAndFlags {
+pub(crate) struct AccountOffsetAndFlags {
     /// offset = 'packed_offset_and_flags.offset_reduced()' * ALIGN_BOUNDARY_OFFSET into the storage
     /// Note this is a smaller type than 'Offset'
     packed_offset_and_flags: PackedOffsetAndFlags,
@@ -124,7 +124,7 @@ impl IsCached for StorageLocation {
 const CACHE_VIRTUAL_STORAGE_ID: AccountsFileId = AccountsFileId::MAX;
 
 impl AccountInfo {
-    pub fn new(storage_location: StorageLocation, lamports: u64) -> Self {
+    pub(crate) fn new(storage_location: StorageLocation, lamports: u64) -> Self {
         let mut packed_offset_and_flags = PackedOffsetAndFlags::default();
         let store_id = match storage_location {
             StorageLocation::AppendVec(store_id, offset) => {
@@ -156,17 +156,17 @@ impl AccountInfo {
         }
     }
 
-    pub fn get_reduced_offset(offset: usize) -> OffsetReduced {
+    pub(crate) fn get_reduced_offset(offset: usize) -> OffsetReduced {
         (offset / ALIGN_BOUNDARY_OFFSET) as OffsetReduced
     }
 
-    pub fn store_id(&self) -> AccountsFileId {
+    pub(crate) fn store_id(&self) -> AccountsFileId {
         // if the account is in a cached store, the store_id is meaningless
         assert!(!self.is_cached());
         self.store_id
     }
 
-    pub fn offset(&self) -> Offset {
+    pub(crate) fn offset(&self) -> Offset {
         Self::reduced_offset_to_offset(
             self.account_offset_and_flags
                 .packed_offset_and_flags
@@ -174,11 +174,11 @@ impl AccountInfo {
         )
     }
 
-    pub fn reduced_offset_to_offset(reduced_offset: OffsetReduced) -> Offset {
+    pub(crate) fn reduced_offset_to_offset(reduced_offset: OffsetReduced) -> Offset {
         (reduced_offset as Offset) * ALIGN_BOUNDARY_OFFSET
     }
 
-    pub fn storage_location(&self) -> StorageLocation {
+    pub(crate) fn storage_location(&self) -> StorageLocation {
         if self.is_cached() {
             StorageLocation::Cached
         } else {

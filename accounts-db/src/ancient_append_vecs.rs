@@ -933,7 +933,7 @@ impl<'a> PackedAncientStorage<'a> {
 /// a set of accounts need to be stored.
 /// If there are too many to fit in 'Primary', the rest are put in 'Overflow'
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-pub enum StorageSelector {
+pub(crate) enum StorageSelector {
     Primary,
     Overflow,
 }
@@ -943,7 +943,7 @@ pub enum StorageSelector {
 /// The 'store' functions need data stored in a slice of specific type.
 /// We need 1-2 of these slices constructed based on available bytes and individual account sizes.
 /// The slice arithmetic across both hashes and account data gets messy. So, this struct abstracts that.
-pub struct AccountsToStore<'a> {
+pub(crate) struct AccountsToStore<'a> {
     accounts: &'a [&'a AccountFromStorage],
     /// if 'accounts' contains more items than can be contained in the primary storage, then we have to split these accounts.
     /// 'index_first_item_overflow' specifies the index of the first item in 'accounts' that will go into the overflow storage
@@ -958,7 +958,7 @@ pub struct AccountsToStore<'a> {
 impl<'a> AccountsToStore<'a> {
     /// break 'stored_accounts' into primary and overflow
     /// available_bytes: how many bytes remain in the primary storage. Excess accounts will be directed to an overflow storage
-    pub fn new(
+    pub(crate) fn new(
         mut available_bytes: u64,
         accounts: &'a [&'a AccountFromStorage],
         alive_total_bytes: usize,
@@ -996,12 +996,12 @@ impl<'a> AccountsToStore<'a> {
     }
 
     /// true if a request to 'get' 'Overflow' would return accounts & hashes
-    pub fn has_overflow(&self) -> bool {
+    pub(crate) fn has_overflow(&self) -> bool {
         self.index_first_item_overflow < self.accounts.len()
     }
 
     /// return # required bytes for the given selector
-    pub fn get_bytes(&self, selector: StorageSelector) -> usize {
+    pub(crate) fn get_bytes(&self, selector: StorageSelector) -> usize {
         match selector {
             StorageSelector::Primary => self.bytes_primary,
             StorageSelector::Overflow => self.bytes_overflow,
@@ -1009,7 +1009,7 @@ impl<'a> AccountsToStore<'a> {
     }
 
     /// get the accounts to store in the given 'storage'
-    pub fn get(&self, storage: StorageSelector) -> &[&'a AccountFromStorage] {
+    pub(crate) fn get(&self, storage: StorageSelector) -> &[&'a AccountFromStorage] {
         let range = match storage {
             StorageSelector::Primary => 0..self.index_first_item_overflow,
             StorageSelector::Overflow => self.index_first_item_overflow..self.accounts.len(),
@@ -1017,14 +1017,14 @@ impl<'a> AccountsToStore<'a> {
         &self.accounts[range]
     }
 
-    pub fn slot(&self) -> Slot {
+    pub(crate) fn slot(&self) -> Slot {
         self.slot
     }
 }
 
 /// capacity of an ancient append vec
 #[allow(clippy::assertions_on_constants, dead_code)]
-pub const fn get_ancient_append_vec_capacity() -> u64 {
+pub(crate) const fn get_ancient_append_vec_capacity() -> u64 {
     // There is a trade-off for selecting the ancient append vec size. Smaller non-ancient append vec are getting
     // combined into large ancient append vec. Too small size of ancient append vec will result in too many ancient append vec
     // memory mapped files. Too big size will make it difficult to clean and shrink them. Hence, we choose approximately
@@ -1046,12 +1046,12 @@ pub const fn get_ancient_append_vec_capacity() -> u64 {
 }
 
 /// is this a max-size append vec designed to be used as an ancient append vec?
-pub fn is_ancient(storage: &AccountsFile) -> bool {
+pub(crate) fn is_ancient(storage: &AccountsFile) -> bool {
     storage.capacity() >= get_ancient_append_vec_capacity()
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {
         super::*,
         crate::{
@@ -2970,7 +2970,7 @@ pub mod tests {
         PackedStorages,
     }
 
-    pub fn build_refs_accounts_from_storage_with_slot(
+    pub(crate) fn build_refs_accounts_from_storage_with_slot(
         accounts: &[(Slot, Vec<AccountFromStorage>)],
     ) -> Vec<(Slot, Vec<&AccountFromStorage>)> {
         accounts
@@ -2979,7 +2979,7 @@ pub mod tests {
             .collect::<Vec<_>>()
     }
 
-    pub fn build_refs_accounts_from_storage_with_slot2<'a>(
+    pub(crate) fn build_refs_accounts_from_storage_with_slot2<'a>(
         accounts: &'a [(Slot, Vec<&'a AccountFromStorage>)],
     ) -> Vec<(Slot, &'a [&'a AccountFromStorage])> {
         accounts

@@ -19,7 +19,7 @@ use {
 
 // Data placement should be aligned at the next boundary. Without alignment accessing the memory may
 // crash on some architectures.
-pub const ALIGN_BOUNDARY_OFFSET: usize = mem::size_of::<u64>();
+pub(crate) const ALIGN_BOUNDARY_OFFSET: usize = mem::size_of::<u64>();
 #[macro_export]
 macro_rules! u64_align {
     ($addr: expr) => {
@@ -55,7 +55,7 @@ pub enum StorageAccess {
     Mmap,
 }
 
-pub type Result<T> = std::result::Result<T, AccountsFileError>;
+pub(crate) type Result<T> = std::result::Result<T, AccountsFileError>;
 
 #[derive(Debug)]
 /// An enum for accessing an accounts file which can be implemented
@@ -96,21 +96,21 @@ impl AccountsFile {
         }
     }
 
-    pub fn flush(&self) -> Result<()> {
+    pub(crate) fn flush(&self) -> Result<()> {
         match self {
             Self::AppendVec(av) => av.flush(),
             Self::TieredStorage(_) => Ok(()),
         }
     }
 
-    pub fn reset(&self) {
+    pub(crate) fn reset(&self) {
         match self {
             Self::AppendVec(av) => av.reset(),
             Self::TieredStorage(_) => {}
         }
     }
 
-    pub fn remaining_bytes(&self) -> u64 {
+    pub(crate) fn remaining_bytes(&self) -> u64 {
         match self {
             Self::AppendVec(av) => av.remaining_bytes(),
             Self::TieredStorage(ts) => ts.capacity().saturating_sub(ts.len() as u64),
@@ -124,14 +124,14 @@ impl AccountsFile {
         }
     }
 
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         match self {
             Self::AppendVec(av) => av.is_empty(),
             Self::TieredStorage(ts) => ts.is_empty(),
         }
     }
 
-    pub fn capacity(&self) -> u64 {
+    pub(crate) fn capacity(&self) -> u64 {
         match self {
             Self::AppendVec(av) => av.capacity(),
             Self::TieredStorage(ts) => ts.capacity(),
@@ -143,7 +143,7 @@ impl AccountsFile {
     }
 
     /// calls `callback` with the account located at the specified index offset.
-    pub fn get_stored_account_meta_callback<Ret>(
+    pub(crate) fn get_stored_account_meta_callback<Ret>(
         &self,
         offset: usize,
         callback: impl for<'local> FnMut(StoredAccountMeta<'local>) -> Ret,
@@ -177,7 +177,7 @@ impl AccountsFile {
         }
     }
 
-    pub fn account_matches_owners(
+    pub(crate) fn account_matches_owners(
         &self,
         offset: usize,
         owners: &[Pubkey],
@@ -264,7 +264,7 @@ impl AccountsFile {
     /// So, return.len() is 1 + (number of accounts written)
     /// After each account is appended, the internal `current_len` is updated
     /// and will be available to other threads.
-    pub fn append_accounts<'a>(
+    pub(crate) fn append_accounts<'a>(
         &self,
         accounts: &impl StorableAccounts<'a>,
         skip: usize,
@@ -308,7 +308,7 @@ pub enum AccountsFileProvider {
 }
 
 impl AccountsFileProvider {
-    pub fn new_writable(&self, path: impl Into<PathBuf>, file_size: u64) -> AccountsFile {
+    pub(crate) fn new_writable(&self, path: impl Into<PathBuf>, file_size: u64) -> AccountsFile {
         match self {
             Self::AppendVec => {
                 AccountsFile::AppendVec(AppendVec::new(path, true, file_size as usize))
@@ -329,15 +329,15 @@ pub enum InternalsForArchive<'a> {
 
 /// Information after storing accounts
 #[derive(Debug)]
-pub struct StoredAccountsInfo {
+pub(crate) struct StoredAccountsInfo {
     /// offset in the storage where each account was stored
-    pub offsets: Vec<usize>,
+    pub(crate) offsets: Vec<usize>,
     /// total size of all the stored accounts
-    pub size: usize,
+    pub(crate) size: usize,
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use crate::accounts_file::AccountsFile;
     impl AccountsFile {
         pub(crate) fn set_current_len_for_tests(&self, len: usize) {

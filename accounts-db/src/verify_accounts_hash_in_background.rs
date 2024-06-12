@@ -95,7 +95,7 @@ impl VerifyAccountsHashInBackground {
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {super::*, std::thread::Builder};
 
     #[test]

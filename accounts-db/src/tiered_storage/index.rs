@@ -10,22 +10,22 @@ use {
 
 /// The in-memory struct for the writing index block.
 #[derive(Debug)]
-pub struct AccountIndexWriterEntry<Offset: AccountOffset> {
+pub(crate) struct AccountIndexWriterEntry<Offset: AccountOffset> {
     /// The account address.
-    pub address: Pubkey,
+    pub(crate) address: Pubkey,
     /// The offset to the account.
-    pub offset: Offset,
+    pub(crate) offset: Offset,
 }
 
 /// The offset to an account.
-pub trait AccountOffset: Clone + Copy + Pod + Zeroable {}
+pub(crate) trait AccountOffset: Clone + Copy + Pod + Zeroable {}
 
 /// The offset to an account/address entry in the accounts index block.
 /// This can be used to obtain the AccountOffset and address by looking through
 /// the accounts index block.
 #[repr(C)]
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Pod, Zeroable)]
-pub struct IndexOffset(pub u32);
+pub(crate) struct IndexOffset(pub(crate) u32);
 
 // Ensure there are no implicit padding bytes
 const _: () = assert!(std::mem::size_of::<IndexOffset>() == 4);
@@ -57,7 +57,7 @@ const _: () = assert!(std::mem::size_of::<IndexBlockFormat>() == 2);
 impl IndexBlockFormat {
     /// Persists the specified index_entries to the specified file and returns
     /// the total number of bytes written.
-    pub fn write_index_block(
+    pub(crate) fn write_index_block(
         &self,
         file: &mut TieredWritableFile,
         index_entries: &[AccountIndexWriterEntry<impl AccountOffset>],
@@ -77,7 +77,7 @@ impl IndexBlockFormat {
     }
 
     /// Returns the address of the account given the specified index.
-    pub fn get_account_address<'a>(
+    pub(crate) fn get_account_address<'a>(
         &self,
         mmap: &'a Mmap,
         footer: &TieredStorageFooter,
@@ -104,7 +104,7 @@ impl IndexBlockFormat {
     }
 
     /// Returns the offset to the account given the specified index.
-    pub fn get_account_offset<Offset: AccountOffset>(
+    pub(crate) fn get_account_offset<Offset: AccountOffset>(
         &self,
         mmap: &Mmap,
         footer: &TieredStorageFooter,
@@ -133,7 +133,7 @@ impl IndexBlockFormat {
     }
 
     /// Returns the size of one index entry.
-    pub fn entry_size<Offset: AccountOffset>(&self) -> usize {
+    pub(crate) fn entry_size<Offset: AccountOffset>(&self) -> usize {
         match self {
             Self::AddressesThenOffsets => {
                 std::mem::size_of::<Pubkey>() + std::mem::size_of::<Offset>()

@@ -28,12 +28,12 @@ type CacheRangesHeld = RwLock<Vec<RangeInclusive<Pubkey>>>;
 type InMemMap<T> = HashMap<Pubkey, AccountMapEntry<T>>;
 
 #[derive(Debug, Default)]
-pub struct StartupStats {
-    pub copy_data_us: AtomicU64,
+pub(crate) struct StartupStats {
+    pub(crate) copy_data_us: AtomicU64,
 }
 
 #[derive(Debug)]
-pub struct PossibleEvictions<T: IndexValue> {
+pub(crate) struct PossibleEvictions<T: IndexValue> {
     /// vec per age in the future, up to size 'ages_to_stay_in_cache'
     possible_evictions: Vec<FlushScanResult<T>>,
     /// next index to use into 'possible_evictions'
@@ -88,7 +88,7 @@ impl<T: IndexValue> PossibleEvictions<T> {
 }
 
 // one instance of this represents one bin of the accounts index.
-pub struct InMemAccountsIndex<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
+pub(crate) struct InMemAccountsIndex<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
     last_age_flushed: AtomicAge,
 
     // backing store
@@ -99,7 +99,7 @@ pub struct InMemAccountsIndex<T: IndexValue, U: DiskIndexValue + From<T> + Into<
     bucket: Option<Arc<BucketApi<(Slot, U)>>>,
 
     // pubkey ranges that this bin must hold in the cache while the range is present in this vec
-    pub cache_ranges_held: CacheRangesHeld,
+    pub(crate) cache_ranges_held: CacheRangesHeld,
     // incremented each time stop_evictions is changed
     stop_evictions_changes: AtomicU64,
     // true while ranges are being manipulated. Used to keep an async flush from removing things while a range is being held.
@@ -132,7 +132,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> Debug for InMemAccoun
     }
 }
 
-pub enum InsertNewEntryResults {
+pub(crate) enum InsertNewEntryResults {
     DidNotExist,
     ExistedNewEntryZeroLamports,
     ExistedNewEntryNonZeroLamports,
@@ -165,7 +165,7 @@ struct FlushScanResult<T> {
 }
 
 impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T, U> {
-    pub fn new(storage: &Arc<BucketMapHolder<T, U>>, bin: usize) -> Self {
+    pub(crate) fn new(storage: &Arc<BucketMapHolder<T, U>>, bin: usize) -> Self {
         let num_ages_to_distribute_flushes = Age::MAX - storage.ages_to_stay_in_cache;
         Self {
             map_internal: RwLock::default(),
@@ -214,14 +214,14 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
     /// Release entire in-mem hashmap to free all memory associated with it.
     /// Idea is that during startup we needed a larger map than we need during runtime.
     /// When using disk-buckets, in-mem index grows over time with dynamic use and then shrinks, in theory back to 0.
-    pub fn shrink_to_fit(&self) {
+    pub(crate) fn shrink_to_fit(&self) {
         // shrink_to_fit could be quite expensive on large map sizes, which 'no disk buckets' could produce, so avoid shrinking in case we end up here
         if self.storage.is_disk_index_enabled() {
             self.map_internal.write().unwrap().shrink_to_fit();
         }
     }
 
-    pub fn items<R>(&self, range: &R) -> Vec<(K, AccountMapEntry<T>)>
+    pub(crate) fn items<R>(&self, range: &R) -> Vec<(K, AccountMapEntry<T>)>
     where
         R: RangeBounds<Pubkey> + std::fmt::Debug,
     {
@@ -242,7 +242,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
     }
 
     // only called in debug code paths
-    pub fn keys(&self) -> Vec<Pubkey> {
+    pub(crate) fn keys(&self) -> Vec<Pubkey> {
         Self::update_stat(&self.stats().keys, 1);
         // easiest implementation is to load everything from disk into cache and return the keys
         let evictions_guard = EvictionsGuard::lock(self);
@@ -456,7 +456,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
 
     // If the slot list for pubkey exists in the index and is empty, remove the index entry for pubkey and return true.
     // Return false otherwise.
-    pub fn remove_if_slot_list_empty(&self, pubkey: Pubkey) -> bool {
+    pub(crate) fn remove_if_slot_list_empty(&self, pubkey: Pubkey) -> bool {
         let mut m = Measure::start("entry");
         let mut map = self.map_internal.write().unwrap();
         let entry = map.entry(pubkey);
@@ -469,7 +469,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
         result
     }
 
-    pub fn slot_list_mut<RT>(
+    pub(crate) fn slot_list_mut<RT>(
         &self,
         pubkey: &Pubkey,
         user: impl for<'a> FnOnce(&mut RwLockWriteGuard<'a, SlotList<T>>) -> RT,
@@ -504,7 +504,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
         self.set_age_to_future(entry, upsert_cached);
     }
 
-    pub fn upsert(
+    pub(crate) fn upsert(
         &self,
         pubkey: &Pubkey,
         new_value: PreAllocatedAccountMapEntry<T>,
@@ -582,7 +582,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
     /// the new item.
     /// if 'other_slot' is some, then also remove any entries in the slot list that are at 'other_slot'
     /// return resulting len of slot list
-    pub fn lock_and_update_slot_list(
+    pub(crate) fn lock_and_update_slot_list(
         current: &AccountMapEntryInner<T>,
         new_value: (Slot, T),
         other_slot: Option<Slot>,
@@ -703,13 +703,13 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
         ))
     }
 
-    pub fn len_for_stats(&self) -> usize {
+    pub(crate) fn len_for_stats(&self) -> usize {
         self.stats().count_in_bucket(self.bin)
     }
 
     /// Queue up these insertions for when the flush thread is dealing with this bin.
     /// This is very fast and requires no lookups or disk access.
-    pub fn startup_insert_only(&self, items: impl Iterator<Item = (Pubkey, (Slot, T))>) {
+    pub(crate) fn startup_insert_only(&self, items: impl Iterator<Item = (Pubkey, (Slot, T))>) {
         assert!(self.storage.get_startup());
         assert!(self.bucket.is_some());
 
@@ -723,7 +723,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
             .fetch_add(m.end_as_us(), Ordering::Relaxed);
     }
 
-    pub fn insert_new_entry_if_missing_with_lock(
+    pub(crate) fn insert_new_entry_if_missing_with_lock(
         &self,
         pubkey: Pubkey,
         new_entry: PreAllocatedAccountMapEntry<T>,
@@ -902,7 +902,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
     ///  'range' will be removed from cache_ranges_held
     ///  and all pubkeys will be eligible for being removed from in-mem cache in the bg if no other range is holding them
     /// Any in-process flush will be aborted when it gets to evicting items from in-mem.
-    pub fn hold_range_in_memory<R>(&self, range: &R, start_holding: bool)
+    pub(crate) fn hold_range_in_memory<R>(&self, range: &R, start_holding: bool)
     where
         R: RangeBounds<Pubkey> + Debug,
     {
@@ -961,7 +961,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
         self.stop_evictions_changes.load(Ordering::Acquire)
     }
 
-    pub fn flush(&self, can_advance_age: bool) {
+    pub(crate) fn flush(&self, can_advance_age: bool) {
         if let Some(flush_guard) = FlushGuard::lock(&self.flushing_active) {
             self.flush_internal(&flush_guard, can_advance_age)
         }
@@ -1128,7 +1128,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
     /// duplicate pubkeys have a slot list with len > 1
     /// These were collected for this bin when we did batch inserts in the bg flush threads.
     /// Insert these into the in-mem index, then return the duplicate (Slot, Pubkey)
-    pub fn populate_and_retrieve_duplicate_keys_from_startup(&self) -> Vec<(Slot, Pubkey)> {
+    pub(crate) fn populate_and_retrieve_duplicate_keys_from_startup(&self) -> Vec<(Slot, Pubkey)> {
         // in order to return accurate and complete duplicates, we must have nothing left remaining to insert
         assert!(self.startup_info.insert.lock().unwrap().is_empty());
 
@@ -1435,7 +1435,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
         Self::update_stat(&self.stats().failed_to_evict, failed as u64);
     }
 
-    pub fn stats(&self) -> &BucketMapHolderStats {
+    pub(crate) fn stats(&self) -> &BucketMapHolderStats {
         &self.storage.stats
     }
 
@@ -1445,7 +1445,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> InMemAccountsIndex<T,
         }
     }
 
-    pub fn update_time_stat(stat: &AtomicU64, mut m: Measure) {
+    pub(crate) fn update_time_stat(stat: &AtomicU64, mut m: Measure) {
         m.stop();
         let value = m.as_us();
         Self::update_stat(stat, value);

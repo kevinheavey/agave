@@ -361,7 +361,7 @@ pub struct RentPayingAccountsByPartition {
     /// At the moment, we use this data structure to verify all rent paying accounts are expected.
     /// When we stop iterating the accounts index to FIND rent paying accounts, we will no longer need this to be a hashset.
     /// It can just be a vec.
-    pub accounts: Vec<HashSet<Pubkey>>,
+    pub(crate) accounts: Vec<HashSet<Pubkey>>,
     partition_count: PartitionsPerCycle,
 }
 

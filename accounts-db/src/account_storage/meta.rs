@@ -30,7 +30,7 @@ impl<'storage> StoredAccountMeta<'storage> {
         }
     }
 
-    pub fn hash(&self) -> &'storage AccountHash {
+    pub(crate) fn hash(&self) -> &'storage AccountHash {
         match self {
             Self::AppendVec(av) => av.hash(),
             // tiered-storage has deprecated the use of AccountHash
@@ -52,7 +52,7 @@ impl<'storage> StoredAccountMeta<'storage> {
         }
     }
 
-    pub fn data(&self) -> &'storage [u8] {
+    pub(crate) fn data(&self) -> &'storage [u8] {
         match self {
             Self::AppendVec(av) => av.data(),
             Self::Hot(hot) => hot.data(),
@@ -66,7 +66,7 @@ impl<'storage> StoredAccountMeta<'storage> {
         }
     }
 
-    pub fn write_version(&self) -> StoredMetaWriteVersion {
+    pub(crate) fn write_version(&self) -> StoredMetaWriteVersion {
         match self {
             Self::AppendVec(av) => av.write_version(),
             // Hot account does not support this API as it does not
@@ -75,7 +75,7 @@ impl<'storage> StoredAccountMeta<'storage> {
         }
     }
 
-    pub fn meta(&self) -> &StoredMeta {
+    pub(crate) fn meta(&self) -> &StoredMeta {
         match self {
             Self::AppendVec(av) => av.meta(),
             // Hot account does not support this API as it does not
@@ -131,30 +131,30 @@ impl<'storage> ReadableAccount for StoredAccountMeta<'storage> {
 /// So the data layout must be stable and consistent across the entire cluster!
 #[derive(Clone, PartialEq, Eq, Debug)]
 #[repr(C)]
-pub struct StoredMeta {
+pub(crate) struct StoredMeta {
     /// global write version
     /// This will be made completely obsolete such that we stop storing it.
     /// We will not support multiple append vecs per slot anymore, so this concept is no longer necessary.
     /// Order of stores of an account to an append vec will determine 'latest' account data per pubkey.
-    pub write_version_obsolete: StoredMetaWriteVersion,
-    pub data_len: u64,
+    pub(crate) write_version_obsolete: StoredMetaWriteVersion,
+    pub(crate) data_len: u64,
     /// key for the account
-    pub pubkey: Pubkey,
+    pub(crate) pubkey: Pubkey,
 }
 
 /// This struct will be backed by mmaped and snapshotted data files.
 /// So the data layout must be stable and consistent across the entire cluster!
 #[derive(Serialize, Deserialize, Clone, Debug, Default, Eq, PartialEq)]
 #[repr(C)]
-pub struct AccountMeta {
+pub(crate) struct AccountMeta {
     /// lamports in the account
-    pub lamports: u64,
+    pub(crate) lamports: u64,
     /// the epoch at which this account will next owe rent
-    pub rent_epoch: Epoch,
+    pub(crate) rent_epoch: Epoch,
     /// the program that owns this account. If executable, the program that loads this account.
-    pub owner: Pubkey,
+    pub(crate) owner: Pubkey,
     /// this account's data contains a loaded program (and is now read-only)
-    pub executable: bool,
+    pub(crate) executable: bool,
 }
 
 impl<'a, T: ReadableAccount> From<&'a T> for AccountMeta {

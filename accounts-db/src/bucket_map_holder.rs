@@ -23,48 +23,48 @@ use {
         time::Duration,
     },
 };
-pub type Age = u8;
-pub type AtomicAge = AtomicU8;
+pub(crate) type Age = u8;
+pub(crate) type AtomicAge = AtomicU8;
 const _: () = assert!(std::mem::size_of::<Age>() == std::mem::size_of::<AtomicAge>());
 
 const AGE_MS: u64 = DEFAULT_MS_PER_SLOT; // match one age per slot time
 
 // 10 GB limit for in-mem idx. In practice, we don't get this high. This tunes how aggressively to save items we expect to use soon.
-pub const DEFAULT_DISK_INDEX: Option<usize> = Some(10_000);
+pub(crate) const DEFAULT_DISK_INDEX: Option<usize> = Some(10_000);
 
-pub struct BucketMapHolder<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
-    pub disk: Option<BucketMap<(Slot, U)>>,
+pub(crate) struct BucketMapHolder<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> {
+    pub(crate) disk: Option<BucketMap<(Slot, U)>>,
 
-    pub count_buckets_flushed: AtomicUsize,
+    pub(crate) count_buckets_flushed: AtomicUsize,
 
     /// These three ages are individual atomics because their values are read many times from code during runtime.
     /// Instead of accessing the single age and doing math each time, each value is incremented each time the age occurs, which is ~400ms.
     /// Callers can ask for the precomputed value they already want.
     /// rolling 'current' age
-    pub age: AtomicAge,
+    pub(crate) age: AtomicAge,
     /// rolling age that is 'ages_to_stay_in_cache' + 'age'
-    pub future_age_to_flush: AtomicAge,
+    pub(crate) future_age_to_flush: AtomicAge,
     /// rolling age that is effectively 'age' - 1
     /// these items are expected to be flushed from the accounts write cache or otherwise modified before this age occurs
-    pub future_age_to_flush_cached: AtomicAge,
+    pub(crate) future_age_to_flush_cached: AtomicAge,
 
-    pub stats: BucketMapHolderStats,
+    pub(crate) stats: BucketMapHolderStats,
 
     age_timer: AtomicInterval,
 
     // used by bg processing to know when any bucket has become dirty
-    pub wait_dirty_or_aged: Arc<WaitableCondvar>,
+    pub(crate) wait_dirty_or_aged: Arc<WaitableCondvar>,
     next_bucket_to_flush: AtomicUsize,
     bins: usize,
 
-    pub threads: usize,
+    pub(crate) threads: usize,
 
     // how much mb are we allowed to keep in the in-mem index?
     // Rest goes to disk.
-    pub mem_budget_mb: Option<usize>,
+    pub(crate) mem_budget_mb: Option<usize>,
 
     /// how many ages should elapse from the last time an item is used where the item will remain in the cache
-    pub ages_to_stay_in_cache: Age,
+    pub(crate) ages_to_stay_in_cache: Age,
 
     /// startup is a special time for flush to focus on moving everything to disk as fast and efficiently as possible
     /// with less thread count limitations. LRU and access patterns are not important. Freeing memory
@@ -85,11 +85,11 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> Debug for BucketMapHo
 #[allow(clippy::mutex_atomic)]
 impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U> {
     /// is the accounts index using disk as a backing store
-    pub fn is_disk_index_enabled(&self) -> bool {
+    pub(crate) fn is_disk_index_enabled(&self) -> bool {
         self.disk.is_some()
     }
 
-    pub fn increment_age(&self) {
+    pub(crate) fn increment_age(&self) {
         // since we are about to change age, there are now 0 buckets that have been flushed at this age
         // this should happen before the age.fetch_add
         // Otherwise, as soon as we increment the age, a thread could race us and flush before we swap this out since it detects the age has moved forward and a bucket will be eligible for flushing.
@@ -109,7 +109,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
         self.wait_dirty_or_aged.notify_all(); // notify all because we can age scan in parallel
     }
 
-    pub fn future_age_to_flush(&self, is_cached: bool) -> Age {
+    pub(crate) fn future_age_to_flush(&self, is_cached: bool) -> Age {
         if is_cached {
             &self.future_age_to_flush_cached
         } else {
@@ -124,14 +124,14 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
     }
 
     /// used by bg processes to determine # active threads and how aggressively to flush
-    pub fn get_startup(&self) -> bool {
+    pub(crate) fn get_startup(&self) -> bool {
         self.startup.load(Ordering::Relaxed)
     }
 
     /// startup=true causes:
     ///      in mem to act in a way that flushes to disk asap
     /// startup=false is 'normal' operation
-    pub fn set_startup(&self, value: bool) {
+    pub(crate) fn set_startup(&self, value: bool) {
         if !value {
             self.wait_for_idle();
         }
@@ -139,7 +139,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
     }
 
     /// return when the bg threads have reached an 'idle' state
-    pub fn wait_for_idle(&self) {
+    pub(crate) fn wait_for_idle(&self) {
         assert!(self.get_startup());
         if self.disk.is_none() {
             return;
@@ -157,11 +157,11 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
         }
     }
 
-    pub fn current_age(&self) -> Age {
+    pub(crate) fn current_age(&self) -> Age {
         self.age.load(Ordering::Acquire)
     }
 
-    pub fn bucket_flushed_at_current_age(&self, can_advance_age: bool) {
+    pub(crate) fn bucket_flushed_at_current_age(&self, can_advance_age: bool) {
         let count_buckets_flushed = 1 + self.count_buckets_flushed.fetch_add(1, Ordering::AcqRel);
         if can_advance_age {
             self.maybe_advance_age_internal(
@@ -171,7 +171,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
     }
 
     /// have all buckets been flushed at the current age?
-    pub fn all_buckets_flushed_at_current_age(&self) -> bool {
+    pub(crate) fn all_buckets_flushed_at_current_age(&self) -> bool {
         self.all_buckets_flushed_at_current_age_internal(self.count_buckets_flushed())
     }
 
@@ -180,12 +180,12 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
         count_buckets_flushed >= self.bins
     }
 
-    pub fn count_buckets_flushed(&self) -> usize {
+    pub(crate) fn count_buckets_flushed(&self) -> usize {
         self.count_buckets_flushed.load(Ordering::Acquire)
     }
 
     /// if all buckets are flushed at the current age and time has elapsed, then advance age
-    pub fn maybe_advance_age(&self) -> bool {
+    pub(crate) fn maybe_advance_age(&self) -> bool {
         self.maybe_advance_age_internal(self.all_buckets_flushed_at_current_age())
     }
 
@@ -200,7 +200,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
         }
     }
 
-    pub fn new(bins: usize, config: &Option<AccountsIndexConfig>, threads: usize) -> Self {
+    pub(crate) fn new(bins: usize, config: &Option<AccountsIndexConfig>, threads: usize) -> Self {
         const DEFAULT_AGE_TO_STAY_IN_CACHE: Age = 5;
         let ages_to_stay_in_cache = config
             .as_ref()
@@ -279,7 +279,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
 
     // get the next bucket to flush, with the idea that the previous bucket
     // is perhaps being flushed by another thread already.
-    pub fn next_bucket_to_flush(&self) -> usize {
+    pub(crate) fn next_bucket_to_flush(&self) -> usize {
         self.next_bucket_to_flush
             .fetch_update(Ordering::AcqRel, Ordering::Acquire, |bucket| {
                 Some((bucket + 1) % self.bins)
@@ -343,7 +343,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
     }
 
     // intended to execute in a bg thread
-    pub fn background(
+    pub(crate) fn background(
         &self,
         exit: Vec<Arc<AtomicBool>>,
         in_mem: Vec<Arc<InMemAccountsIndex<T, U>>>,
@@ -413,7 +413,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> BucketMapHolder<T, U>
 }
 
 #[cfg(test)]
-pub mod tests {
+pub(crate) mod tests {
     use {super::*, rayon::prelude::*, std::time::Instant};
 
     #[test]

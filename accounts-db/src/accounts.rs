@@ -48,7 +48,7 @@ pub type PubkeyAccountSlot = (Pubkey, AccountSharedData, Slot);
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Debug, Default)]
-pub struct AccountLocks {
+pub(crate) struct AccountLocks {
     write_locks: HashSet<Pubkey>,
     readonly_locks: HashMap<Pubkey, u64>,
 }
@@ -1408,13 +1408,13 @@ mod tests {
 
     impl Accounts {
         /// callers used to call store_uncached. But, this is not allowed anymore.
-        pub fn store_for_tests(&self, slot: Slot, pubkey: &Pubkey, account: &AccountSharedData) {
+        pub(crate) fn store_for_tests(&self, slot: Slot, pubkey: &Pubkey, account: &AccountSharedData) {
             self.accounts_db.store_for_tests(slot, &[(pubkey, account)])
         }
 
         /// useful to adapt tests written prior to introduction of the write cache
         /// to use the write cache
-        pub fn add_root_and_flush_write_cache(&self, slot: Slot) {
+        pub(crate) fn add_root_and_flush_write_cache(&self, slot: Slot) {
             self.add_root(slot);
             self.accounts_db.flush_accounts_cache_slot_for_tests(slot);
         }

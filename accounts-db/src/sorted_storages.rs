@@ -22,7 +22,7 @@ pub struct SortedStorages<'a> {
 
 impl<'a> SortedStorages<'a> {
     /// containing nothing
-    pub fn empty() -> Self {
+    pub(crate) fn empty() -> Self {
         SortedStorages {
             range: Range::default(),
             storages: HashMap::default(),
@@ -30,7 +30,7 @@ impl<'a> SortedStorages<'a> {
     }
 
     /// primary method of retrieving [`(Slot, Arc<AccountStorageEntry>)`]
-    pub fn iter_range<R>(&'a self, range: &R) -> SortedStoragesIter<'a>
+    pub(crate) fn iter_range<R>(&'a self, range: &R) -> SortedStoragesIter<'a>
     where
         R: RangeBounds<Slot>,
     {
@@ -41,23 +41,23 @@ impl<'a> SortedStorages<'a> {
         self.storages.get(&slot).copied()
     }
 
-    pub fn range_width(&self) -> Slot {
+    pub(crate) fn range_width(&self) -> Slot {
         self.range.end - self.range.start
     }
 
-    pub fn range(&self) -> &Range<Slot> {
+    pub(crate) fn range(&self) -> &Range<Slot> {
         &self.range
     }
 
-    pub fn max_slot_inclusive(&self) -> Slot {
+    pub(crate) fn max_slot_inclusive(&self) -> Slot {
         self.range.end.saturating_sub(1)
     }
 
-    pub fn slot_count(&self) -> usize {
+    pub(crate) fn slot_count(&self) -> usize {
         self.storages.len()
     }
 
-    pub fn storage_count(&self) -> usize {
+    pub(crate) fn storage_count(&self) -> usize {
         self.storages.len()
     }
 
@@ -133,7 +133,7 @@ impl<'a> SortedStorages<'a> {
 /// Iterator over successive slots in 'storages' within 'range'.
 /// This enforces sequential access so that random access does not have to be implemented.
 /// Random access could be expensive with large sparse sets.
-pub struct SortedStoragesIter<'a> {
+pub(crate) struct SortedStoragesIter<'a> {
     /// range for the iterator to iterate over (start_inclusive..end_exclusive)
     range: Range<Slot>,
     /// the data to return per slot
@@ -159,7 +159,7 @@ impl<'a> Iterator for SortedStoragesIter<'a> {
 }
 
 impl<'a> SortedStoragesIter<'a> {
-    pub fn new<R: RangeBounds<Slot>>(
+    pub(crate) fn new<R: RangeBounds<Slot>>(
         storages: &'a SortedStorages<'a>,
         range: &R,
     ) -> SortedStoragesIter<'a> {
@@ -203,7 +203,7 @@ mod tests {
     };
 
     impl<'a> SortedStorages<'a> {
-        pub fn new_debug(
+        pub(crate) fn new_debug(
             source: &[(&'a Arc<AccountStorageEntry>, Slot)],
             min: Slot,
             len: usize,
@@ -220,7 +220,7 @@ mod tests {
             Self { range, storages }
         }
 
-        pub fn new_for_tests(storages: &[&'a Arc<AccountStorageEntry>], slots: &[Slot]) -> Self {
+        pub(crate) fn new_for_tests(storages: &[&'a Arc<AccountStorageEntry>], slots: &[Slot]) -> Self {
             assert_eq!(storages.len(), slots.len());
             SortedStorages::new_with_slots(
                 storages.iter().cloned().zip(slots.iter().cloned()),

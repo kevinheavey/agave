@@ -1,15 +1,15 @@
 #![allow(dead_code)]
 
-pub mod byte_block;
-pub mod error;
-pub mod file;
-pub mod footer;
-pub mod hot;
-pub mod index;
-pub mod meta;
-pub mod mmap_utils;
-pub mod owners;
-pub mod readable;
+pub(crate) mod byte_block;
+pub(crate) mod error;
+pub(crate) mod file;
+pub(crate) mod footer;
+pub(crate) mod hot;
+pub(crate) mod index;
+pub(crate) mod meta;
+pub(crate) mod mmap_utils;
+pub(crate) mod owners;
+pub(crate) mod readable;
 mod test_utils;
 
 use {
@@ -30,19 +30,19 @@ use {
     },
 };
 
-pub type TieredStorageResult<T> = Result<T, TieredStorageError>;
+pub(crate) type TieredStorageResult<T> = Result<T, TieredStorageError>;
 
 const MAX_TIERED_STORAGE_FILE_SIZE: u64 = 16 * 1024 * 1024 * 1024; // 16 GiB;
 
 /// The struct that defines the formats of all building blocks of a
 /// TieredStorage.
 #[derive(Clone, Debug, PartialEq)]
-pub struct TieredStorageFormat {
-    pub meta_entry_size: usize,
-    pub account_meta_format: AccountMetaFormat,
-    pub owners_block_format: OwnersBlockFormat,
-    pub index_block_format: IndexBlockFormat,
-    pub account_block_format: AccountBlockFormat,
+pub(crate) struct TieredStorageFormat {
+    pub(crate) meta_entry_size: usize,
+    pub(crate) account_meta_format: AccountMetaFormat,
+    pub(crate) owners_block_format: OwnersBlockFormat,
+    pub(crate) index_block_format: IndexBlockFormat,
+    pub(crate) account_block_format: AccountBlockFormat,
 }
 
 /// The implementation of AccountsFile for tiered-storage.
@@ -77,7 +77,7 @@ impl TieredStorage {
     ///
     /// Note that the actual file will not be created until write_accounts
     /// is called.
-    pub fn new_writable(path: impl Into<PathBuf>) -> Self {
+    pub(crate) fn new_writable(path: impl Into<PathBuf>) -> Self {
         Self {
             reader: OnceLock::<TieredStorageReader>::new(),
             already_written: false.into(),
@@ -87,7 +87,7 @@ impl TieredStorage {
 
     /// Creates a new read-only instance of TieredStorage from the
     /// specified path.
-    pub fn new_readonly(path: impl Into<PathBuf>) -> TieredStorageResult<Self> {
+    pub(crate) fn new_readonly(path: impl Into<PathBuf>) -> TieredStorageResult<Self> {
         let path = path.into();
         Ok(Self {
             reader: TieredStorageReader::new_from_path(&path).map(OnceLock::from)?,
@@ -97,7 +97,7 @@ impl TieredStorage {
     }
 
     /// Returns the path to this TieredStorage.
-    pub fn path(&self) -> &Path {
+    pub(crate) fn path(&self) -> &Path {
         self.path.as_path()
     }
 
@@ -105,7 +105,7 @@ impl TieredStorage {
     ///
     /// Note that this function can only be called once per a TieredStorage
     /// instance.  Otherwise, it will trigger panic.
-    pub fn write_accounts<'a>(
+    pub(crate) fn write_accounts<'a>(
         &self,
         accounts: &impl StorableAccounts<'a>,
         skip: usize,
@@ -141,26 +141,26 @@ impl TieredStorage {
 
     /// Returns the underlying reader of the TieredStorage.  None will be
     /// returned if it's is_read_only() returns false.
-    pub fn reader(&self) -> Option<&TieredStorageReader> {
+    pub(crate) fn reader(&self) -> Option<&TieredStorageReader> {
         self.reader.get()
     }
 
     /// Returns true if the TieredStorage instance is read-only.
-    pub fn is_read_only(&self) -> bool {
+    pub(crate) fn is_read_only(&self) -> bool {
         self.reader.get().is_some()
     }
 
     /// Returns the size of the underlying accounts file.
-    pub fn len(&self) -> usize {
+    pub(crate) fn len(&self) -> usize {
         self.reader().map_or(0, |reader| reader.len())
     }
 
     /// Returns whether the underlying storage is empty.
-    pub fn is_empty(&self) -> bool {
+    pub(crate) fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
-    pub fn capacity(&self) -> u64 {
+    pub(crate) fn capacity(&self) -> u64 {
         self.reader()
             .map_or(MAX_TIERED_STORAGE_FILE_SIZE, |reader| reader.capacity())
     }

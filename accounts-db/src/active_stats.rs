@@ -3,7 +3,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 
 /// counters of different areas of a validator which could be active
 #[derive(Debug, Default)]
-pub struct ActiveStats {
+pub(crate) struct ActiveStats {
     clean: AtomicUsize,
     squash_ancient: AtomicUsize,
     shrink: AtomicUsize,
@@ -15,7 +15,7 @@ pub struct ActiveStats {
 }
 
 #[derive(Debug, Copy, Clone)]
-pub enum ActiveStatItem {
+pub(crate) enum ActiveStatItem {
     Clean,
     Shrink,
     SquashAncient,
@@ -27,7 +27,7 @@ pub enum ActiveStatItem {
 }
 
 /// sole purpose is to handle 'drop' so that stat is decremented when self is dropped
-pub struct ActiveStatGuard<'a> {
+pub(crate) struct ActiveStatGuard<'a> {
     stats: &'a ActiveStats,
     item: ActiveStatItem,
 }
@@ -43,7 +43,7 @@ impl<'a> Drop for ActiveStatGuard<'a> {
 impl ActiveStats {
     #[must_use]
     /// create a stack object to set the state to increment stat initially and decrement on drop
-    pub fn activate(&self, stat: ActiveStatItem) -> ActiveStatGuard<'_> {
+    pub(crate) fn activate(&self, stat: ActiveStatItem) -> ActiveStatGuard<'_> {
         self.update_and_log(stat, |stat| {
             stat.fetch_add(1, Ordering::Relaxed).wrapping_add(1)
         });
