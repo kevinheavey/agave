@@ -56,6 +56,10 @@ impl From<u64> for PubkeyError {
     }
 }
 
+/// wasm-bindgen version of the Pubkey struct.
+/// This duplication is required until https://github.com/rustwasm/wasm-bindgen/issues/3671
+/// is fixed. This must not diverge from the regular non-wasm Pubkey struct.
+/// 
 /// The address of a [Solana account][acc].
 ///
 /// Some account addresses are [ed25519] public keys, with corresponding secret
