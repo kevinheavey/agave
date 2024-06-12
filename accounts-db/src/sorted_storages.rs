@@ -41,10 +41,6 @@ impl<'a> SortedStorages<'a> {
         self.storages.get(&slot).copied()
     }
 
-    pub(crate) fn range_width(&self) -> Slot {
-        self.range.end - self.range.start
-    }
-
     pub(crate) fn range(&self) -> &Range<Slot> {
         &self.range
     }

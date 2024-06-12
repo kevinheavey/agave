@@ -125,10 +125,6 @@ impl<'append_vec> AppendVecStoredAccountMeta<'append_vec> {
         self.meta.data_len
     }
 
-    pub(crate) fn write_version(&self) -> StoredMetaWriteVersion {
-        self.meta.write_version_obsolete
-    }
-
     pub(crate) fn meta(&self) -> &StoredMeta {
         self.meta
     }

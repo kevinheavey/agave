@@ -47,7 +47,6 @@ impl<'a> StorableAccounts<'a> for (Slot, &'a [StakeReward]) {
 use {
     rand::Rng,
     solana_sdk::{
-        account::WritableAccount,
         rent::Rent,
         signature::{Keypair, Signer},
     },
@@ -95,11 +94,5 @@ impl StakeReward {
 
             stake_account: validator_stake_account,
         }
-    }
-
-    pub(crate) fn credit(&mut self, amount: u64) {
-        self.stake_reward_info.lamports = amount as i64;
-        self.stake_reward_info.post_balance += amount;
-        self.stake_account.checked_add_lamports(amount).unwrap();
     }
 }

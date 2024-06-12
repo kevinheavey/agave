@@ -123,7 +123,6 @@ const SCAN_SLOT_PAR_ITER_THRESHOLD: usize = 4000;
 const UNREF_ACCOUNTS_BATCH_SIZE: usize = 10_000;
 
 pub(crate) const DEFAULT_FILE_SIZE: u64 = PAGE_SIZE * 1024;
-pub(crate) const DEFAULT_NUM_THREADS: u32 = 8;
 pub(crate) const DEFAULT_NUM_DIRS: u32 = 4;
 
 // When calculating hashes, it is helpful to break the pubkeys found into bins based on the pubkey value.
@@ -2634,10 +2633,6 @@ impl AccountsDb {
         new
     }
 
-    pub(crate) fn file_size(&self) -> u64 {
-        self.file_size
-    }
-
     /// Get the base working directory
     pub fn get_base_working_path(&self) -> PathBuf {
         self.base_working_path.clone()
@@ -2660,11 +2655,6 @@ impl AccountsDb {
             size,
             self.accounts_file_provider,
         )
-    }
-
-    pub(crate) fn expected_cluster_type(&self) -> ClusterType {
-        self.cluster_type
-            .expect("Cluster type must be set at initialization")
     }
 
     /// Reclaim older states of accounts older than max_clean_root_inclusive for AccountsDb bloat mitigation.
@@ -6745,11 +6735,6 @@ impl AccountsDb {
                 i64
             ),
         );
-    }
-
-    pub(crate) fn checked_iterative_sum_for_capitalization(total_cap: u64, new_cap: u64) -> u64 {
-        let new_total = total_cap as u128 + new_cap as u128;
-        AccountsHasher::checked_cast_for_capitalization(new_total)
     }
 
     pub(crate) fn checked_sum_for_capitalization<T: Iterator<Item = u64>>(balances: T) -> u64 {

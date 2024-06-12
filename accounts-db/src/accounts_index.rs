@@ -604,21 +604,6 @@ type LockMapType<T, U> = Vec<MapType<T, U>>;
 type LockMapTypeSlice<T, U> = [MapType<T, U>];
 type AccountMaps<'a, T, U> = &'a MapType<T, U>;
 
-#[derive(Debug, Default)]
-pub(crate) struct ScanSlotTracker {
-    is_removed: bool,
-}
-
-impl ScanSlotTracker {
-    pub(crate) fn is_removed(&self) -> bool {
-        self.is_removed
-    }
-
-    pub(crate) fn mark_removed(&mut self) {
-        self.is_removed = true;
-    }
-}
-
 #[derive(Copy, Clone)]
 pub(crate) enum AccountsIndexScanResult {
     /// if the entry is not in the in-memory index, do not add it unless the entry becomes dirty
@@ -1971,10 +1956,6 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
             // Only keep the slots that have yet to be cleaned
             !is_cleaned
         });
-    }
-
-    pub(crate) fn num_alive_roots(&self) -> usize {
-        self.roots_tracker.read().unwrap().alive_roots.len()
     }
 
     pub(crate) fn all_alive_roots(&self) -> Vec<Slot> {
@@ -3982,9 +3963,6 @@ pub(crate) mod tests {
                 .contains(&slot)
         }
 
-        pub(crate) fn clear_roots(&self) {
-            self.roots_tracker.write().unwrap().alive_roots.clear()
-        }
     }
 
     #[test]
