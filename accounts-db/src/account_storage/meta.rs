@@ -66,6 +66,7 @@ impl<'storage> StoredAccountMeta<'storage> {
         }
     }
 
+    #[cfg(test)]
     pub(crate) fn meta(&self) -> &StoredMeta {
         match self {
             Self::AppendVec(av) => av.meta(),

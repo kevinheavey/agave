@@ -560,9 +560,11 @@ impl AccountFromStorage {
     pub fn stored_size(&self) -> usize {
         aligned_stored_size(self.data_len as usize)
     }
+    #[cfg(test)]
     pub(crate) fn data_len(&self) -> usize {
         self.data_len as usize
     }
+    #[cfg(test)]
     pub(crate) fn new(account: &StoredAccountMeta) -> Self {
         // the id is irrelevant in this account info. This structure is only used DURING shrink operations.
         // In those cases, there is only 1 append vec id per slot when we read the accounts.
@@ -9674,7 +9676,6 @@ pub(crate) mod tests {
     use {
         super::*,
         crate::{
-            account_info::StoredSize,
             account_storage::meta::{AccountMeta, StoredMeta},
             accounts_file::AccountsFileProvider,
             accounts_hash::MERKLE_FANOUT,
@@ -9702,6 +9703,10 @@ pub(crate) mod tests {
         },
         test_case::test_case,
     };
+
+    /// bytes used to store this account in append vec
+    /// Note this max needs to be big enough to handle max data len of 10MB, which is a const
+    type StoredSize = u32;
 
     fn linear_ancestors(end_slot: u64) -> Ancestors {
         let mut ancestors: Ancestors = vec![(0, 0)].into_iter().collect();

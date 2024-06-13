@@ -14,10 +14,6 @@ use {
 /// offset within an append vec to account data
 pub(crate) type Offset = usize;
 
-/// bytes used to store this account in append vec
-/// Note this max needs to be big enough to handle max data len of 10MB, which is a const
-pub(crate) type StoredSize = u32;
-
 /// specify where account data is located
 #[derive(Debug, PartialEq, Eq)]
 pub(crate) enum StorageLocation {
