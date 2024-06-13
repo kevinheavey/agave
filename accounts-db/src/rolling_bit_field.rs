@@ -3,10 +3,9 @@
 //! Old key values are removed from the lesser values and do not accumulate.
 
 mod iterators;
-use {
-    bv::BitVec, iterators::RollingBitFieldOnesIter, solana_nohash_hasher::IntSet,
-    solana_sdk::clock::Slot,
-};
+#[cfg(test)]
+use iterators::RollingBitFieldOnesIter;
+use {bv::BitVec, solana_nohash_hasher::IntSet, solana_sdk::clock::Slot};
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Debug, Clone)]
