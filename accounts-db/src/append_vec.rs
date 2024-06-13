@@ -6,9 +6,7 @@
 
 use {
     crate::{
-        account_storage::meta::{
-            AccountMeta, StoredAccountMeta, StoredMeta, StoredMetaWriteVersion,
-        },
+        account_storage::meta::{AccountMeta, StoredAccountMeta, StoredMeta},
         accounts_file::{
             AccountsFileError, InternalsForArchive, MatchAccountOwnerError, Result, StorageAccess,
             StoredAccountsInfo, ALIGN_BOUNDARY_OFFSET,
