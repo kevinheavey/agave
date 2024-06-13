@@ -1000,13 +1000,6 @@ impl<'a> LoadedAccount<'a> {
         }
     }
 
-    pub(crate) fn is_cached(&self) -> bool {
-        match self {
-            LoadedAccount::Stored(_) => false,
-            LoadedAccount::Cached(_) => true,
-        }
-    }
-
     /// data_len can be calculated without having access to `&data` in future implementations
     pub(crate) fn data_len(&self) -> usize {
         self.data().len()
