@@ -276,6 +276,7 @@ impl RollingBitField {
     ///
     /// The iterator yields all the 'set' bits.
     /// Note, the iteration order of the bits in 'excess' is not deterministic.
+    #[cfg(test)]
     pub(crate) fn iter_ones(&self) -> RollingBitFieldOnesIter<'_> {
         RollingBitFieldOnesIter::new(self)
     }

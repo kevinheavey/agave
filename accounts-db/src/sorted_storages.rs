@@ -22,6 +22,7 @@ pub struct SortedStorages<'a> {
 
 impl<'a> SortedStorages<'a> {
     /// containing nothing
+    #[cfg(test)]
     pub(crate) fn empty() -> Self {
         SortedStorages {
             range: Range::default(),

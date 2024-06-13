@@ -2483,6 +2483,7 @@ impl AccountsDb {
         AccountsDb::new_for_tests(Vec::new(), &ClusterType::Development)
     }
 
+    #[cfg(test)]
     pub(crate) fn new_single_for_tests_with_provider(file_provider: AccountsFileProvider) -> Self {
         AccountsDb::new_for_tests_with_provider(
             Vec::new(),
@@ -4885,6 +4886,7 @@ impl AccountsDb {
         Ok(())
     }
 
+    #[cfg(test)]
     pub(crate) fn unchecked_scan_accounts<F>(
         &self,
         metric_name: &'static str,
@@ -6732,6 +6734,7 @@ impl AccountsDb {
         );
     }
 
+    #[cfg(test)]
     pub(crate) fn checked_sum_for_capitalization<T: Iterator<Item = u64>>(balances: T) -> u64 {
         AccountsHasher::checked_cast_for_capitalization(balances.map(|b| b as u128).sum::<u128>())
     }

@@ -1188,6 +1188,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         )
     }
 
+    #[cfg(test)]
     pub(crate) fn unchecked_scan_accounts<F>(
         &self,
         metric_name: &'static str,
@@ -1967,6 +1968,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         self.roots_tracker.read().unwrap().uncleaned_roots.clone()
     }
 
+    #[cfg(test)]
     pub(crate) fn uncleaned_roots_len(&self) -> usize {
         self.roots_tracker.read().unwrap().uncleaned_roots.len()
     }
