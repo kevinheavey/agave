@@ -124,13 +124,6 @@ impl AccountsFile {
         }
     }
 
-    pub(crate) fn is_empty(&self) -> bool {
-        match self {
-            Self::AppendVec(av) => av.is_empty(),
-            Self::TieredStorage(ts) => ts.is_empty(),
-        }
-    }
-
     pub(crate) fn capacity(&self) -> u64 {
         match self {
             Self::AppendVec(av) => av.capacity(),
