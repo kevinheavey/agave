@@ -17,6 +17,9 @@ num-traits = { workspace = true }
 solana-program = { workspace = true }
 thiserror = { workspace = true }
 
+[dev-dependencies]
+tiny-bip39 = { workspace = true }
+
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 aes-gcm-siv = { workspace = true }
 bincode = { workspace = true }
