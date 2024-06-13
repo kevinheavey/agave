@@ -218,6 +218,6 @@ members = [
 #
 # There is a similar override in `../../Cargo.toml`.  Please keep both comments
 # and the overrides in sync.
-solana-curve25519 = { path = "../../curve25519" }
+solana-curve25519 = { path = "../../curves/curve25519" }
 solana-program = { path = "../../sdk/program" }
 solana-zk-token-sdk = { path = "../../zk-token-sdk" }
