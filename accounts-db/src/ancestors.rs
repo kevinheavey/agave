@@ -66,10 +66,6 @@ impl Ancestors {
         self.ancestors.get_all()
     }
 
-    pub(crate) fn remove(&mut self, slot: &Slot) {
-        self.ancestors.remove(slot);
-    }
-
     pub fn contains_key(&self, slot: &Slot) -> bool {
         self.ancestors.contains(slot)
     }
@@ -80,10 +76,6 @@ impl Ancestors {
 
     pub(crate) fn is_empty(&self) -> bool {
         self.len() == 0
-    }
-
-    pub(crate) fn min_slot(&self) -> Slot {
-        self.ancestors.min().unwrap_or_default()
     }
 
     pub(crate) fn max_slot(&self) -> Slot {

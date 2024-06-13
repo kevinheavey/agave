@@ -36,7 +36,7 @@ pub mod shared_buffer_reader;
 pub mod sorted_storages;
 pub mod stake_rewards;
 pub mod storable_accounts;
-pub(crate) mod tiered_storage;
+pub mod tiered_storage;
 pub mod utils;
 mod verify_accounts_hash_in_background;
 pub(crate) mod waitable_condvar;

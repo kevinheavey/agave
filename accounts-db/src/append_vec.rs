@@ -45,7 +45,7 @@ use solana_sdk::account::accounts_equal;
 
 /// size of the fixed sized fields in an append vec
 /// we need to add data len and align it to get the actual stored size
-pub(crate) const STORE_META_OVERHEAD: usize = 136;
+pub const STORE_META_OVERHEAD: usize = 136;
 
 // Ensure the STORE_META_OVERHEAD constant remains accurate
 const _: () = assert!(
@@ -123,6 +123,7 @@ impl<'append_vec> AppendVecStoredAccountMeta<'append_vec> {
         self.meta.data_len
     }
 
+    #[cfg(test)]
     pub(crate) fn meta(&self) -> &StoredMeta {
         self.meta
     }
@@ -270,7 +271,7 @@ impl Drop for AppendVec {
 }
 
 impl AppendVec {
-    pub(crate) fn new(file: impl Into<PathBuf>, create: bool, size: usize) -> Self {
+    pub fn new(file: impl Into<PathBuf>, create: bool, size: usize) -> Self {
         let file = file.into();
         let initial_len = 0;
         AppendVec::sanitize_len_and_size(initial_len, size).unwrap();
@@ -364,7 +365,7 @@ impl AppendVec {
         }
     }
 
-    pub(crate) fn reset(&self) {
+    pub fn reset(&self) {
         // This mutex forces append to be single threaded, but concurrent with reads
         // See UNSAFE usage in `append_ptr`
         let _lock = self.append_lock.lock().unwrap();
@@ -565,7 +566,7 @@ impl AppendVec {
 
     /// calls `callback` with the stored account metadata for the account at `offset` if its data doesn't overrun
     /// the internal buffer. Otherwise return None.
-    pub(crate) fn get_stored_account_meta_callback<Ret>(
+    pub fn get_stored_account_meta_callback<Ret>(
         &self,
         offset: usize,
         mut callback: impl for<'local> FnMut(StoredAccountMeta<'local>) -> Ret,
@@ -786,7 +787,7 @@ impl AppendVec {
     /// So, return.len() is 1 + (number of accounts written)
     /// After each account is appended, the internal `current_len` is updated
     /// and will be available to other threads.
-    pub(crate) fn append_accounts<'a>(
+    pub fn append_accounts<'a>(
         &self,
         accounts: &impl StorableAccounts<'a>,
         skip: usize,

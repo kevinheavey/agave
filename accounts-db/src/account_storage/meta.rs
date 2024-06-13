@@ -123,7 +123,7 @@ impl<'storage> ReadableAccount for StoredAccountMeta<'storage> {
 /// So the data layout must be stable and consistent across the entire cluster!
 #[derive(Clone, PartialEq, Eq, Debug)]
 #[repr(C)]
-pub(crate) struct StoredMeta {
+pub struct StoredMeta {
     /// global write version
     /// This will be made completely obsolete such that we stop storing it.
     /// We will not support multiple append vecs per slot anymore, so this concept is no longer necessary.

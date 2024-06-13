@@ -322,7 +322,7 @@ pub enum InternalsForArchive<'a> {
 
 /// Information after storing accounts
 #[derive(Debug)]
-pub(crate) struct StoredAccountsInfo {
+pub struct StoredAccountsInfo {
     /// offset in the storage where each account was stored
     pub(crate) offsets: Vec<usize>,
     /// total size of all the stored accounts

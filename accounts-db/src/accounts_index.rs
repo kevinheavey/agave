@@ -55,7 +55,7 @@ pub(crate) const ACCOUNTS_INDEX_CONFIG_FOR_TESTING: AccountsIndexConfig = Accoun
     scan_results_limit_bytes: None,
     started_from_validator: false,
 };
-pub(crate) const ACCOUNTS_INDEX_CONFIG_FOR_BENCHMARKS: AccountsIndexConfig = AccountsIndexConfig {
+pub const ACCOUNTS_INDEX_CONFIG_FOR_BENCHMARKS: AccountsIndexConfig = AccountsIndexConfig {
     bins: Some(BINS_FOR_BENCHMARKS),
     flush_threads: Some(FLUSH_THREADS_TESTING),
     drives: None,
