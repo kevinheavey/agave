@@ -80,7 +80,7 @@ pub(crate) struct GenerateIndexResult<T: IndexValue> {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 /// how accounts index 'upsert' should handle reclaims
-pub(crate) enum UpsertReclaim {
+pub enum UpsertReclaim {
     /// previous entry for this slot in the index is expected to be cached, so irrelevant to reclaims
     PreviousSlotEntryWasCached,
     /// previous entry for this slot in the index may need to be reclaimed, so return it.
@@ -660,7 +660,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
         Self::new(Some(ACCOUNTS_INDEX_CONFIG_FOR_TESTING), Arc::default())
     }
 
-    pub(crate) fn new(config: Option<AccountsIndexConfig>, exit: Arc<AtomicBool>) -> Self {
+    pub fn new(config: Option<AccountsIndexConfig>, exit: Arc<AtomicBool>) -> Self {
         let scan_results_limit_bytes = config
             .as_ref()
             .and_then(|config| config.scan_results_limit_bytes);
@@ -1722,7 +1722,7 @@ impl<T: IndexValue, U: DiskIndexValue + From<T> + Into<T>> AccountsIndex<T, U> {
 
     /// Updates the given pubkey at the given slot with the new account information.
     /// on return, the index's previous account info may be returned in 'reclaims' depending on 'previous_slot_entry_was_cached'
-    pub(crate) fn upsert(
+    pub fn upsert(
         &self,
         new_slot: Slot,
         old_slot: Slot,
