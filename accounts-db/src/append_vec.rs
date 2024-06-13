@@ -388,10 +388,6 @@ impl AppendVec {
         self.current_len.load(Ordering::Acquire)
     }
 
-    pub(crate) fn is_empty(&self) -> bool {
-        self.len() == 0
-    }
-
     pub fn capacity(&self) -> u64 {
         self.file_size
     }
