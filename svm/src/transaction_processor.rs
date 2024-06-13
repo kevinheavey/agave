@@ -1004,6 +1004,7 @@ mod tests {
             hash::Hash,
             message::{LegacyMessage, Message, MessageHeader},
             nonce,
+            rent_debits::RentDebits,
             reserved_account_keys::ReservedAccountKeys,
             signature::{Keypair, Signature},
             system_program,
