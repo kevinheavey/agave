@@ -2,9 +2,6 @@
 //! Relies on there being a sliding window of key values. The key values continue to increase.
 //! Old key values are removed from the lesser values and do not accumulate.
 
-mod iterators;
-#[cfg(test)]
-use iterators::RollingBitFieldOnesIter;
 use {bv::BitVec, solana_nohash_hasher::IntSet, solana_sdk::clock::Slot};
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
@@ -269,15 +266,6 @@ impl RollingBitField {
             }
         }
         all
-    }
-
-    /// Returns an iterator over the rolling bit field
-    ///
-    /// The iterator yields all the 'set' bits.
-    /// Note, the iteration order of the bits in 'excess' is not deterministic.
-    #[cfg(test)]
-    pub(crate) fn iter_ones(&self) -> RollingBitFieldOnesIter<'_> {
-        RollingBitFieldOnesIter::new(self)
     }
 }
 
