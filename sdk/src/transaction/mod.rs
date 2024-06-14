@@ -192,6 +192,9 @@ pub struct Transaction {
     pub message: Message,
 }
 
+/// wasm-bindgen version of the Transaction struct.
+/// This duplication is required until https://github.com/rustwasm/wasm-bindgen/issues/3671
+/// is fixed. This must not diverge from the regular non-wasm Transaction struct.
 #[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 #[cfg_attr(

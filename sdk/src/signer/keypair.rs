@@ -19,10 +19,7 @@ use {
         path::Path,
     },
 };
-/// wasm-bindgen version of the Keypair struct.
-/// This duplication is required until https://github.com/rustwasm/wasm-bindgen/issues/3671
-/// is fixed. This must not diverge from the regular non-wasm Keypair struct.
-///
+
 /// A vanilla Ed25519 key pair
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 #[derive(Debug)]

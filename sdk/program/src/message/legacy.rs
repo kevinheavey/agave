@@ -145,6 +145,9 @@ pub struct Message {
     pub instructions: Vec<CompiledInstruction>,
 }
 
+/// wasm-bindgen version of the Message struct.
+/// This duplication is required until https://github.com/rustwasm/wasm-bindgen/issues/3671
+/// is fixed. This must not diverge from the regular non-wasm Message struct.
 #[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 #[cfg_attr(
