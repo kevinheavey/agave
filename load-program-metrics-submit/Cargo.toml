@@ -2,7 +2,7 @@
 name = "solana-load-program-metrics-submit"
 description = "Utility crate not intended for external use."
 documentation = "https://docs.rs/solana-load-program-metrics-submit"
-version = "0.0.1"
+version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
 homepage = { workspace = true }
