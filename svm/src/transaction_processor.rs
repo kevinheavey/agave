@@ -33,6 +33,7 @@ use {
         sysvar_cache::SysvarCache,
         timings::{ExecuteTimingType, ExecuteTimings},
     },
+    solana_rent_collector::RentCollector,
     solana_sdk::{
         account::{AccountSharedData, ReadableAccount, PROGRAM_OWNERS},
         clock::{Epoch, Slot},
@@ -46,7 +47,6 @@ use {
         instruction::{CompiledInstruction, TRANSACTION_LEVEL_STACK_HEIGHT},
         message::SanitizedMessage,
         pubkey::Pubkey,
-        rent_collector::RentCollector,
         saturating_add_assign,
         transaction::{self, SanitizedTransaction, TransactionError},
         transaction_context::{ExecutionRecord, TransactionContext},
