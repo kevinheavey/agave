@@ -338,6 +338,9 @@ pub struct Instruction {
     pub data: Vec<u8>,
 }
 
+/// wasm-bindgen version of the Instruction struct.
+/// This duplication is required until https://github.com/rustwasm/wasm-bindgen/issues/3671
+/// is fixed. This must not diverge from the regular non-wasm Instruction struct.
 #[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 pub struct Instruction {
