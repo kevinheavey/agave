@@ -24,6 +24,8 @@ pub fn set_syscall_stubs(syscall_stubs: Box<dyn SyscallStubs>) -> Box<dyn Syscal
     std::mem::replace(&mut SYSCALL_STUBS.write().unwrap(), syscall_stubs)
 }
 
+// ported from itertools because we don't need anything else
+// from itertools.
 fn join<I>(itr: &mut I, sep: &str) -> String
 where
     I: Iterator,
