@@ -58,7 +58,7 @@ pub use {
         native_token, nonce, program, program_error, program_memory, program_option, program_pack,
         rent, sanitize, secp256k1_program, serde_varint, serialize_utils, short_vec, slot_hashes,
         slot_history, stable_layout, stake, stake_history, syscalls, system_instruction,
-        system_program, sysvar, unchecked_div_by_const, vote, wasm_bindgen,
+        system_program, sysvar, unchecked_div_by_const, vote,
     },
     solana_secp256k1_recover as secp256k1_recover,
 };
