@@ -139,7 +139,7 @@ pub trait SyscallStubs: Sync + Send {
     fn sol_log_data(&self, fields: &[&[u8]]) {
         println!(
             "data: {}",
-            join(&mut fields.iter().map(|v| BASE64_STANDARD.encode(v)), " ")
+            fields.iter().map(|v| BASE64_STANDARD.encode(v)).collect::<Vec<_>>().join(" ")
         );
     }
     fn sol_get_processed_sibling_instruction(&self, _index: usize) -> Option<Instruction> {
