@@ -8,10 +8,7 @@ use {
         program_error::UNSUPPORTED_SYSVAR, pubkey::Pubkey,
     },
     base64::{prelude::BASE64_STANDARD, Engine},
-    std::{
-        fmt::Write,
-        sync::{Arc, RwLock},
-    },
+    std::sync::{Arc, RwLock},
 };
 
 lazy_static::lazy_static! {
@@ -22,29 +19,6 @@ lazy_static::lazy_static! {
 // to swap in alternatives
 pub fn set_syscall_stubs(syscall_stubs: Box<dyn SyscallStubs>) -> Box<dyn SyscallStubs> {
     std::mem::replace(&mut SYSCALL_STUBS.write().unwrap(), syscall_stubs)
-}
-
-// ported from itertools because we don't need anything else
-// from itertools.
-fn join<I>(itr: &mut I, sep: &str) -> String
-where
-    I: Iterator,
-    I::Item: std::fmt::Display,
-{
-    match itr.next() {
-        None => String::new(),
-        Some(first_elt) => {
-            // estimate lower bound of capacity needed
-            let (lower, _) = itr.size_hint();
-            let mut result = String::with_capacity(sep.len() * lower);
-            write!(&mut result, "{}", first_elt).unwrap();
-            itr.for_each(|elt| {
-                result.push_str(sep);
-                write!(&mut result, "{}", elt).unwrap();
-            });
-            result
-        }
-    }
 }
 
 #[allow(clippy::arithmetic_side_effects)]
@@ -139,7 +113,11 @@ pub trait SyscallStubs: Sync + Send {
     fn sol_log_data(&self, fields: &[&[u8]]) {
         println!(
             "data: {}",
-            fields.iter().map(|v| BASE64_STANDARD.encode(v)).collect::<Vec<_>>().join(" ")
+            fields
+                .iter()
+                .map(|v| BASE64_STANDARD.encode(v))
+                .collect::<Vec<_>>()
+                .join(" ")
         );
     }
     fn sol_get_processed_sibling_instruction(&self, _index: usize) -> Option<Instruction> {
