@@ -1,6 +1,6 @@
 [package]
 name = "solana-sanitize"
-description = "Solana Sanitize Trait"
+description = "Solana Message Sanitization"
 documentation = "https://docs.rs/solana-sanitize"
 version = { workspace = true }
 authors = { workspace = true }
