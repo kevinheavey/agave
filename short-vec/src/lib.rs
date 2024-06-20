@@ -1,6 +1,8 @@
 //! Compact serde-encoding of vectors with small length.
 
 #![allow(clippy::arithmetic_side_effects)]
+#[cfg(feature = "frozen-abi")]
+use solana_frozen_abi_macro::AbiExample;
 use {
     serde::{
         de::{self, Deserializer, SeqAccess, Visitor},
@@ -9,8 +11,6 @@ use {
     },
     std::{convert::TryFrom, fmt, marker::PhantomData},
 };
-#[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::AbiExample;
 
 /// Same as u16, but serialized with 1 to 3 bytes. If the value is above
 /// 0x7f, the top bit is set and the remaining value is stored in the next
