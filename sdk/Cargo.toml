@@ -85,6 +85,7 @@ solana-program = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
+solana-short-vec = { workspace = true }
 thiserror = { workspace = true }
 uriparse = { workspace = true }
 

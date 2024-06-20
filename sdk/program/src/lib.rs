@@ -521,7 +521,6 @@ pub mod rent;
 pub mod secp256k1_program;
 pub mod serde_varint;
 pub mod serialize_utils;
-pub mod short_vec;
 pub mod slot_hashes;
 pub mod slot_history;
 pub mod stable_layout;
