@@ -7359,6 +7359,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-short-vec"
+version = "2.1.0"
+dependencies = [
+ "assert_matches",
+ "bincode",
+ "rustc_version 0.4.0",
+ "serde",
+ "serde_json",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
+]
+
+[[package]]
 name = "solana-stake-accounts"
 version = "2.1.0"
 dependencies = [
