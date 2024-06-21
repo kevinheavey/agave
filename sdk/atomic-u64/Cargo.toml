@@ -1,6 +1,6 @@
 [package]
 name = "solana-atomic-u64"
-description = "Solana atomic u64 implementation"
+description = "Solana atomic u64 implementation. For internal use only."
 documentation = "https://docs.rs/solana-atomic-u64"
 version = { workspace = true }
 authors = { workspace = true }
