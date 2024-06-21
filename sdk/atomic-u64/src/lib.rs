@@ -1,4 +1,4 @@
-pub(crate) use implementation::AtomicU64;
+pub use implementation::AtomicU64;
 
 #[cfg(target_pointer_width = "64")]
 mod implementation {
