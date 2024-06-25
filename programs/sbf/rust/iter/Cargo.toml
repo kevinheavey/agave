@@ -9,6 +9,7 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
+solana-entrypoint-consts = { workspace = true }
 solana-program = { workspace = true }
 
 [lib]

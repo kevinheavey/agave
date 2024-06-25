@@ -2,9 +2,8 @@
 
 extern crate solana_program;
 use {
-    solana_program::{
-        custom_heap_default, custom_panic_default, entrypoint::SUCCESS, log::sol_log_64,
-    },
+    solana_entrypoint_consts::SUCCESS,
+    solana_program::{custom_heap_default, custom_panic_default, log::sol_log_64},
     solana_sbf_rust_param_passing_dep::{Data, TestDep},
 };
 

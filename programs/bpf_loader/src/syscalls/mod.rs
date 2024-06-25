@@ -2559,7 +2559,7 @@ mod tests {
             let memory_mapping = &mut vm.memory_mapping;
             let result = SyscallAllocFree::rust(
                 invoke_context,
-                solana_sdk::entrypoint::HEAP_LENGTH as u64,
+                solana_entrypoint_consts::HEAP_LENGTH as u64,
                 0,
                 0,
                 0,
@@ -2569,7 +2569,7 @@ mod tests {
             assert_ne!(result.unwrap(), 0);
             let result = SyscallAllocFree::rust(
                 invoke_context,
-                solana_sdk::entrypoint::HEAP_LENGTH as u64,
+                solana_entrypoint_consts::HEAP_LENGTH as u64,
                 0,
                 0,
                 0,
@@ -2596,7 +2596,7 @@ mod tests {
             }
             let result = SyscallAllocFree::rust(
                 invoke_context,
-                solana_sdk::entrypoint::HEAP_LENGTH as u64,
+                solana_entrypoint_consts::HEAP_LENGTH as u64,
                 0,
                 0,
                 0,
@@ -2619,7 +2619,7 @@ mod tests {
             }
             let result = SyscallAllocFree::rust(
                 invoke_context,
-                solana_sdk::entrypoint::HEAP_LENGTH as u64,
+                solana_entrypoint_consts::HEAP_LENGTH as u64,
                 0,
                 0,
                 0,

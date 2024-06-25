@@ -88,7 +88,7 @@ pub struct ComputeBudget {
     /// Number of compute units consumed for a multiscalar multiplication (msm) of ristretto points.
     /// The total cost is calculated as `msm_base_cost + (length - 1) * msm_incremental_cost`.
     pub curve25519_ristretto_msm_incremental_cost: u64,
-    /// program heap region size, default: solana_sdk::entrypoint::HEAP_LENGTH
+    /// program heap region size, default: solana_entrypoint_consts::HEAP_LENGTH
     pub heap_size: u32,
     /// Number of compute units per additional 32k heap above the default (~.5
     /// us per 32k at 15 units/us rounded up)
@@ -173,7 +173,7 @@ impl ComputeBudget {
             curve25519_ristretto_multiply_cost: 2_208,
             curve25519_ristretto_msm_base_cost: 2303,
             curve25519_ristretto_msm_incremental_cost: 788,
-            heap_size: u32::try_from(solana_sdk::entrypoint::HEAP_LENGTH).unwrap(),
+            heap_size: u32::try_from(solana_entrypoint_consts::HEAP_LENGTH).unwrap(),
             heap_cost: DEFAULT_HEAP_COST,
             mem_op_base_cost: 10,
             alt_bn128_addition_cost: 334,

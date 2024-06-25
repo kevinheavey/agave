@@ -10,6 +10,7 @@ edition = "2021"
 publish = false
 
 [dependencies]
+solana-entrypoint-consts = { path = "../../../../entrypoint-consts", version = "=2.1.0" }
 solana-program = { path = "../../../../program", version = "=2.1.0" }
 
 [lib]

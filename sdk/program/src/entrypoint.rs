@@ -5,6 +5,10 @@
 //! [`bpf_loader`]: crate::bpf_loader
 
 extern crate alloc;
+pub use solana_entrypoint_consts::{
+    BPF_ALIGN_OF_U128, HEAP_LENGTH, HEAP_START_ADDRESS, MAX_PERMITTED_DATA_INCREASE,
+    NON_DUP_MARKER, SUCCESS,
+};
 use {
     crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey},
     alloc::vec::Vec,

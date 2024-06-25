@@ -3,7 +3,7 @@
 extern crate solana_program;
 use {
     byteorder::{ByteOrder, LittleEndian},
-    solana_program::entrypoint::SUCCESS,
+    solana_entrypoint_consts::SUCCESS,
 };
 
 #[no_mangle]

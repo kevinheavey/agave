@@ -2,9 +2,10 @@
 
 use {
     crate::{
-        clock::Epoch, debug_account_data::*, entrypoint::MAX_PERMITTED_DATA_INCREASE,
-        program_error::ProgramError, program_memory::sol_memset, pubkey::Pubkey,
+        clock::Epoch, debug_account_data::*, program_error::ProgramError,
+        program_memory::sol_memset, pubkey::Pubkey,
     },
+    solana_entrypoint_consts::MAX_PERMITTED_DATA_INCREASE,
     std::{
         cell::{Ref, RefCell, RefMut},
         fmt,
@@ -131,7 +132,7 @@ impl<'a> AccountInfo<'a> {
     /// memory.
     ///
     /// Note:  Account data can be increased within a single call by up to
-    /// `solana_program::entrypoint::MAX_PERMITTED_DATA_INCREASE` bytes.
+    /// `solana_entrypoint_consts::MAX_PERMITTED_DATA_INCREASE` bytes.
     ///
     /// Note: Memory used to grow is already zero-initialized upon program
     /// entrypoint and re-zeroing it wastes compute units.  If within the same

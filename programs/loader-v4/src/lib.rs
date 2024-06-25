@@ -1,5 +1,6 @@
 use {
     solana_compute_budget::compute_budget::ComputeBudget,
+    solana_entrypoint_consts::SUCCESS,
     solana_measure::measure::Measure,
     solana_program_runtime::{
         ic_logger_msg,
@@ -21,7 +22,6 @@ use {
         vm::{Config, ContextObject, EbpfVm},
     },
     solana_sdk::{
-        entrypoint::SUCCESS,
         instruction::InstructionError,
         loader_v4::{self, LoaderV4State, LoaderV4Status, DEPLOYMENT_COOLDOWN_IN_SLOTS},
         loader_v4_instruction::LoaderV4Instruction,

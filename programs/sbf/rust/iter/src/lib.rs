@@ -3,8 +3,9 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 extern crate solana_program;
-use solana_program::{
-    custom_heap_default, custom_panic_default, entrypoint::SUCCESS, log::sol_log_64,
+use {
+    solana_entrypoint_consts::SUCCESS,
+    solana_program::{custom_heap_default, custom_panic_default, log::sol_log_64},
 };
 
 #[no_mangle]
