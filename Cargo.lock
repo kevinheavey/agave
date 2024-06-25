@@ -6266,6 +6266,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-entrypoint-consts"
+version = "2.1.0"
+
+[[package]]
 name = "solana-faucet"
 version = "2.1.0"
 dependencies = [

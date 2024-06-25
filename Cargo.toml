@@ -99,6 +99,7 @@ members = [
     "sdk/cargo-build-sbf",
     "sdk/cargo-test-bpf",
     "sdk/cargo-test-sbf",
+    "sdk/entrypoint-consts",
     "sdk/gen-headers",
     "sdk/macro",
     "sdk/package-metadata-macro",
@@ -347,6 +348,7 @@ solana-cost-model = { path = "cost-model", version = "=2.1.0" }
 solana-curve25519 = { path = "curves/curve25519", version = "=2.1.0" }
 solana-download-utils = { path = "download-utils", version = "=2.1.0" }
 solana-entry = { path = "entry", version = "=2.1.0" }
+solana-entrypoint-consts = { path = "sdk/entrypoint-consts", version = "=2.1.0" }
 solana-faucet = { path = "faucet", version = "=2.1.0" }
 solana-frozen-abi = { path = "frozen-abi", version = "=2.1.0" }
 solana-frozen-abi-macro = { path = "frozen-abi/macro", version = "=2.1.0" }
