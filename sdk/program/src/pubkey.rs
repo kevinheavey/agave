@@ -538,7 +538,7 @@ impl Pubkey {
                 )
             };
             match result {
-                crate::entrypoint::SUCCESS => Some((Pubkey::from(bytes), bump_seed)),
+                solana_entrypoint_consts::SUCCESS => Some((Pubkey::from(bytes), bump_seed)),
                 _ => None,
             }
         }
@@ -629,7 +629,7 @@ impl Pubkey {
                 )
             };
             match result {
-                crate::entrypoint::SUCCESS => Ok(Pubkey::from(bytes)),
+                solana_entrypoint_consts::SUCCESS => Ok(Pubkey::from(bytes)),
                 _ => Err(result.into()),
             }
         }

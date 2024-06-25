@@ -4670,6 +4670,7 @@ dependencies = [
  "scopeguard",
  "solana-compute-budget",
  "solana-curve25519",
+ "solana-entrypoint-consts",
  "solana-measure",
  "solana-poseidon",
  "solana-program-runtime",
@@ -4786,6 +4787,7 @@ name = "solana-compute-budget"
 version = "2.1.0"
 dependencies = [
  "rustc_version",
+ "solana-entrypoint-consts",
  "solana-sdk",
 ]
 
@@ -4968,6 +4970,10 @@ dependencies = [
  "solana-rayon-threadlimit",
  "solana-sdk",
 ]
+
+[[package]]
+name = "solana-entrypoint-consts"
+version = "2.1.0"
 
 [[package]]
 name = "solana-faucet"
@@ -5154,6 +5160,7 @@ version = "2.1.0"
 dependencies = [
  "log",
  "solana-compute-budget",
+ "solana-entrypoint-consts",
  "solana-measure",
  "solana-program-runtime",
  "solana-sdk",
@@ -5314,6 +5321,7 @@ dependencies = [
  "serde_derive",
  "sha2 0.10.8",
  "sha3 0.10.8",
+ "solana-entrypoint-consts",
  "solana-sanitize",
  "solana-sdk-macro",
  "thiserror",
@@ -5613,6 +5621,7 @@ dependencies = [
  "solana-compute-budget-program",
  "solana-config-program",
  "solana-cost-model",
+ "solana-entrypoint-consts",
  "solana-inline-spl",
  "solana-loader-v4-program",
  "solana-measure",
@@ -5666,6 +5675,7 @@ dependencies = [
  "solana-bpf-loader-program",
  "solana-cli-output",
  "solana-compute-budget",
+ "solana-entrypoint-consts",
  "solana-ledger",
  "solana-logger",
  "solana-measure",
@@ -5686,6 +5696,7 @@ dependencies = [
 name = "solana-sbf-rust-128bit"
 version = "2.1.0"
 dependencies = [
+ "solana-entrypoint-consts",
  "solana-program",
  "solana-sbf-rust-128bit-dep",
 ]
@@ -5701,6 +5712,7 @@ dependencies = [
 name = "solana-sbf-rust-alloc"
 version = "2.1.0"
 dependencies = [
+ "solana-entrypoint-consts",
  "solana-program",
 ]
 
@@ -5735,6 +5747,7 @@ dependencies = [
 name = "solana-sbf-rust-call-depth"
 version = "2.1.0"
 dependencies = [
+ "solana-entrypoint-consts",
  "solana-program",
 ]
 
@@ -5766,7 +5779,7 @@ name = "solana-sbf-rust-dep-crate"
 version = "2.1.0"
 dependencies = [
  "byteorder 1.5.0",
- "solana-program",
+ "solana-entrypoint-consts",
 ]
 
 [[package]]
@@ -5882,6 +5895,7 @@ dependencies = [
 name = "solana-sbf-rust-iter"
 version = "2.1.0"
 dependencies = [
+ "solana-entrypoint-consts",
  "solana-program",
 ]
 
@@ -5948,6 +5962,7 @@ dependencies = [
 name = "solana-sbf-rust-param-passing"
 version = "2.1.0"
 dependencies = [
+ "solana-entrypoint-consts",
  "solana-program",
  "solana-sbf-rust-param-passing-dep",
 ]
@@ -6145,6 +6160,7 @@ dependencies = [
  "sha2 0.10.8",
  "sha3 0.10.8",
  "siphasher",
+ "solana-entrypoint-consts",
  "solana-program",
  "solana-sanitize",
  "solana-sdk-macro",

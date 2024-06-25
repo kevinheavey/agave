@@ -5724,6 +5724,7 @@ dependencies = [
  "scopeguard",
  "solana-compute-budget",
  "solana-curve25519",
+ "solana-entrypoint-consts",
  "solana-measure",
  "solana-poseidon",
  "solana-program-runtime",
@@ -6013,6 +6014,7 @@ name = "solana-compute-budget"
 version = "2.1.0"
 dependencies = [
  "rustc_version 0.4.0",
+ "solana-entrypoint-consts",
  "solana-frozen-abi",
  "solana-sdk",
 ]
@@ -6539,6 +6541,7 @@ dependencies = [
  "bincode",
  "log",
  "solana-compute-budget",
+ "solana-entrypoint-consts",
  "solana-measure",
  "solana-program-runtime",
  "solana-sdk",
@@ -6840,6 +6843,7 @@ dependencies = [
  "serial_test",
  "sha2 0.10.8",
  "sha3 0.10.8",
+ "solana-entrypoint-consts",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",
@@ -7203,6 +7207,7 @@ dependencies = [
  "solana-compute-budget-program",
  "solana-config-program",
  "solana-cost-model",
+ "solana-entrypoint-consts",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-inline-spl",
@@ -7302,6 +7307,7 @@ dependencies = [
  "sha2 0.10.8",
  "sha3 0.10.8",
  "siphasher",
+ "solana-entrypoint-consts",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",

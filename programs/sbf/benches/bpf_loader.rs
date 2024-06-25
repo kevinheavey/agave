@@ -22,6 +22,7 @@ use {
         syscalls::create_program_runtime_environment_v1,
     },
     solana_compute_budget::compute_budget::ComputeBudget,
+    solana_entrypoint_consts::SUCCESS,
     solana_measure::measure::Measure,
     solana_program_runtime::invoke_context::InvokeContext,
     solana_rbpf::{
@@ -38,7 +39,6 @@ use {
         account::AccountSharedData,
         bpf_loader,
         client::SyncClient,
-        entrypoint::SUCCESS,
         feature_set::FeatureSet,
         instruction::{AccountMeta, Instruction},
         message::Message,

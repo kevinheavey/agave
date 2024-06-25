@@ -304,7 +304,7 @@ pub fn invoke_signed_unchecked(
             )
         };
         match result {
-            crate::entrypoint::SUCCESS => Ok(()),
+            solana_entrypoint_consts::SUCCESS => Ok(()),
             _ => Err(result.into()),
         }
     }
