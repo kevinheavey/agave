@@ -5546,6 +5546,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-native-token"
+version = "2.1.0"
+
+[[package]]
 name = "solana-net-utils"
 version = "2.1.0"
 dependencies = [
@@ -5659,6 +5663,7 @@ dependencies = [
  "solana-hash",
  "solana-instruction",
  "solana-msg",
+ "solana-native-token",
  "solana-program-error",
  "solana-program-memory",
  "solana-program-option",
@@ -6613,6 +6618,7 @@ dependencies = [
  "solana-decode-error",
  "solana-derivation-path",
  "solana-feature-set",
+ "solana-native-token",
  "solana-program",
  "solana-program-memory",
  "solana-sanitize",
