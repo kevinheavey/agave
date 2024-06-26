@@ -8,8 +8,6 @@ extern crate self as solana_frozen_abi;
 pub mod abi_digester;
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
 pub mod abi_example;
-#[cfg(RUSTC_WITH_SPECIALIZATION)]
-mod hash;
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
 #[macro_use]
