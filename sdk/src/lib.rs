@@ -111,7 +111,6 @@ pub mod wasm;
 
 #[deprecated(since = "2.1.0", note = "Use `solana-decode-error` crate instead")]
 pub use solana_decode_error as decode_error;
-
 #[deprecated(since = "2.1.0", note = "Use `solana-sanitize` crate instead")]
 pub use solana_sanitize as sanitize;
 /// Same as `declare_id` except report that this id has been deprecated.
