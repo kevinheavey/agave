@@ -206,7 +206,8 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
 
     /// Returns the current environments depending on the given epoch
     /// Returns None if the call could result in a deadlock
-    pub fn get_environments_for_epoch(&self, epoch: Epoch) -> Option<ProgramRuntimeEnvironments> {
+    #[cfg_attr(feature = "dev-context-only-utils", qualifier_attr::qualifiers(pub))]
+    fn get_environments_for_epoch(&self, epoch: Epoch) -> Option<ProgramRuntimeEnvironments> {
         self.program_cache
             .try_read()
             .ok()
