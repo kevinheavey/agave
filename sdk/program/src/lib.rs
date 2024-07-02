@@ -482,7 +482,6 @@ pub mod borsh1;
 pub mod bpf_loader;
 pub mod bpf_loader_deprecated;
 pub mod bpf_loader_upgradeable;
-pub mod clock;
 pub mod compute_units;
 pub mod debug_account_data;
 pub mod ed25519_program;

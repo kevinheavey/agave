@@ -1,0 +1,21 @@
+[package]
+name = "solana-clock"
+description = "Solana Message Sanitization"
+documentation = "https://docs.rs/solana-sanitize"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+serde = { workspace = true }
+serde_derive = { workspace = true }
+solana-sdk-macro = { workspace = true }
+
+[dev-dependencies]
+static_assertions = { workspace = true }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]

@@ -6023,6 +6023,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-clock"
+version = "2.1.0"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "solana-sdk-macro",
+ "static_assertions",
+]
+
+[[package]]
 name = "solana-compute-budget"
 version = "2.1.0"
 dependencies = [
