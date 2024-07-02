@@ -9,7 +9,6 @@ use {
 };
 use {
     crate::{
-        clock::{Epoch, Slot, UnixTimestamp},
         hash::Hash,
         instruction::InstructionError,
         pubkey::Pubkey,
@@ -26,6 +25,7 @@ use {
         io::Cursor,
         mem::{self, MaybeUninit},
     },
+    solana_clock::{Epoch, Slot, UnixTimestamp},
 };
 
 mod vote_state_0_23_5;
@@ -964,7 +964,6 @@ pub mod serde_compact_vote_state_update {
     use {
         super::*,
         crate::{
-            clock::{Slot, UnixTimestamp},
             serde_varint,
             vote::state::Lockout,
         },
@@ -1062,7 +1061,6 @@ pub mod serde_tower_sync {
     use {
         super::*,
         crate::{
-            clock::{Slot, UnixTimestamp},
             serde_varint,
             vote::state::Lockout,
         },

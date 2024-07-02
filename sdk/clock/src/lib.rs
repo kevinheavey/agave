@@ -20,7 +20,10 @@
 //!
 //! [oracle]: https://docs.solanalabs.com/implemented-proposals/validator-timestamp-oracle
 
-use {serde_derive::{Deserialize, Serialize}, solana_sdk_macro::CloneZeroed};
+use {
+    serde_derive::{Deserialize, Serialize},
+    solana_sdk_macro::CloneZeroed,
+};
 
 /// The default tick rate that the cluster attempts to achieve (160 per second).
 ///

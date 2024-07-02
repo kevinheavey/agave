@@ -532,6 +532,7 @@ pub mod wasm;
 pub use solana_msg::msg;
 #[deprecated(since = "2.1.0", note = "Use `solana-program-memory` crate instead")]
 pub use solana_program_memory as program_memory;
+pub use solana_clock as clock;
 #[deprecated(since = "2.1.0", note = "Use `solana-sanitize` crate instead")]
 pub use solana_sanitize as sanitize;
 #[deprecated(since = "2.1.0", note = "Use `solana-secp256k1-recover` crate instead")]
