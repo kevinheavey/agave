@@ -155,6 +155,8 @@ pub use solana_sdk_macro::declare_id;
 pub use solana_sdk_macro::pubkey;
 /// Convenience macro to define multiple static public keys.
 pub use solana_sdk_macro::pubkeys;
+#[deprecated(since = "2.1.0", note = "Use `solana-secp256k1-recover` crate instead")]
+pub use solana_secp256k1_recover as secp256k1_recover;
 
 /// Convenience macro for `AddAssign` with saturating arithmetic.
 /// Replace by `std::num::Saturating` once stable
