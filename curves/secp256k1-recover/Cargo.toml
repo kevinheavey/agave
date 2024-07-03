@@ -11,9 +11,11 @@ edition = { workspace = true }
 
 [dependencies]
 borsh = { workspace = true, optional = true }
-solana-define-syscall = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true }
 thiserror = { workspace = true }
+
+[target.'cfg(target_os = "solana")'.dependencies]
+solana-define-syscall = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 libsecp256k1 = { workspace = true }
