@@ -1,3 +1,5 @@
+#[cfg(target_os = "solana")]
+use solana_define_syscall::define_syscall;
 /// Print a message to the log.
 ///
 /// Supports simple strings as well as Rust [format strings][fs]. When passed a
@@ -34,7 +36,7 @@ macro_rules! msg {
 }
 
 #[cfg(target_os = "solana")]
-solana_define_syscall::define_syscall!(fn sol_log_(message: *const u8, len: u64));
+define_syscall!(fn sol_log_(message: *const u8, len: u64));
 
 /// Print a string to the log.
 #[inline]
