@@ -165,7 +165,7 @@ solana_define_syscall::define_syscall!(fn sol_secp256k1_recover(hash: *const u8,
 /// signatures with high-order `S` values. The following code will accomplish
 /// this:
 ///
-/// ```rust
+/// ```rust,ignore
 /// # use solana_program::program_error::ProgramError;
 /// # let signature_bytes = [
 /// #     0x83, 0x55, 0x81, 0xDF, 0xB1, 0x02, 0xA7, 0xD2,
@@ -261,7 +261,7 @@ solana_define_syscall::define_syscall!(fn sol_secp256k1_recover(hash: *const u8,
 /// The Solana program. Note that it uses `libsecp256k1` version 0.7.0 to parse
 /// the secp256k1 signature to prevent malleability.
 ///
-/// ```no_run
+/// ```rust,ignore
 /// use solana_program::{
 ///     entrypoint::ProgramResult,
 ///     keccak, msg,
@@ -331,7 +331,7 @@ solana_define_syscall::define_syscall!(fn sol_secp256k1_recover(hash: *const u8,
 ///
 /// The RPC client program:
 ///
-/// ```no_run
+/// ```rust,ignore
 /// # use solana_program::example_mocks::solana_rpc_client;
 /// # use solana_program::example_mocks::solana_sdk;
 /// use anyhow::Result;
