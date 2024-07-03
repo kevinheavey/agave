@@ -6174,6 +6174,7 @@ dependencies = [
  "borsh 1.5.1",
  "libsecp256k1 0.6.0",
  "rustc_version",
+ "solana-define-syscall",
  "thiserror",
 ]
 
