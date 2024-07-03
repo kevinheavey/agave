@@ -34,3 +34,6 @@ rustc_version = { workspace = true }
 [features]
 borsh = ["dep:borsh"]
 frozen-abi = ["dep:solana-frozen-abi"]
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
