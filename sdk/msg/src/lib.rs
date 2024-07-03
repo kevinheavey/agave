@@ -16,7 +16,7 @@
 /// # Examples
 ///
 /// ```
-/// use solana_msg:msg;
+/// use solana_msg::msg;
 ///
 /// // The fast form
 /// msg!("verifying multisig");
