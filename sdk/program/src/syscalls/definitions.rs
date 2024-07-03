@@ -1,5 +1,7 @@
 #[cfg(target_feature = "static-syscalls")]
 pub use solana_define_syscall::sys_hash;
+#[deprecated(since = "2.1.0", note = "Use `solana_secp256k1_recover::sol_secp256k1_recover` instead")]
+pub use solana_secp256k1_recover::sol_secp256k1_recover;
 use {
     crate::{
         instruction::{AccountMeta, ProcessedSiblingInstruction},
