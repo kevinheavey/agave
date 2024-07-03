@@ -87,7 +87,7 @@ impl Secp256k1Pubkey {
 }
 
 #[cfg(target_os = "solana")]
-define_syscall!(fn sol_secp256k1_recover(hash: *const u8, recovery_id: u64, signature: *const u8, result: *mut u8) -> u64);
+solana_define_syscall::define_syscall!(fn sol_secp256k1_recover(hash: *const u8, recovery_id: u64, signature: *const u8, result: *mut u8) -> u64);
 
 /// Recover the public key from a [secp256k1] ECDSA signature and
 /// cryptographically-hashed message.
