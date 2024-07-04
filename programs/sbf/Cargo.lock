@@ -5131,6 +5131,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-hash"
+version = "2.1.0"
+dependencies = [
+ "bs58",
+ "bytemuck",
+ "bytemuck_derive",
+ "serde",
+ "serde_derive",
+ "solana-atomic-u64",
+ "solana-sanitize",
+ "thiserror",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "solana-hasher"
+version = "2.1.0"
+dependencies = [
+ "sha2 0.10.8",
+ "solana-define-syscall",
+ "solana-hash",
+]
+
+[[package]]
 name = "solana-inline-spl"
 version = "2.1.0"
 dependencies = [
@@ -5389,6 +5413,8 @@ dependencies = [
  "solana-atomic-u64",
  "solana-decode-error",
  "solana-define-syscall",
+ "solana-hash",
+ "solana-hasher",
  "solana-msg",
  "solana-program-memory",
  "solana-sanitize",
