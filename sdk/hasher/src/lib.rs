@@ -40,7 +40,7 @@ pub fn hashv(vals: &[&[u8]]) -> Hash {
     // Call via a system call to perform the calculation
     #[cfg(target_os = "solana")]
     {
-        let mut hash_result = [0; HASH_BYTES];
+        let mut hash_result = [0; solana_hash::HASH_BYTES];
         unsafe {
             sol_sha256(
                 vals as *const _ as *const u8,
