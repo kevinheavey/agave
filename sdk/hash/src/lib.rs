@@ -2,9 +2,11 @@
 use crate::wasm_bindgen;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+#[cfg(feature = "bytemuck")]
+use bytemuck_derive::{Pod, Zeroable};
+#[cfg(feature = "serde")]
+use serde_derive::{Deserialize, Serialize};
 use {
-    bytemuck_derive::{Pod, Zeroable},
-    serde_derive::{Deserialize, Serialize},
     solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
     thiserror::Error,
@@ -32,20 +34,9 @@ pub const MAX_BASE58_LEN: usize = 44;
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Serialize,
-    Deserialize,
-    Clone,
-    Copy,
-    Default,
-    Eq,
-    PartialEq,
-    Ord,
-    PartialOrd,
-    Hash,
-    Pod,
-    Zeroable,
-)]
+#[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize,))]
+#[derive(Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[repr(transparent)]
 pub struct Hash(pub [u8; HASH_BYTES]);
 
