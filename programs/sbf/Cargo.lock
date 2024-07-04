@@ -5168,10 +5168,6 @@ name = "solana-hash"
 version = "2.1.0"
 dependencies = [
  "bs58",
- "bytemuck",
- "bytemuck_derive",
- "serde",
- "serde_derive",
  "solana-atomic-u64",
  "solana-sanitize",
  "thiserror",

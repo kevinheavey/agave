@@ -14,11 +14,11 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 borsh = { workspace = true, optional = true }
-bytemuck = { workspace = true }
-bytemuck_derive = { workspace = true }
+bytemuck = { workspace = true, optional = true}
+bytemuck_derive = { workspace = true, optional = true }
 bs58 = { workspace = true }
-serde = { workspace = true }
-serde_derive = { workspace = true }
+serde = { workspace = true, optional = true }
+serde_derive = { workspace = true, optional = true }
 solana-atomic-u64 = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
@@ -30,4 +30,6 @@ wasm-bindgen = { workspace = true }
 
 [features]
 borsh = ["dep:borsh"]
+bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+serde = ["dep:serde", "dep:serde_derive"]
