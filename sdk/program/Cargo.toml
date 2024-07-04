@@ -36,6 +36,8 @@ solana-clock = { workspace = true, features = ["serde"] }
 solana-decode-error = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi"] }
 solana-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
+solana-hash = { workspace = true }
+solana-hasher = { workspace = true }
 solana-msg = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
