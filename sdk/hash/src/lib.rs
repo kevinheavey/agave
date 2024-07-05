@@ -1,5 +1,5 @@
 #[cfg(target_arch = "wasm32")]
-use crate::wasm_bindgen;
+use use wasm_bindgen::prelude::wasm_bindgen;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 #[cfg(feature = "bytemuck")]
