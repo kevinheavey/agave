@@ -10,6 +10,7 @@ use {
         ser::{SerializeTuple, Serializer},
     },
     serde_derive::{Deserialize, Serialize},
+    solana_hash::HASH_BYTES,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_short_vec as short_vec,
     std::{collections::HashSet, fmt},
@@ -161,7 +162,8 @@ impl VersionedMessage {
         let mut hasher = blake3::Hasher::new();
         hasher.update(b"solana-tx-message-v1");
         hasher.update(message_bytes);
-        Hash(hasher.finalize().into())
+        let hash_bytes: [u8; HASH_BYTES] = hasher.finalize().into();
+        hash_bytes.into()
     }
 }
 
