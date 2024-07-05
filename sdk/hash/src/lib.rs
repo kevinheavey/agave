@@ -31,7 +31,6 @@ pub const MAX_BASE58_LEN: usize = 44;
 /// [`blake3`]: crate::blake3
 /// [`Message::hash`]: crate::message::Message::hash
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
