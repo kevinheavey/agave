@@ -1,11 +1,11 @@
-#[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::wasm_bindgen;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::wasm_bindgen;
 use {
     solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
