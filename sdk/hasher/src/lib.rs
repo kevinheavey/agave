@@ -2,7 +2,7 @@
 use solana_define_syscall::define_syscall;
 use {
     sha2::{Digest, Sha256},
-    solana_hash::Hash,
+    solana_hash::{Hash, HASH_BYTES},
 };
 
 #[derive(Clone, Default)]
@@ -20,7 +20,8 @@ impl Hasher {
         }
     }
     pub fn result(self) -> Hash {
-        Hash(self.hasher.finalize().into())
+        let bytes: [u8; HASH_BYTES] = self.hasher.finalize().into();
+        bytes.into()
     }
 }
 
@@ -84,7 +85,7 @@ mod tests {
 
         assert_eq!(hash_base58_str.parse::<Hash>(), Ok(hash));
 
-        hash_base58_str.push_str(&bs58::encode(hash.0).into_string());
+        hash_base58_str.push_str(&bs58::encode(hash.as_ref()).into_string());
         assert_eq!(
             hash_base58_str.parse::<Hash>(),
             Err(ParseHashError::WrongSize)
@@ -106,7 +107,7 @@ mod tests {
             Err(ParseHashError::WrongSize)
         );
 
-        let mut hash_base58_str = bs58::encode(hash.0).into_string();
+        let mut hash_base58_str = bs58::encode(hash.as_ref()).into_string();
         assert_eq!(hash_base58_str.parse::<Hash>(), Ok(hash));
 
         // throw some non-base58 stuff in there
