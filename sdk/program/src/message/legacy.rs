@@ -523,11 +523,12 @@ impl Message {
     /// Compute the blake3 hash of a raw transaction message.
     #[cfg(not(target_os = "solana"))]
     pub fn hash_raw_message(message_bytes: &[u8]) -> Hash {
-        use blake3::traits::digest::Digest;
+        use {blake3::traits::digest::Digest, solana_hash::HASH_BYTES};
         let mut hasher = blake3::Hasher::new();
         hasher.update(b"solana-tx-message-v1");
         hasher.update(message_bytes);
-        Hash(hasher.finalize().into())
+        let hash_bytes: [u8; HASH_BYTES] = hasher.finalize().into();
+        hash_bytes.into()
     }
 
     pub fn compile_instruction(&self, ix: &Instruction) -> CompiledInstruction {
