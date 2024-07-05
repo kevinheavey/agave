@@ -17,6 +17,7 @@ borsh = { workspace = true, optional = true }
 bs58 = { workspace = true }
 bytemuck = { workspace = true, optional = true }
 bytemuck_derive = { workspace = true, optional = true }
+js-sys = { workspace = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
 solana-atomic-u64 = { workspace = true }
