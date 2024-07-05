@@ -7373,8 +7373,6 @@ dependencies = [
  "rustc_version 0.4.0",
  "serde",
  "serde_json",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
 ]
 
 [[package]]
