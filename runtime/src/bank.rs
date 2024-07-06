@@ -3073,11 +3073,6 @@ impl Bank {
         self.fee_rate_governor.lamports_per_signature
     }
 
-    pub(crate) fn get_lamports_per_signature_for_blockhash(&self, hash: &Hash) -> Option<u64> {
-        let blockhash_queue = self.blockhash_queue.read().unwrap();
-        blockhash_queue.get_lamports_per_signature(hash)
-    }
-
     pub fn get_fee_for_message(&self, message: &SanitizedMessage) -> Option<u64> {
         let lamports_per_signature = {
             let blockhash_queue = self.blockhash_queue.read().unwrap();
@@ -3214,11 +3209,6 @@ impl Bank {
             &Hash::new_unique(),
             &BankWithScheduler::no_scheduler_available(),
         )
-    }
-
-    #[cfg(feature = "dev-context-only-utils")]
-    pub(crate) fn register_recent_blockhash_for_test(&self, hash: &Hash) {
-        self.register_recent_blockhash(hash, &BankWithScheduler::no_scheduler_available());
     }
 
     /// Tell the bank which Entry IDs exist on the ledger. This function assumes subsequent calls
@@ -5289,10 +5279,6 @@ impl Bank {
         )
     }
 
-    pub(crate) fn account_indexes_include_key(&self, key: &Pubkey) -> bool {
-        self.rc.accounts.account_indexes_include_key(key)
-    }
-
     /// Returns all the accounts this bank can load
     pub(crate) fn get_all_accounts(&self, sort_results: bool) -> ScanResult<Vec<PubkeyAccountSlot>> {
         self.rc
@@ -5862,17 +5848,6 @@ impl Bank {
         SnapshotHash::new(&accounts_hash, epoch_accounts_hash.as_ref())
     }
 
-    pub(crate) fn get_thread_pool(&self) -> &ThreadPool {
-        &self.rc.accounts.accounts_db.thread_pool_clean
-    }
-
-    pub(crate) fn load_account_into_read_cache(&self, key: &Pubkey) {
-        self.rc
-            .accounts
-            .accounts_db
-            .load_account_into_read_cache(&self.ancestors, key);
-    }
-
     pub(crate) fn update_accounts_hash(
         &self,
         data_source: CalcAccountsHashDataSource,
@@ -6165,16 +6140,6 @@ impl Bank {
     pub fn epoch_vote_accounts(&self, epoch: Epoch) -> Option<&VoteAccountsHashMap> {
         let epoch_stakes = self.epoch_stakes.get(&epoch)?.stakes();
         Some(epoch_stakes.vote_accounts().as_ref())
-    }
-
-    /// Get the fixed authorized voter for the given vote account for the
-    /// current epoch
-    pub(crate) fn epoch_authorized_voter(&self, vote_account: &Pubkey) -> Option<&Pubkey> {
-        self.epoch_stakes
-            .get(&self.epoch)
-            .expect("Epoch stakes for bank's own epoch must exist")
-            .epoch_authorized_voters()
-            .get(vote_account)
     }
 
     /// Get the fixed set of vote accounts for the given node id for the
@@ -6932,18 +6897,6 @@ impl Bank {
         TransactionBatch::new(lock_results, self, Cow::Owned(sanitized_txs))
     }
 
-    /// Set the initial accounts data size
-    /// NOTE: This fn is *ONLY FOR TESTS*
-    pub(crate) fn set_accounts_data_size_initial_for_tests(&mut self, amount: u64) {
-        self.accounts_data_size_initial = amount;
-    }
-
-    /// Update the accounts data size off-chain delta
-    /// NOTE: This fn is *ONLY FOR TESTS*
-    pub(crate) fn update_accounts_data_size_delta_off_chain_for_tests(&self, amount: i64) {
-        self.update_accounts_data_size_delta_off_chain(amount)
-    }
-
     #[cfg(test)]
     fn restore_old_behavior_for_fragile_tests(&self) {
         self.lazy_rent_collection.store(true, Relaxed);
@@ -7004,14 +6957,6 @@ impl Bank {
             self.epoch_schedule.get_epoch(slot),
             &self.transaction_processor.program_cache.read().unwrap(),
         )
-    }
-
-    pub(crate) fn get_transaction_processor(&self) -> &TransactionBatchProcessor<BankForks> {
-        &self.transaction_processor
-    }
-
-    pub(crate) fn set_fee_structure(&mut self, fee_structure: &FeeStructure) {
-        self.fee_structure = fee_structure.clone();
     }
 
     pub fn load_program(
