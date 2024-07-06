@@ -2757,7 +2757,7 @@ impl Bank {
         });
     }
 
-    pub(crate) fn update_recent_blockhashes(&self) {
+    pub fn update_recent_blockhashes(&self) {
         let blockhash_queue = self.blockhash_queue.read().unwrap();
         self.update_recent_blockhashes_locked(&blockhash_queue);
     }
@@ -6207,7 +6207,7 @@ impl Bank {
         !self.is_delta.load(Relaxed)
     }
 
-    pub(crate) fn add_mockup_builtin(
+    pub fn add_mockup_builtin(
         &mut self,
         program_id: Pubkey,
         builtin_function: BuiltinFunctionWithContext,
@@ -6873,7 +6873,7 @@ impl Bank {
 
     /// Intended for use by benches only.
     /// create new bank with the given config and paths.
-    pub(crate) fn new_with_paths_for_benches(
+    pub fn new_with_paths_for_benches(
         genesis_config: &GenesisConfig,
         paths: Vec<PathBuf>,
     ) -> Self {
