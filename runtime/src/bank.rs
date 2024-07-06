@@ -5279,7 +5279,10 @@ impl Bank {
     }
 
     /// Returns all the accounts this bank can load
-    pub(crate) fn get_all_accounts(&self, sort_results: bool) -> ScanResult<Vec<PubkeyAccountSlot>> {
+    pub(crate) fn get_all_accounts(
+        &self,
+        sort_results: bool,
+    ) -> ScanResult<Vec<PubkeyAccountSlot>> {
         self.rc
             .accounts
             .load_all(&self.ancestors, self.bank_id, sort_results)
@@ -5673,7 +5676,10 @@ impl Bank {
     /// Get this bank's storages to use for snapshots.
     ///
     /// If a base slot is provided, return only the storages that are *higher* than this slot.
-    pub(crate) fn get_snapshot_storages(&self, base_slot: Option<Slot>) -> Vec<Arc<AccountStorageEntry>> {
+    pub(crate) fn get_snapshot_storages(
+        &self,
+        base_slot: Option<Slot>,
+    ) -> Vec<Arc<AccountStorageEntry>> {
         // if a base slot is provided, request storages starting at the slot *after*
         let start_slot = base_slot.map_or(0, |slot| slot.saturating_add(1));
         // we want to *include* the storage at our slot
@@ -5905,7 +5911,10 @@ impl Bank {
     }
 
     /// Calculate the incremental accounts hash from `base_slot` to `self`
-    pub(crate) fn update_incremental_accounts_hash(&self, base_slot: Slot) -> IncrementalAccountsHash {
+    pub(crate) fn update_incremental_accounts_hash(
+        &self,
+        base_slot: Slot,
+    ) -> IncrementalAccountsHash {
         let config = CalcAccountsHashConfig {
             use_bg_thread_pool: true,
             ancestors: None, // does not matter, will not be used
@@ -6864,7 +6873,10 @@ impl Bank {
 
     /// Intended for use by benches only.
     /// create new bank with the given config and paths.
-    pub(crate) fn new_with_paths_for_benches(genesis_config: &GenesisConfig, paths: Vec<PathBuf>) -> Self {
+    pub(crate) fn new_with_paths_for_benches(
+        genesis_config: &GenesisConfig,
+        paths: Vec<PathBuf>,
+    ) -> Self {
         Self::new_with_paths(
             genesis_config,
             Arc::<RuntimeConfig>::default(),
