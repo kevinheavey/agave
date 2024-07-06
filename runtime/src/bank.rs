@@ -6873,10 +6873,7 @@ impl Bank {
 
     /// Intended for use by benches only.
     /// create new bank with the given config and paths.
-    pub fn new_with_paths_for_benches(
-        genesis_config: &GenesisConfig,
-        paths: Vec<PathBuf>,
-    ) -> Self {
+    pub fn new_with_paths_for_benches(genesis_config: &GenesisConfig, paths: Vec<PathBuf>) -> Self {
         Self::new_with_paths(
             genesis_config,
             Arc::<RuntimeConfig>::default(),
@@ -7191,11 +7188,7 @@ impl Drop for Bank {
 #[cfg(any(test, feature = "dev-context-only-utils"))]
 pub mod test_utils {
     use {
-        super::Bank,
-        crate::installed_scheduler_pool::BankWithScheduler,
-        solana_sdk::{
-            hash::hashv,
-        },
+        super::Bank, crate::installed_scheduler_pool::BankWithScheduler, solana_sdk::hash::hashv,
         std::sync::Arc,
     };
     pub fn goto_end_of_slot(bank: Arc<Bank>) {
@@ -7221,7 +7214,8 @@ pub mod test_utils {
         vote_pubkey: &solana_sdk::pubkey::Pubkey,
     ) {
         let mut vote_account = bank.get_account(vote_pubkey).unwrap_or_default();
-        let mut vote_state = solana_vote_program::vote_state::from(&vote_account).unwrap_or_default();
+        let mut vote_state =
+            solana_vote_program::vote_state::from(&vote_account).unwrap_or_default();
         vote_state.last_timestamp = timestamp;
         let versioned = solana_vote_program::vote_state::VoteStateVersions::new_current(vote_state);
         solana_vote_program::vote_state::to(&versioned, &mut vote_account).unwrap();
