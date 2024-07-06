@@ -7178,21 +7178,17 @@ impl Drop for Bank {
 }
 
 /// utility function used for testing and benchmarking.
-#[cfg(test)]
+#[cfg(any(test, feature = "dev-context-only-utils"))]
 pub mod test_utils {
     use {
         super::Bank,
         crate::installed_scheduler_pool::BankWithScheduler,
         solana_sdk::{
-            account::{ReadableAccount, WritableAccount},
             hash::hashv,
-            lamports::LamportsError,
-            pubkey::Pubkey,
         },
-        solana_vote_program::vote_state::{self, BlockTimestamp, VoteStateVersions},
         std::sync::Arc,
     };
-    pub(crate) fn goto_end_of_slot(bank: Arc<Bank>) {
+    pub fn goto_end_of_slot(bank: Arc<Bank>) {
         goto_end_of_slot_with_scheduler(&BankWithScheduler::new_without_scheduler(bank))
     }
 
@@ -7208,24 +7204,27 @@ pub mod test_utils {
         }
     }
 
+    #[cfg(test)]
     pub(crate) fn update_vote_account_timestamp(
-        timestamp: BlockTimestamp,
+        timestamp: solana_vote_program::vote_state::BlockTimestamp,
         bank: &Bank,
-        vote_pubkey: &Pubkey,
+        vote_pubkey: &solana_sdk::pubkey::Pubkey,
     ) {
         let mut vote_account = bank.get_account(vote_pubkey).unwrap_or_default();
-        let mut vote_state = vote_state::from(&vote_account).unwrap_or_default();
+        let mut vote_state = solana_vote_program::vote_state::from(&vote_account).unwrap_or_default();
         vote_state.last_timestamp = timestamp;
-        let versioned = VoteStateVersions::new_current(vote_state);
-        vote_state::to(&versioned, &mut vote_account).unwrap();
+        let versioned = solana_vote_program::vote_state::VoteStateVersions::new_current(vote_state);
+        solana_vote_program::vote_state::to(&versioned, &mut vote_account).unwrap();
         bank.store_account(vote_pubkey, &vote_account);
     }
 
-    pub(crate) fn deposit(
+    #[cfg(any(test, feature = "dev-context-only-utils"))]
+    pub fn deposit(
         bank: &Bank,
-        pubkey: &Pubkey,
+        pubkey: &solana_sdk::pubkey::Pubkey,
         lamports: u64,
-    ) -> std::result::Result<u64, LamportsError> {
+    ) -> std::result::Result<u64, solana_sdk::lamports::LamportsError> {
+        use solana_sdk::account::{ReadableAccount, WritableAccount};
         // This doesn't collect rents intentionally.
         // Rents should only be applied to actual TXes
         let mut account = bank
