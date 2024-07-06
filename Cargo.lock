@@ -7328,6 +7328,7 @@ dependencies = [
  "rustc_version 0.4.0",
  "solana-define-syscall",
  "solana-frozen-abi",
+ "solana-frozen-abi-macro",
  "thiserror",
 ]
 

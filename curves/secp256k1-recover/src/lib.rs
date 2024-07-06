@@ -64,7 +64,7 @@ pub const SECP256K1_SIGNATURE_LENGTH: usize = 64;
 pub const SECP256K1_PUBLIC_KEY_LENGTH: usize = 64;
 
 #[repr(transparent)]
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
