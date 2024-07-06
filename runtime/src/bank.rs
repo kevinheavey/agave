@@ -6971,6 +6971,16 @@ impl Bank {
         )
     }
 
+    #[cfg(feature = "dev-context-only-utils")]
+    pub fn get_transaction_processor(&self) -> &TransactionBatchProcessor<BankForks> {
+        &self.transaction_processor
+    }
+
+    #[cfg(feature = "dev-context-only-utils")]
+    pub fn set_fee_structure(&mut self, fee_structure: &FeeStructure) {
+        self.fee_structure = fee_structure.clone();
+    }
+
     pub fn load_program(
         &self,
         pubkey: &Pubkey,
