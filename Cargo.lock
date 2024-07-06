@@ -7570,6 +7570,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-timings"
+version = "2.1.0"
+dependencies = [
+ "eager",
+ "enum-iterator",
+ "solana-sdk",
+]
+
+[[package]]
 name = "solana-tokens"
 version = "2.1.0"
 dependencies = [
