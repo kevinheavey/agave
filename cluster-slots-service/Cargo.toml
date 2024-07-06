@@ -22,3 +22,6 @@ solana-sdk = { workspace = true }
 
 [dev-dependencies]
 solana-streamer = { workspace = true }
+
+[features]
+dev-context-only-utils = []
