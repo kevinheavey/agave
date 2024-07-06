@@ -1,3 +1,4 @@
+#![allow(clippy::arithmetic_side_effects)]
 pub mod cluster_slots;
 use {
     cluster_slots::ClusterSlots,
