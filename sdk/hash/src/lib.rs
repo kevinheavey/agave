@@ -189,3 +189,16 @@ impl Hash {
         self.0.clone().into()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use solana_frozen_abi::abi_example::AbiExample;
+    fn foo<T: AbiExample>() {
+    }
+
+    #[test]
+    fn test_abi_example_impl() {
+        foo::<Hash>();
+    }
+}
