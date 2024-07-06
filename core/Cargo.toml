@@ -130,6 +130,7 @@ frozen-abi = [
     "solana-program-runtime/frozen-abi",
     "solana-runtime/frozen-abi",
     "solana-sdk/frozen-abi",
+    "solana-short-vec/frozen-abi",
     "solana-svm/frozen-abi",
     "solana-vote/frozen-abi",
     "solana-vote-program/frozen-abi",
