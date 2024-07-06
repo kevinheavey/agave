@@ -206,7 +206,6 @@ use {
     },
     solana_program_runtime::{loaded_programs::ProgramCacheForTxBatch, sysvar_cache::SysvarCache},
     solana_svm::program_loader::load_program_with_pubkey,
-    solana_system_program::{get_system_account_kind, SystemAccountKind},
 };
 
 /// params to `verify_accounts_hash`
@@ -6947,6 +6946,7 @@ impl Bank {
         self.transaction_processor.get_sysvar_cache_for_tests()
     }
 
+    #[cfg(test)]
     pub(crate) fn update_accounts_hash_for_tests(&self) -> AccountsHash {
         self.update_accounts_hash(CalcAccountsHashDataSource::IndexForTests, false, false)
     }
@@ -6971,11 +6971,12 @@ impl Bank {
         load_program_with_pubkey(self, &environments, pubkey, self.slot(), reload)
     }
 
+    #[cfg(test)]
     pub(crate) fn withdraw(&self, pubkey: &Pubkey, lamports: u64) -> Result<()> {
         match self.get_account_with_fixed_root(pubkey) {
             Some(mut account) => {
-                let min_balance = match get_system_account_kind(&account) {
-                    Some(SystemAccountKind::Nonce) => self
+                let min_balance = match solana_system_program::get_system_account_kind(&account) {
+                    Some(solana_system_program::SystemAccountKind::Nonce) => self
                         .rent_collector
                         .rent
                         .minimum_balance(nonce::State::size()),
@@ -7165,6 +7166,7 @@ impl Drop for Bank {
 }
 
 /// utility function used for testing and benchmarking.
+#[cfg(test)]
 pub mod test_utils {
     use {
         super::Bank,
