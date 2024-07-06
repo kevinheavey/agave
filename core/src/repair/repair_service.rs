@@ -8,7 +8,6 @@ use {
 use {
     crate::{
         cluster_info_vote_listener::VerifiedVoteReceiver,
-        cluster_slots_service::cluster_slots::ClusterSlots,
         repair::{
             ancestor_hashes_service::{AncestorHashesReplayUpdateReceiver, AncestorHashesService},
             duplicate_repair_status::AncestorDuplicateSlotToRepair,
@@ -30,6 +29,7 @@ use {
         blockstore::{Blockstore, SlotMeta},
         shred,
     },
+    solana_cluster_slots_service::cluster_slots::ClusterSlots,
     solana_measure::measure::Measure,
     solana_runtime::bank_forks::BankForks,
     solana_sdk::{

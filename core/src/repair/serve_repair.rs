@@ -1,6 +1,5 @@
 use {
     crate::{
-        cluster_slots_service::cluster_slots::ClusterSlots,
         repair::{
             duplicate_repair_status::get_ancestor_hash_repair_sample_size,
             quic_endpoint::{LocalRequest, RemoteRequest},
@@ -17,6 +16,7 @@ use {
         distributions::{Distribution, WeightedError, WeightedIndex},
         Rng,
     },
+    solana_cluster_slots_service::cluster_slots::ClusterSlots,
     solana_gossip::{
         cluster_info::{ClusterInfo, ClusterInfoError},
         contact_info::{ContactInfo, Protocol},

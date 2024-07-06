@@ -1,10 +1,10 @@
 use {
     crate::{
         cluster_info_vote_listener::SlotVoteTracker,
-        cluster_slots_service::cluster_slots::SlotPubkeys,
         consensus::{Stake, ThresholdDecision, VotedStakes},
         replay_stage::SUPERMINORITY_THRESHOLD,
     },
+    solana_cluster_slots_service::cluster_slots::SlotPubkeys,
     solana_ledger::blockstore_processor::{ConfirmationProgress, ReplaySlotStats},
     solana_runtime::{bank::Bank, bank_forks::BankForks},
     solana_sdk::{clock::Slot, hash::Hash, pubkey::Pubkey},

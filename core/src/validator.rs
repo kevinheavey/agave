@@ -1308,7 +1308,7 @@ impl Validator {
         let outstanding_repair_requests =
             Arc::<RwLock<repair::repair_service::OutstandingShredRepairs>>::default();
         let cluster_slots =
-            Arc::new(crate::cluster_slots_service::cluster_slots::ClusterSlots::default());
+            Arc::new(solana_cluster_slots_service::cluster_slots::ClusterSlots::default());
 
         let tvu = Tvu::new(
             vote_account,

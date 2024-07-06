@@ -2,7 +2,6 @@
 use {
     crate::{
         cluster_info_vote_listener::VoteTracker,
-        cluster_slots_service::cluster_slots::ClusterSlots,
         consensus::{
             fork_choice::SelectVoteAndResetForkResult,
             heaviest_subtree_fork_choice::HeaviestSubtreeForkChoice,
@@ -17,6 +16,7 @@ use {
         unfrozen_gossip_verified_vote_hashes::UnfrozenGossipVerifiedVoteHashes,
     },
     crossbeam_channel::unbounded,
+    solana_cluster_slots_service::cluster_slots::ClusterSlots,
     solana_runtime::{
         accounts_background_service::AbsRequestSender,
         bank::Bank,

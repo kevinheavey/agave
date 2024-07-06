@@ -72,6 +72,7 @@ tokio = { workspace = true }
 assert_cmd = { workspace = true }
 predicates = { workspace = true }
 solana-account-decoder = { workspace = true }
+solana-cluster-slots-service = { workspace = true }
 solana-inline-spl = { workspace = true }
 solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
 spl-token-2022 = { workspace = true, features = ["no-entrypoint"] }

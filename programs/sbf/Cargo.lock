@@ -4789,6 +4789,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-cluster-slots-service"
+version = "2.1.0"
+dependencies = [
+ "crossbeam-channel",
+ "itertools 0.12.1",
+ "log",
+ "solana-gossip",
+ "solana-ledger",
+ "solana-measure",
+ "solana-metrics",
+ "solana-runtime",
+ "solana-sdk",
+]
+
+[[package]]
 name = "solana-compute-budget"
 version = "2.1.0"
 dependencies = [
@@ -4872,6 +4887,7 @@ dependencies = [
  "solana-accounts-db",
  "solana-bloom",
  "solana-client",
+ "solana-cluster-slots-service",
  "solana-compute-budget",
  "solana-cost-model",
  "solana-entry",
