@@ -21,6 +21,7 @@ solana-ledger = { workspace = true }
 solana-program-runtime = { workspace = true }
 solana-runtime = { workspace = true }
 solana-sdk = { workspace = true }
+solana-timings = { workspace = true }
 solana-unified-scheduler-logic = { workspace = true }
 vec_extract_if_polyfill = { workspace = true }
 
