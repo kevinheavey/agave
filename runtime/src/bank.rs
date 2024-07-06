@@ -425,7 +425,7 @@ pub struct TransactionLogCollector {
 }
 
 impl TransactionLogCollector {
-    pub fn get_logs_for_address(
+    pub(crate) fn get_logs_for_address(
         &self,
         address: Option<&Pubkey>,
     ) -> Option<Vec<TransactionLogInfo>> {
@@ -637,7 +637,7 @@ impl PartialEq for Bank {
 impl BankFieldsToSerialize {
     /// Create a new BankFieldsToSerialize where basically every field is defaulted.
     /// Only use for tests; many of the fields are invalid!
-    pub fn default_for_tests() -> Self {
+    pub(crate) fn default_for_tests() -> Self {
         Self {
             blockhash_queue: BlockhashQueue::default(),
             ancestors: AncestorsForSerialization::default(),
@@ -1766,7 +1766,7 @@ impl Bank {
         self.epoch
     }
 
-    pub fn first_normal_epoch(&self) -> Epoch {
+    pub(crate) fn first_normal_epoch(&self) -> Epoch {
         self.epoch_schedule().first_normal_epoch
     }
 
@@ -1782,7 +1782,7 @@ impl Bank {
         *self.hash.read().unwrap() != Hash::default()
     }
 
-    pub fn freeze_started(&self) -> bool {
+    pub(crate) fn freeze_started(&self) -> bool {
         self.freeze_started.load(Relaxed)
     }
 
@@ -1908,7 +1908,7 @@ impl Bank {
         });
     }
 
-    pub fn update_last_restart_slot(&self) {
+    pub(crate) fn update_last_restart_slot(&self) {
         let feature_flag = self
             .feature_set
             .is_active(&feature_set::last_restart_slot_sysvar::id());
@@ -2758,7 +2758,7 @@ impl Bank {
         });
     }
 
-    pub fn update_recent_blockhashes(&self) {
+    pub(crate) fn update_recent_blockhashes(&self) {
         let blockhash_queue = self.blockhash_queue.read().unwrap();
         self.update_recent_blockhashes_locked(&blockhash_queue);
     }
@@ -2810,7 +2810,7 @@ impl Bank {
         stake_weighted_timestamp
     }
 
-    pub fn rehash(&self) {
+    pub(crate) fn rehash(&self) {
         let mut hash = self.hash.write().unwrap();
         let new = self.hash_internal_state();
         if new != *hash {
@@ -3004,7 +3004,7 @@ impl Bank {
     }
 
     /// Add a precompiled program account
-    pub fn add_precompiled_account(&self, program_id: &Pubkey) {
+    pub(crate) fn add_precompiled_account(&self, program_id: &Pubkey) {
         self.add_precompiled_account_with_owner(program_id, native_loader::id())
     }
 
@@ -3073,7 +3073,7 @@ impl Bank {
         self.fee_rate_governor.lamports_per_signature
     }
 
-    pub fn get_lamports_per_signature_for_blockhash(&self, hash: &Hash) -> Option<u64> {
+    pub(crate) fn get_lamports_per_signature_for_blockhash(&self, hash: &Hash) -> Option<u64> {
         let blockhash_queue = self.blockhash_queue.read().unwrap();
         blockhash_queue.get_lamports_per_signature(hash)
     }
@@ -3113,7 +3113,7 @@ impl Bank {
         self.set_initial_accounts_hash_verification_completed();
     }
 
-    pub fn get_fee_for_message_with_lamports_per_signature(
+    pub(crate) fn get_fee_for_message_with_lamports_per_signature(
         &self,
         message: &SanitizedMessage,
         lamports_per_signature: u64,
@@ -3217,7 +3217,7 @@ impl Bank {
     }
 
     #[cfg(feature = "dev-context-only-utils")]
-    pub fn register_recent_blockhash_for_test(&self, hash: &Hash) {
+    pub(crate) fn register_recent_blockhash_for_test(&self, hash: &Hash) {
         self.register_recent_blockhash(hash, &BankWithScheduler::no_scheduler_available());
     }
 
@@ -3227,7 +3227,7 @@ impl Bank {
     ///
     /// This is NOT thread safe because if tick height is updated by two different threads, the
     /// block boundary condition could be missed.
-    pub fn register_tick(&self, hash: &Hash, scheduler: &InstalledSchedulerRwLock) {
+    pub(crate) fn register_tick(&self, hash: &Hash, scheduler: &InstalledSchedulerRwLock) {
         assert!(
             !self.freeze_started(),
             "register_tick() working on a bank that is already frozen or is undergoing freezing!"
@@ -3481,7 +3481,7 @@ impl Bank {
         account_overrides
     }
 
-    pub fn unlock_accounts<'a>(
+    pub(crate) fn unlock_accounts<'a>(
         &self,
         txs_and_results: impl Iterator<Item = (&'a SanitizedTransaction, &'a Result<()>)>,
     ) {
@@ -3862,13 +3862,13 @@ impl Bank {
     }
 
     /// Load the accounts data size, in bytes
-    pub fn load_accounts_data_size(&self) -> u64 {
+    pub(crate) fn load_accounts_data_size(&self) -> u64 {
         self.accounts_data_size_initial
             .saturating_add_signed(self.load_accounts_data_size_delta())
     }
 
     /// Load the change in accounts data size in this Bank, in bytes
-    pub fn load_accounts_data_size_delta(&self) -> i64 {
+    pub(crate) fn load_accounts_data_size_delta(&self) -> i64 {
         let delta_on_chain = self.load_accounts_data_size_delta_on_chain();
         let delta_off_chain = self.load_accounts_data_size_delta_off_chain();
         delta_on_chain.saturating_add(delta_off_chain)
@@ -3876,13 +3876,13 @@ impl Bank {
 
     /// Load the change in accounts data size in this Bank, in bytes, from on-chain events
     /// i.e. transactions
-    pub fn load_accounts_data_size_delta_on_chain(&self) -> i64 {
+    pub(crate) fn load_accounts_data_size_delta_on_chain(&self) -> i64 {
         self.accounts_data_size_delta_on_chain.load(Acquire)
     }
 
     /// Load the change in accounts data size in this Bank, in bytes, from off-chain events
     /// i.e. rent collection
-    pub fn load_accounts_data_size_delta_off_chain(&self) -> i64 {
+    pub(crate) fn load_accounts_data_size_delta_off_chain(&self) -> i64 {
         self.accounts_data_size_delta_off_chain.load(Acquire)
     }
 
@@ -4784,7 +4784,7 @@ impl Bank {
     // This value is specially chosen to align with slots per epoch in mainnet-beta and testnet
     // Also, assume 500GB account data set as the extreme, then for 2 day (=48 hours) to collect
     // rent eagerly, we'll consume 5.7 MB/s IO bandwidth, bidirectionally.
-    pub fn slot_count_in_two_day_helper(ticks_per_slot: SlotCount) -> SlotCount {
+    pub(crate) fn slot_count_in_two_day_helper(ticks_per_slot: SlotCount) -> SlotCount {
         2 * DEFAULT_TICKS_PER_SECOND * SECONDS_PER_DAY / ticks_per_slot
     }
 
@@ -4956,7 +4956,7 @@ impl Bank {
         self.process_transaction(&tx).map(|_| signature)
     }
 
-    pub fn read_balance(account: &AccountSharedData) -> u64 {
+    pub(crate) fn read_balance(account: &AccountSharedData) -> u64 {
         account.lamports()
     }
     /// Each program would need to be able to introspect its own state
@@ -4991,7 +4991,7 @@ impl Bank {
         self.store_accounts((self.slot(), &[(pubkey, account)][..]))
     }
 
-    pub fn store_accounts<'a>(&self, accounts: impl StorableAccounts<'a>) {
+    pub(crate) fn store_accounts<'a>(&self, accounts: impl StorableAccounts<'a>) {
         assert!(!self.freeze_started());
         let mut m = Measure::start("stakes_cache.check_and_store");
         let new_warmup_cooldown_rate_epoch = self.new_warmup_cooldown_rate_epoch();
@@ -5021,7 +5021,7 @@ impl Bank {
             .flush_accounts_cache(true, Some(self.slot()))
     }
 
-    pub fn flush_accounts_cache_if_needed(&self) {
+    pub(crate) fn flush_accounts_cache_if_needed(&self) {
         self.rc
             .accounts
             .accounts_db
@@ -5178,7 +5178,7 @@ impl Bank {
         }
     }
 
-    pub fn get_account_with_fixed_root_no_cache(
+    pub(crate) fn get_account_with_fixed_root_no_cache(
         &self,
         pubkey: &Pubkey,
     ) -> Option<AccountSharedData> {
@@ -5289,12 +5289,12 @@ impl Bank {
         )
     }
 
-    pub fn account_indexes_include_key(&self, key: &Pubkey) -> bool {
+    pub(crate) fn account_indexes_include_key(&self, key: &Pubkey) -> bool {
         self.rc.accounts.account_indexes_include_key(key)
     }
 
     /// Returns all the accounts this bank can load
-    pub fn get_all_accounts(&self, sort_results: bool) -> ScanResult<Vec<PubkeyAccountSlot>> {
+    pub(crate) fn get_all_accounts(&self, sort_results: bool) -> ScanResult<Vec<PubkeyAccountSlot>> {
         self.rc
             .accounts
             .load_all(&self.ancestors, self.bank_id, sort_results)
@@ -5405,7 +5405,7 @@ impl Bank {
             .fetch_add(tx_count, Relaxed);
     }
 
-    pub fn signature_count(&self) -> u64 {
+    pub(crate) fn signature_count(&self) -> u64 {
         self.signature_count.load(Relaxed)
     }
 
@@ -5677,7 +5677,7 @@ impl Bank {
     /// return true if bg hash verification is complete
     /// return false if bg hash verification has not completed yet
     /// if hash verification failed, a panic will occur
-    pub fn has_initial_accounts_hash_verification_completed(&self) -> bool {
+    pub(crate) fn has_initial_accounts_hash_verification_completed(&self) -> bool {
         self.rc
             .accounts
             .accounts_db
@@ -5688,7 +5688,7 @@ impl Bank {
     /// Get this bank's storages to use for snapshots.
     ///
     /// If a base slot is provided, return only the storages that are *higher* than this slot.
-    pub fn get_snapshot_storages(&self, base_slot: Option<Slot>) -> Vec<Arc<AccountStorageEntry>> {
+    pub(crate) fn get_snapshot_storages(&self, base_slot: Option<Slot>) -> Vec<Arc<AccountStorageEntry>> {
         // if a base slot is provided, request storages starting at the slot *after*
         let start_slot = base_slot.map_or(0, |slot| slot.saturating_add(1));
         // we want to *include* the storage at our slot
@@ -5820,7 +5820,7 @@ impl Bank {
     ///
     /// This fn is used when creating a snapshot with ledger-tool, or when
     /// packaging a snapshot into an archive (used to get the `SnapshotHash`).
-    pub fn get_accounts_hash(&self) -> Option<AccountsHash> {
+    pub(crate) fn get_accounts_hash(&self) -> Option<AccountsHash> {
         self.rc
             .accounts
             .accounts_db
@@ -5832,7 +5832,7 @@ impl Bank {
     ///
     /// This fn is used when creating an incremental snapshot with ledger-tool, or when
     /// packaging a snapshot into an archive (used to get the `SnapshotHash`).
-    pub fn get_incremental_accounts_hash(&self) -> Option<IncrementalAccountsHash> {
+    pub(crate) fn get_incremental_accounts_hash(&self) -> Option<IncrementalAccountsHash> {
         self.rc
             .accounts
             .accounts_db
@@ -5862,18 +5862,18 @@ impl Bank {
         SnapshotHash::new(&accounts_hash, epoch_accounts_hash.as_ref())
     }
 
-    pub fn get_thread_pool(&self) -> &ThreadPool {
+    pub(crate) fn get_thread_pool(&self) -> &ThreadPool {
         &self.rc.accounts.accounts_db.thread_pool_clean
     }
 
-    pub fn load_account_into_read_cache(&self, key: &Pubkey) {
+    pub(crate) fn load_account_into_read_cache(&self, key: &Pubkey) {
         self.rc
             .accounts
             .accounts_db
             .load_account_into_read_cache(&self.ancestors, key);
     }
 
-    pub fn update_accounts_hash(
+    pub(crate) fn update_accounts_hash(
         &self,
         data_source: CalcAccountsHashDataSource,
         mut debug_verify: bool,
@@ -5931,7 +5931,7 @@ impl Bank {
     }
 
     /// Calculate the incremental accounts hash from `base_slot` to `self`
-    pub fn update_incremental_accounts_hash(&self, base_slot: Slot) -> IncrementalAccountsHash {
+    pub(crate) fn update_incremental_accounts_hash(&self, base_slot: Slot) -> IncrementalAccountsHash {
         let config = CalcAccountsHashConfig {
             use_bg_thread_pool: true,
             ancestors: None, // does not matter, will not be used
@@ -5955,7 +5955,7 @@ impl Bank {
 
     /// A snapshot bank should be purged of 0 lamport accounts which are not part of the hash
     /// calculation and could shield other real accounts.
-    pub fn verify_snapshot_bank(
+    pub(crate) fn verify_snapshot_bank(
         &self,
         test_hash_calculation: bool,
         skip_shrink: bool,
@@ -6154,7 +6154,7 @@ impl Bank {
     }
 
     /// Get the total epoch stake for the given epoch.
-    pub fn epoch_total_stake(&self, epoch: Epoch) -> Option<u64> {
+    pub(crate) fn epoch_total_stake(&self, epoch: Epoch) -> Option<u64> {
         self.epoch_stakes
             .get(&epoch)
             .map(|epoch_stakes| epoch_stakes.total_stake())
@@ -6169,7 +6169,7 @@ impl Bank {
 
     /// Get the fixed authorized voter for the given vote account for the
     /// current epoch
-    pub fn epoch_authorized_voter(&self, vote_account: &Pubkey) -> Option<&Pubkey> {
+    pub(crate) fn epoch_authorized_voter(&self, vote_account: &Pubkey) -> Option<&Pubkey> {
         self.epoch_stakes
             .get(&self.epoch)
             .expect("Epoch stakes for bank's own epoch must exist")
@@ -6234,7 +6234,7 @@ impl Bank {
         !self.is_delta.load(Relaxed)
     }
 
-    pub fn add_mockup_builtin(
+    pub(crate) fn add_mockup_builtin(
         &mut self,
         program_id: Pubkey,
         builtin_function: BuiltinFunctionWithContext,
@@ -6247,7 +6247,7 @@ impl Bank {
         );
     }
 
-    pub fn add_precompile(&mut self, program_id: &Pubkey) {
+    pub(crate) fn add_precompile(&mut self, program_id: &Pubkey) {
         debug!("Adding precompiled program {}", program_id);
         self.add_precompiled_account(program_id);
         debug!("Added precompiled program {:?}", program_id);
@@ -6278,7 +6278,7 @@ impl Bank {
         self.rc.accounts.accounts_db.print_accounts_stats("");
     }
 
-    pub fn shrink_candidate_slots(&self) -> usize {
+    pub(crate) fn shrink_candidate_slots(&self) -> usize {
         self.rc
             .accounts
             .accounts_db
@@ -6292,7 +6292,7 @@ impl Bank {
             .shrink_ancient_slots(self.epoch_schedule())
     }
 
-    pub fn validate_fee_collector_account(&self) -> bool {
+    pub(crate) fn validate_fee_collector_account(&self) -> bool {
         self.feature_set
             .is_active(&feature_set::validate_fee_collector_account::id())
     }
@@ -6625,7 +6625,7 @@ impl Bank {
     }
 
     /// Get all the accounts for this bank and calculate stats
-    pub fn get_total_accounts_stats(&self) -> ScanResult<TotalAccountsStats> {
+    pub(crate) fn get_total_accounts_stats(&self) -> ScanResult<TotalAccountsStats> {
         let accounts = self.get_all_accounts(false)?;
         Ok(self.calculate_total_accounts_stats(
             accounts
@@ -6635,7 +6635,7 @@ impl Bank {
     }
 
     /// Given all the accounts for a bank, calculate stats
-    pub fn calculate_total_accounts_stats<'a>(
+    pub(crate) fn calculate_total_accounts_stats<'a>(
         &self,
         accounts: impl Iterator<Item = (&'a Pubkey, &'a AccountSharedData)>,
     ) -> TotalAccountsStats {
@@ -6727,7 +6727,7 @@ impl Bank {
         self.check_program_modification_slot
     }
 
-    pub fn set_check_program_modification_slot(&mut self, check: bool) {
+    pub(crate) fn set_check_program_modification_slot(&mut self, check: bool) {
         self.check_program_modification_slot = check;
     }
 
@@ -6900,7 +6900,7 @@ impl Bank {
 
     /// Intended for use by benches only.
     /// create new bank with the given config and paths.
-    pub fn new_with_paths_for_benches(genesis_config: &GenesisConfig, paths: Vec<PathBuf>) -> Self {
+    pub(crate) fn new_with_paths_for_benches(genesis_config: &GenesisConfig, paths: Vec<PathBuf>) -> Self {
         Self::new_with_paths(
             genesis_config,
             Arc::<RuntimeConfig>::default(),
@@ -6934,13 +6934,13 @@ impl Bank {
 
     /// Set the initial accounts data size
     /// NOTE: This fn is *ONLY FOR TESTS*
-    pub fn set_accounts_data_size_initial_for_tests(&mut self, amount: u64) {
+    pub(crate) fn set_accounts_data_size_initial_for_tests(&mut self, amount: u64) {
         self.accounts_data_size_initial = amount;
     }
 
     /// Update the accounts data size off-chain delta
     /// NOTE: This fn is *ONLY FOR TESTS*
-    pub fn update_accounts_data_size_delta_off_chain_for_tests(&self, amount: i64) {
+    pub(crate) fn update_accounts_data_size_delta_off_chain_for_tests(&self, amount: i64) {
         self.update_accounts_data_size_delta_off_chain(amount)
     }
 
@@ -6973,7 +6973,7 @@ impl Bank {
     }
 
     #[cfg(test)]
-    pub fn flush_accounts_cache_slot_for_tests(&self) {
+    pub(crate) fn flush_accounts_cache_slot_for_tests(&self) {
         self.rc
             .accounts
             .accounts_db
@@ -6994,7 +6994,7 @@ impl Bank {
         self.transaction_processor.get_sysvar_cache_for_tests()
     }
 
-    pub fn update_accounts_hash_for_tests(&self) -> AccountsHash {
+    pub(crate) fn update_accounts_hash_for_tests(&self) -> AccountsHash {
         self.update_accounts_hash(CalcAccountsHashDataSource::IndexForTests, false, false)
     }
 
@@ -7006,11 +7006,11 @@ impl Bank {
         )
     }
 
-    pub fn get_transaction_processor(&self) -> &TransactionBatchProcessor<BankForks> {
+    pub(crate) fn get_transaction_processor(&self) -> &TransactionBatchProcessor<BankForks> {
         &self.transaction_processor
     }
 
-    pub fn set_fee_structure(&mut self, fee_structure: &FeeStructure) {
+    pub(crate) fn set_fee_structure(&mut self, fee_structure: &FeeStructure) {
         self.fee_structure = fee_structure.clone();
     }
 
@@ -7026,7 +7026,7 @@ impl Bank {
         load_program_with_pubkey(self, &environments, pubkey, self.slot(), reload)
     }
 
-    pub fn withdraw(&self, pubkey: &Pubkey, lamports: u64) -> Result<()> {
+    pub(crate) fn withdraw(&self, pubkey: &Pubkey, lamports: u64) -> Result<()> {
         match self.get_account_with_fixed_root(pubkey) {
             Some(mut account) => {
                 let min_balance = match get_system_account_kind(&account) {
@@ -7233,11 +7233,11 @@ pub mod test_utils {
         solana_vote_program::vote_state::{self, BlockTimestamp, VoteStateVersions},
         std::sync::Arc,
     };
-    pub fn goto_end_of_slot(bank: Arc<Bank>) {
+    pub(crate) fn goto_end_of_slot(bank: Arc<Bank>) {
         goto_end_of_slot_with_scheduler(&BankWithScheduler::new_without_scheduler(bank))
     }
 
-    pub fn goto_end_of_slot_with_scheduler(bank: &BankWithScheduler) {
+    pub(crate) fn goto_end_of_slot_with_scheduler(bank: &BankWithScheduler) {
         let mut tick_hash = bank.last_blockhash();
         loop {
             tick_hash = hashv(&[tick_hash.as_ref(), &[42]]);
@@ -7249,7 +7249,7 @@ pub mod test_utils {
         }
     }
 
-    pub fn update_vote_account_timestamp(
+    pub(crate) fn update_vote_account_timestamp(
         timestamp: BlockTimestamp,
         bank: &Bank,
         vote_pubkey: &Pubkey,
@@ -7262,7 +7262,7 @@ pub mod test_utils {
         bank.store_account(vote_pubkey, &vote_account);
     }
 
-    pub fn deposit(
+    pub(crate) fn deposit(
         bank: &Bank,
         pubkey: &Pubkey,
         lamports: u64,
