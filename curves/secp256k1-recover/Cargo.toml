@@ -11,6 +11,7 @@ edition = { workspace = true }
 
 [dependencies]
 borsh = { workspace = true, optional = true }
+solana-frozen-abi = { workspace = true, optional = true }
 thiserror = { workspace = true }
 
 [target.'cfg(target_os = "solana")'.dependencies]
@@ -31,6 +32,7 @@ rustc_version = { workspace = true }
 
 [features]
 borsh = ["dep:borsh"]
+frozen-abi = ["dep:solana-frozen-abi"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
