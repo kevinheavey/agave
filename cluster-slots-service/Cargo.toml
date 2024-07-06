@@ -1,0 +1,24 @@
+[package]
+name = "solana-cluster-slots-service"
+description = "Solana cluster slots service"
+documentation = "https://docs.rs/solana-cluster-slots-service"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+crossbeam-channel = { workspace = true }
+itertools = { workspace = true }
+log = { workspace = true }
+solana-gossip = { workspace = true }
+solana-ledger = { workspace = true }
+solana-measure = { workspace = true }
+solana-metrics = { workspace = true }
+solana-runtime = { workspace = true }
+solana-sdk = { workspace = true }
+
+[dev-dependencies]
+solana-streamer = { workspace = true }
