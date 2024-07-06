@@ -24,12 +24,12 @@ use {
     lru::LruCache,
     rand::seq::SliceRandom,
     solana_client::connection_cache::Protocol,
+    solana_cluster_slots_service::cluster_slots::ClusterSlots,
     solana_gossip::cluster_info::ClusterInfo,
     solana_ledger::{
         blockstore::{Blockstore, SlotMeta},
         shred,
     },
-    solana_cluster_slots_service::cluster_slots::ClusterSlots,
     solana_measure::measure::Measure,
     solana_runtime::bank_forks::BankForks,
     solana_sdk::{
