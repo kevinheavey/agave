@@ -1,3 +1,4 @@
+#![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(min_specialization))]
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 #[cfg(feature = "bytemuck")]
@@ -31,6 +32,7 @@ pub const MAX_BASE58_LEN: usize = 44;
 /// [`blake3`]: crate::blake3
 /// [`Message::hash`]: crate::message::Message::hash
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
+#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
@@ -169,5 +171,18 @@ impl Hash {
     /// Return the `Uint8Array` representation of the hash
     pub fn toBytes(&self) -> Box<[u8]> {
         self.0.clone().into()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use solana_frozen_abi::abi_example::AbiExample;
+    fn foo<T: AbiExample>() {
+    }
+
+    #[test]
+    fn test_abi_example_impl() {
+        foo::<Hash>();
     }
 }
