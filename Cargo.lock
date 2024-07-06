@@ -6585,6 +6585,8 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-atomic-u64",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
  "solana-sanitize",
  "thiserror",
  "wasm-bindgen",
