@@ -123,7 +123,7 @@ fn compile_instructions(ixs: &[Instruction], keys: &[Pubkey]) -> Vec<CompiledIns
 #[cfg(not(target_arch = "wasm32"))]
 #[cfg_attr(
     feature = "frozen-abi",
-    frozen_abi(digest = "hPGFnQYLp3Ps4XLg7NHHvC7tDfNGMMBCN3x2jGXpF3G"),
+    frozen_abi(digest = "8T1Vi17ZrAmakpGPcPo4cMR4stSpbGNP9teYoB6wVR4z"),
     derive(AbiExample)
 )]
 #[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
@@ -153,7 +153,7 @@ pub struct Message {
 #[wasm_bindgen]
 #[cfg_attr(
     feature = "frozen-abi",
-    frozen_abi(digest = "hPGFnQYLp3Ps4XLg7NHHvC7tDfNGMMBCN3x2jGXpF3G"),
+    frozen_abi(digest = "8T1Vi17ZrAmakpGPcPo4cMR4stSpbGNP9teYoB6wVR4z"),
     derive(AbiExample)
 )]
 #[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
