@@ -1,3 +1,7 @@
+#![deprecated(
+    since = "2.1.0",
+    note = "The DecodeError trait has been replaced by simply using num_traits::FromPrimitive directly."
+)]
 //! Converting custom error codes to enums.
 
 use num_traits::FromPrimitive;
