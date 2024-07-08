@@ -9,7 +9,7 @@ use arbitrary::Arbitrary;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use {
-    crate::{decode_error::DecodeError, hash::hashv},
+    crate::hash::hash,
     bytemuck_derive::{Pod, Zeroable},
     num_derive::{FromPrimitive, ToPrimitive},
     std::{
@@ -40,11 +40,6 @@ pub enum PubkeyError {
     InvalidSeeds,
     #[error("Provided owner is not allowed")]
     IllegalOwner,
-}
-impl<T> DecodeError<T> for PubkeyError {
-    fn type_of() -> &'static str {
-        "PubkeyError"
-    }
 }
 impl From<u64> for PubkeyError {
     fn from(error: u64) -> Self {
@@ -108,12 +103,6 @@ pub enum ParsePubkeyError {
 impl From<Infallible> for ParsePubkeyError {
     fn from(_: Infallible) -> Self {
         unreachable!("Infallible uninhabited");
-    }
-}
-
-impl<T> DecodeError<T> for ParsePubkeyError {
-    fn type_of() -> &'static str {
-        "ParsePubkeyError"
     }
 }
 

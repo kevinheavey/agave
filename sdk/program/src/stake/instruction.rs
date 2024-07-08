@@ -3,7 +3,6 @@ use crate::stake::config;
 use {
     crate::{
         clock::{Epoch, UnixTimestamp},
-        decode_error::DecodeError,
         instruction::{AccountMeta, Instruction},
         program_error::ProgramError,
         pubkey::Pubkey,
@@ -83,12 +82,6 @@ pub enum StakeError {
 impl From<StakeError> for ProgramError {
     fn from(e: StakeError) -> Self {
         ProgramError::Custom(e as u32)
-    }
-}
-
-impl<E> DecodeError<E> for StakeError {
-    fn type_of() -> &'static str {
-        "StakeError"
     }
 }
 
@@ -926,10 +919,10 @@ mod tests {
         use num_traits::FromPrimitive;
         fn pretty_err<T>(err: InstructionError) -> String
         where
-            T: 'static + std::error::Error + DecodeError<T> + FromPrimitive,
+            T: 'static + std::error::Error + FromPrimitive,
         {
             if let InstructionError::Custom(code) = err {
-                let specific_error: T = T::decode_custom_error_to_enum(code).unwrap();
+                let specific_error: T = T::from_u32(code).unwrap();
                 format!(
                     "{:?}: {}::{:?} - {}",
                     err,

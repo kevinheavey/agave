@@ -4,7 +4,7 @@
 #[cfg(feature = "borsh")]
 use borsh::io::Error as BorshIoError;
 use {
-    crate::{decode_error::DecodeError, instruction::InstructionError, msg, pubkey::PubkeyError},
+    crate::{instruction::InstructionError, msg, pubkey::PubkeyError},
     num_traits::{FromPrimitive, ToPrimitive},
     std::convert::TryFrom,
     thiserror::Error,
@@ -73,17 +73,17 @@ pub enum ProgramError {
 pub trait PrintProgramError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive;
+        E: 'static + std::error::Error + PrintProgramError + FromPrimitive;
 }
 
 impl PrintProgramError for ProgramError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive,
+        E: 'static + std::error::Error + PrintProgramError + FromPrimitive,
     {
         match self {
             Self::Custom(error) => {
-                if let Some(custom_error) = E::decode_custom_error_to_enum(*error) {
+                if let Some(custom_error) = E::from_u32(*error) {
                     custom_error.print::<E>();
                 } else {
                     msg!("Error: Unknown");

@@ -23,7 +23,6 @@ use {
     solana_sdk::{
         clock::{Epoch, Slot},
         commitment_config::CommitmentConfig,
-        decode_error::DecodeError,
         hash::Hash,
         instruction::InstructionError,
         offchain_message::OffchainMessage,
@@ -1732,10 +1731,10 @@ pub fn request_and_confirm_airdrop(
 
 pub fn common_error_adapter<E>(ix_error: &InstructionError) -> Option<E>
 where
-    E: 'static + std::error::Error + DecodeError<E> + FromPrimitive,
+    E: 'static + std::error::Error + FromPrimitive,
 {
     if let InstructionError::Custom(code) = ix_error {
-        E::decode_custom_error_to_enum(*code)
+        E::from_u32(*code)
     } else {
         None
     }
@@ -1746,7 +1745,7 @@ pub fn log_instruction_custom_error<E>(
     config: &CliConfig,
 ) -> ProcessResult
 where
-    E: 'static + std::error::Error + DecodeError<E> + FromPrimitive,
+    E: 'static + std::error::Error + FromPrimitive,
 {
     log_instruction_custom_error_ex::<E, _>(result, &config.output_format, common_error_adapter)
 }
@@ -1757,7 +1756,7 @@ pub fn log_instruction_custom_error_ex<E, F>(
     error_adapter: F,
 ) -> ProcessResult
 where
-    E: 'static + std::error::Error + DecodeError<E> + FromPrimitive,
+    E: 'static + std::error::Error + FromPrimitive,
     F: Fn(&InstructionError) -> Option<E>,
 {
     match result {

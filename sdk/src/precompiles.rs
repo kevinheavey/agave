@@ -4,7 +4,7 @@
 
 use {
     crate::{
-        decode_error::DecodeError, feature_set::FeatureSet, instruction::CompiledInstruction,
+        feature_set::FeatureSet, instruction::CompiledInstruction,
         pubkey::Pubkey,
     },
     lazy_static::lazy_static,
@@ -24,11 +24,6 @@ pub enum PrecompileError {
     InvalidDataOffsets,
     #[error("instruction is incorrect size")]
     InvalidInstructionDataSize,
-}
-impl<T> DecodeError<T> for PrecompileError {
-    fn type_of() -> &'static str {
-        "PrecompileError"
-    }
 }
 
 /// All precompiled programs must implement the `Verify` function

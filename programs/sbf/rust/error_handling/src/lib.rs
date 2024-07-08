@@ -6,7 +6,6 @@ use {
     num_traits::FromPrimitive,
     solana_program::{
         account_info::AccountInfo,
-        decode_error::DecodeError,
         entrypoint::ProgramResult,
         msg,
         program_error::{PrintProgramError, ProgramError},
@@ -28,15 +27,10 @@ impl From<MyError> for ProgramError {
         ProgramError::Custom(e as u32)
     }
 }
-impl<T> DecodeError<T> for MyError {
-    fn type_of() -> &'static str {
-        "MyError"
-    }
-}
 impl PrintProgramError for MyError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive,
+        E: 'static + std::error::Error + PrintProgramError + FromPrimitive,
     {
         match self {
             MyError::DefaultEnumStart => msg!("Error: Default enum start"),

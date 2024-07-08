@@ -1,7 +1,6 @@
 //! Vote program errors
 
 use {
-    crate::decode_error::DecodeError,
     num_derive::{FromPrimitive, ToPrimitive},
     thiserror::Error,
 };
@@ -74,12 +73,6 @@ pub enum VoteError {
     AssertionFailed,
 }
 
-impl<E> DecodeError<E> for VoteError {
-    fn type_of() -> &'static str {
-        "VoteError"
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use {super::*, crate::instruction::InstructionError};
@@ -89,10 +82,10 @@ mod tests {
         use num_traits::FromPrimitive;
         fn pretty_err<T>(err: InstructionError) -> String
         where
-            T: 'static + std::error::Error + DecodeError<T> + FromPrimitive,
+            T: 'static + std::error::Error + FromPrimitive,
         {
             if let InstructionError::Custom(code) = err {
-                let specific_error: T = T::decode_custom_error_to_enum(code).unwrap();
+                let specific_error: T = T::from_u32(code).unwrap();
                 format!(
                     "{:?}: {}::{:?} - {}",
                     err,

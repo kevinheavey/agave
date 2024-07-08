@@ -42,7 +42,6 @@
 #[allow(deprecated)]
 use {
     crate::{
-        decode_error::DecodeError,
         instruction::{AccountMeta, Instruction},
         nonce,
         pubkey::Pubkey,
@@ -73,12 +72,6 @@ pub enum SystemError {
     NonceBlockhashNotExpired,
     #[error("specified nonce does not match stored nonce")]
     NonceUnexpectedBlockhashValue,
-}
-
-impl<T> DecodeError<T> for SystemError {
-    fn type_of() -> &'static str {
-        "SystemError"
-    }
 }
 
 /// Maximum permitted size of account data (10 MiB).
