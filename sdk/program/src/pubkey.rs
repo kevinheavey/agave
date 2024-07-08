@@ -9,7 +9,7 @@ use arbitrary::Arbitrary;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use {
-    crate::hash::hash,
+    crate::hash::hashv,
     bytemuck_derive::{Pod, Zeroable},
     num_derive::{FromPrimitive, ToPrimitive},
     std::{
