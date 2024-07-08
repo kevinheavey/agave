@@ -3,10 +3,7 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{
-        feature_set::FeatureSet, instruction::CompiledInstruction,
-        pubkey::Pubkey,
-    },
+    crate::{feature_set::FeatureSet, instruction::CompiledInstruction, pubkey::Pubkey},
     lazy_static::lazy_static,
     thiserror::Error,
 };
