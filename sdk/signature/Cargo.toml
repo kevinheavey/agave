@@ -24,7 +24,6 @@ thiserror = { workspace = true }
 [dev-dependencies]
 curve25519-dalek = { workspace = true }
 solana-program = { workspace = true }
-solana-signature = { path = ".", features = ["verify"] }
 
 [build-dependencies]
 rustc_version = { workspace = true }

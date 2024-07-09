@@ -1,7 +1,7 @@
 //! 64-byte signature type.
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(feature = "verify")]
+#[cfg(any(test, feature = "verify"))]
 use std::convert::TryInto;
 use {
     std::{fmt, str::FromStr},
@@ -34,7 +34,7 @@ impl Signature {
     }
 }
 
-#[cfg(feature = "verify")]
+#[cfg(any(test, feature = "verify"))]
 impl Signature {
     pub(self) fn verify_verbose(
         &self,
