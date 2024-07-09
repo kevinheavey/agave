@@ -90,7 +90,7 @@ solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-program = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
-solana-signature = { workspace = true }
+solana-signature = { workspace = true, features = ["serde"] }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-serde-varint = { workspace = true }
