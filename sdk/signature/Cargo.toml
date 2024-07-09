@@ -11,7 +11,7 @@ edition = { workspace = true }
 
 [dependencies]
 bs58 = { workspace = true }
-ed25519-dalek = { workspace = true }
+ed25519-dalek = { workspace = true, optional = true }
 generic-array = { workspace = true, features = ["serde", "more_lengths"] }
 rand = { workspace = true }
 serde = { workspace = true, optional = true }
@@ -32,6 +32,7 @@ rustc_version = { workspace = true }
 [features]
 frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 serde = ["dep:serde", "dep:serde_derive"]
+verify = ["dep:ed25519-dalek"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

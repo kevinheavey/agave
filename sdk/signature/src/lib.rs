@@ -24,7 +24,10 @@ impl Signature {
     pub fn new_unique() -> Self {
         Self::from(std::array::from_fn(|_| rand::random()))
     }
+}
 
+#[cfg(feature = "verify")]
+impl Signature {
     pub(self) fn verify_verbose(
         &self,
         pubkey_bytes: &[u8],
