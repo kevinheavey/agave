@@ -29,7 +29,7 @@ pub trait Signable {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_program::pubkey::Pubkey, solana_sdk::signer::keypair::Keypair};
+    use {super::*, solana_sdk::signer::keypair::Keypair};
     #[test]
     fn test_signature_fromstr() {
         let signature = Keypair::new().sign_message(&[0u8]);
@@ -38,7 +38,7 @@ mod tests {
 
         assert_eq!(signature_base58_str.parse::<Signature>(), Ok(signature));
 
-        signature_base58_str.push_str(&bs58::encode(signature.0).into_string());
+        signature_base58_str.push_str(&bs58::encode(<[u8; 64]>::from(signature)).into_string());
         assert_eq!(
             signature_base58_str.parse::<Signature>(),
             Err(ParseSignatureError::WrongSize)
@@ -53,7 +53,7 @@ mod tests {
             Err(ParseSignatureError::WrongSize)
         );
 
-        let mut signature_base58_str = bs58::encode(signature.0).into_string();
+        let mut signature_base58_str = bs58::encode(<[u8; 64]>::from(signature)).into_string();
         assert_eq!(signature_base58_str.parse::<Signature>(), Ok(signature));
 
         // throw some non-base58 stuff in there
