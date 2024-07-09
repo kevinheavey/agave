@@ -90,11 +90,11 @@ solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-program = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
-solana-signature = { workspace = true, features = ["rand", "serde", "verify"] }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-serde-varint = { workspace = true }
 solana-short-vec = { workspace = true }
+solana-signature = { workspace = true, features = ["rand", "serde", "verify"] }
 thiserror = { workspace = true }
 uriparse = { workspace = true }
 
