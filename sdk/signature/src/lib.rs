@@ -14,7 +14,7 @@ pub const SIGNATURE_BYTES: usize = 64;
 const MAX_BASE58_SIGNATURE_LEN: usize = 88;
 
 #[repr(transparent)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Signature(#[cfg_attr(feature = "serde", serde(with = "serde_bytes"))] [u8; SIGNATURE_BYTES]);
