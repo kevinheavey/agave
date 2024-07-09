@@ -6317,6 +6317,17 @@ name = "solana-define-syscall"
 version = "2.1.0"
 
 [[package]]
+name = "solana-derivation-path"
+version = "2.1.0"
+dependencies = [
+ "assert_matches",
+ "derivation-path",
+ "qstring",
+ "thiserror",
+ "uriparse",
+]
+
+[[package]]
 name = "solana-dos"
 version = "2.1.0"
 dependencies = [
@@ -7502,6 +7513,7 @@ dependencies = [
  "siphasher",
  "solana-bn254",
  "solana-decode-error",
+ "solana-derivation-path",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",
@@ -7516,7 +7528,6 @@ dependencies = [
  "static_assertions",
  "thiserror",
  "tiny-bip39",
- "uriparse",
  "wasm-bindgen",
 ]
 

@@ -5018,6 +5018,16 @@ name = "solana-define-syscall"
 version = "2.1.0"
 
 [[package]]
+name = "solana-derivation-path"
+version = "2.1.0"
+dependencies = [
+ "derivation-path",
+ "qstring",
+ "thiserror",
+ "uriparse",
+]
+
+[[package]]
 name = "solana-download-utils"
 version = "2.1.0"
 dependencies = [
@@ -6303,6 +6313,7 @@ dependencies = [
  "siphasher",
  "solana-bn254",
  "solana-decode-error",
+ "solana-derivation-path",
  "solana-program",
  "solana-program-memory",
  "solana-sanitize",
@@ -6311,7 +6322,6 @@ dependencies = [
  "solana-serde-varint",
  "solana-short-vec",
  "thiserror",
- "uriparse",
  "wasm-bindgen",
 ]
 
