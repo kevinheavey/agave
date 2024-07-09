@@ -18,8 +18,7 @@ use {
     solana_compute_budget::compute_budget::ComputeBudget,
     solana_log_collector::ic_msg,
     solana_program_runtime::{
-        invoke_context::BuiltinFunctionWithContext, loaded_programs::ProgramCacheEntry,
-        stable_log,
+        invoke_context::BuiltinFunctionWithContext, loaded_programs::ProgramCacheEntry, stable_log,
     },
     solana_runtime::{
         accounts_background_service::{AbsRequestSender, SnapshotRequestKind},
