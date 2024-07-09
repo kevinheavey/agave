@@ -7344,7 +7344,6 @@ dependencies = [
  "memmap2",
  "num_enum",
  "pbkdf2 0.11.0",
- "qstring",
  "qualifier_attr",
  "rand 0.7.3",
  "rand 0.8.5",

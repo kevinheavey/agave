@@ -69,7 +69,6 @@ log = { workspace = true }
 memmap2 = { workspace = true, optional = true }
 num_enum = { workspace = true }
 pbkdf2 = { workspace = true }
-qstring = { workspace = true }
 qualifier_attr = { workspace = true, optional = true }
 rand = { workspace = true, optional = true }
 rand0-7 = { package = "rand", version = "0.7", optional = true }
