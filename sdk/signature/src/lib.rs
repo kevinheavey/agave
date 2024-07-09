@@ -20,6 +20,7 @@ pub struct Signature(GenericArray<u8, U64>);
 
 impl solana_sanitize::Sanitize for Signature {}
 
+#[cfg(feature = "rand")]
 impl Signature {
     pub fn new_unique() -> Self {
         Self::from(std::array::from_fn(|_| rand::random()))
