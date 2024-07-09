@@ -71,7 +71,7 @@ impl fmt::Display for Signature {
 
 impl From<Signature> for [u8; 64] {
     fn from(signature: Signature) -> Self {
-        signature.0.into()
+        signature.0
     }
 }
 
