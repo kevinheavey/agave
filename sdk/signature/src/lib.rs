@@ -1,9 +1,10 @@
 //! 64-byte signature type.
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+#[cfg(feature = "verify")]
+use std::convert::TryInto;
 use {
-    generic_array::{typenum::U64, GenericArray},
-    std::{convert::TryInto, fmt, str::FromStr},
+    std::{fmt, str::FromStr},
     thiserror::Error,
 };
 
@@ -15,8 +16,14 @@ const MAX_BASE58_SIGNATURE_LEN: usize = 88;
 #[repr(transparent)]
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi::AbiExample))]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
-#[derive(Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Signature(GenericArray<u8, U64>);
+#[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct Signature(#[cfg_attr(feature = "serde", serde(with = "serde_bytes"))] [u8; SIGNATURE_BYTES]);
+
+impl Default for Signature {
+    fn default() -> Self {
+        Self([0; SIGNATURE_BYTES])
+    }
+}
 
 impl solana_sanitize::Sanitize for Signature {}
 
@@ -71,7 +78,7 @@ impl From<Signature> for [u8; 64] {
 impl From<[u8; SIGNATURE_BYTES]> for Signature {
     #[inline]
     fn from(signature: [u8; SIGNATURE_BYTES]) -> Self {
-        Self(GenericArray::from(signature))
+        Self(signature)
     }
 }
 
