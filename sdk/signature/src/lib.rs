@@ -5,7 +5,7 @@ use serde_derive::{Deserialize, Serialize};
 use std::convert::TryInto;
 use {
     generic_array::{typenum::U64, GenericArray},
-    std::{convert::TryInto, fmt, str::FromStr},
+    std::{fmt, str::FromStr},
     thiserror::Error,
 };
 
@@ -66,7 +66,7 @@ impl fmt::Display for Signature {
 
 impl From<Signature> for [u8; 64] {
     fn from(signature: Signature) -> Self {
-        signature.0
+        signature.0.into()
     }
 }
 
