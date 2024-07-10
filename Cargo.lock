@@ -7546,7 +7546,6 @@ dependencies = [
  "jsonrpc-core",
  "reqwest",
  "reqwest-middleware",
- "semver 1.0.23",
  "serde",
  "serde_derive",
  "serde_json",
@@ -7555,7 +7554,6 @@ dependencies = [
  "solana-rpc-response",
  "solana-sdk",
  "solana-transaction-status-client-types",
- "solana-version",
  "thiserror",
 ]
 
