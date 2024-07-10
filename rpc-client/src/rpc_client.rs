@@ -3766,6 +3766,7 @@ mod tests {
         jsonrpc_http_server::{AccessControlAllowOrigin, DomainsValidation, ServerBuilder},
         serde_json::{json, Number},
         solana_rpc_client_api::client_error::ErrorKind,
+        solana_rpc_response::OptionalContext,
         solana_sdk::{
             instruction::InstructionError,
             signature::{Keypair, Signer},

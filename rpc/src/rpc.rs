@@ -4351,6 +4351,7 @@ pub mod tests {
             },
             filter::MemcmpEncodedBytes,
         },
+        solana_rpc_response::RpcApiVersion,
         solana_runtime::{
             accounts_background_service::AbsRequestSender, bank::BankTestConfig,
             commitment::BlockCommitment, non_circulating_supply::non_circulating_accounts,
