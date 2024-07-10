@@ -10,14 +10,14 @@ use {
         client_error::Result,
         config::RpcBlockProductionConfig,
         request::RpcRequest,
-        response::{
-            Response, RpcAccountBalance, RpcBlockProduction, RpcBlockProductionRange, RpcBlockhash,
-            RpcConfirmedTransactionStatusWithSignature, RpcContactInfo, RpcIdentity,
-            RpcInflationGovernor, RpcInflationRate, RpcInflationReward, RpcKeyedAccount,
-            RpcPerfSample, RpcPrioritizationFee, RpcResponseContext, RpcSimulateTransactionResult,
-            RpcSnapshotSlotInfo, RpcSupply, RpcVersionInfo, RpcVoteAccountInfo,
-            RpcVoteAccountStatus,
-        },
+    },
+    solana_rpc_response::{
+        Response, RpcAccountBalance, RpcBlockProduction, RpcBlockProductionRange, RpcBlockhash,
+        RpcConfirmedTransactionStatusWithSignature, RpcContactInfo, RpcIdentity,
+        RpcInflationGovernor, RpcInflationRate, RpcInflationReward, RpcKeyedAccount,
+        RpcPerfSample, RpcPrioritizationFee, RpcResponseContext, RpcSimulateTransactionResult,
+        RpcSnapshotSlotInfo, RpcSupply, RpcVersionInfo, RpcVoteAccountInfo,
+        RpcVoteAccountStatus,
     },
     solana_sdk::{
         account::Account,

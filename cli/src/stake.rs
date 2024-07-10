@@ -34,9 +34,9 @@ use {
     solana_rpc_client_api::{
         config::RpcGetVoteAccountsConfig,
         request::DELINQUENT_VALIDATOR_SLOT_DISTANCE,
-        response::{RpcInflationReward, RpcVoteAccountStatus},
     },
     solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
+    solana_rpc_response::{RpcInflationReward, RpcVoteAccountStatus},
     solana_sdk::{
         account::{from_account, Account},
         account_utils::StateMut,

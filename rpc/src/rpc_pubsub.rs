@@ -23,10 +23,10 @@ use {
             RpcProgramAccountsConfig, RpcSignatureSubscribeConfig, RpcTransactionLogsConfig,
             RpcTransactionLogsFilter,
         },
-        response::{
-            Response as RpcResponse, RpcBlockUpdate, RpcKeyedAccount, RpcLogsResponse,
-            RpcSignatureResult, RpcVersionInfo, RpcVote, SlotInfo, SlotUpdate,
-        },
+    },
+    solana_rpc_response::{
+        Response as RpcResponse, RpcBlockUpdate, RpcKeyedAccount, RpcLogsResponse,
+        RpcSignatureResult, RpcVersionInfo, RpcVote, SlotInfo, SlotUpdate,
     },
     solana_sdk::{clock::Slot, pubkey::Pubkey, signature::Signature},
     solana_transaction_status::UiTransactionEncoding,
