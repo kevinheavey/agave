@@ -27,6 +27,7 @@ full = [
     "rand",
     "rand0-7",
     "serde_json",
+    "solana-signature",
     "ed25519-dalek",
     "ed25519-dalek-bip32",
     "libsecp256k1",
@@ -94,7 +95,7 @@ solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-serde-varint = { workspace = true }
 solana-short-vec = { workspace = true }
-solana-signature = { workspace = true, features = ["rand", "serde", "verify"] }
+solana-signature = { workspace = true, features = ["rand", "serde", "verify"], optional = true }
 thiserror = { workspace = true }
 uriparse = { workspace = true }
 
