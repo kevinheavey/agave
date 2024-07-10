@@ -22,6 +22,7 @@ serde_derive = { workspace = true }
 serde_json = { workspace = true }
 solana-account-decoder = { workspace = true }
 solana-inline-spl = { workspace = true }
+solana-rpc-response = { workspace = true }
 solana-sdk = { workspace = true }
 solana-transaction-status-client-types = { workspace = true }
 solana-version = { workspace = true }
