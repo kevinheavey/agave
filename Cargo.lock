@@ -7589,6 +7589,7 @@ dependencies = [
  "semver 1.0.23",
  "serde",
  "serde_derive",
+ "serde_json",
  "solana-account-decoder",
  "solana-sdk",
  "solana-transaction-status-client-types",
