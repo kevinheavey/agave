@@ -17,10 +17,8 @@ use {
     solana_feature_set::FEATURE_NAMES,
     solana_remote_wallet::remote_wallet::RemoteWalletManager,
     solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
-        client_error::Error as ClientError, request::MAX_MULTIPLE_ACCOUNTS,
-        response::RpcVoteAccountInfo,
-    },
+    solana_rpc_client_api::{client_error::Error as ClientError, request::MAX_MULTIPLE_ACCOUNTS},
+    solana_rpc_response::RpcVoteAccountInfo,
     solana_sdk::{
         account::Account,
         clock::Slot,
