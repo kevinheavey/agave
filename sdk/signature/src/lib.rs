@@ -1,4 +1,5 @@
 //! 64-byte signature type.
+#![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(min_specialization))]
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(any(test, feature = "verify"))]
