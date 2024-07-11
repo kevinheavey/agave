@@ -1,6 +1,6 @@
 use {
     base64::{prelude::BASE64_STANDARD, Engine},
-    serde_derive::{Serialize, Deserialize},
+    serde_derive::{Deserialize, Serialize},
     solana_inline_spl::{token::GenericTokenAccount, token_2022::Account},
     solana_sdk::account::{AccountSharedData, ReadableAccount},
     std::borrow::Cow,
