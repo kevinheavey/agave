@@ -7145,7 +7145,6 @@ name = "solana-rpc-client-api"
 version = "2.1.0"
 dependencies = [
  "anyhow",
- "const_format",
  "jsonrpc-core",
  "reqwest",
  "reqwest-middleware",
@@ -7184,8 +7183,10 @@ version = "2.1.0"
 dependencies = [
  "base64 0.22.1",
  "bs58",
+ "const_format",
  "serde",
  "serde_derive",
+ "serde_json",
  "solana-inline-spl",
  "solana-sdk",
  "thiserror",
