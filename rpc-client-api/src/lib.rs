@@ -1,5 +1,3 @@
-#![allow(clippy::arithmetic_side_effects)]
-
 pub mod client_error;
 pub mod config;
 pub mod custom_error;

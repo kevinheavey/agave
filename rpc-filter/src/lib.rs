@@ -194,6 +194,7 @@ impl Memcmp {
         }
     }
 
+    #[allow(clippy::arithmetic_side_effects)]
     pub fn bytes_match(&self, data: &[u8]) -> bool {
         match self.bytes() {
             Some(bytes) => {
