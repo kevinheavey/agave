@@ -7142,8 +7142,6 @@ name = "solana-rpc-client-api"
 version = "2.1.0"
 dependencies = [
  "anyhow",
- "base64 0.22.1",
- "bs58",
  "const_format",
  "jsonrpc-core",
  "reqwest",
@@ -7153,7 +7151,7 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "solana-account-decoder",
- "solana-inline-spl",
+ "solana-rpc-filter",
  "solana-sdk",
  "solana-transaction-status",
  "solana-version",
@@ -7175,6 +7173,19 @@ dependencies = [
  "solana-sdk",
  "thiserror",
  "tokio",
+]
+
+[[package]]
+name = "solana-rpc-filter"
+version = "2.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "bs58",
+ "serde",
+ "serde_derive",
+ "solana-inline-spl",
+ "solana-sdk",
+ "thiserror",
 ]
 
 [[package]]
