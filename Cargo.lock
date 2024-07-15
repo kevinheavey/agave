@@ -6131,6 +6131,7 @@ name = "solana-commitment-config"
 version = "2.1.0"
 dependencies = [
  "serde",
+ "serde_derive",
  "thiserror",
 ]
 
