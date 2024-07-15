@@ -6127,6 +6127,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-commitment-config"
+version = "2.1.0"
+dependencies = [
+ "serde",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-compute-budget"
 version = "2.1.0"
 dependencies = [
@@ -7550,6 +7558,7 @@ dependencies = [
  "sha3",
  "siphasher",
  "solana-bn254",
+ "solana-commitment-config",
  "solana-decode-error",
  "solana-derivation-path",
  "solana-frozen-abi",
