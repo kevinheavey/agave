@@ -1,8 +1,10 @@
 //! Definitions of commitment levels.
 
-#![cfg(feature = "full")]
-
-use {std::str::FromStr, thiserror::Error};
+use {
+    serde::{Deserialize, Serialize},
+    std::str::FromStr,
+    thiserror::Error,
+};
 
 #[derive(Serialize, Deserialize, Default, Clone, Copy, Debug, PartialEq, Eq, Hash)]
 #[serde(rename_all = "camelCase")]
