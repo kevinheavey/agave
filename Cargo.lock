@@ -6338,6 +6338,13 @@ dependencies = [
  "solana-sdk",
  "solana-svm-transaction",
 ]
+[[package]]
+name = "solana-feature-set"
+version = "2.1.0"
+dependencies = [
+ "lazy_static",
+ "solana-program",
+]
 
 [[package]]
 name = "solana-frozen-abi"
