@@ -5,15 +5,15 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+use {
+    core::fmt,
+    solana_sanitize::Sanitize,
+    std::{convert::TryFrom, error::Error, mem, str::FromStr},
+};
 #[cfg(target_arch = "wasm32")]
 use {
     js_sys::{Array, Uint8Array},
     wasm_bindgen::{prelude::*, JsCast},
-};
-use {
-    solana_sanitize::Sanitize,
-    std::{convert::TryFrom, fmt, mem, str::FromStr},
-    thiserror::Error,
 };
 
 /// Size of a hash in bytes.
@@ -70,12 +70,21 @@ impl fmt::Display for Hash {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Error)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ParseHashError {
-    #[error("string decoded to wrong size for hash")]
     WrongSize,
-    #[error("failed to decoded string to hash")]
     Invalid,
+}
+
+impl Error for ParseHashError {}
+
+impl fmt::Display for ParseHashError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            ParseHashError::WrongSize => f.write_str("string decoded to wrong size for hash"),
+            ParseHashError::Invalid => f.write_str("failed to decoded string to hash"),
+        }
+    }
 }
 
 impl FromStr for Hash {
