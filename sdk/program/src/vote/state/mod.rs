@@ -963,10 +963,7 @@ impl VoteState {
 pub mod serde_compact_vote_state_update {
     use {
         super::*,
-        crate::{
-            serde_varint,
-            vote::state::Lockout,
-        },
+        crate::{serde_varint, vote::state::Lockout},
         serde::{Deserialize, Deserializer, Serialize, Serializer},
         solana_short_vec as short_vec,
     };
@@ -1060,10 +1057,7 @@ pub mod serde_compact_vote_state_update {
 pub mod serde_tower_sync {
     use {
         super::*,
-        crate::{
-            serde_varint,
-            vote::state::Lockout,
-        },
+        crate::{serde_varint, vote::state::Lockout},
         serde::{Deserialize, Deserializer, Serialize, Serializer},
         solana_short_vec as short_vec,
     };
