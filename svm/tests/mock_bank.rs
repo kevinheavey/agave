@@ -4,6 +4,7 @@ use {
         SyscallMemset, SyscallSetReturnData,
     },
     solana_compute_budget::compute_budget::ComputeBudget,
+    solana_feature_set::FeatureSet,
     solana_program_runtime::{
         invoke_context::InvokeContext,
         loaded_programs::{

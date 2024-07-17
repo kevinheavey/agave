@@ -186,6 +186,7 @@ dependencies = [
  "solana-core",
  "solana-cost-model",
  "solana-entry",
+ "solana-feature-set",
  "solana-geyser-plugin-manager",
  "solana-gossip",
  "solana-ledger",
@@ -5617,6 +5618,7 @@ dependencies = [
  "num-derive",
  "num-traits",
  "rustc_version 0.4.1",
+ "solana-feature-set",
  "solana-log-collector",
  "solana-program",
  "solana-program-runtime",
@@ -5631,6 +5633,7 @@ dependencies = [
  "assert_matches",
  "bincode",
  "solana-address-lookup-table-program",
+ "solana-feature-set",
  "solana-program-test",
  "solana-sdk",
 ]
@@ -5702,6 +5705,7 @@ dependencies = [
  "futures 0.3.30",
  "solana-banks-interface",
  "solana-client",
+ "solana-feature-set",
  "solana-runtime",
  "solana-sdk",
  "solana-send-transaction-service",
@@ -5743,6 +5747,7 @@ dependencies = [
  "solana-connection-cache",
  "solana-core",
  "solana-faucet",
+ "solana-feature-set",
  "solana-genesis",
  "solana-gossip",
  "solana-local-cluster",
@@ -5818,6 +5823,7 @@ dependencies = [
  "solana-bn254",
  "solana-compute-budget",
  "solana-curve25519",
+ "solana-feature-set",
  "solana-log-collector",
  "solana-measure",
  "solana-poseidon",
@@ -5988,6 +5994,7 @@ dependencies = [
  "solana-connection-cache",
  "solana-decode-error",
  "solana-faucet",
+ "solana-feature-set",
  "solana-loader-v4-program",
  "solana-logger",
  "solana-program-runtime",
@@ -6229,6 +6236,7 @@ dependencies = [
  "solana-core",
  "solana-cost-model",
  "solana-entry",
+ "solana-feature-set",
  "solana-fee",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
@@ -6290,6 +6298,7 @@ dependencies = [
  "rustc_version 0.4.1",
  "solana-builtins-default-costs",
  "solana-compute-budget",
+ "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",
@@ -6438,18 +6447,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-fee"
-version = "2.1.0"
-dependencies = [
- "solana-sdk",
- "solana-svm-transaction",
-]
-[[package]]
 name = "solana-feature-set"
 version = "2.1.0"
 dependencies = [
  "lazy_static",
  "solana-program",
+]
+
+[[package]]
+name = "solana-fee"
+version = "2.1.0"
+dependencies = [
+ "solana-sdk",
+ "solana-svm-transaction",
 ]
 
 [[package]]
@@ -6575,6 +6585,7 @@ dependencies = [
  "solana-client",
  "solana-connection-cache",
  "solana-entry",
+ "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-ledger",
@@ -6700,6 +6711,7 @@ dependencies = [
  "solana-bpf-loader-program",
  "solana-cost-model",
  "solana-entry",
+ "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",
@@ -6767,6 +6779,7 @@ dependencies = [
  "solana-core",
  "solana-download-utils",
  "solana-entry",
+ "solana-feature-set",
  "solana-gossip",
  "solana-ledger",
  "solana-local-cluster",
@@ -7109,6 +7122,7 @@ dependencies = [
  "rustc_version 0.4.1",
  "serde",
  "solana-compute-budget",
+ "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-log-collector",
@@ -7142,6 +7156,7 @@ dependencies = [
  "solana-banks-server",
  "solana-bpf-loader-program",
  "solana-compute-budget",
+ "solana-feature-set",
  "solana-inline-spl",
  "solana-log-collector",
  "solana-logger",
@@ -7266,6 +7281,7 @@ dependencies = [
  "solana-client",
  "solana-entry",
  "solana-faucet",
+ "solana-feature-set",
  "solana-gossip",
  "solana-inline-spl",
  "solana-ledger",
@@ -7451,6 +7467,7 @@ dependencies = [
  "solana-compute-budget-program",
  "solana-config-program",
  "solana-cost-model",
+ "solana-feature-set",
  "solana-fee",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
@@ -7559,6 +7576,7 @@ dependencies = [
  "solana-bn254",
  "solana-decode-error",
  "solana-derivation-path",
+ "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",
@@ -7701,6 +7719,7 @@ dependencies = [
  "rustc_version 0.4.1",
  "solana-compute-budget",
  "solana-config-program",
+ "solana-feature-set",
  "solana-log-collector",
  "solana-logger",
  "solana-program-runtime",
@@ -7717,6 +7736,7 @@ dependencies = [
  "assert_matches",
  "bincode",
  "rustc_version 0.4.1",
+ "solana-feature-set",
  "solana-program-test",
  "solana-sdk",
  "solana-vote-program",
@@ -7829,6 +7849,7 @@ dependencies = [
  "solana-bpf-loader-program",
  "solana-compute-budget",
  "solana-compute-budget-program",
+ "solana-feature-set",
  "solana-fee",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
@@ -7902,6 +7923,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-compute-budget",
+ "solana-feature-set",
  "solana-log-collector",
  "solana-logger",
  "solana-program-runtime",
@@ -7923,6 +7945,7 @@ dependencies = [
  "solana-cli-output",
  "solana-compute-budget",
  "solana-core",
+ "solana-feature-set",
  "solana-geyser-plugin-manager",
  "solana-gossip",
  "solana-ledger",
@@ -8123,6 +8146,7 @@ dependencies = [
  "rayon",
  "rustls",
  "solana-entry",
+ "solana-feature-set",
  "solana-gossip",
  "solana-ledger",
  "solana-logger",
@@ -8213,6 +8237,7 @@ dependencies = [
  "semver 1.0.23",
  "serde",
  "serde_derive",
+ "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-sanitize",
@@ -8249,6 +8274,7 @@ dependencies = [
  "rustc_version 0.4.1",
  "serde",
  "serde_derive",
+ "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",
@@ -8357,6 +8383,7 @@ dependencies = [
  "curve25519-dalek 4.1.3",
  "num-derive",
  "num-traits",
+ "solana-feature-set",
  "solana-log-collector",
  "solana-program-runtime",
  "solana-sdk",

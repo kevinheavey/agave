@@ -72,7 +72,6 @@ pub mod epoch_rewards_hasher;
 pub mod example_mocks;
 pub mod exit;
 pub mod feature;
-pub mod feature_set;
 pub mod fee;
 pub mod genesis_config;
 pub mod hard_forks;
