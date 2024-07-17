@@ -5087,7 +5087,6 @@ dependencies = [
  "serde_derive",
  "solana-atomic-u64",
  "solana-sanitize",
- "thiserror",
  "wasm-bindgen",
 ]
 
