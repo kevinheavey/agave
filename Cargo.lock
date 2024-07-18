@@ -7374,6 +7374,7 @@ dependencies = [
  "digest 0.10.7",
  "ed25519-dalek",
  "ed25519-dalek-bip32",
+ "generic-array 0.14.7",
  "getrandom 0.1.16",
  "hex",
  "hmac 0.12.1",
