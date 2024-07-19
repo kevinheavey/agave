@@ -843,7 +843,7 @@ pub mod ed25519_precompile_verify_strict {
 }
 
 pub mod vote_only_retransmitter_signed_fec_sets {
-    solana_sdk::declare_id!("RfEcA95xnhuwooVAhUUksEJLZBF7xKCLuqrJoqk4Zph");
+    solana_program::declare_id!("RfEcA95xnhuwooVAhUUksEJLZBF7xKCLuqrJoqk4Zph");
 }
 
 pub mod move_precompile_verification_to_svm {
