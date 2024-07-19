@@ -5283,7 +5283,8 @@ name = "solana-merkle-tree"
 version = "2.1.0"
 dependencies = [
  "fast-math",
- "solana-program",
+ "solana-hash",
+ "solana-hasher",
 ]
 
 [[package]]
