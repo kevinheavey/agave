@@ -7073,6 +7073,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-rpc-account-info-config"
+version = "2.1.0"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "solana-sdk",
+]
+
+[[package]]
 name = "solana-rpc-client"
 version = "2.1.0"
 dependencies = [
