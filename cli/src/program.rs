@@ -14,7 +14,6 @@ use {
     bip39::{Language, Mnemonic, MnemonicType, Seed},
     clap::{App, AppSettings, Arg, ArgMatches, SubCommand},
     log::*,
-    solana_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
     solana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
     solana_clap_utils::{
         self,
@@ -43,10 +42,11 @@ use {
     solana_program_runtime::invoke_context::InvokeContext,
     solana_rbpf::{elf::Executable, verifier::RequisiteVerifier},
     solana_remote_wallet::remote_wallet::RemoteWalletManager,
+    solana_rpc_account_info_config::{RpcAccountInfoConfig, UiAccountEncoding, UiDataSliceConfig},
     solana_rpc_client::rpc_client::RpcClient,
     solana_rpc_client_api::{
         client_error::ErrorKind as ClientErrorKind,
-        config::{RpcAccountInfoConfig, RpcProgramAccountsConfig, RpcSendTransactionConfig},
+        config::{RpcProgramAccountsConfig, RpcSendTransactionConfig},
         filter::{Memcmp, RpcFilterType},
         request::MAX_MULTIPLE_ACCOUNTS,
     },

@@ -17,9 +17,10 @@ use {
     itertools::Either,
     rayon::prelude::*,
     serde::Serialize,
-    solana_account_decoder::{parse_token::is_known_spl_token_id, UiAccount, UiAccountEncoding},
+    solana_account_decoder::{parse_token::is_known_spl_token_id, UiAccount},
     solana_ledger::{blockstore::Blockstore, get_tmp_ledger_path},
     solana_measure::measure::Measure,
+    solana_rpc_account_info_config::UiAccountEncoding,
     solana_rpc_client_api::response::{
         ProcessedSignatureResult, ReceivedSignatureResult, Response as RpcResponse, RpcBlockUpdate,
         RpcBlockUpdateError, RpcKeyedAccount, RpcLogsResponse, RpcResponseContext,
@@ -1235,10 +1236,10 @@ pub(crate) mod tests {
         },
         serial_test::serial,
         solana_ledger::get_tmp_ledger_path_auto_delete,
+        solana_rpc_account_info_config::RpcAccountInfoConfig,
         solana_rpc_client_api::config::{
-            RpcAccountInfoConfig, RpcBlockSubscribeConfig, RpcBlockSubscribeFilter,
-            RpcProgramAccountsConfig, RpcSignatureSubscribeConfig, RpcTransactionLogsConfig,
-            RpcTransactionLogsFilter,
+            RpcBlockSubscribeConfig, RpcBlockSubscribeFilter, RpcProgramAccountsConfig,
+            RpcSignatureSubscribeConfig, RpcTransactionLogsConfig, RpcTransactionLogsFilter,
         },
         solana_runtime::{
             commitment::BlockCommitment,

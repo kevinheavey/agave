@@ -6,13 +6,14 @@ use {
     chrono::{Local, TimeZone},
     serde::ser::{Impossible, SerializeSeq, SerializeStruct, Serializer},
     serde_derive::{Deserialize, Serialize},
-    solana_account_decoder::{UiAccount, UiAccountData, UiAccountEncoding},
+    solana_account_decoder::{UiAccount, UiAccountData},
     solana_accounts_db::accounts_index::ScanConfig,
     solana_cli_output::{
         display::writeln_transaction, CliAccount, CliAccountNewConfig, OutputFormat, QuietDisplay,
         VerboseDisplay,
     },
     solana_ledger::blockstore::{Blockstore, BlockstoreError},
+    solana_rpc_account_info_config::UiAccountEncoding,
     solana_runtime::bank::{Bank, TotalAccountsStats},
     solana_sdk::{
         account::{AccountSharedData, ReadableAccount},

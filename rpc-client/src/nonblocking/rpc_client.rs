@@ -25,13 +25,14 @@ use {
     serde_json::{json, Value},
     solana_account_decoder::{
         parse_token::{TokenAccountType, UiTokenAccount, UiTokenAmount},
-        UiAccount, UiAccountData, UiAccountEncoding,
+        UiAccount, UiAccountData,
     },
+    solana_rpc_account_info_config::{RpcAccountInfoConfig, UiAccountEncoding},
     solana_rpc_client_api::{
         client_error::{
             Error as ClientError, ErrorKind as ClientErrorKind, Result as ClientResult,
         },
-        config::{RpcAccountInfoConfig, *},
+        config::*,
         request::{RpcError, RpcRequest, RpcResponseErrorData, TokenAccountsFilter},
         response::*,
     },
@@ -3454,7 +3455,7 @@ impl RpcClient {
     /// #     pubkey::Pubkey,
     /// #     commitment_config::CommitmentConfig,
     /// # };
-    /// # use solana_account_decoder::UiAccountEncoding;
+    /// # use solana_rpc_account_info_config::UiAccountEncoding;
     /// # use std::str::FromStr;
     /// # futures::executor::block_on(async {
     /// #     let mocks = rpc_client::create_rpc_client_mocks();
@@ -3674,7 +3675,7 @@ impl RpcClient {
     /// #     signer::keypair::Keypair,
     /// #     commitment_config::CommitmentConfig,
     /// # };
-    /// # use solana_account_decoder::UiAccountEncoding;
+    /// # use solana_rpc_account_info_config::UiAccountEncoding;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -3948,7 +3949,7 @@ impl RpcClient {
     /// #     signer::keypair::Keypair,
     /// #     commitment_config::CommitmentConfig,
     /// # };
-    /// # use solana_account_decoder::{UiDataSliceConfig, UiAccountEncoding};
+    /// # use solana_rpc_account_info_config::{UiDataSliceConfig, UiAccountEncoding};
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();

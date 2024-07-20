@@ -5,7 +5,8 @@ use {
     async_trait::async_trait,
     base64::{prelude::BASE64_STANDARD, Engine},
     serde_json::{json, Number, Value},
-    solana_account_decoder::{UiAccount, UiAccountEncoding},
+    solana_account_decoder::UiAccount,
+    solana_rpc_account_info_config::UiAccountEncoding,
     solana_rpc_client_api::{
         client_error::Result,
         config::RpcBlockProductionConfig,

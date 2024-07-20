@@ -1,10 +1,11 @@
 use {
     crate::{
         parse_account_data::{ParsableAccount, ParseAccountError},
-        UiAccountData, UiAccountEncoding,
+        UiAccountData,
     },
     base64::{prelude::BASE64_STANDARD, Engine},
     bincode::{deserialize, serialized_size},
+    solana_rpc_account_info_config::UiAccountEncoding,
     solana_sdk::{bpf_loader_upgradeable::UpgradeableLoaderState, pubkey::Pubkey},
 };
 

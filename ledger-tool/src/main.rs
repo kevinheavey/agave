@@ -19,7 +19,6 @@ use {
     dashmap::DashMap,
     log::*,
     serde_derive::Serialize,
-    solana_account_decoder::UiAccountEncoding,
     solana_accounts_db::{accounts_db::CalcAccountsHashDataSource, accounts_index::ScanConfig},
     solana_clap_utils::{
         hidden_unless_forced,
@@ -43,6 +42,7 @@ use {
         },
     },
     solana_measure::{measure, measure::Measure},
+    solana_rpc_account_info_config::UiAccountEncoding,
     solana_runtime::{
         bank::{
             bank_hash_details::{self, SlotDetails, TransactionDetails},

@@ -10,12 +10,10 @@ use {
         rpc_pubsub_service::{PubSubConfig, PubSubService},
         rpc_subscriptions::RpcSubscriptions,
     },
+    solana_rpc_account_info_config::RpcAccountInfoConfig,
     solana_rpc_client::rpc_client::RpcClient,
     solana_rpc_client_api::{
-        config::{
-            RpcAccountInfoConfig, RpcBlockSubscribeConfig, RpcBlockSubscribeFilter,
-            RpcProgramAccountsConfig,
-        },
+        config::{RpcBlockSubscribeConfig, RpcBlockSubscribeFilter, RpcProgramAccountsConfig},
         response::SlotInfo,
     },
     solana_runtime::{

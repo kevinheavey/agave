@@ -9,7 +9,6 @@ use {
     },
     clap::{App, AppSettings, Arg, ArgMatches, SubCommand},
     log::*,
-    solana_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
     solana_clap_utils::{
         input_parsers::{pubkey_of, pubkey_of_signer, signer_of},
         input_validators::{is_valid_pubkey, is_valid_signer},
@@ -27,9 +26,10 @@ use {
     solana_program_runtime::invoke_context::InvokeContext,
     solana_rbpf::{elf::Executable, verifier::RequisiteVerifier},
     solana_remote_wallet::remote_wallet::RemoteWalletManager,
+    solana_rpc_account_info_config::{RpcAccountInfoConfig, UiAccountEncoding, UiDataSliceConfig},
     solana_rpc_client::rpc_client::RpcClient,
     solana_rpc_client_api::{
-        config::{RpcAccountInfoConfig, RpcProgramAccountsConfig, RpcSendTransactionConfig},
+        config::{RpcProgramAccountsConfig, RpcSendTransactionConfig},
         filter::{Memcmp, RpcFilterType},
     },
     solana_sdk::{

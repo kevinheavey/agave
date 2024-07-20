@@ -18,9 +18,9 @@ use {
     serde_json::{Map, Value},
     solana_account_decoder::{
         parse_account_data::AccountAdditionalDataV2, parse_token::UiTokenAccount, UiAccount,
-        UiAccountEncoding, UiDataSliceConfig,
     },
     solana_clap_utils::keypair::SignOnly,
+    solana_rpc_account_info_config::{UiAccountEncoding, UiDataSliceConfig},
     solana_rpc_client_api::response::{
         RpcAccountBalance, RpcContactInfo, RpcInflationGovernor, RpcInflationRate, RpcKeyedAccount,
         RpcSupply, RpcVoteAccountInfo,

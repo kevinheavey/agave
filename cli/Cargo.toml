@@ -44,6 +44,7 @@ solana-program-runtime = { workspace = true }
 solana-pubsub-client = { workspace = true }
 solana-quic-client = { workspace = true }
 solana-remote-wallet = { workspace = true, features = ["default"] }
+solana-rpc-account-info-config = { workspace = true }
 solana-rpc-client = { workspace = true, features = ["default"] }
 solana-rpc-client-api = { workspace = true }
 solana-rpc-client-nonce-utils = { workspace = true }

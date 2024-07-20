@@ -97,11 +97,11 @@ use {
         Map, Value,
     },
     solana_account_decoder::UiAccount,
+    solana_rpc_account_info_config::RpcAccountInfoConfig,
     solana_rpc_client_api::{
         config::{
-            RpcAccountInfoConfig, RpcBlockSubscribeConfig, RpcBlockSubscribeFilter,
-            RpcProgramAccountsConfig, RpcSignatureSubscribeConfig, RpcTransactionLogsConfig,
-            RpcTransactionLogsFilter,
+            RpcBlockSubscribeConfig, RpcBlockSubscribeFilter, RpcProgramAccountsConfig,
+            RpcSignatureSubscribeConfig, RpcTransactionLogsConfig, RpcTransactionLogsFilter,
         },
         response::{
             Response as RpcResponse, RpcBlockUpdate, RpcKeyedAccount, RpcLogsResponse,

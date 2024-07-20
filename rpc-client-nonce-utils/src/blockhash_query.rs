@@ -109,7 +109,8 @@ mod tests {
         crate::blockhash_query,
         clap::App,
         serde_json::{self, json},
-        solana_account_decoder::{UiAccount, UiAccountEncoding},
+        solana_account_decoder::UiAccount,
+        solana_rpc_account_info_config::UiAccountEncoding,
         solana_rpc_client_api::{
             request::RpcRequest,
             response::{Response, RpcBlockhash, RpcResponseContext},

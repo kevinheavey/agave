@@ -1,6 +1,6 @@
 use {
     serde_derive::{Deserialize, Serialize},
-    solana_sdk::commitment_config::CommitmentConfig
+    solana_sdk::commitment_config::CommitmentConfig,
 };
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Eq, Hash)]

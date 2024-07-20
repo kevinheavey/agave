@@ -20,6 +20,7 @@ pub mod validator_info;
 use {
     crate::parse_account_data::{parse_account_data_v2, AccountAdditionalDataV2, ParsedAccount},
     base64::{prelude::BASE64_STANDARD, Engine},
+    solana_rpc_account_info_config::{UiAccountEncoding, UiDataSliceConfig},
     solana_sdk::{
         account::{ReadableAccount, WritableAccount},
         clock::Epoch,

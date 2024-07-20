@@ -16,12 +16,12 @@ use {
     jsonrpc_core::{Error, ErrorCode, Result},
     jsonrpc_derive::rpc,
     jsonrpc_pubsub::{typed::Subscriber, SubscriptionId as PubSubSubscriptionId},
-    solana_account_decoder::{UiAccount, UiAccountEncoding},
+    solana_account_decoder::UiAccount,
+    solana_rpc_account_info_config::{RpcAccountInfoConfig, UiAccountEncoding},
     solana_rpc_client_api::{
         config::{
-            RpcAccountInfoConfig, RpcBlockSubscribeConfig, RpcBlockSubscribeFilter,
-            RpcProgramAccountsConfig, RpcSignatureSubscribeConfig, RpcTransactionLogsConfig,
-            RpcTransactionLogsFilter,
+            RpcBlockSubscribeConfig, RpcBlockSubscribeFilter, RpcProgramAccountsConfig,
+            RpcSignatureSubscribeConfig, RpcTransactionLogsConfig, RpcTransactionLogsFilter,
         },
         response::{
             Response as RpcResponse, RpcBlockUpdate, RpcKeyedAccount, RpcLogsResponse,
@@ -610,7 +610,8 @@ mod tests {
         base64::{prelude::BASE64_STANDARD, Engine},
         jsonrpc_core::{IoHandler, Response},
         serial_test::serial,
-        solana_account_decoder::{parse_account_data::parse_account_data_v2, UiAccountEncoding},
+        solana_account_decoder::parse_account_data::parse_account_data_v2,
+        solana_rpc_account_info_config::UiAccountEncoding,
         solana_rpc_client_api::response::{
             ProcessedSignatureResult, ReceivedSignatureResult, RpcSignatureResult, SlotInfo,
         },

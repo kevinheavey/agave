@@ -4,8 +4,9 @@ use {
     solana_account_decoder::{
         parse_account_data::{AccountAdditionalDataV2, SplTokenAdditionalData},
         parse_token::get_token_account_mint,
-        UiAccount, UiAccountData, UiAccountEncoding,
+        UiAccount, UiAccountData,
     },
+    solana_rpc_account_info_config::UiAccountEncoding,
     solana_rpc_client_api::response::RpcKeyedAccount,
     solana_runtime::bank::Bank,
     solana_sdk::{

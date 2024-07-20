@@ -8,10 +8,11 @@ use {
     solana_account_decoder::UiAccount,
     solana_client::connection_cache::ConnectionCache,
     solana_pubsub_client::nonblocking::pubsub_client::PubsubClient,
+    solana_rpc_account_info_config::RpcAccountInfoConfig,
     solana_rpc_client::rpc_client::RpcClient,
     solana_rpc_client_api::{
         client_error::{ErrorKind as ClientErrorKind, Result as ClientResult},
-        config::{RpcAccountInfoConfig, RpcSignatureSubscribeConfig, RpcSimulateTransactionConfig},
+        config::{RpcSignatureSubscribeConfig, RpcSimulateTransactionConfig},
         request::RpcError,
         response::{Response as RpcResponse, RpcSignatureResult, SlotUpdate},
     },
@@ -118,10 +119,7 @@ fn test_rpc_send_tx() {
 
     assert!(confirmed_tx);
 
-    use {
-        solana_account_decoder::UiAccountEncoding,
-        solana_rpc_client_api::config::RpcAccountInfoConfig,
-    };
+    use solana_rpc_account_info_config::{RpcAccountInfoConfig, UiAccountEncoding};
     let config = RpcAccountInfoConfig {
         encoding: Some(UiAccountEncoding::Base64),
         commitment: None,

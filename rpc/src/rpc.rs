@@ -13,7 +13,7 @@ use {
     solana_account_decoder::{
         parse_account_data::SplTokenAdditionalData,
         parse_token::{is_known_spl_token_id, token_amount_to_ui_amount_v2, UiTokenAmount},
-        UiAccount, UiAccountEncoding, UiDataSliceConfig, MAX_BASE58_BYTES,
+        UiAccount, MAX_BASE58_BYTES,
     },
     solana_accounts_db::{
         accounts::AccountAddressFilter,
@@ -36,6 +36,7 @@ use {
     },
     solana_metrics::inc_new_counter_info,
     solana_perf::packet::PACKET_DATA_SIZE,
+    solana_rpc_account_info_config::{RpcAccountInfoConfig, UiAccountEncoding, UiDataSliceConfig},
     solana_rpc_client_api::{
         config::*,
         custom_error::RpcCustomError,

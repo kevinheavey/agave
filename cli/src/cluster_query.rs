@@ -26,13 +26,14 @@ use {
     },
     solana_pubsub_client::pubsub_client::PubsubClient,
     solana_remote_wallet::remote_wallet::RemoteWalletManager,
+    solana_rpc_account_info_config::RpcAccountInfoConfig,
     solana_rpc_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient},
     solana_rpc_client_api::{
         client_error::ErrorKind as ClientErrorKind,
         config::{
-            RpcAccountInfoConfig, RpcBlockConfig, RpcGetVoteAccountsConfig,
-            RpcLargestAccountsConfig, RpcLargestAccountsFilter, RpcProgramAccountsConfig,
-            RpcTransactionConfig, RpcTransactionLogsConfig, RpcTransactionLogsFilter,
+            RpcBlockConfig, RpcGetVoteAccountsConfig, RpcLargestAccountsConfig,
+            RpcLargestAccountsFilter, RpcProgramAccountsConfig, RpcTransactionConfig,
+            RpcTransactionLogsConfig, RpcTransactionLogsFilter,
         },
         filter::{Memcmp, RpcFilterType},
         request::DELINQUENT_VALIDATOR_SLOT_DISTANCE,
@@ -1831,7 +1832,7 @@ pub fn process_show_stakes(
 
     let mut program_accounts_config = RpcProgramAccountsConfig {
         account_config: RpcAccountInfoConfig {
-            encoding: Some(solana_account_decoder::UiAccountEncoding::Base64),
+            encoding: Some(solana_rpc_account_info_config::UiAccountEncoding::Base64),
             ..RpcAccountInfoConfig::default()
         },
         ..RpcProgramAccountsConfig::default()

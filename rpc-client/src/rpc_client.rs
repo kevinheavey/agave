@@ -21,11 +21,12 @@ use {
     serde_json::Value,
     solana_account_decoder::{
         parse_token::{UiTokenAccount, UiTokenAmount},
-        UiAccount, UiAccountEncoding,
+        UiAccount,
     },
+    solana_rpc_account_info_config::{RpcAccountInfoConfig, UiAccountEncoding},
     solana_rpc_client_api::{
         client_error::{Error as ClientError, ErrorKind, Result as ClientResult},
-        config::{RpcAccountInfoConfig, *},
+        config::*,
         request::{RpcRequest, TokenAccountsFilter},
         response::*,
     },
@@ -2967,7 +2968,7 @@ impl RpcClient {
     /// #     pubkey::Pubkey,
     /// #     commitment_config::CommitmentConfig,
     /// # };
-    /// # use solana_account_decoder::UiAccountEncoding;
+    /// # use solana_rpc_account_info_config::UiAccountEncoding;
     /// # use std::str::FromStr;
     /// # let mocks = rpc_client::create_rpc_client_mocks();
     /// # let rpc_client = RpcClient::new_mock_with_mocks("succeeds".to_string(), mocks);
@@ -3128,7 +3129,7 @@ impl RpcClient {
     /// #     signer::keypair::Keypair,
     /// #     commitment_config::CommitmentConfig,
     /// # };
-    /// # use solana_account_decoder::UiAccountEncoding;
+    /// # use solana_rpc_account_info_config::UiAccountEncoding;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// # let alice = Keypair::new();
     /// # let bob = Keypair::new();
@@ -3331,7 +3332,7 @@ impl RpcClient {
     /// #     signer::keypair::Keypair,
     /// #     commitment_config::CommitmentConfig,
     /// # };
-    /// # use solana_account_decoder::{UiDataSliceConfig, UiAccountEncoding};
+    /// # use solana_rpc_account_info_config::{UiDataSliceConfig, UiAccountEncoding};
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// # let alice = Keypair::new();
     /// # let base64_bytes = "\

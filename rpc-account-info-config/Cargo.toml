@@ -12,7 +12,7 @@ edition = { workspace = true }
 [dependencies]
 serde = { workspace = true }
 serde_derive = { workspace = true }
-solana-sdk = { workspace = true, default-features = false, features = ["full"] }
+solana-sdk = { workspace = true, default-features = false, features = ["borsh", "full"] }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
