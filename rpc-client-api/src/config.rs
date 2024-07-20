@@ -1,6 +1,7 @@
+pub use solana_rpc_account_info_config::RpcAccountInfoConfig;
 use {
     crate::filter::RpcFilterType,
-    solana_rpc_account_info_config::{RpcAccountInfoConfig, UiAccountEncoding},
+    solana_rpc_account_info_config::UiAccountEncoding,
     solana_sdk::{
         clock::{Epoch, Slot},
         commitment_config::{CommitmentConfig, CommitmentLevel},
