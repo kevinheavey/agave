@@ -4501,6 +4501,7 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "solana-config-program",
+ "solana-rpc-account-info-config",
  "solana-sdk",
  "spl-token",
  "spl-token-2022",
@@ -4734,6 +4735,7 @@ dependencies = [
  "solana-account-decoder",
  "solana-clap-utils",
  "solana-cli-config",
+ "solana-rpc-account-info-config",
  "solana-rpc-client-api",
  "solana-sdk",
  "solana-transaction-status",
@@ -5411,6 +5413,7 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "solana-account-decoder",
+ "solana-rpc-account-info-config",
  "solana-rpc-client-api",
  "solana-sdk",
  "thiserror",
@@ -5506,6 +5509,7 @@ dependencies = [
  "solana-perf",
  "solana-poh",
  "solana-rayon-threadlimit",
+ "solana-rpc-account-info-config",
  "solana-rpc-client-api",
  "solana-runtime",
  "solana-sdk",
@@ -5528,6 +5532,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-rpc-account-info-config"
+version = "2.1.0"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "solana-sdk",
+]
+
+[[package]]
 name = "solana-rpc-client"
 version = "2.1.0"
 dependencies = [
@@ -5544,6 +5557,7 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "solana-account-decoder",
+ "solana-rpc-account-info-config",
  "solana-rpc-client-api",
  "solana-sdk",
  "solana-transaction-status",
@@ -5568,6 +5582,7 @@ dependencies = [
  "serde_json",
  "solana-account-decoder",
  "solana-inline-spl",
+ "solana-rpc-account-info-config",
  "solana-sdk",
  "solana-transaction-status",
  "solana-version",
