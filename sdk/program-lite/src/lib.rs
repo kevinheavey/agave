@@ -481,9 +481,6 @@ pub mod program_stubs;
 pub mod pubkey;
 pub mod syscalls;
 
-#[cfg(target_arch = "wasm32")]
-pub use wasm_bindgen::prelude::wasm_bindgen;
-
 #[deprecated(since = "2.1.0", note = "Use `solana-decode-error` crate instead")]
 pub use solana_decode_error as decode_error;
 /// Same as [`declare_id`] except that it reports that this ID has been deprecated.
@@ -526,6 +523,8 @@ pub use solana_sdk_macro::program_declare_id as declare_id;
 /// assert_eq!(ID, my_id);
 /// ```
 pub use solana_sdk_macro::program_pubkey as pubkey;
+#[cfg(target_arch = "wasm32")]
+pub use wasm_bindgen::prelude::wasm_bindgen;
 
 #[macro_use]
 extern crate serde_derive;

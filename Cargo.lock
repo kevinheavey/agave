@@ -5404,6 +5404,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-account-info"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "serde",
+ "solana-debug-account-data",
+ "solana-program-error",
+ "solana-program-memory",
+ "solana-pubkey",
+]
+
+[[package]]
 name = "solana-accounts-bench"
 version = "2.1.0"
 dependencies = [
@@ -6182,6 +6194,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-debug-account-data"
+version = "2.1.0"
+
+[[package]]
 name = "solana-decode-error"
 version = "2.1.0"
 dependencies = [
@@ -6269,6 +6285,15 @@ dependencies = [
  "solana-perf",
  "solana-rayon-threadlimit",
  "solana-sdk",
+]
+
+[[package]]
+name = "solana-entrypoint"
+version = "2.1.0"
+dependencies = [
+ "solana-account-info",
+ "solana-program-error",
+ "solana-pubkey",
 ]
 
 [[package]]
@@ -6439,11 +6464,57 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-hash"
+version = "2.1.0"
+dependencies = [
+ "borsh 1.5.1",
+ "bs58",
+ "bytemuck",
+ "bytemuck_derive",
+ "console_error_panic_hook",
+ "console_log",
+ "getrandom 0.2.10",
+ "serde",
+ "serde_derive",
+ "sha2 0.10.8",
+ "solana-atomic-u64",
+ "solana-define-syscall",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
+ "solana-sanitize",
+ "thiserror",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "solana-inline-spl"
 version = "2.1.0"
 dependencies = [
  "bytemuck",
  "solana-program",
+]
+
+[[package]]
+name = "solana-instruction"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "borsh 1.5.1",
+ "console_error_panic_hook",
+ "console_log",
+ "getrandom 0.2.10",
+ "num-traits",
+ "serde",
+ "serde_derive",
+ "solana-atomic-u64",
+ "solana-define-syscall",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
+ "solana-pubkey",
+ "solana-sanitize",
+ "solana-short-vec",
+ "thiserror",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -6606,6 +6677,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-log"
+version = "2.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "solana-account-info",
+ "solana-debug-account-data",
+ "solana-msg",
+ "solana-pubkey",
+]
+
+[[package]]
 name = "solana-log-analyzer"
 version = "2.1.0"
 dependencies = [
@@ -6682,6 +6764,10 @@ dependencies = [
  "solana-sdk",
  "thiserror",
 ]
+
+[[package]]
+name = "solana-msg"
+version = "2.1.0"
 
 [[package]]
 name = "solana-net-shaper"
@@ -6879,6 +6965,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-program-error"
+version = "2.1.0"
+dependencies = [
+ "borsh 1.5.1",
+ "num-traits",
+ "serde",
+ "serde_derive",
+ "solana-decode-error",
+ "solana-instruction",
+ "solana-msg",
+ "solana-pubkey",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-program-lite"
 version = "2.1.0"
 dependencies = [
@@ -6917,6 +7018,33 @@ dependencies = [
  "static_assertions",
  "thiserror",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "solana-program-lite-split"
+version = "2.1.0"
+dependencies = [
+ "solana-account-info",
+ "solana-debug-account-data",
+ "solana-decode-error",
+ "solana-entrypoint",
+ "solana-hash",
+ "solana-instruction",
+ "solana-log",
+ "solana-program-error",
+ "solana-program-memory",
+ "solana-pubkey",
+ "solana-sanitize",
+ "solana-sdk-macro",
+ "solana-syscalls",
+]
+
+[[package]]
+name = "solana-program-memory"
+version = "2.1.0"
+dependencies = [
+ "num-traits",
+ "solana-define-syscall",
 ]
 
 [[package]]
@@ -6984,6 +7112,34 @@ dependencies = [
  "test-case",
  "thiserror",
  "tokio",
+]
+
+[[package]]
+name = "solana-pubkey"
+version = "2.1.0"
+dependencies = [
+ "borsh 1.5.1",
+ "bs58",
+ "bytemuck",
+ "bytemuck_derive",
+ "console_error_panic_hook",
+ "console_log",
+ "curve25519-dalek",
+ "getrandom 0.2.10",
+ "num-derive",
+ "num-traits",
+ "rustc_version 0.4.0",
+ "serde",
+ "serde_derive",
+ "solana-atomic-u64",
+ "solana-decode-error",
+ "solana-define-syscall",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
+ "solana-hash",
+ "solana-sanitize",
+ "thiserror",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -7636,6 +7792,15 @@ name = "solana-svm-transaction"
 version = "2.1.0"
 dependencies = [
  "solana-sdk",
+]
+
+[[package]]
+name = "solana-syscalls"
+version = "2.1.0"
+dependencies = [
+ "solana-define-syscall",
+ "solana-instruction",
+ "solana-pubkey",
 ]
 
 [[package]]

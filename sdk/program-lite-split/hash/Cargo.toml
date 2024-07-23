@@ -1,0 +1,50 @@
+[package]
+name = "solana-hash"
+description = "Solana Program"
+documentation = "https://docs.rs/solana-program"
+readme = "README.md"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+rust-version = "1.75.0"                          # solana platform-tools rust version
+
+[dependencies]
+borsh = { workspace = true, optional = true }
+bs58 = { workspace = true }
+bytemuck = { workspace = true }
+bytemuck_derive = { workspace = true }
+serde = { workspace = true }
+serde_derive = { workspace = true }
+sha2 = { workspace = true }
+solana-atomic-u64 = { workspace = true }
+solana-frozen-abi = { workspace = true, optional = true }
+solana-frozen-abi-macro = { workspace = true, optional = true }
+solana-sanitize = { workspace = true }
+thiserror = { workspace = true }
+
+# This is currently needed to build on-chain programs reliably.
+# Borsh 0.10 may pull in hashbrown 0.13, which uses ahash 0.8, which uses
+# getrandom 0.2 underneath. This explicit dependency allows for no-std if cargo
+# upgrades Borsh's dependency to hashbrown 0.13.
+# Remove this once borsh 0.11 or 1.0 is released, which correctly declares the
+# hashbrown dependency as optional.
+[target.'cfg(target_os = "solana")'.dependencies]
+getrandom = { workspace = true, features = ["custom"] }
+solana-define-syscall = { workspace = true }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+console_error_panic_hook = { workspace = true }
+console_log = { workspace = true }
+getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
+wasm-bindgen = { workspace = true }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[features]
+default = ["borsh"]
+borsh = ["dep:borsh"]
+frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]

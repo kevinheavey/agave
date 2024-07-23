@@ -107,6 +107,18 @@ members = [
     "sdk/package-metadata-macro",
     "sdk/program",
     "sdk/program-lite",
+    "sdk/program-lite-split",
+    "sdk/program-lite-split/account-info",
+    "sdk/program-lite-split/debug-account-data",
+    "sdk/program-lite-split/entrypoint",
+    "sdk/program-lite-split/hash",
+    "sdk/program-lite-split/instruction",
+    "sdk/program-lite-split/log",
+    "sdk/program-lite-split/msg",
+    "sdk/program-lite-split/program-error",
+    "sdk/program-lite-split/program-memory",
+    "sdk/program-lite-split/pubkey",
+    "sdk/program-lite-split/syscalls",
     "send-transaction-service",
     "short-vec",
     "stake-accounts",
@@ -329,6 +341,18 @@ smallvec = "1.13.2"
 smpl_jwt = "0.7.1"
 socket2 = "0.5.7"
 soketto = "0.7"
+solana-account-info = { path = "sdk/program-lite-split/account-info" }
+solana-debug-account-data = { path = "sdk/program-lite-split/debug-account-data"}
+solana-entrypoint = { path = "sdk/program-lite-split/entrypoint"}
+solana-hash = { path = "sdk/program-lite-split/hash",  default-features = false }
+solana-instruction = { path = "sdk/program-lite-split/instruction",  default-features = false }
+solana-log = { path = "sdk/program-lite-split/log"}
+solana-msg = { path = "sdk/program-lite-split/msg"}
+solana-program-error = { path = "sdk/program-lite-split/program-error",  default-features = false }
+solana-program-lite-split = { path = "sdk/program-lite-split",  default-features = false }
+solana-program-memory = { path = "sdk/program-lite-split/program-memory"}
+solana-pubkey = { path = "sdk/program-lite-split/pubkey",  default-features = false }
+solana-syscalls = { path = "sdk/program-lite-split/syscalls"}
 solana-account-decoder = { path = "account-decoder", version = "=2.1.0" }
 solana-accounts-db = { path = "accounts-db", version = "=2.1.0" }
 solana-address-lookup-table-program = { path = "programs/address-lookup-table", version = "=2.1.0" }

@@ -1,0 +1,23 @@
+[package]
+name = "solana-account-info"
+description = "Solana Program"
+documentation = "https://docs.rs/solana-program"
+readme = "README.md"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+rust-version = "1.75.0"                          # solana platform-tools rust version
+
+[dependencies]
+bincode = { workspace = true }
+serde = { workspace = true }
+solana-debug-account-data = { workspace = true }
+solana-program-error = { workspace = true }
+solana-program-memory = { workspace = true }
+solana-pubkey = { workspace = true }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]

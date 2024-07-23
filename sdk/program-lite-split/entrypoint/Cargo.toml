@@ -1,0 +1,20 @@
+[package]
+name = "solana-entrypoint"
+description = "Solana Program"
+documentation = "https://docs.rs/solana-program"
+readme = "README.md"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+rust-version = "1.75.0"                          # solana platform-tools rust version
+
+[dependencies]
+solana-account-info = { workspace = true }
+solana-program-error = { workspace = true }
+solana-pubkey = { workspace = true }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
