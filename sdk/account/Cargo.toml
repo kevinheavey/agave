@@ -1,5 +1,5 @@
 [package]
-name = "solana-acccount"
+name = "solana-account"
 description = "Solana Account type"
 documentation = "https://docs.rs/solana-account"
 version = { workspace = true }
