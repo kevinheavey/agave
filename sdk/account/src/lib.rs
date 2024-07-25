@@ -1,7 +1,10 @@
+#![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(min_specialization))]
 //! The Solana [`Account`] type.
 
 #[cfg(feature = "dev-context-only-utils")]
 use qualifier_attr::qualifiers;
+#[cfg(feature = "frozen-abi")]
+use solana_frozen_abi_macro::{frozen_abi, AbiExample};
 use {
     serde::ser::{Serialize, Serializer},
     solana_program::{
@@ -54,6 +57,8 @@ mod account_serialize {
         solana_program::{clock::Epoch, pubkey::Pubkey},
         serde::{ser::Serializer, Serialize},
     };
+    #[cfg(feature = "frozen-abi")]
+    use solana_frozen_abi_macro::{frozen_abi, AbiExample};
     #[repr(C)]
     #[cfg_attr(
         feature = "frozen-abi",
