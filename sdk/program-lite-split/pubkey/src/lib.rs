@@ -168,6 +168,7 @@ impl TryFrom<&str> for Pubkey {
     }
 }
 
+#[cfg(feature = "curve")]
 #[allow(clippy::used_underscore_binding)]
 pub fn bytes_are_curve_point<T: AsRef<[u8]>>(_bytes: T) -> bool {
     #[cfg(not(target_os = "solana"))]
@@ -478,6 +479,7 @@ impl Pubkey {
     /// #
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    #[cfg(feature = "curve")]
     pub fn find_program_address(seeds: &[&[u8]], program_id: &Pubkey) -> (Pubkey, u8) {
         Self::try_find_program_address(seeds, program_id)
             .unwrap_or_else(|| panic!("Unable to find a viable program address bump seed"))
@@ -496,6 +498,7 @@ impl Pubkey {
     ///
     /// [`find_program_address`]: Pubkey::find_program_address
     #[allow(clippy::same_item_push)]
+    #[cfg(feature = "curve")]
     pub fn try_find_program_address(seeds: &[&[u8]], program_id: &Pubkey) -> Option<(Pubkey, u8)> {
         // Perform the calculation inline, calling this from within a program is
         // not supported
@@ -579,6 +582,7 @@ impl Pubkey {
     /// assert_eq!(expected_pda, actual_pda);
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    #[cfg(feature = "curve")]
     pub fn create_program_address(
         seeds: &[&[u8]],
         program_id: &Pubkey,
@@ -632,6 +636,7 @@ impl Pubkey {
         self.0
     }
 
+    #[cfg(feature = "curve")]
     pub fn is_on_curve(&self) -> bool {
         bytes_are_curve_point(self)
     }
