@@ -19,7 +19,7 @@
 //! ```
 //! # use solana_program::example_mocks::solana_sdk;
 //! # use solana_program::example_mocks::solana_rpc_client;
-//! # use solana_sdk::account::Account;
+//! # use solana_account::Account;
 //! # use solana_rpc_client::rpc_client::RpcClient;
 //! # use solana_sdk::sysvar::stake_history::{self, StakeHistory};
 //! # use anyhow::Result;
