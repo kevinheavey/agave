@@ -1,15 +1,14 @@
 #![cfg(feature = "full")]
 
 //! calculate and collect rent from Accounts
-use solana_sdk::{
-    account::{AccountSharedData, ReadableAccount, WritableAccount},
+use {solana_sdk::{
     clock::Epoch,
     epoch_schedule::EpochSchedule,
     genesis_config::GenesisConfig,
     incinerator,
     pubkey::Pubkey,
     rent::{Rent, RentDue},
-};
+}, solana_account::{AccountSharedData, ReadableAccount, WritableAccount}};
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
@@ -216,7 +215,8 @@ mod tests {
     use {
         super::*,
         assert_matches::assert_matches,
-        solana_sdk::{account::Account, sysvar},
+        solana_account::Account,
+        solana_sdk::sysvar,
     };
 
     fn default_rent_collector_clone_with_epoch(epoch: Epoch) -> RentCollector {

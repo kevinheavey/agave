@@ -7358,6 +7358,7 @@ dependencies = [
  "sha2 0.10.8",
  "sha3 0.10.8",
  "siphasher",
+ "solana-account",
  "solana-bn254",
  "solana-decode-error",
  "solana-frozen-abi",

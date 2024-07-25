@@ -58,7 +58,6 @@ pub use solana_program::{
 };
 #[cfg(feature = "borsh")]
 pub use solana_program::{borsh, borsh0_10, borsh1};
-pub mod account;
 pub mod account_utils;
 pub mod client;
 pub mod commitment_config;

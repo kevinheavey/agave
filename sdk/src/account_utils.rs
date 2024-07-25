@@ -1,11 +1,9 @@
 //! Useful extras for `Account` state.
 
 use {
-    crate::{
-        account::{Account, AccountSharedData},
-        instruction::InstructionError,
-    },
+    crate::instruction::InstructionError,
     bincode::ErrorKind,
+    solana_account::{Account, AccountSharedData},
     std::cell::Ref,
 };
 
@@ -68,7 +66,8 @@ where
 mod tests {
     use {
         super::*,
-        crate::{account::AccountSharedData, pubkey::Pubkey},
+        crate::pubkey::Pubkey,
+        solana_account::AccountSharedData
     };
 
     #[test]

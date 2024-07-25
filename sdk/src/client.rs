@@ -9,8 +9,7 @@
 
 #![cfg(feature = "full")]
 
-use crate::{
-    account::Account,
+use {crate::{
     clock::Slot,
     commitment_config::CommitmentConfig,
     epoch_info::EpochInfo,
@@ -24,7 +23,7 @@ use crate::{
     system_instruction,
     transaction::{self, Transaction, VersionedTransaction},
     transport::Result,
-};
+}, solana_account::Account};
 
 pub trait Client: SyncClient + AsyncClient {
     fn tpu_addr(&self) -> String;
