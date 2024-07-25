@@ -4,7 +4,6 @@
 
 use {
     crate::{
-        account::{Account, AccountSharedData},
         clock::{UnixTimestamp, DEFAULT_TICKS_PER_SLOT},
         epoch_schedule::EpochSchedule,
         fee_calculator::FeeRateGovernor,
@@ -22,6 +21,7 @@ use {
     bincode::{deserialize, serialize},
     chrono::{TimeZone, Utc},
     memmap2::Mmap,
+    solana_account::{Account, AccountSharedData},
     std::{
         collections::BTreeMap,
         fmt,
