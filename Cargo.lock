@@ -5626,7 +5626,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-acccount"
+name = "solana-account"
 version = "2.1.0"
 dependencies = [
  "bincode",
