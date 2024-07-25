@@ -9,21 +9,24 @@
 
 #![cfg(feature = "full")]
 
-use {crate::{
-    clock::Slot,
-    commitment_config::CommitmentConfig,
-    epoch_info::EpochInfo,
-    hash::Hash,
-    instruction::Instruction,
-    message::Message,
-    pubkey::Pubkey,
-    signature::{Keypair, Signature},
-    signer::Signer,
-    signers::Signers,
-    system_instruction,
-    transaction::{self, Transaction, VersionedTransaction},
-    transport::Result,
-}, solana_account::Account};
+use {
+    crate::{
+        clock::Slot,
+        commitment_config::CommitmentConfig,
+        epoch_info::EpochInfo,
+        hash::Hash,
+        instruction::Instruction,
+        message::Message,
+        pubkey::Pubkey,
+        signature::{Keypair, Signature},
+        signer::Signer,
+        signers::Signers,
+        system_instruction,
+        transaction::{self, Transaction, VersionedTransaction},
+        transport::Result,
+    },
+    solana_account::Account,
+};
 
 pub trait Client: SyncClient + AsyncClient {
     fn tpu_addr(&self) -> String;

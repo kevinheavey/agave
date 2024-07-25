@@ -52,13 +52,13 @@ pub struct Account {
 
 // mod because we need 'Account' below to have the name 'Account' to match expected serialization
 mod account_serialize {
-    use {
-        crate::ReadableAccount,
-        solana_program::{clock::Epoch, pubkey::Pubkey},
-        serde::{ser::Serializer, Serialize},
-    };
     #[cfg(feature = "frozen-abi")]
     use solana_frozen_abi_macro::{frozen_abi, AbiExample};
+    use {
+        crate::ReadableAccount,
+        serde::{ser::Serializer, Serialize},
+        solana_program::{clock::Epoch, pubkey::Pubkey},
+    };
     #[repr(C)]
     #[cfg_attr(
         feature = "frozen-abi",

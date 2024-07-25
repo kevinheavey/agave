@@ -64,11 +64,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        crate::pubkey::Pubkey,
-        solana_account::AccountSharedData
-    };
+    use {super::*, crate::pubkey::Pubkey, solana_account::AccountSharedData};
 
     #[test]
     fn test_account_state() {
