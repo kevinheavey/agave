@@ -5626,6 +5626,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-acccount"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "qualifier_attr",
+ "serde",
+ "serde_bytes",
+ "serde_derive",
+ "solana-program",
+]
+
+[[package]]
 name = "solana-account-decoder"
 version = "2.1.0"
 dependencies = [
