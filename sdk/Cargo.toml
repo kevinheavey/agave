@@ -92,7 +92,7 @@ solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-short-vec = { workspace = true }
-solana-transaction-error = { workspace = true }
+solana-transaction-error = { workspace = true, features = ["serde"] }
 thiserror = { workspace = true }
 uriparse = { workspace = true }
 
