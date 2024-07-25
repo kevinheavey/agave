@@ -195,7 +195,7 @@ impl Message {
     /// #     solana_sdk,
     /// # };
     /// # use std::borrow::Cow;
-    /// # use solana_sdk::account::Account;
+    /// # use solana_account::Account;
     /// use anyhow::Result;
     /// use solana_rpc_client::rpc_client::RpcClient;
     /// use solana_program::address_lookup_table::{self, state::{AddressLookupTable, LookupTableMeta}};
