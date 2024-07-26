@@ -796,7 +796,7 @@ use {
     },
     digest::Digest,
     serde_derive::{Deserialize, Serialize},
-    solana_precompile_error::PrecompileError
+    solana_precompile_error::PrecompileError,
 };
 
 pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
