@@ -7847,6 +7847,7 @@ dependencies = [
  "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
+ "solana-instruction",
  "solana-logger",
  "solana-precompile-error",
  "solana-program",
