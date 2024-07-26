@@ -6830,7 +6830,6 @@ name = "solana-precompile-error"
 version = "2.1.0"
 dependencies = [
  "solana-decode-error",
- "thiserror",
 ]
 
 [[package]]
