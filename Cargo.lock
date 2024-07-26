@@ -6826,6 +6826,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-precompile-error"
+version = "2.1.0"
+dependencies = [
+ "solana-decode-error",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-program"
 version = "2.1.0"
 dependencies = [
@@ -7351,6 +7359,7 @@ dependencies = [
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",
+ "solana-precompile-error",
  "solana-program",
  "solana-program-memory",
  "solana-sanitize",
