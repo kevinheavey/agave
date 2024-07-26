@@ -7274,7 +7274,6 @@ dependencies = [
  "num-derive",
  "num-traits",
  "solana-decode-error",
- "thiserror",
 ]
 
 [[package]]
