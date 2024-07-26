@@ -1,5 +1,9 @@
 /// Precompile errors
-use {core::fmt, num_derive::{FromPrimitive, ToPrimitive}, solana_decode_error::DecodeError};
+use {
+    core::fmt,
+    num_derive::{FromPrimitive, ToPrimitive},
+    solana_decode_error::DecodeError,
+};
 
 /// Precompile errors
 #[derive(Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
