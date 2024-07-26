@@ -1503,7 +1503,7 @@ pub fn create_nonce_account(
 ///     system_instruction,
 ///     transaction::Transaction,
 /// };
-/// # use solana_account::Account;
+/// # use solana_sdk::account::Account;
 /// use std::path::Path;
 /// use anyhow::Result;
 /// # use anyhow::anyhow;
