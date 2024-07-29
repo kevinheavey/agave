@@ -48,6 +48,7 @@ use {
         clock::{UnixTimestamp, MAX_PROCESSING_AGE},
         compute_budget::ComputeBudgetInstruction,
         entrypoint::MAX_PERMITTED_DATA_INCREASE,
+        fee::{FeeBudgetLimits, FeeStructure},
         fee_calculator::FeeRateGovernor,
         genesis_config::ClusterType,
         hash::Hash,

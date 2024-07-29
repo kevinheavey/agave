@@ -26,6 +26,7 @@ use {
     solana_runtime_transaction::instructions_processor::process_compute_budget_instructions,
     solana_sdk::{
         clock::{Slot, FORWARD_TRANSACTIONS_TO_LEADER_AT_SLOT_OFFSET, MAX_PROCESSING_AGE},
+        fee::FeeBudgetLimits,
         message::SanitizedMessage,
         saturating_add_assign,
         timing::timestamp,
