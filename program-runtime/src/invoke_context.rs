@@ -8,7 +8,7 @@ use {
         sysvar_cache::SysvarCache,
     },
     solana_compute_budget::compute_budget::ComputeBudget,
-    solana_feature_set::{FeatureSet, move_precompile_verification_to_svm},
+    solana_feature_set::{move_precompile_verification_to_svm, FeatureSet},
     solana_log_collector::{ic_msg, LogCollector},
     solana_measure::measure::Measure,
     solana_rbpf::{
