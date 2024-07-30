@@ -1,3 +1,4 @@
+#![no_std]
 #[cfg(target_os = "solana")]
 use solana_define_syscall::define_syscall;
 use {
