@@ -1,18 +1,23 @@
+#![no_std]
 #![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(min_specialization))]
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
+extern crate std;
+#[cfg(any(feature = "borsh", target_arch = "wasm32"))]
+use std::string::ToString;
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 use {
-    core::fmt,
+    core::{convert::TryFrom, fmt, mem, str::FromStr},
     solana_sanitize::Sanitize,
-    std::{convert::TryFrom, error::Error, mem, str::FromStr},
 };
 #[cfg(target_arch = "wasm32")]
 use {
     js_sys::{Array, Uint8Array},
+    std::{boxed::Box, format, string::String, vec},
     wasm_bindgen::{prelude::*, JsCast},
 };
 
@@ -35,9 +40,10 @@ pub const MAX_BASE58_LEN: usize = 44;
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
-    derive(BorshSerialize, BorshDeserialize, BorshSchema),
+    derive(BorshSerialize, BorshDeserialize),
     borsh(crate = "borsh")
 )]
+#[cfg_attr(all(feature = "borsh", feature = "std"), derive(BorshSchema))]
 #[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize,))]
 #[derive(Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -76,7 +82,8 @@ pub enum ParseHashError {
     Invalid,
 }
 
-impl Error for ParseHashError {}
+#[cfg(feature = "std")]
+impl std::error::Error for ParseHashError {}
 
 impl fmt::Display for ParseHashError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
