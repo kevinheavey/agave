@@ -778,7 +778,7 @@ macro_rules! declare_id {
         fn test_id() {
             assert!(check_id(&id()));
         }
-    }
+    };
 }
 
 #[cfg(test)]
