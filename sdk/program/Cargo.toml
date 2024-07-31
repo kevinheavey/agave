@@ -16,10 +16,11 @@ bincode = { workspace = true }
 blake3 = { workspace = true, features = ["digest", "traits-preview"] }
 borsh = { workspace = true, optional = true }
 borsh0-10 = { package = "borsh", version = "0.10.3", optional = true }
-bs58 = { workspace = true }
 bv = { workspace = true, features = ["serde"] }
 bytemuck = { workspace = true }
 bytemuck_derive = { workspace = true }
+five8 = { workspace = true }
+five8_core = { workspace = true }
 lazy_static = { workspace = true }
 log = { workspace = true }
 memoffset = { workspace = true }
@@ -79,6 +80,7 @@ parking_lot = { workspace = true }
 anyhow = { workspace = true }
 array-bytes = { workspace = true }
 assert_matches = { workspace = true }
+bs58 = { workspace = true }
 itertools = { workspace = true }
 serde_json = { workspace = true }
 serial_test = { workspace = true }

@@ -7,7 +7,7 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use {
     sha3::{Digest, Keccak256},
     solana_sanitize::Sanitize,
-    std::{convert::TryFrom, fmt, mem, str::FromStr},
+    std::{convert::TryFrom, fmt, str::{FromStr, from_utf8}},
     thiserror::Error,
 };
 
@@ -53,13 +53,19 @@ impl AsRef<[u8]> for Hash {
 
 impl fmt::Debug for Hash {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        let mut out = [0u8; MAX_BASE58_LEN];
+        let mut len = 0;
+        five8::encode_32(&self.0, Some(&mut len), &mut out);
+        write!(f, "{}", from_utf8(&out[..len as usize]).unwrap())
     }
 }
 
 impl fmt::Display for Hash {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        let mut out = [0u8; MAX_BASE58_LEN];
+        let mut len = 0;
+        five8::encode_32(&self.0, Some(&mut len), &mut out);
+        write!(f, "{}", from_utf8(&out[..len as usize]).unwrap())
     }
 }
 
@@ -75,17 +81,18 @@ impl FromStr for Hash {
     type Err = ParseHashError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        use five8_core::DecodeError::{TooLong, TooShort, OutputTooLong};
         if s.len() > MAX_BASE58_LEN {
             return Err(ParseHashError::WrongSize);
         }
-        let bytes = bs58::decode(s)
-            .into_vec()
-            .map_err(|_| ParseHashError::Invalid)?;
-        if bytes.len() != mem::size_of::<Hash>() {
-            Err(ParseHashError::WrongSize)
-        } else {
-            Ok(Hash::new(&bytes))
-        }
+        let mut out = [0u8; HASH_BYTES];
+        five8::decode_32(s, &mut out).map_err(|e| match e {
+            TooLong | TooShort | OutputTooLong => {
+                ParseHashError::WrongSize
+            }
+            _ => ParseHashError::Invalid,
+        })?;
+        Ok(Self(out))
     }
 }
 

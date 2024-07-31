@@ -15,8 +15,8 @@ use {
     solana_decode_error::DecodeError,
     std::{
         convert::{Infallible, TryFrom},
-        fmt, mem,
-        str::FromStr,
+        fmt,
+        str::{FromStr, from_utf8},
     },
     thiserror::Error,
 };
@@ -122,17 +122,18 @@ impl FromStr for Pubkey {
     type Err = ParsePubkeyError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        use five8_core::DecodeError::{TooLong, TooShort, OutputTooLong};
         if s.len() > MAX_BASE58_LEN {
             return Err(ParsePubkeyError::WrongSize);
         }
-        let pubkey_vec = bs58::decode(s)
-            .into_vec()
-            .map_err(|_| ParsePubkeyError::Invalid)?;
-        if pubkey_vec.len() != mem::size_of::<Pubkey>() {
-            Err(ParsePubkeyError::WrongSize)
-        } else {
-            Pubkey::try_from(pubkey_vec).map_err(|_| ParsePubkeyError::Invalid)
-        }
+        let mut out = [0u8; PUBKEY_BYTES];
+        five8::decode_32(s, &mut out).map_err(|e| match e {
+            TooLong | TooShort | OutputTooLong => {
+                ParsePubkeyError::WrongSize
+            }
+            _ => ParsePubkeyError::Invalid,
+        })?;
+        Ok(Self(out))
     }
 }
 
@@ -655,13 +656,19 @@ impl AsMut<[u8]> for Pubkey {
 
 impl fmt::Debug for Pubkey {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        let mut out = [0u8; MAX_BASE58_LEN];
+        let mut len = 0;
+        five8::encode_32(&self.0, Some(&mut len), &mut out);
+        write!(f, "{}", from_utf8(&out[..len as usize]).unwrap())
     }
 }
 
 impl fmt::Display for Pubkey {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        let mut out = [0u8; MAX_BASE58_LEN];
+        let mut len = 0;
+        five8::encode_32(&self.0, Some(&mut len), &mut out);
+        write!(f, "{}", from_utf8(&out[..len as usize]).unwrap())
     }
 }
 

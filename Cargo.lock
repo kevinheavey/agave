@@ -2201,6 +2201,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "five8"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "448b79cf6e417bbcad52c49fc55b814c66f89e83afc3d32db42ebc1c367b4e9e"
+dependencies = [
+ "five8_core",
+]
+
+[[package]]
+name = "five8_core"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b2a72055cd9cffc40c9f75f1e5810c80559e158796cf2202292ce4745889588"
+
+[[package]]
 name = "fixedbitset"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6863,6 +6878,8 @@ dependencies = [
  "console_error_panic_hook",
  "console_log",
  "curve25519-dalek",
+ "five8",
+ "five8_core",
  "getrandom 0.2.10",
  "itertools 0.12.1",
  "js-sys",
@@ -7340,6 +7357,8 @@ dependencies = [
  "digest 0.10.7",
  "ed25519-dalek",
  "ed25519-dalek-bip32",
+ "five8",
+ "five8_core",
  "generic-array 0.14.7",
  "getrandom 0.1.16",
  "hex",

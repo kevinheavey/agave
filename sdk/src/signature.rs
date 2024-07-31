@@ -10,7 +10,7 @@ use {
         borrow::{Borrow, Cow},
         convert::TryInto,
         fmt,
-        str::FromStr,
+        str::{FromStr, from_utf8},
     },
     thiserror::Error,
 };
@@ -71,13 +71,19 @@ impl AsRef<[u8]> for Signature {
 
 impl fmt::Debug for Signature {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        let mut out = [0u8; MAX_BASE58_SIGNATURE_LEN];
+        let mut len = 0;
+        five8::encode_64(&self.0.as_ref(), Some(&mut len), &mut out);
+        write!(f, "{}", from_utf8(&out[..len as usize]).unwrap())
     }
 }
 
 impl fmt::Display for Signature {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        let mut out = [0u8; MAX_BASE58_SIGNATURE_LEN];
+        let mut len = 0;
+        five8::encode_64(&self.0.as_ref(), Some(&mut len), &mut out);
+        write!(f, "{}", from_utf8(&out[..len as usize]).unwrap())
     }
 }
 

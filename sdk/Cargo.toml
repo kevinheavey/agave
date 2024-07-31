@@ -57,6 +57,8 @@ derivation-path = { workspace = true }
 digest = { workspace = true, optional = true }
 ed25519-dalek = { workspace = true, optional = true }
 ed25519-dalek-bip32 = { workspace = true, optional = true }
+five8 = { workspace = true }
+five8_core = { workspace = true }
 generic-array = { workspace = true, features = [
     "serde",
     "more_lengths",

@@ -17,6 +17,7 @@ use {
         error,
         io::{Read, Write},
         path::Path,
+        str::from_utf8,
     },
 };
 
@@ -69,12 +70,17 @@ impl Keypair {
 
     /// Recovers a `Keypair` from a base58-encoded string
     pub fn from_base58_string(s: &str) -> Self {
-        Self::from_bytes(&bs58::decode(s).into_vec().unwrap()).unwrap()
+        let mut out = [0u8; ed25519_dalek::KEYPAIR_LENGTH];
+        five8::decode_64(s, &mut out).unwrap();
+        Self::from_bytes(&out).unwrap()
     }
 
     /// Returns this `Keypair` as a base58-encoded string
     pub fn to_base58_string(&self) -> String {
-        bs58::encode(&self.0.to_bytes()).into_string()
+        let mut out = [0u8; five8_core::BASE58_ENCODED_64_MAX_LEN];
+        let mut len = 0;
+        five8::encode_64(&self.0.to_bytes(), Some(&mut len), &mut out);
+        from_utf8(&out[..len as usize]).unwrap().to_string()
     }
 
     /// Gets this `Keypair`'s SecretKey
