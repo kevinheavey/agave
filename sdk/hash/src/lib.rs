@@ -4,12 +4,12 @@
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 #[cfg(any(feature = "std", target_arch = "wasm32"))]
 extern crate std;
-#[cfg(any(feature = "borsh", target_arch = "wasm32"))]
-use std::string::ToString;
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+#[cfg(any(feature = "borsh", target_arch = "wasm32"))]
+use std::string::ToString;
 use {
     core::{convert::TryFrom, fmt, mem, str::FromStr},
     solana_sanitize::Sanitize,
