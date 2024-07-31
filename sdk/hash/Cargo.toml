@@ -34,6 +34,7 @@ rustc_version = { workspace = true }
 [features]
 borsh = ["dep:borsh", "std"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
+default = ["std"]
 frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "std"]
 serde = ["dep:serde", "dep:serde_derive"]
 std = []
