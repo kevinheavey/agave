@@ -508,7 +508,6 @@ pub mod message;
 pub mod native_token;
 pub mod nonce;
 pub mod program;
-pub mod program_error;
 pub mod program_option;
 pub mod program_pack;
 pub mod program_stubs;
@@ -530,7 +529,7 @@ pub mod sysvar;
 pub mod vote;
 pub mod wasm;
 
-pub use solana_msg::msg;
+pub use {solana_msg::msg, solana_program_error as program_error};
 #[deprecated(since = "2.1.0", note = "Use `solana-program-memory` crate instead")]
 pub use solana_program_memory as program_memory;
 #[deprecated(since = "2.1.0", note = "Use `solana-sanitize` crate instead")]
