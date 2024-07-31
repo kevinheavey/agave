@@ -10,7 +10,7 @@ use {
         borrow::{Borrow, Cow},
         convert::TryInto,
         fmt,
-        str::{FromStr, from_utf8},
+        str::{from_utf8, FromStr},
     },
     thiserror::Error,
 };

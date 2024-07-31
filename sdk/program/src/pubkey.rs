@@ -16,7 +16,7 @@ use {
     std::{
         convert::{Infallible, TryFrom},
         fmt,
-        str::{FromStr, from_utf8},
+        str::{from_utf8, FromStr},
     },
     thiserror::Error,
 };
@@ -122,15 +122,13 @@ impl FromStr for Pubkey {
     type Err = ParsePubkeyError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        use five8_core::DecodeError::{TooLong, TooShort, OutputTooLong};
+        use five8_core::DecodeError::{OutputTooLong, TooLong, TooShort};
         if s.len() > MAX_BASE58_LEN {
             return Err(ParsePubkeyError::WrongSize);
         }
         let mut out = [0u8; PUBKEY_BYTES];
         five8::decode_32(s, &mut out).map_err(|e| match e {
-            TooLong | TooShort | OutputTooLong => {
-                ParsePubkeyError::WrongSize
-            }
+            TooLong | TooShort | OutputTooLong => ParsePubkeyError::WrongSize,
             _ => ParsePubkeyError::Invalid,
         })?;
         Ok(Self(out))

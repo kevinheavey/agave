@@ -7,7 +7,11 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use {
     five8_core::DecodeError,
     solana_sanitize::Sanitize,
-    std::{convert::TryFrom, fmt, str::{FromStr, from_utf8}},
+    std::{
+        convert::TryFrom,
+        fmt,
+        str::{from_utf8, FromStr},
+    },
     thiserror::Error,
 };
 

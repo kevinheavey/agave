@@ -7,7 +7,11 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use {
     sha3::{Digest, Keccak256},
     solana_sanitize::Sanitize,
-    std::{convert::TryFrom, fmt, str::{FromStr, from_utf8}},
+    std::{
+        convert::TryFrom,
+        fmt,
+        str::{from_utf8, FromStr},
+    },
     thiserror::Error,
 };
 
@@ -81,15 +85,13 @@ impl FromStr for Hash {
     type Err = ParseHashError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        use five8_core::DecodeError::{TooLong, TooShort, OutputTooLong};
+        use five8_core::DecodeError::{OutputTooLong, TooLong, TooShort};
         if s.len() > MAX_BASE58_LEN {
             return Err(ParseHashError::WrongSize);
         }
         let mut out = [0u8; HASH_BYTES];
         five8::decode_32(s, &mut out).map_err(|e| match e {
-            TooLong | TooShort | OutputTooLong => {
-                ParseHashError::WrongSize
-            }
+            TooLong | TooShort | OutputTooLong => ParseHashError::WrongSize,
             _ => ParseHashError::Invalid,
         })?;
         Ok(Self(out))
