@@ -5552,7 +5552,6 @@ dependencies = [
  "js-sys",
  "num-derive",
  "num-traits",
- "rand 0.8.5",
  "serde",
  "serde_derive",
  "solana-atomic-u64",

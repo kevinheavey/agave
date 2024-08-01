@@ -31,7 +31,6 @@ solana-hasher = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 curve25519-dalek = { workspace = true, optional = true }
-rand = { workspace = true }
 solana-hasher = { workspace = true, optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
@@ -42,6 +41,7 @@ wasm-bindgen = { workspace = true }
 [dev-dependencies]
 anyhow = { workspace = true }
 arbitrary = { workspace = true, features = ["derive"] }
+rand = { workspace = true }
 solana-program = { workspace = true, features = ["borsh"] }
 solana-pubkey = { path = ".", features = ["borsh", "curve25519"] }
 
