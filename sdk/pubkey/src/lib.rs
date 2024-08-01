@@ -10,20 +10,20 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(target_arch = "wasm32")]
 use {
-    js_sys::{Array, Uint8Array},
-    wasm_bindgen::{prelude::wasm_bindgen, JsCast, JsValue},
-};
-use {
+    core::fmt,
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     std::{
         convert::{Infallible, TryFrom},
-        fmt, mem,
+        mem,
         str::FromStr,
     },
-    thiserror::Error,
+};
+#[cfg(target_arch = "wasm32")]
+use {
+    js_sys::{Array, Uint8Array},
+    wasm_bindgen::{prelude::wasm_bindgen, JsCast, JsValue},
 };
 #[cfg(target_os = "solana")]
 pub mod syscalls;
@@ -46,16 +46,30 @@ const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 const SUCCESS: u64 = 0;
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum PubkeyError {
     /// Length of the seed is too long for address generation
-    #[error("Length of the seed is too long for address generation")]
     MaxSeedLengthExceeded,
-    #[error("Provided seeds do not result in a valid address")]
     InvalidSeeds,
-    #[error("Provided owner is not allowed")]
     IllegalOwner,
 }
+
+impl std::error::Error for PubkeyError {}
+
+impl fmt::Display for PubkeyError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            PubkeyError::MaxSeedLengthExceeded => {
+                f.write_str("Length of the seed is too long for address generation")
+            }
+            PubkeyError::InvalidSeeds => {
+                f.write_str("Provided seeds do not result in a valid address")
+            }
+            PubkeyError::IllegalOwner => f.write_str("Provided owner is not allowed"),
+        }
+    }
+}
+
 impl<T> DecodeError<T> for PubkeyError {
     fn type_of() -> &'static str {
         "PubkeyError"
@@ -102,12 +116,21 @@ pub struct Pubkey(pub(crate) [u8; 32]);
 impl solana_sanitize::Sanitize for Pubkey {}
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum ParsePubkeyError {
-    #[error("String is the wrong size")]
     WrongSize,
-    #[error("Invalid Base58 string")]
     Invalid,
+}
+
+impl std::error::Error for ParsePubkeyError {}
+
+impl fmt::Display for ParsePubkeyError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> ::core::fmt::Result {
+        match self {
+            ParsePubkeyError::WrongSize => f.write_str("String is the wrong size"),
+            ParsePubkeyError::Invalid => f.write_str("Invalid Base58 string"),
+        }
+    }
 }
 
 impl From<Infallible> for ParsePubkeyError {
