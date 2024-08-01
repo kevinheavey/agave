@@ -18,8 +18,8 @@ bytemuck = { workspace = true }
 bytemuck_derive = { workspace = true }
 num-derive = { workspace = true }
 num-traits = { workspace = true }
-serde = { workspace = true }
-serde_derive = { workspace = true }
+serde = { workspace = true, optional = true }
+serde_derive = { workspace = true, optional = true }
 solana-atomic-u64 = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-define-syscall = { workspace = true }
@@ -49,6 +49,7 @@ solana-pubkey = { path = ".", features = ["borsh", "curve25519"] }
 borsh = ["dep:borsh", "dep:borsh0-10"]
 curve25519 = ["dep:curve25519-dalek", "sha2"]
 dev-context-only-utils = ["dep:arbitrary"]
+serde = ["dep:serde", "dep:serde_derive"]
 sha2 = ["dep:solana-hasher", "solana-hasher/sha2"]
 
 [package.metadata.docs.rs]
