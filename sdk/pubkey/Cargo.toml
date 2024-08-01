@@ -53,7 +53,7 @@ solana-pubkey = { path = ".", features = [
 rustc_version = { workspace = true }
 
 [features]
-borsh = ["dep:borsh", "dep:borsh0-10"]
+borsh = ["dep:borsh", "dep:borsh0-10", "std"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 curve25519 = ["dep:curve25519-dalek", "sha2"]
 default = ["std"]
