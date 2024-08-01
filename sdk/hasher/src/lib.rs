@@ -1,16 +1,17 @@
 #![no_std]
 #[cfg(target_os = "solana")]
 use solana_define_syscall::define_syscall;
-use {
-    sha2::{Digest, Sha256},
-    solana_hash::{Hash, HASH_BYTES},
-};
+#[cfg(any(feature = "sha2", not(target_os = "solana")))]
+use sha2::{Digest, Sha256};
+use solana_hash::Hash;
 
+#[cfg(any(feature = "sha2", not(target_os = "solana")))]
 #[derive(Clone, Default)]
 pub struct Hasher {
     hasher: Sha256,
 }
 
+#[cfg(any(feature = "sha2", not(target_os = "solana")))]
 impl Hasher {
     pub fn hash(&mut self, val: &[u8]) {
         self.hasher.update(val);
@@ -21,7 +22,7 @@ impl Hasher {
         }
     }
     pub fn result(self) -> Hash {
-        let bytes: [u8; HASH_BYTES] = self.hasher.finalize().into();
+        let bytes: [u8; solana_hash::HASH_BYTES] = self.hasher.finalize().into();
         bytes.into()
     }
 }
