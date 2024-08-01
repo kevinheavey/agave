@@ -2,7 +2,7 @@
 //! Solana account addresses.
 #![allow(clippy::arithmetic_side_effects)]
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 extern crate std;
 #[cfg(any(test, feature = "dev-context-only-utils"))]
 use arbitrary::Arbitrary;
@@ -893,9 +893,9 @@ impl Pubkey {
             base58_str.parse::<Pubkey>().map_err(display_to_jsvalue)
         } else if let Some(uint8_array) = value.dyn_ref::<Uint8Array>() {
             Pubkey::try_from(uint8_array.to_vec())
-                .map_err(|err| JsValue::from(format!("Invalid Uint8Array pubkey: {err:?}")))
+                .map_err(|err| JsValue::from(std::format!("Invalid Uint8Array pubkey: {err:?}")))
         } else if let Some(array) = value.dyn_ref::<Array>() {
-            let mut bytes = vec![];
+            let mut bytes = std::vec![];
             let iterator = js_sys::try_iter(&array.values())?.expect("array to be iterable");
             for x in iterator {
                 let x = x?;
@@ -906,10 +906,10 @@ impl Pubkey {
                         continue;
                     }
                 }
-                return Err(format!("Invalid array argument: {:?}", x).into());
+                return Err(std::format!("Invalid array argument: {:?}", x).into());
             }
             Pubkey::try_from(bytes)
-                .map_err(|err| JsValue::from(format!("Invalid Array pubkey: {err:?}")))
+                .map_err(|err| JsValue::from(std::format!("Invalid Array pubkey: {err:?}")))
         } else if value.is_undefined() {
             Ok(Pubkey::default())
         } else {
@@ -918,7 +918,7 @@ impl Pubkey {
     }
 
     /// Return the base58 string representation of the public key
-    pub fn toString(&self) -> String {
+    pub fn toString(&self) -> std::string::String {
         self.to_string()
     }
 
@@ -934,7 +934,7 @@ impl Pubkey {
     }
 
     /// Return the `Uint8Array` representation of the public key
-    pub fn toBytes(&self) -> Box<[u8]> {
+    pub fn toBytes(&self) -> std::boxed::Box<[u8]> {
         self.0.clone().into()
     }
 
