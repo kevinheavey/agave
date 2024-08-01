@@ -1,5 +1,6 @@
-#![no_std]
 //! Solana account addresses.
+#![no_std]
+#![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(min_specialization))]
 #![allow(clippy::arithmetic_side_effects)]
 
 #[cfg(any(feature = "std", target_arch = "wasm32"))]
@@ -139,7 +140,7 @@ impl From<u64> for PubkeyError {
 /// [`Keypair`]: https://docs.rs/solana-sdk/latest/solana_sdk/signer/keypair/struct.Keypair.html
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 #[repr(transparent)]
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
     derive(BorshSerialize, BorshDeserialize),
