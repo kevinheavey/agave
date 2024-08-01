@@ -35,6 +35,8 @@ rand = { workspace = true }
 solana-hasher = { workspace = true, optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
+js-sys = { workspace = true }
 wasm-bindgen = { workspace = true }
 
 [dev-dependencies]
