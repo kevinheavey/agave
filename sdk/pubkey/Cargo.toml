@@ -42,7 +42,12 @@ wasm-bindgen = { workspace = true }
 anyhow = { workspace = true }
 arbitrary = { workspace = true, features = ["derive"] }
 rand = { workspace = true }
-solana-pubkey = { path = ".", features = ["borsh", "curve25519", "dev-context-only-utils", "std"] }
+solana-pubkey = { path = ".", features = [
+    "borsh",
+    "curve25519",
+    "dev-context-only-utils",
+    "std",
+] }
 
 [build-dependencies]
 rustc_version = { workspace = true }
@@ -53,10 +58,7 @@ bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 curve25519 = ["dep:curve25519-dalek", "sha2"]
 default = ["std"]
 dev-context-only-utils = ["dep:arbitrary", "std"]
-frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
-]
+frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 serde = ["dep:serde", "dep:serde_derive"]
 sha2 = ["dep:solana-hasher", "solana-hasher/sha2"]
 std = []
