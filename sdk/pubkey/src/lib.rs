@@ -816,7 +816,7 @@ macro_rules! impl_borsh_schema {
             [u8; 32]: $borsh::BorshSchema,
         {
             fn declaration() -> $borsh::schema::Declaration {
-                "Pubkey".to_string()
+                std::string::String::from("Pubkey")
             }
             fn add_definitions_recursively(
                 definitions: &mut $borsh::maybestd::collections::HashMap<
