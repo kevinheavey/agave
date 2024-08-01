@@ -1,8 +1,8 @@
 #![no_std]
-#[cfg(target_os = "solana")]
-use solana_define_syscall::define_syscall;
 #[cfg(any(feature = "sha2", not(target_os = "solana")))]
 use sha2::{Digest, Sha256};
+#[cfg(target_os = "solana")]
+use solana_define_syscall::define_syscall;
 use solana_hash::Hash;
 
 #[cfg(any(feature = "sha2", not(target_os = "solana")))]
