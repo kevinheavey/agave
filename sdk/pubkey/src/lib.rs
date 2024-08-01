@@ -950,7 +950,7 @@ impl Pubkey {
     /// Derive a program address from seeds and a program id
     #[cfg(feature = "curve25519")]
     pub fn createProgramAddress(
-        seeds: Box<[JsValue]>,
+        seeds: std::boxed::Box<[JsValue]>,
         program_id: &Pubkey,
     ) -> Result<Pubkey, JsValue> {
         let seeds_vec = js_value_to_seeds_vec(&seeds)?;
@@ -969,7 +969,7 @@ impl Pubkey {
     /// * `[PubKey, number]` - the program address and bump seed
     #[cfg(feature = "curve25519")]
     pub fn findProgramAddress(
-        seeds: Box<[JsValue]>,
+        seeds: std::boxed::Box<[JsValue]>,
         program_id: &Pubkey,
     ) -> Result<JsValue, JsValue> {
         let seeds_vec = js_value_to_seeds_vec(&seeds)?;
