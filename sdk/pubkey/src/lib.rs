@@ -2,17 +2,18 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
-#[cfg(target_arch = "wasm32")]
-use crate::wasm_bindgen;
-#[cfg(test)]
+#[cfg(any(test, feature = "dev-context-only-utils"))]
 use arbitrary::Arbitrary;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::wasm_bindgen;
 use {
-    crate::hash::hashv,
     bytemuck_derive::{Pod, Zeroable},
     num_derive::{FromPrimitive, ToPrimitive},
+    serde_derive::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
+    solana_hasher::hashv,
     std::{
         convert::{Infallible, TryFrom},
         fmt, mem,
@@ -20,6 +21,7 @@ use {
     },
     thiserror::Error,
 };
+pub mod syscalls;
 
 /// Number of bytes in a pubkey
 pub const PUBKEY_BYTES: usize = 32;
@@ -31,6 +33,11 @@ pub const MAX_SEEDS: usize = 16;
 const MAX_BASE58_LEN: usize = 44;
 
 const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
+
+/// Copied from `solana_program::entrypoint::SUCCESS`
+/// to avoid a `solana_program`` dependency
+#[cfg(target_os = "solana")]
+const SUCCESS: u64 = 0;
 
 #[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum PubkeyError {
@@ -93,7 +100,7 @@ impl From<u64> for PubkeyError {
     Serialize,
     Zeroable,
 )]
-#[cfg_attr(test, derive(Arbitrary))]
+#[cfg_attr(any(test, feature = "dev-context-only-utils"), derive(Arbitrary))]
 pub struct Pubkey(pub(crate) [u8; 32]);
 
 impl solana_sanitize::Sanitize for Pubkey {}
@@ -310,8 +317,8 @@ impl Pubkey {
     ///
     /// ```
     /// # use borsh::{BorshSerialize, BorshDeserialize};
+    /// # use solana_pubkey::Pubkey;
     /// # use solana_program::{
-    /// #     pubkey::Pubkey,
     /// #     entrypoint::ProgramResult,
     /// #     program::invoke_signed,
     /// #     system_instruction,
@@ -391,8 +398,8 @@ impl Pubkey {
     /// ```
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// # use solana_program::example_mocks::{solana_sdk, solana_rpc_client};
+    /// # use solana_pubkey::Pubkey;
     /// # use solana_program::{
-    /// #     pubkey::Pubkey,
     /// #     instruction::Instruction,
     /// #     hash::Hash,
     /// #     instruction::AccountMeta,
@@ -527,7 +534,7 @@ impl Pubkey {
                 )
             };
             match result {
-                crate::entrypoint::SUCCESS => Some((Pubkey::from(bytes), bump_seed)),
+                SUCCESS => Some((Pubkey::from(bytes), bump_seed)),
                 _ => None,
             }
         }
@@ -568,7 +575,7 @@ impl Pubkey {
     /// that the returned `Pubkey` has the expected value.
     ///
     /// ```
-    /// # use solana_program::pubkey::Pubkey;
+    /// # use solana_pubkey::Pubkey;
     /// # let program_id = Pubkey::new_unique();
     /// let (expected_pda, bump_seed) = Pubkey::find_program_address(&[b"vault"], &program_id);
     /// let actual_pda = Pubkey::create_program_address(&[b"vault", &[bump_seed]], &program_id)?;
@@ -592,7 +599,7 @@ impl Pubkey {
         // not supported
         #[cfg(not(target_os = "solana"))]
         {
-            let mut hasher = crate::hash::Hasher::default();
+            let mut hasher = solana_hasher::Hasher::default();
             for seed in seeds.iter() {
                 hasher.hash(seed);
             }
@@ -618,7 +625,7 @@ impl Pubkey {
                 )
             };
             match result {
-                crate::entrypoint::SUCCESS => Ok(Pubkey::from(bytes)),
+                SUCCESS => Ok(Pubkey::from(bytes)),
                 _ => Err(result.into()),
             }
         }
@@ -640,7 +647,7 @@ impl Pubkey {
         };
 
         #[cfg(not(target_os = "solana"))]
-        crate::program_stubs::sol_log(&self.to_string());
+        println!("{}", &self.to_string());
     }
 }
 
