@@ -16,12 +16,11 @@ use serde_derive::{Deserialize, Serialize};
 #[cfg(any(feature = "borsh", all(feature = "std", not(target_os = "solana"))))]
 use std::string::ToString;
 #[cfg(feature = "std")]
-use std::vec::Vec;
+use {core::str::FromStr, std::vec::Vec};
 use {
     core::{
         convert::{Infallible, TryFrom},
-        fmt, mem,
-        str::FromStr,
+        fmt,
     },
     num_traits::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
@@ -40,6 +39,7 @@ pub const PUBKEY_BYTES: usize = 32;
 pub const MAX_SEED_LEN: usize = 32;
 /// Maximum number of seeds
 pub const MAX_SEEDS: usize = 16;
+#[cfg(feature = "std")]
 /// Maximum string length of a base58 encoded pubkey
 const MAX_BASE58_LEN: usize = 44;
 
@@ -195,6 +195,7 @@ impl FromPrimitive for ParsePubkeyError {
     }
 }
 
+#[cfg(feature = "std")]
 impl std::error::Error for ParsePubkeyError {}
 
 impl fmt::Display for ParsePubkeyError {
@@ -218,7 +219,8 @@ impl<T> DecodeError<T> for ParsePubkeyError {
     }
 }
 
-impl FromStr for Pubkey {
+#[cfg(feature = "std")]
+impl core::str::FromStr for Pubkey {
     type Err = ParsePubkeyError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -228,7 +230,7 @@ impl FromStr for Pubkey {
         let pubkey_vec = bs58::decode(s)
             .into_vec()
             .map_err(|_| ParsePubkeyError::Invalid)?;
-        if pubkey_vec.len() != mem::size_of::<Pubkey>() {
+        if pubkey_vec.len() != core::mem::size_of::<Pubkey>() {
             Err(ParsePubkeyError::WrongSize)
         } else {
             Pubkey::try_from(pubkey_vec).map_err(|_| ParsePubkeyError::Invalid)
@@ -244,7 +246,7 @@ impl From<[u8; 32]> for Pubkey {
 }
 
 impl TryFrom<&[u8]> for Pubkey {
-    type Error = std::array::TryFromSliceError;
+    type Error = core::array::TryFromSliceError;
 
     #[inline]
     fn try_from(pubkey: &[u8]) -> Result<Self, Self::Error> {
@@ -262,6 +264,7 @@ impl TryFrom<Vec<u8>> for Pubkey {
     }
 }
 
+#[cfg(feature = "std")]
 impl TryFrom<&str> for Pubkey {
     type Error = ParsePubkeyError;
     fn try_from(s: &str) -> Result<Self, Self::Error> {
