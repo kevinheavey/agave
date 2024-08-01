@@ -6,10 +6,11 @@
 use arbitrary::Arbitrary;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+#[cfg(feature = "serde")]
+use serde_derive::{Deserialize, Serialize};
 use {
     bytemuck_derive::{Pod, Zeroable},
     num_derive::{FromPrimitive, ToPrimitive},
-    serde_derive::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
     std::{
         convert::{Infallible, TryFrom},
@@ -42,7 +43,8 @@ const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 #[cfg(target_os = "solana")]
 const SUCCESS: u64 = 0;
 
-#[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum PubkeyError {
     /// Length of the seed is too long for address generation
     #[error("Length of the seed is too long for address generation")]
@@ -89,26 +91,15 @@ impl From<u64> for PubkeyError {
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Clone,
-    Copy,
-    Default,
-    Deserialize,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd,
-    Pod,
-    Serialize,
-    Zeroable,
-)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Pod, Zeroable)]
 #[cfg_attr(any(test, feature = "dev-context-only-utils"), derive(Arbitrary))]
 pub struct Pubkey(pub(crate) [u8; 32]);
 
 impl solana_sanitize::Sanitize for Pubkey {}
 
-#[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum ParsePubkeyError {
     #[error("String is the wrong size")]
     WrongSize,
