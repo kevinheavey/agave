@@ -12,7 +12,7 @@ use bytemuck_derive::{Pod, Zeroable};
 use serde_derive::{Deserialize, Serialize};
 use {
     core::fmt,
-    num_derive::{FromPrimitive, ToPrimitive},
+    num_traits::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     std::{
         convert::{Infallible, TryFrom},
@@ -46,12 +46,46 @@ const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 const SUCCESS: u64 = 0;
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PubkeyError {
     /// Length of the seed is too long for address generation
     MaxSeedLengthExceeded,
     InvalidSeeds,
     IllegalOwner,
+}
+
+impl ToPrimitive for PubkeyError {
+    #[inline]
+    fn to_i64(&self) -> Option<i64> {
+        Some(match *self {
+            PubkeyError::MaxSeedLengthExceeded => PubkeyError::MaxSeedLengthExceeded as i64,
+            PubkeyError::InvalidSeeds => PubkeyError::InvalidSeeds as i64,
+            PubkeyError::IllegalOwner => PubkeyError::IllegalOwner as i64,
+        })
+    }
+    #[inline]
+    fn to_u64(&self) -> Option<u64> {
+        self.to_i64().map(|x| x as u64)
+    }
+}
+
+impl FromPrimitive for PubkeyError {
+    #[inline]
+    fn from_i64(n: i64) -> Option<Self> {
+        if n == PubkeyError::MaxSeedLengthExceeded as i64 {
+            Some(PubkeyError::MaxSeedLengthExceeded)
+        } else if n == PubkeyError::InvalidSeeds as i64 {
+            Some(PubkeyError::InvalidSeeds)
+        } else if n == PubkeyError::IllegalOwner as i64 {
+            Some(PubkeyError::IllegalOwner)
+        } else {
+            None
+        }
+    }
+    #[inline]
+    fn from_u64(n: u64) -> Option<Self> {
+        Self::from_i64(n as i64)
+    }
 }
 
 impl std::error::Error for PubkeyError {}
@@ -116,10 +150,41 @@ pub struct Pubkey(pub(crate) [u8; 32]);
 impl solana_sanitize::Sanitize for Pubkey {}
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ParsePubkeyError {
     WrongSize,
     Invalid,
+}
+
+impl ToPrimitive for ParsePubkeyError {
+    #[inline]
+    fn to_i64(&self) -> Option<i64> {
+        Some(match *self {
+            ParsePubkeyError::WrongSize => ParsePubkeyError::WrongSize as i64,
+            ParsePubkeyError::Invalid => ParsePubkeyError::Invalid as i64,
+        })
+    }
+    #[inline]
+    fn to_u64(&self) -> Option<u64> {
+        self.to_i64().map(|x| x as u64)
+    }
+}
+
+impl FromPrimitive for ParsePubkeyError {
+    #[inline]
+    fn from_i64(n: i64) -> Option<Self> {
+        if n == ParsePubkeyError::WrongSize as i64 {
+            Some(ParsePubkeyError::WrongSize)
+        } else if n == ParsePubkeyError::Invalid as i64 {
+            Some(ParsePubkeyError::Invalid)
+        } else {
+            None
+        }
+    }
+    #[inline]
+    fn from_u64(n: u64) -> Option<Self> {
+        Self::from_i64(n as i64)
+    }
 }
 
 impl std::error::Error for ParsePubkeyError {}
