@@ -5550,7 +5550,6 @@ dependencies = [
  "curve25519-dalek",
  "getrandom 0.2.10",
  "js-sys",
- "num-derive",
  "num-traits",
  "serde",
  "serde_derive",
