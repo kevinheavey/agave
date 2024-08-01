@@ -13,7 +13,6 @@ use {
     num_derive::{FromPrimitive, ToPrimitive},
     serde_derive::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
-    solana_hasher::hashv,
     std::{
         convert::{Infallible, TryFrom},
         fmt, mem,
@@ -32,6 +31,7 @@ pub const MAX_SEEDS: usize = 16;
 /// Maximum string length of a base58 encoded pubkey
 const MAX_BASE58_LEN: usize = 44;
 
+#[cfg(any(target_os = "solana", feature = "sha2", feature = "curve25519"))]
 const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 
 /// Copied from `solana_program::entrypoint::SUCCESS`
@@ -175,9 +175,13 @@ impl TryFrom<&str> for Pubkey {
     }
 }
 
+// If target_os = "solana", then this panics so there are no dependencies.
+// When target_os != "solana", this should be opt-in so users
+// don't need the curve25519 dependency.
+#[cfg(any(target_os = "solana", feature = "curve25519"))]
 #[allow(clippy::used_underscore_binding)]
 pub fn bytes_are_curve_point<T: AsRef<[u8]>>(_bytes: T) -> bool {
-    #[cfg(all(not(target_os = "solana"), feature = "curve25519"))]
+    #[cfg(not(target_os = "solana"))]
     {
         curve25519_dalek::edwards::CompressedEdwardsY::from_slice(_bytes.as_ref())
             .decompress()
@@ -205,6 +209,11 @@ impl Pubkey {
         Self::from(b)
     }
 
+    // If target_os = "solana", then the solana_hasher crate will use
+    // syscalls which bring no dependencies.
+    // When target_os != "solana", this should be opt-in so users
+    // don't need the sha2 dependency.
+    #[cfg(any(target_os = "solana", feature = "sha2"))]
     pub fn create_with_seed(
         base: &Pubkey,
         seed: &str,
@@ -221,7 +230,7 @@ impl Pubkey {
                 return Err(PubkeyError::IllegalOwner);
             }
         }
-        let hash = hashv(&[base.as_ref(), seed.as_ref(), owner]);
+        let hash = solana_hasher::hashv(&[base.as_ref(), seed.as_ref(), owner]);
         Ok(Pubkey::from(hash.to_bytes()))
     }
 
@@ -478,6 +487,11 @@ impl Pubkey {
     /// #
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    // If target_os = "solana", then the function will use
+    // syscalls which bring no dependencies.
+    // When target_os != "solana", this should be opt-in so users
+    // don't need the curve25519 dependency.
+    #[cfg(any(target_os = "solana", feature = "curve25519"))]
     pub fn find_program_address(seeds: &[&[u8]], program_id: &Pubkey) -> (Pubkey, u8) {
         Self::try_find_program_address(seeds, program_id)
             .unwrap_or_else(|| panic!("Unable to find a viable program address bump seed"))
@@ -495,6 +509,11 @@ impl Pubkey {
     /// See the documentation for [`find_program_address`] for a full description.
     ///
     /// [`find_program_address`]: Pubkey::find_program_address
+    // If target_os = "solana", then the function will use
+    // syscalls which bring no dependencies.
+    // When target_os != "solana", this should be opt-in so users
+    // don't need the curve25519 dependency.
+    #[cfg(any(target_os = "solana", feature = "curve25519"))]
     #[allow(clippy::same_item_push)]
     pub fn try_find_program_address(seeds: &[&[u8]], program_id: &Pubkey) -> Option<(Pubkey, u8)> {
         // Perform the calculation inline, calling this from within a program is
@@ -579,6 +598,11 @@ impl Pubkey {
     /// assert_eq!(expected_pda, actual_pda);
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    // If target_os = "solana", then the function will use
+    // syscalls which bring no dependencies.
+    // When target_os != "solana", this should be opt-in so users
+    // don't need the curve225519 dep.
+    #[cfg(any(target_os = "solana", feature = "curve25519"))]
     pub fn create_program_address(
         seeds: &[&[u8]],
         program_id: &Pubkey,
@@ -632,6 +656,10 @@ impl Pubkey {
         self.0
     }
 
+    // If target_os = "solana", then this panics so there are no dependencies.
+    // When target_os != "solana", this should be opt-in so users
+    // don't need the curve25519 dependency.
+    #[cfg(any(target_os = "solana", feature = "curve25519"))]
     pub fn is_on_curve(&self) -> bool {
         bytes_are_curve_point(self)
     }
