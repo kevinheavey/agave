@@ -7164,6 +7164,8 @@ dependencies = [
  "bytemuck",
  "bytemuck_derive",
  "curve25519-dalek",
+ "getrandom 0.2.10",
+ "js-sys",
  "num-derive",
  "num-traits",
  "rand 0.8.5",
