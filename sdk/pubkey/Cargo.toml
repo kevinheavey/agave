@@ -28,7 +28,7 @@ solana-sanitize = { workspace = true }
 thiserror = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
-curve25519-dalek = { workspace = true }
+curve25519-dalek = { workspace = true, optional = true }
 rand = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
@@ -38,10 +38,11 @@ wasm-bindgen = { workspace = true }
 anyhow = { workspace = true }
 arbitrary = { workspace = true, features = ["derive"] }
 solana-program = { workspace = true, features = ["borsh"] }
-solana-pubkey = { path = ".", features = ["borsh"] }
+solana-pubkey = { path = ".", features = ["borsh", "curve25519"] }
 
 [features]
 borsh = ["dep:borsh", "dep:borsh0-10"]
+curve25519 = ["dep:curve25519-dalek"]
 dev-context-only-utils = ["dep:arbitrary"]
 # sha256 = ["dep:solana-hasher"]
 
