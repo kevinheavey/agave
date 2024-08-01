@@ -45,7 +45,7 @@ const MAX_BASE58_LEN: usize = 44;
 const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 
 /// Copied from `solana_program::entrypoint::SUCCESS`
-/// to avoid a `solana_program`` dependency
+/// to avoid a `solana_program` dependency
 #[cfg(target_os = "solana")]
 const SUCCESS: u64 = 0;
 
@@ -416,7 +416,7 @@ impl Pubkey {
     ///
     /// First the on-chain Solana program:
     ///
-    /// ```
+    /// ```text
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// # use solana_pubkey::Pubkey;
     /// # use solana_program::{
@@ -496,7 +496,7 @@ impl Pubkey {
     ///
     /// The client program:
     ///
-    /// ```
+    /// ```text
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// # use solana_program::example_mocks::{solana_sdk, solana_rpc_client};
     /// # use solana_pubkey::Pubkey;

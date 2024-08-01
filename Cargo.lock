@@ -7177,7 +7177,6 @@ dependencies = [
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-hasher",
- "solana-program",
  "solana-pubkey",
  "solana-sanitize",
  "wasm-bindgen",
