@@ -7035,7 +7035,6 @@ dependencies = [
  "solana-program",
  "solana-pubkey",
  "solana-sanitize",
- "thiserror",
  "wasm-bindgen",
 ]
 
