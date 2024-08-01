@@ -1,7 +1,9 @@
+#![no_std]
 //! Solana account addresses.
-
 #![allow(clippy::arithmetic_side_effects)]
 
+#[cfg(feature = "std")]
+extern crate std;
 #[cfg(any(test, feature = "dev-context-only-utils"))]
 use arbitrary::Arbitrary;
 #[cfg(feature = "borsh")]
@@ -10,15 +12,16 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+#[cfg(feature = "std")]
+use std::{string::ToString, vec::Vec};
 use {
-    core::fmt,
-    num_traits::{FromPrimitive, ToPrimitive},
-    solana_decode_error::DecodeError,
-    std::{
+    core::{
         convert::{Infallible, TryFrom},
-        mem,
+        fmt, mem,
         str::FromStr,
     },
+    num_traits::{FromPrimitive, ToPrimitive},
+    solana_decode_error::DecodeError,
 };
 #[cfg(target_arch = "wasm32")]
 use {
@@ -88,6 +91,7 @@ impl FromPrimitive for PubkeyError {
     }
 }
 
+#[cfg(feature = "std")]
 impl std::error::Error for PubkeyError {}
 
 impl fmt::Display for PubkeyError {
@@ -138,9 +142,10 @@ impl From<u64> for PubkeyError {
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[cfg_attr(
     feature = "borsh",
-    derive(BorshSerialize, BorshDeserialize, BorshSchema),
+    derive(BorshSerialize, BorshDeserialize),
     borsh(crate = "borsh")
 )]
+#[cfg_attr(all(feature = "borsh", feature = "std"), derive(BorshSchema))]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
 #[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -244,6 +249,7 @@ impl TryFrom<&[u8]> for Pubkey {
     }
 }
 
+#[cfg(feature = "std")]
 impl TryFrom<Vec<u8>> for Pubkey {
     type Error = Vec<u8>;
 
@@ -759,8 +765,8 @@ impl Pubkey {
             crate::syscalls::sol_log_pubkey(self.as_ref() as *const _ as *const u8)
         };
 
-        #[cfg(not(target_os = "solana"))]
-        println!("{}", &self.to_string());
+        #[cfg(all(not(target_os = "solana"), feature = "std"))]
+        std::println!("{}", &self.to_string());
     }
 }
 
@@ -1175,7 +1181,7 @@ mod tests {
     fn test_pubkey_off_curve() {
         // try a bunch of random input, all successful generated program
         // addresses must land off the curve and be unique
-        let mut addresses = vec![];
+        let mut addresses = std::vec![];
         for _ in 0..1_000 {
             let program_id = Pubkey::new_unique();
             let bytes1 = rand::random::<[u8; 10]>();
@@ -1211,7 +1217,8 @@ mod tests {
         let mut to_fake = owner.to_bytes().to_vec();
         to_fake.extend_from_slice(marker);
 
-        let seed = &String::from_utf8(to_fake[..to_fake.len() - 32].to_vec()).expect("not utf8");
+        let seed = &std::string::String::from_utf8(to_fake[..to_fake.len() - 32].to_vec())
+            .expect("not utf8");
         let base = &Pubkey::try_from(&to_fake[to_fake.len() - 32..]).unwrap();
 
         Pubkey::create_with_seed(&key, seed, base)

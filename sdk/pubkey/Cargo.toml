@@ -41,15 +41,17 @@ anyhow = { workspace = true }
 arbitrary = { workspace = true, features = ["derive"] }
 rand = { workspace = true }
 solana-program = { workspace = true, features = ["borsh"] }
-solana-pubkey = { path = ".", features = ["borsh", "curve25519"] }
+solana-pubkey = { path = ".", features = ["borsh", "curve25519", "std"] }
 
 [features]
 borsh = ["dep:borsh", "dep:borsh0-10"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 curve25519 = ["dep:curve25519-dalek", "sha2"]
-dev-context-only-utils = ["dep:arbitrary"]
+default = ["std"]
+dev-context-only-utils = ["dep:arbitrary", "std"]
 serde = ["dep:serde", "dep:serde_derive"]
 sha2 = ["dep:solana-hasher", "solana-hasher/sha2"]
+std = []
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
