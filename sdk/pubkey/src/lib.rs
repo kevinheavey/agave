@@ -25,6 +25,7 @@ use {
     },
     thiserror::Error,
 };
+#[cfg(target_os = "solana")]
 pub mod syscalls;
 
 /// Number of bytes in a pubkey
