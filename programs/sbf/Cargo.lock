@@ -5559,7 +5559,6 @@ dependencies = [
  "solana-define-syscall",
  "solana-hasher",
  "solana-sanitize",
- "thiserror",
  "wasm-bindgen",
 ]
 

@@ -23,7 +23,6 @@ serde_derive = { workspace = true, optional = true }
 solana-atomic-u64 = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-sanitize = { workspace = true }
-thiserror = { workspace = true }
 
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-define-syscall = { workspace = true }
