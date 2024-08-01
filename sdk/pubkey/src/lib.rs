@@ -6,10 +6,16 @@
 use arbitrary::Arbitrary;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+#[cfg(feature = "bytemuck")]
+use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+#[cfg(target_arch = "wasm32")]
 use {
-    bytemuck_derive::{Pod, Zeroable},
+    js_sys::{Array, Uint8Array},
+    wasm_bindgen::{prelude::wasm_bindgen, JsCast, JsValue},
+};
+use {
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     std::{
@@ -18,11 +24,6 @@ use {
         str::FromStr,
     },
     thiserror::Error,
-};
-#[cfg(target_arch = "wasm32")]
-use {
-    js_sys::{Array, Uint8Array},
-    wasm_bindgen::{prelude::wasm_bindgen, JsCast, JsValue},
 };
 pub mod syscalls;
 
@@ -92,7 +93,8 @@ impl From<u64> for PubkeyError {
     borsh(crate = "borsh")
 )]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
-#[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd, Pod, Zeroable)]
+#[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
+#[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(any(test, feature = "dev-context-only-utils"), derive(Arbitrary))]
 pub struct Pubkey(pub(crate) [u8; 32]);
 
