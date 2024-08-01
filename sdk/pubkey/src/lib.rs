@@ -13,8 +13,10 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+#[cfg(all(feature = "std", not(target_os = "solana")))]
+use std::string::ToString;
 #[cfg(feature = "std")]
-use std::{string::ToString, vec::Vec};
+use std::vec::Vec;
 use {
     core::{
         convert::{Infallible, TryFrom},
