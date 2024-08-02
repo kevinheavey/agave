@@ -3,8 +3,9 @@ use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
 use {
     core::fmt,
     num_traits::ToPrimitive,
-    serde_derive::{Deserialize, Serialize},
 };
+#[cfg(feature = "serde")]
+use serde_derive::{Deserialize, Serialize};
 
 /// Builtin return values occupy the upper 32 bits
 const BUILTIN_BIT_SHIFT: usize = 32;
@@ -54,7 +55,8 @@ pub const INCORRECT_AUTHORITY: u64 = to_builtin!(26);
 /// dangerous to include error strings from 3rd party crates because they could
 /// change at any time and changes to them are difficult to detect.
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum InstructionError {
     /// Deprecated! Use CustomError instead!
     /// The program instruction returned an error
