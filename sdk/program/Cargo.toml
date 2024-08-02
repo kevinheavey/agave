@@ -37,7 +37,7 @@ solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-hash = { workspace = true, features = ["bytemuck", "serde", "std"] }
 solana-hasher = { workspace = true, features = ["sha2"] }
-solana-instruction = { workspace = true, default-features = false, features = ["bincode"] }
+solana-instruction = { workspace = true, default-features = false, features = ["bincode", "serde"] }
 solana-msg = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-pubkey = { workspace = true, features = ["bytemuck", "curve25519", "serde", "std"] }
