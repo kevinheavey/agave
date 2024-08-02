@@ -1,0 +1,27 @@
+[package]
+name = "solana-program-error"
+description = "Solana ProgramError type and related definitions."
+documentation = "https://docs.rs/solana-program-error"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+borsh = { workspace = true, default-features = false, optional = true }
+num-traits = { workspace = true }
+serde = { workspace = true }
+serde_derive = { workspace = true }
+solana-decode-error = { workspace = true }
+solana-instruction = { workspace = true, default-features = false }
+solana-msg = { workspace = true }
+solana-pubkey = { workspace = true, default-features = false }
+thiserror = { workspace = true }
+
+[features]
+borsh = ["dep:borsh"]
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
