@@ -4481,6 +4481,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-account-info"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "serde",
+ "solana-program-error",
+ "solana-program-memory",
+ "solana-pubkey",
+]
+
+[[package]]
 name = "solana-accounts-db"
 version = "2.1.0"
 dependencies = [
@@ -5369,6 +5380,7 @@ dependencies = [
  "serde_derive",
  "sha2 0.10.8",
  "sha3 0.10.8",
+ "solana-account-info",
  "solana-atomic-u64",
  "solana-decode-error",
  "solana-define-syscall",
