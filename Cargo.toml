@@ -422,7 +422,7 @@ solana-program-memory = { path = "sdk/program-memory", version = "=2.1.0" }
 solana-program-option = { path = "sdk/program-option", version = "=2.1.0" }
 solana-program-runtime = { path = "program-runtime", version = "=2.1.0" }
 solana-program-test = { path = "program-test", version = "=2.1.0" }
-solana-pubkey = { path = "sdk/pubkey", version = "=2.1.0" }
+solana-pubkey = { path = "sdk/pubkey", version = "=2.1.0", default-features = false }
 solana-pubsub-client = { path = "pubsub-client", version = "=2.1.0" }
 solana-quic-client = { path = "quic-client", version = "=2.1.0" }
 solana-rayon-threadlimit = { path = "rayon-threadlimit", version = "=2.1.0" }
