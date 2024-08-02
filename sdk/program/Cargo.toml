@@ -37,6 +37,7 @@ solana-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi
 solana-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
 solana-hash = { workspace = true, features = ["bytemuck", "serde", "std"] }
 solana-hasher = { workspace = true, features = ["sha2"] }
+solana-instruction = { workspace = true }
 solana-msg = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-pubkey = { workspace = true, features = ["bytemuck", "curve25519", "serde", "std"] }
@@ -100,13 +101,20 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 default = ["borsh"]
-borsh = ["dep:borsh", "dep:borsh0-10", "solana-hash/borsh", "solana-pubkey/borsh"]
+borsh = [
+    "dep:borsh",
+    "dep:borsh0-10",
+    "solana-hash/borsh",
+    "solana-instruction/borsh",
+    "solana-pubkey/borsh"
+]
 dev-context-only-utils = ["dep:qualifier_attr"]
 frozen-abi = [
     "dep:rustc_version",
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
     "solana-hash/frozen-abi",
+    "solana-instruction/frozen-abi",
     "solana-pubkey/frozen-abi",
     "solana-short-vec/frozen-abi"
 ]
