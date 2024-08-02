@@ -39,6 +39,7 @@ solana-hash = { workspace = true, features = ["bytemuck", "serde", "std"] }
 solana-hasher = { workspace = true, features = ["sha2"] }
 solana-instruction = { workspace = true, default-features = false, features = ["bincode", "serde"] }
 solana-msg = { workspace = true }
+solana-program-error = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-pubkey = { workspace = true, features = ["bytemuck", "curve25519", "serde", "std"] }
 solana-sanitize = { workspace = true }
@@ -105,6 +106,7 @@ borsh = [
     "dep:borsh0-10",
     "solana-hash/borsh",
     "solana-instruction/borsh",
+    "solana-program-error/borsh",
     "solana-pubkey/borsh"
 ]
 dev-context-only-utils = ["dep:qualifier_attr"]
