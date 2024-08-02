@@ -3,9 +3,10 @@
 #![allow(clippy::arithmetic_side_effects)]
 #[cfg(feature = "borsh")]
 use borsh::io::Error as BorshIoError;
+#[cfg(feature = "serde")]
+use serde_derive::{Deserialize, Serialize};
 use {
     num_traits::FromPrimitive,
-    serde_derive::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
     solana_instruction::error::{
         InstructionError, ACCOUNT_ALREADY_INITIALIZED, ACCOUNT_BORROW_FAILED,
@@ -25,7 +26,8 @@ use {
 };
 
 /// Reasons the program may fail
-#[derive(Clone, Debug, Deserialize, Eq, Error, PartialEq, Serialize)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Clone, Debug, Eq, Error, PartialEq)]
 pub enum ProgramError {
     /// Allows on-chain programs to implement program-specific error types and see them returned
     /// by the Solana runtime. A program-specific error may be any type that is represented as
