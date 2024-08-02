@@ -5542,7 +5542,6 @@ dependencies = [
  "solana-instruction",
  "solana-msg",
  "solana-pubkey",
- "thiserror",
 ]
 
 [[package]]
