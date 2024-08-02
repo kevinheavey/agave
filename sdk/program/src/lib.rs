@@ -469,7 +469,6 @@
 // Allows macro expansion of `use ::solana_program::*` to work within this crate
 extern crate self as solana_program;
 
-pub mod account_info;
 pub mod address_lookup_table;
 pub mod big_mod_exp;
 pub mod blake3;
@@ -484,7 +483,6 @@ pub mod bpf_loader_deprecated;
 pub mod bpf_loader_upgradeable;
 pub mod clock;
 pub mod compute_units;
-pub mod debug_account_data;
 pub mod ed25519_program;
 pub mod entrypoint;
 pub mod entrypoint_deprecated;
@@ -539,7 +537,11 @@ pub use solana_secp256k1_recover as secp256k1_recover;
 pub use solana_short_vec as short_vec;
 #[cfg(target_arch = "wasm32")]
 pub use wasm_bindgen::prelude::wasm_bindgen;
-pub use {solana_msg::msg, solana_pubkey as pubkey};
+pub use {
+    solana_account_info::{self as account_info, debug_account_data},
+    solana_msg::msg,
+    solana_pubkey as pubkey,
+};
 
 /// The [config native program][np].
 ///
