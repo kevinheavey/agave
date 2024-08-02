@@ -1,11 +1,8 @@
-#[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
-use {
-    core::fmt,
-    num_traits::ToPrimitive,
-};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+#[cfg(feature = "frozen-abi")]
+use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
+use {core::fmt, num_traits::ToPrimitive};
 
 /// Builtin return values occupy the upper 32 bits
 const BUILTIN_BIT_SHIFT: usize = 32;
