@@ -15,14 +15,13 @@
 
 #[cfg(feature = "borsh")]
 use borsh::BorshSerialize;
-#[cfg(feature = "serde")]
-use {serde_derive::{Deserialize, Serialize}, solana_short_vec as short_vec};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
+use {crate::error::InstructionError, solana_pubkey::Pubkey, solana_sanitize::Sanitize};
+#[cfg(feature = "serde")]
 use {
-    crate::error::InstructionError,
-    solana_pubkey::Pubkey,
-    solana_sanitize::Sanitize,
+    serde_derive::{Deserialize, Serialize},
+    solana_short_vec as short_vec,
 };
 pub mod error;
 #[cfg(not(target_os = "solana"))]
@@ -239,7 +238,7 @@ impl Instruction {
     /// ```
     /// # use solana_pubkey::Pubkey;
     /// # use solana_instruction::{AccountMeta, Instruction};
-    /// # 
+    /// #
     /// # use borsh::{io::Error, BorshSerialize, BorshDeserialize};
     /// #
     /// #[derive(BorshSerialize, BorshDeserialize)]
@@ -392,7 +391,11 @@ impl AccountMeta {
 ///
 /// [`Message`]: crate::message::Message
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize), serde(rename_all = "camelCase"))]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize, Deserialize),
+    serde(rename_all = "camelCase")
+)]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct CompiledInstruction {
     /// Index into the transaction keys array indicating the program account that executes this instruction.
