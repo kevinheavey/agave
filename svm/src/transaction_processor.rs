@@ -21,10 +21,7 @@ use {
     log::debug,
     percentage::Percentage,
     solana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
-    solana_compute_budget::{
-        compute_budget::ComputeBudget,
-        compute_budget_processor::process_compute_budget_instructions,
-    },
+    solana_compute_budget::compute_budget::ComputeBudget,
     solana_feature_set::{remove_rounding_in_fee_calculation, FeatureSet},
     solana_loader_v4_program::create_program_runtime_environment_v2,
     solana_log_collector::LogCollector,
