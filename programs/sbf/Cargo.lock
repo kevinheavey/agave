@@ -5213,6 +5213,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-instruction"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "borsh 1.5.1",
+ "getrandom 0.2.10",
+ "js-sys",
+ "num-traits",
+ "rustc_version",
+ "serde",
+ "serde_derive",
+ "solana-define-syscall",
+ "solana-pubkey",
+ "solana-sanitize",
+ "solana-short-vec",
+ "thiserror",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "solana-lattice-hash"
 version = "2.1.0"
 dependencies = [
@@ -5468,6 +5488,7 @@ dependencies = [
  "solana-decode-error",
  "solana-define-syscall",
  "solana-hash",
+ "solana-instruction",
  "solana-msg",
  "solana-program-memory",
  "solana-program-option",
