@@ -5228,7 +5228,6 @@ dependencies = [
  "solana-pubkey",
  "solana-sanitize",
  "solana-short-vec",
- "thiserror",
  "wasm-bindgen",
 ]
 
