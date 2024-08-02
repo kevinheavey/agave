@@ -1,12 +1,9 @@
 //! Account information.
 
 use {
-    crate::{
-        debug_account_data::*, entrypoint::MAX_PERMITTED_DATA_INCREASE,
-        program_error::ProgramError, pubkey::Pubkey,
-    },
-    solana_clock::Epoch,
+    solana_program_error::ProgramError,
     solana_program_memory::sol_memset,
+    solana_pubkey::Pubkey,
     std::{
         cell::{Ref, RefCell, RefMut},
         fmt,
@@ -14,6 +11,15 @@ use {
         slice::from_raw_parts_mut,
     },
 };
+pub mod debug_account_data;
+
+// inline from solana_program::entrypoint
+const MAX_PERMITTED_DATA_INCREASE: usize = 1_024 * 10;
+#[cfg(test)]
+static_assertions::const_assert_eq!(
+    MAX_PERMITTED_DATA_INCREASE,
+    solana_program::entrypoint::MAX_PERMITTED_DATA_INCREASE
+);
 
 /// Account information
 #[derive(Clone)]
@@ -28,7 +34,7 @@ pub struct AccountInfo<'a> {
     /// Program that owns this account
     pub owner: &'a Pubkey,
     /// The epoch at which this account will next owe rent
-    pub rent_epoch: Epoch,
+    pub rent_epoch: u64,
     /// Was the transaction signed by this account's public key?
     pub is_signer: bool,
     /// Is the account writable?
@@ -49,7 +55,7 @@ impl<'a> fmt::Debug for AccountInfo<'a> {
             .field("rent_epoch", &self.rent_epoch)
             .field("lamports", &self.lamports())
             .field("data.len", &self.data_len());
-        debug_account_data(&self.data.borrow(), &mut f);
+        debug_account_data::debug_account_data(&self.data.borrow(), &mut f);
 
         f.finish_non_exhaustive()
     }
@@ -203,7 +209,7 @@ impl<'a> AccountInfo<'a> {
         data: &'a mut [u8],
         owner: &'a Pubkey,
         executable: bool,
-        rent_epoch: Epoch,
+        rent_epoch: u64,
     ) -> Self {
         Self {
             key,
@@ -242,7 +248,7 @@ impl<'a, T: IntoAccountInfo<'a>> From<T> for AccountInfo<'a> {
 /// Provides information required to construct an `AccountInfo`, used in
 /// conversion implementations.
 pub trait Account {
-    fn get(&mut self) -> (&mut u64, &mut [u8], &Pubkey, bool, Epoch);
+    fn get(&mut self) -> (&mut u64, &mut [u8], &Pubkey, bool, u64);
 }
 
 /// Convert (&'a Pubkey, &'a mut T) where T: Account into an `AccountInfo`
@@ -398,7 +404,10 @@ impl<'a> AsRef<AccountInfo<'a>> for AccountInfo<'a> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::debug_account_data::{Hex, MAX_DEBUG_ACCOUNT_DATA},
+    };
 
     #[test]
     fn test_next_account_infos() {
