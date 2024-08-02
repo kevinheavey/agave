@@ -134,10 +134,8 @@ impl Instruction {
     /// # Examples
     ///
     /// ```
-    /// # use solana_program::{
-    /// #     pubkey::Pubkey,
-    /// #     instruction::{AccountMeta, Instruction},
-    /// # };
+    /// # use solana_pubkey::Pubkey;
+    /// # use solana_instruction::{AccountMeta, Instruction};
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
     /// #[derive(BorshSerialize, BorshDeserialize)]
@@ -188,10 +186,8 @@ impl Instruction {
     /// # Examples
     ///
     /// ```
-    /// # use solana_program::{
-    /// #     pubkey::Pubkey,
-    /// #     instruction::{AccountMeta, Instruction},
-    /// # };
+    /// # use solana_pubkey::Pubkey;
+    /// # use solana_instruction::{AccountMeta, Instruction};
     /// # use serde::{Serialize, Deserialize};
     /// #
     /// #[derive(Serialize, Deserialize)]
@@ -241,10 +237,9 @@ impl Instruction {
     /// # Examples
     ///
     /// ```
-    /// # use solana_program::{
-    /// #     pubkey::Pubkey,
-    /// #     instruction::{AccountMeta, Instruction},
-    /// # };
+    /// # use solana_pubkey::Pubkey;
+    /// # use solana_instruction::{AccountMeta, Instruction};
+    /// # 
     /// # use borsh::{io::Error, BorshSerialize, BorshDeserialize};
     /// #
     /// #[derive(BorshSerialize, BorshDeserialize)]
@@ -323,10 +318,8 @@ impl AccountMeta {
     /// # Examples
     ///
     /// ```
-    /// # use solana_program::{
-    /// #     pubkey::Pubkey,
-    /// #     instruction::{AccountMeta, Instruction},
-    /// # };
+    /// # use solana_pubkey::Pubkey;
+    /// # use solana_instruction::{AccountMeta, Instruction};
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
     /// # #[derive(BorshSerialize, BorshDeserialize)]
@@ -359,10 +352,8 @@ impl AccountMeta {
     /// # Examples
     ///
     /// ```
-    /// # use solana_program::{
-    /// #     pubkey::Pubkey,
-    /// #     instruction::{AccountMeta, Instruction},
-    /// # };
+    /// # use solana_pubkey::Pubkey;
+    /// # use solana_instruction::{AccountMeta, Instruction};
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
     /// # #[derive(BorshSerialize, BorshDeserialize)]

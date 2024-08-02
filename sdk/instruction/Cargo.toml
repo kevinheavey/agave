@@ -31,12 +31,16 @@ getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
 js-sys = { workspace = true }
 wasm-bindgen = { workspace = true }
 
+[dev-dependencies]
+solana-instruction = { path = ".", features = ["borsh", "dev-context-only-utils"] }
+
 [build-dependencies]
 rustc_version = { workspace = true }
 
 [features]
 bincode = ["dep:bincode", "dep:serde"]
 borsh = ["dep:borsh"]
+dev-context-only-utils = [] # unused but CI fails without this.
 frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 serde = ["dep:serde", "dep:serde_derive", "dep:solana-short-vec"]
 
