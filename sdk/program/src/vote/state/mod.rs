@@ -19,13 +19,13 @@ use {
     },
     bincode::{serialize_into, ErrorKind},
     serde_derive::{Deserialize, Serialize},
+    solana_clock::{Epoch, Slot, UnixTimestamp},
     std::{
         collections::VecDeque,
         fmt::Debug,
         io::Cursor,
         mem::{self, MaybeUninit},
     },
-    solana_clock::{Epoch, Slot, UnixTimestamp},
 };
 
 mod vote_state_0_23_5;
