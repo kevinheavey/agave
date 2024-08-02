@@ -22,7 +22,6 @@ solana-pubkey = { workspace = true, default-features = false, features = [
 ] }
 solana-sanitize = { workspace = true }
 solana-short-vec = { workspace = true }
-thiserror = { workspace = true }
 
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-define-syscall = { workspace = true }
