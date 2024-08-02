@@ -7,15 +7,16 @@
 extern crate std;
 #[cfg(any(test, feature = "dev-context-only-utils"))]
 use arbitrary::Arbitrary;
-#[cfg(feature = "borsh")]
-use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(any(feature = "borsh", all(feature = "std", not(target_os = "solana"))))]
-use std::string::ToString;
-#[cfg(feature = "std")]
+#[cfg(feature = "borsh")]
+use {
+    borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
+    std::string::ToString,
+};
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 use {core::str::FromStr, std::vec::Vec};
 use {
     core::{
@@ -39,7 +40,7 @@ pub const PUBKEY_BYTES: usize = 32;
 pub const MAX_SEED_LEN: usize = 32;
 /// Maximum number of seeds
 pub const MAX_SEEDS: usize = 16;
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 /// Maximum string length of a base58 encoded pubkey
 const MAX_BASE58_LEN: usize = 44;
 
@@ -219,8 +220,8 @@ impl<T> DecodeError<T> for ParsePubkeyError {
     }
 }
 
-#[cfg(feature = "std")]
-impl core::str::FromStr for Pubkey {
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
+impl FromStr for Pubkey {
     type Err = ParsePubkeyError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -254,7 +255,7 @@ impl TryFrom<&[u8]> for Pubkey {
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 impl TryFrom<Vec<u8>> for Pubkey {
     type Error = Vec<u8>;
 
@@ -772,7 +773,7 @@ impl Pubkey {
         };
 
         #[cfg(all(not(target_os = "solana"), feature = "std"))]
-        std::println!("{}", &self.to_string());
+        std::println!("{}", std::string::ToString::to_string(&self));
     }
 }
 
@@ -883,7 +884,7 @@ fn js_value_to_seeds_vec(array_of_uint8_arrays: &[JsValue]) -> Result<Vec<Vec<u8
 
 #[cfg(target_arch = "wasm32")]
 fn display_to_jsvalue<T: std::fmt::Display>(display: T) -> JsValue {
-    display.to_string().into()
+    std::string::ToString::to_string(&display).into()
 }
 
 #[allow(non_snake_case)]
@@ -925,7 +926,7 @@ impl Pubkey {
 
     /// Return the base58 string representation of the public key
     pub fn toString(&self) -> std::string::String {
-        self.to_string()
+        std::string::ToString::to_string(self)
     }
 
     /// Check if a `Pubkey` is on the ed25519 curve.
