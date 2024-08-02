@@ -103,8 +103,8 @@ pub trait SyscallStubs: Sync + Send {
                 .join(" ")
         );
     }
-    fn sol_get_processed_sibling_instruction(&self, _index: usize) -> Option<Instruction> {
-        instruction_stubs::sol_get_processed_sibling_instruction(_index)
+    fn sol_get_processed_sibling_instruction(&self, index: usize) -> Option<Instruction> {
+        instruction_stubs::sol_get_processed_sibling_instruction(index)
     }
     fn sol_get_stack_height(&self) -> u64 {
         instruction_stubs::sol_get_stack_height()
