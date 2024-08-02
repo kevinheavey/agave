@@ -19,7 +19,6 @@ use borsh::BorshSerialize;
 use wasm_bindgen::prelude::wasm_bindgen;
 use {
     crate::error::InstructionError,
-    bincode::serialize,
     serde_derive::{Deserialize, Serialize},
     solana_pubkey::Pubkey,
     solana_sanitize::Sanitize,
@@ -177,6 +176,7 @@ impl Instruction {
         }
     }
 
+    #[cfg(feature = "bincode")]
     /// Create a new instruction from a value, encoded with [`bincode`].
     ///
     /// [`bincode`]: https://docs.rs/bincode/latest/bincode/
@@ -221,7 +221,7 @@ impl Instruction {
         data: &T,
         accounts: Vec<AccountMeta>,
     ) -> Self {
-        let data = serialize(data).unwrap();
+        let data = bincode::serialize(data).unwrap();
         Self {
             program_id,
             accounts,
@@ -415,8 +415,9 @@ pub struct CompiledInstruction {
 impl Sanitize for CompiledInstruction {}
 
 impl CompiledInstruction {
+    #[cfg(feature = "bincode")]
     pub fn new<T: serde::Serialize>(program_ids_index: u8, data: &T, accounts: Vec<u8>) -> Self {
-        let data = serialize(data).unwrap();
+        let data = bincode::serialize(data).unwrap();
         Self {
             program_id_index: program_ids_index,
             accounts,
