@@ -29,7 +29,7 @@ serde = { workspace = true, optional = true }
 serde_bytes = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
 sha2 = { workspace = true, optional = true }
-sha3 = { workspace = true }
+sha3 = { workspace = true, optional = true }
 solana-atomic-u64 = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true }
@@ -99,7 +99,8 @@ dev-context-only-utils = [
     "bytemuck",
     "curve25519",
     "serde",
-    "sha2"
+    "sha2",
+    "sha3"
 ]
 frozen-abi = [
     "dep:solana-frozen-abi",
@@ -114,3 +115,4 @@ serde = [
     "bv/serde"
 ]
 sha2 = ["dep:sha2"]
+sha3 = ["dep:sha3"]

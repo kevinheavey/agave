@@ -4,8 +4,9 @@
 
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+#[cfg(feature = "sha3")]
+use sha3::{Digest, Keccak256};
 use {
-    sha3::{Digest, Keccak256},
     solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
     thiserror::Error,
@@ -25,11 +26,13 @@ const MAX_BASE58_LEN: usize = 44;
 #[repr(transparent)]
 pub struct Hash(pub [u8; HASH_BYTES]);
 
+#[cfg(feature = "sha3")]
 #[derive(Clone, Default)]
 pub struct Hasher {
     hasher: Keccak256,
 }
 
+#[cfg(feature = "sha3")]
 impl Hasher {
     pub fn hash(&mut self, val: &[u8]) {
         self.hasher.update(val);
@@ -115,6 +118,7 @@ impl Hash {
     }
 }
 
+#[cfg(feature = "sha3")]
 /// Return a Keccak256 hash for the given data.
 pub fn hashv(vals: &[&[u8]]) -> Hash {
     // Perform the calculation inline, calling this from within a program is
@@ -140,11 +144,13 @@ pub fn hashv(vals: &[&[u8]]) -> Hash {
     }
 }
 
+#[cfg(feature = "sha3")]
 /// Return a Keccak256 hash for the given data.
 pub fn hash(val: &[u8]) -> Hash {
     hashv(&[val])
 }
 
+#[cfg(feature = "sha3")]
 /// Return the hash of the given hash extended with the given value.
 pub fn extend_and_hash(id: &Hash, val: &[u8]) -> Hash {
     let mut hash_data = id.as_ref().to_vec();
