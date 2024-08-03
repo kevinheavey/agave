@@ -11,7 +11,6 @@ use bytemuck_derive::{Pod, Zeroable};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
 use {
-    num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     std::{
         convert::{Infallible, TryFrom},
@@ -34,7 +33,7 @@ const MAX_BASE58_LEN: usize = 44;
 const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Error, Debug, Clone, PartialEq, Eq)]
 pub enum PubkeyError {
     /// Length of the seed is too long for address generation
     #[error("Length of the seed is too long for address generation")]
@@ -44,6 +43,41 @@ pub enum PubkeyError {
     #[error("Provided owner is not allowed")]
     IllegalOwner,
 }
+
+impl num_traits::FromPrimitive for PubkeyError {
+    #[inline]
+    fn from_i64(n: i64) -> Option<Self> {
+        if n == PubkeyError::MaxSeedLengthExceeded as i64 {
+            Some(PubkeyError::MaxSeedLengthExceeded)
+        } else if n == PubkeyError::InvalidSeeds as i64 {
+            Some(PubkeyError::InvalidSeeds)
+        } else if n == PubkeyError::IllegalOwner as i64 {
+            Some(PubkeyError::IllegalOwner)
+        } else {
+            None
+        }
+    }
+    #[inline]
+    fn from_u64(n: u64) -> Option<Self> {
+        Self::from_i64(n as i64)
+    }
+}
+
+impl num_traits::ToPrimitive for PubkeyError {
+    #[inline]
+    fn to_i64(&self) -> Option<i64> {
+        Some(match *self {
+            PubkeyError::MaxSeedLengthExceeded => PubkeyError::MaxSeedLengthExceeded as i64,
+            PubkeyError::InvalidSeeds => PubkeyError::InvalidSeeds as i64,
+            PubkeyError::IllegalOwner => PubkeyError::IllegalOwner as i64,
+        })
+    }
+    #[inline]
+    fn to_u64(&self) -> Option<u64> {
+        self.to_i64().map(|x| x as u64)
+    }
+}
+
 impl<T> DecodeError<T> for PubkeyError {
     fn type_of() -> &'static str {
         "PubkeyError"
@@ -90,12 +124,43 @@ pub struct Pubkey(pub(crate) [u8; 32]);
 impl solana_sanitize::Sanitize for Pubkey {}
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Error, Debug, Clone, PartialEq, Eq)]
 pub enum ParsePubkeyError {
     #[error("String is the wrong size")]
     WrongSize,
     #[error("Invalid Base58 string")]
     Invalid,
+}
+
+impl num_traits::FromPrimitive for ParsePubkeyError {
+    #[inline]
+    fn from_i64(n: i64) -> Option<Self> {
+        if n == ParsePubkeyError::WrongSize as i64 {
+            Some(ParsePubkeyError::WrongSize)
+        } else if n == ParsePubkeyError::Invalid as i64 {
+            Some(ParsePubkeyError::Invalid)
+        } else {
+            None
+        }
+    }
+    #[inline]
+    fn from_u64(n: u64) -> Option<Self> {
+        Self::from_i64(n as i64)
+    }
+}
+
+impl num_traits::ToPrimitive for ParsePubkeyError {
+    #[inline]
+    fn to_i64(&self) -> Option<i64> {
+        Some(match *self {
+            ParsePubkeyError::WrongSize => ParsePubkeyError::WrongSize as i64,
+            ParsePubkeyError::Invalid => ParsePubkeyError::Invalid as i64,
+        })
+    }
+    #[inline]
+    fn to_u64(&self) -> Option<u64> {
+        self.to_i64().map(|x| x as u64)
+    }
 }
 
 impl From<Infallible> for ParsePubkeyError {

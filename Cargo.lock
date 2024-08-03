@@ -6941,7 +6941,6 @@ dependencies = [
  "lazy_static",
  "log",
  "memoffset 0.9.1",
- "num-derive",
  "num-traits",
  "qualifier_attr",
  "rand 0.8.5",

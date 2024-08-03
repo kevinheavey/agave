@@ -46,15 +46,10 @@ use crate::{
     sysvar::{recent_blockhashes, rent},
 };
 #[allow(deprecated)]
-use {
-    crate::pubkey::Pubkey,
-    num_derive::{FromPrimitive, ToPrimitive},
-    solana_decode_error::DecodeError,
-    thiserror::Error,
-};
+use {crate::pubkey::Pubkey, solana_decode_error::DecodeError, thiserror::Error};
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Error, Debug, Clone, PartialEq, Eq)]
 pub enum SystemError {
     #[error("an account with the same address already exists")]
     AccountAlreadyInUse,
@@ -74,6 +69,62 @@ pub enum SystemError {
     NonceBlockhashNotExpired,
     #[error("specified nonce does not match stored nonce")]
     NonceUnexpectedBlockhashValue,
+}
+
+impl num_traits::FromPrimitive for SystemError {
+    #[inline]
+    fn from_i64(n: i64) -> Option<Self> {
+        if n == SystemError::AccountAlreadyInUse as i64 {
+            Some(SystemError::AccountAlreadyInUse)
+        } else if n == SystemError::ResultWithNegativeLamports as i64 {
+            Some(SystemError::ResultWithNegativeLamports)
+        } else if n == SystemError::InvalidProgramId as i64 {
+            Some(SystemError::InvalidProgramId)
+        } else if n == SystemError::InvalidAccountDataLength as i64 {
+            Some(SystemError::InvalidAccountDataLength)
+        } else if n == SystemError::MaxSeedLengthExceeded as i64 {
+            Some(SystemError::MaxSeedLengthExceeded)
+        } else if n == SystemError::AddressWithSeedMismatch as i64 {
+            Some(SystemError::AddressWithSeedMismatch)
+        } else if n == SystemError::NonceNoRecentBlockhashes as i64 {
+            Some(SystemError::NonceNoRecentBlockhashes)
+        } else if n == SystemError::NonceBlockhashNotExpired as i64 {
+            Some(SystemError::NonceBlockhashNotExpired)
+        } else if n == SystemError::NonceUnexpectedBlockhashValue as i64 {
+            Some(SystemError::NonceUnexpectedBlockhashValue)
+        } else {
+            None
+        }
+    }
+    #[inline]
+    fn from_u64(n: u64) -> Option<Self> {
+        Self::from_i64(n as i64)
+    }
+}
+
+impl num_traits::ToPrimitive for SystemError {
+    #[inline]
+    fn to_i64(&self) -> Option<i64> {
+        Some(match *self {
+            SystemError::AccountAlreadyInUse => SystemError::AccountAlreadyInUse as i64,
+            SystemError::ResultWithNegativeLamports => {
+                SystemError::ResultWithNegativeLamports as i64
+            }
+            SystemError::InvalidProgramId => SystemError::InvalidProgramId as i64,
+            SystemError::InvalidAccountDataLength => SystemError::InvalidAccountDataLength as i64,
+            SystemError::MaxSeedLengthExceeded => SystemError::MaxSeedLengthExceeded as i64,
+            SystemError::AddressWithSeedMismatch => SystemError::AddressWithSeedMismatch as i64,
+            SystemError::NonceNoRecentBlockhashes => SystemError::NonceNoRecentBlockhashes as i64,
+            SystemError::NonceBlockhashNotExpired => SystemError::NonceBlockhashNotExpired as i64,
+            SystemError::NonceUnexpectedBlockhashValue => {
+                SystemError::NonceUnexpectedBlockhashValue as i64
+            }
+        })
+    }
+    #[inline]
+    fn to_u64(&self) -> Option<u64> {
+        self.to_i64().map(|x| x as u64)
+    }
 }
 
 impl<T> DecodeError<T> for SystemError {
