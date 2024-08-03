@@ -115,7 +115,7 @@ impl fmt::Display for SanitizeMessageError {
 impl ::core::convert::From<AddressLoaderError> for SanitizeMessageError {
     #[allow(deprecated)]
     fn from(source: AddressLoaderError) -> Self {
-        SanitizeMessageError::AddressLoaderError { 0: source }
+        SanitizeMessageError::AddressLoaderError(source)
     }
 }
 

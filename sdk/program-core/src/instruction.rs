@@ -291,8 +291,8 @@ impl fmt::Display for InstructionError {
             InstructionError::DuplicateAccountOutOfSync => {
                 f.write_str("instruction modifications of multiply-passed account differ")
             }
-            InstructionError::Custom(_0) => {
-                write!(f, "custom program error: {field__0:#x}", field__0 = _0)
+            InstructionError::Custom(num) => {
+                write!(f, "custom program error: {num:#x}")
             }
             InstructionError::InvalidError => f.write_str("program returned invalid error code"),
             InstructionError::ExecutableDataModified => {
