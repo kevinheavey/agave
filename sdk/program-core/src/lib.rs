@@ -38,6 +38,7 @@ pub mod rent;
 pub mod secp256k1_program;
 pub mod serialize_utils;
 pub mod slot_hashes;
+#[cfg(feature = "bv")]
 pub mod slot_history;
 pub mod stable_layout;
 pub mod stake_history;

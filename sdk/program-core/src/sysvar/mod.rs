@@ -84,6 +84,7 @@
 use crate::pubkey::Pubkey;
 #[cfg(feature = "bincode")]
 use crate::{account_info::AccountInfo, program_error::ProgramError};
+#[cfg(feature = "bv")]
 #[allow(deprecated)]
 pub use sysvar_ids::ALL_IDS;
 
@@ -97,9 +98,11 @@ pub mod recent_blockhashes;
 pub mod rent;
 pub mod rewards;
 pub mod slot_hashes;
+#[cfg(feature = "bv")]
 pub mod slot_history;
 pub mod stake_history;
 
+#[cfg(feature = "bv")]
 #[deprecated(
     since = "2.0.0",
     note = "please use `solana_sdk::reserved_account_keys::ReservedAccountKeys` instead"
@@ -131,6 +134,7 @@ mod sysvar_ids {
     note = "please check the account's owner or use solana_sdk::reserved_account_keys::ReservedAccountKeys instead"
 )]
 #[allow(deprecated)]
+#[cfg(feature = "bv")]
 pub fn is_sysvar_id(id: &Pubkey) -> bool {
     ALL_IDS.iter().any(|key| key == id)
 }

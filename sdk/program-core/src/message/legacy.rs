@@ -14,20 +14,25 @@
 #[cfg(feature = "bincode")]
 use crate::system_instruction;
 #[allow(deprecated)]
+#[cfg(feature = "bv")]
 pub use builtins::{BUILTIN_PROGRAMS_KEYS, MAYBE_BUILTIN_KEY_OR_SYSVAR};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
+#[cfg(feature = "bv")]
+use {
+    crate::{bpf_loader, bpf_loader_deprecated, system_program, sysvar},
+    std::str::FromStr,
+};
 use {
     crate::{
-        bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
+        bpf_loader_upgradeable,
         hash::Hash,
         instruction::{CompiledInstruction, Instruction},
         message::{compiled_keys::CompiledKeys, MessageHeader},
         pubkey::Pubkey,
-        system_program, sysvar,
     },
     solana_sanitize::{Sanitize, SanitizeError},
-    std::{collections::HashSet, convert::TryFrom, str::FromStr},
+    std::{collections::HashSet, convert::TryFrom},
 };
 #[cfg(feature = "serde")]
 use {
@@ -35,6 +40,7 @@ use {
     solana_short_vec as short_vec,
 };
 
+#[cfg(feature = "bv")]
 #[deprecated(
     since = "2.0.0",
     note = "please use `solana_sdk::reserved_account_keys::ReservedAccountKeys` instead"
@@ -81,6 +87,7 @@ mod builtins {
     note = "please use `solana_sdk::reserved_account_keys::ReservedAccountKeys::is_reserved` instead"
 )]
 #[allow(deprecated)]
+#[cfg(feature = "bv")]
 pub fn is_builtin_key_or_sysvar(key: &Pubkey) -> bool {
     if MAYBE_BUILTIN_KEY_OR_SYSVAR[key.0[0] as usize] {
         return sysvar::is_sysvar_id(key) || BUILTIN_PROGRAMS_KEYS.contains(key);
@@ -637,6 +644,7 @@ impl Message {
     /// runtime.
     #[deprecated(since = "2.0.0", note = "Please use `is_maybe_writable` instead")]
     #[allow(deprecated)]
+    #[cfg(feature = "bv")]
     pub fn is_writable(&self, i: usize) -> bool {
         (self.is_writable_index(i))
             && !is_builtin_key_or_sysvar(&self.account_keys[i])
