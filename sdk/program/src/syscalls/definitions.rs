@@ -23,10 +23,7 @@ pub use solana_secp256k1_recover::sol_secp256k1_recover;
 #[deprecated(since = "2.1.0", note = "Use solana_sha256_hasher::sol_sha256 instead")]
 pub use solana_sha256_hasher::sol_sha256;
 use {
-    crate::{
-        instruction::{AccountMeta, ProcessedSiblingInstruction},
-        pubkey::Pubkey,
-    },
+    crate::pubkey::Pubkey,
     solana_define_syscall::define_syscall,
 };
 define_syscall!(fn sol_log_64_(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64));
