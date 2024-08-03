@@ -301,10 +301,10 @@ impl<'a, T: Account> IntoAccountInfo<'a> for &'a mut (Pubkey, T) {
 /// # Examples
 ///
 /// ```
-/// use solana_program::entrypoint::ProgramResult;
+/// use solana_program_error::ProgramResult;
 /// use solana_account_info::{AccountInfo, next_account_info};
 /// use solana_pubkey::Pubkey;
-/// # use solana_program::program_error::ProgramError;
+/// # use solana_program_error::ProgramError;
 ///
 /// pub fn process_instruction(
 ///     program_id: &Pubkey,
@@ -350,10 +350,10 @@ pub fn next_account_info<'a, 'b, I: Iterator<Item = &'a AccountInfo<'b>>>(
 /// # Examples
 ///
 /// ```
-/// use solana_program::entrypoint::ProgramResult;
+/// use solana_program_error::ProgramResult;
 /// use solana_account_info::{AccountInfo, next_account_info, next_account_infos};
 /// use solana_pubkey::Pubkey;
-/// # use solana_program::program_error::ProgramError;
+/// # use solana_program_error::ProgramError;
 ///
 /// pub fn process_instruction(
 ///     program_id: &Pubkey,
