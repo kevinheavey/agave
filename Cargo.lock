@@ -6961,6 +6961,7 @@ dependencies = [
  "solana-frozen-abi-macro",
  "solana-logger",
  "solana-msg",
+ "solana-program-core",
  "solana-program-memory",
  "solana-sanitize",
  "solana-sdk-macro",
