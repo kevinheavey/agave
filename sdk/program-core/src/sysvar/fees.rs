@@ -22,7 +22,7 @@
 
 #[cfg(feature = "bincode")]
 use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
-use {crate::fee_calculator::FeeCalculator, solana_sdk_macro::CloneZeroed};
+use crate::fee_calculator::FeeCalculator;
 
 crate::declare_deprecated_sysvar_id!("SysvarFees111111111111111111111111111111111", Fees);
 
@@ -33,9 +33,24 @@ crate::declare_deprecated_sysvar_id!("SysvarFees11111111111111111111111111111111
 )]
 #[repr(C)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(Debug, CloneZeroed, Default, PartialEq, Eq)]
+#[derive(Debug, Default, PartialEq, Eq)]
 pub struct Fees {
     pub fee_calculator: FeeCalculator,
+}
+
+// Recursive expansion of CloneZeroed macro
+// =========================================
+
+impl Clone for Fees {
+    fn clone(&self) -> Self {
+        let mut value = std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            std::ptr::write_bytes(&mut value, 0, 1);
+            let ptr = value.as_mut_ptr();
+            std::ptr::addr_of_mut!((*ptr).fee_calculator).write(self.fee_calculator);
+            value.assume_init()
+        }
+    }
 }
 
 impl Fees {

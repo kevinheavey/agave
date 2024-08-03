@@ -4,13 +4,13 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
-use {crate::clock::DEFAULT_SLOTS_PER_EPOCH, solana_sdk_macro::CloneZeroed};
+use crate::clock::DEFAULT_SLOTS_PER_EPOCH;
 
 /// Configuration of network rent.
 #[repr(C)]
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(PartialEq, CloneZeroed, Debug)]
+#[derive(PartialEq, Debug)]
 pub struct Rent {
     /// Rental rate in lamports/byte-year.
     pub lamports_per_byte_year: u64,
@@ -24,6 +24,24 @@ pub struct Rent {
     /// Valid values are in the range [0, 100]. The remaining percentage is
     /// distributed to validators.
     pub burn_percent: u8,
+}
+
+// Recursive expansion of CloneZeroed macro
+// =========================================
+
+impl Clone for Rent {
+    fn clone(&self) -> Self {
+        let mut value = std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            std::ptr::write_bytes(&mut value, 0, 1);
+            let ptr = value.as_mut_ptr();
+            std::ptr::addr_of_mut!((*ptr).lamports_per_byte_year)
+                .write(self.lamports_per_byte_year);
+            std::ptr::addr_of_mut!((*ptr).exemption_threshold).write(self.exemption_threshold);
+            std::ptr::addr_of_mut!((*ptr).burn_percent).write(self.burn_percent);
+            value.assume_init()
+        }
+    }
 }
 
 /// Default rental rate in lamports/byte-year.

@@ -12,7 +12,6 @@
 //! epochs increasing in slots until they last for [`DEFAULT_SLOTS_PER_EPOCH`].
 
 pub use crate::clock::{Epoch, Slot, DEFAULT_SLOTS_PER_EPOCH};
-use solana_sdk_macro::CloneZeroed;
 
 /// The default number of slots before an epoch starts to calculate the leader schedule.
 pub const DEFAULT_LEADER_SCHEDULE_SLOT_OFFSET: u64 = DEFAULT_SLOTS_PER_EPOCH;
@@ -35,7 +34,7 @@ pub const MINIMUM_SLOTS_PER_EPOCH: u64 = 32;
     derive(Serialize, Deserialize),
     serde(rename_all = "camelCase")
 )]
-#[derive(Debug, CloneZeroed, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct EpochSchedule {
     /// The maximum number of slots in each epoch.
     pub slots_per_epoch: u64,
@@ -56,6 +55,26 @@ pub struct EpochSchedule {
     ///
     /// Basically: `MINIMUM_SLOTS_PER_EPOCH * (2.pow(first_normal_epoch) - 1)`.
     pub first_normal_slot: Slot,
+}
+
+// Recursive expansion of CloneZeroed macro
+// =========================================
+
+impl Clone for EpochSchedule {
+    fn clone(&self) -> Self {
+        let mut value = std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            std::ptr::write_bytes(&mut value, 0, 1);
+            let ptr = value.as_mut_ptr();
+            std::ptr::addr_of_mut!((*ptr).slots_per_epoch).write(self.slots_per_epoch);
+            std::ptr::addr_of_mut!((*ptr).leader_schedule_slot_offset)
+                .write(self.leader_schedule_slot_offset);
+            std::ptr::addr_of_mut!((*ptr).warmup).write(self.warmup);
+            std::ptr::addr_of_mut!((*ptr).first_normal_epoch).write(self.first_normal_epoch);
+            std::ptr::addr_of_mut!((*ptr).first_normal_slot).write(self.first_normal_slot);
+            value.assume_init()
+        }
+    }
 }
 
 impl Default for EpochSchedule {
