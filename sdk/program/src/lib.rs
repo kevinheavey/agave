@@ -483,7 +483,6 @@ pub mod bpf_loader_deprecated;
 pub mod bpf_loader_upgradeable;
 pub mod compute_units;
 pub mod ed25519_program;
-pub mod entrypoint;
 pub mod entrypoint_deprecated;
 pub mod epoch_rewards;
 pub mod epoch_schedule;
@@ -539,6 +538,9 @@ pub use wasm_bindgen::prelude::wasm_bindgen;
 pub use {
     solana_account_info::{self as account_info, debug_account_data},
     solana_clock as clock,
+    solana_entrypoint::{
+        self as entrypoint, custom_heap_default, custom_panic_default, entrypoint,
+    },
     solana_msg::msg,
     solana_native_token as native_token, solana_program_option as program_option,
     solana_pubkey as pubkey, solana_rent as rent,
