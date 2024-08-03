@@ -5393,7 +5393,6 @@ dependencies = [
  "solana-msg",
  "solana-program-memory",
  "solana-sanitize",
- "solana-sdk-macro",
  "solana-short-vec",
  "wasm-bindgen",
 ]

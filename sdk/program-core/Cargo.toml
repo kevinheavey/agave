@@ -37,7 +37,6 @@ solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-msg = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
-solana-sdk-macro = { workspace = true }
 solana-short-vec = { workspace = true, optional = true }
 
 # This is currently needed to build on-chain programs reliably.

@@ -6977,7 +6977,6 @@ dependencies = [
  "solana-program-core",
  "solana-program-memory",
  "solana-sanitize",
- "solana-sdk-macro",
  "solana-short-vec",
  "static_assertions",
  "wasm-bindgen",
