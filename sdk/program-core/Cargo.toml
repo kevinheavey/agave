@@ -51,7 +51,7 @@ solana-define-syscall = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 arbitrary = { workspace = true, features = ["derive"], optional = true }
-base64 = { workspace = true, features = ["alloc", "std"] }
+base64 = { workspace = true, features = ["alloc", "std"], optional = true }
 bitflags = { workspace = true }
 curve25519-dalek = { workspace = true, optional = true }
 
@@ -85,6 +85,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 crate-type = ["cdylib", "rlib"]
 
 [features]
+base64 = ["dep:base64"]
 bincode = ["dep:bincode", "serde"]
 borsh = ["dep:borsh", "dep:borsh0-10", "dep:getrandom"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
@@ -92,6 +93,7 @@ curve25519 = ["dep:curve25519-dalek"]
 dev-context-only-utils = [
     "dep:arbitrary",
     "dep:qualifier_attr",
+    "base64",
     "bincode",
     "borsh",
     "bytemuck",

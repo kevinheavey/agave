@@ -2,12 +2,13 @@
 
 #![cfg(not(target_os = "solana"))]
 
+#[cfg(feature = "base64")]
+use base64::{prelude::BASE64_STANDARD, Engine};
 use {
     crate::{
         account_info::AccountInfo, entrypoint::ProgramResult, instruction::Instruction,
         program_error::UNSUPPORTED_SYSVAR, pubkey::Pubkey,
     },
-    base64::{prelude::BASE64_STANDARD, Engine},
     solana_program_memory::stubs,
     std::sync::{Arc, RwLock},
 };
@@ -92,6 +93,7 @@ pub trait SyscallStubs: Sync + Send {
         None
     }
     fn sol_set_return_data(&self, _data: &[u8]) {}
+    #[cfg(feature = "base64")]
     fn sol_log_data(&self, fields: &[&[u8]]) {
         println!(
             "data: {}",
@@ -201,6 +203,7 @@ pub(crate) fn sol_set_return_data(data: &[u8]) {
     SYSCALL_STUBS.read().unwrap().sol_set_return_data(data)
 }
 
+#[cfg(feature = "base64")]
 pub(crate) fn sol_log_data(data: &[&[u8]]) {
     SYSCALL_STUBS.read().unwrap().sol_log_data(data)
 }

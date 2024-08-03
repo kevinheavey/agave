@@ -32,6 +32,7 @@ solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-msg = { workspace = true }
 solana-program-core = { workspace = true, features = [
+    "base64",
     "bincode",
     "borsh",
     "bytemuck",
