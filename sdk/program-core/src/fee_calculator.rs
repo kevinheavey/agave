@@ -1,7 +1,7 @@
 //! Calculation of transaction fees.
 
 #![allow(clippy::arithmetic_side_effects)]
-use {crate::clock::DEFAULT_MS_PER_SLOT, log::*};
+use crate::clock::DEFAULT_MS_PER_SLOT;
 
 #[repr(C)]
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
@@ -108,7 +108,8 @@ impl FeeRateGovernor {
                             / me.target_signatures_per_slot,
                     ));
 
-            trace!(
+            #[cfg(feature = "log")]
+            log::trace!(
                 "desired_lamports_per_signature: {}",
                 desired_lamports_per_signature
             );
@@ -124,7 +125,8 @@ impl FeeRateGovernor {
                 let gap_adjust =
                     std::cmp::max(1, me.target_lamports_per_signature / 20) as i64 * gap.signum();
 
-                trace!(
+                #[cfg(feature = "log")]
+                log::trace!(
                     "lamports_per_signature gap is {}, adjusting by {}",
                     gap,
                     gap_adjust
@@ -142,7 +144,8 @@ impl FeeRateGovernor {
             me.min_lamports_per_signature = me.target_lamports_per_signature;
             me.max_lamports_per_signature = me.target_lamports_per_signature;
         }
-        debug!(
+        #[cfg(feature = "log")]
+        log::debug!(
             "new_derived(): lamports_per_signature: {}",
             me.lamports_per_signature
         );

@@ -21,7 +21,7 @@ bytemuck = { workspace = true, optional = true }
 bytemuck_derive = { workspace = true, optional = true }
 five8_const = { workspace = true }
 lazy_static = { workspace = true }
-log = { workspace = true }
+log = { workspace = true, optional = true }
 memoffset = { workspace = true }
 num-traits = { workspace = true, optional = true }
 qualifier_attr = { workspace = true, optional = true }
@@ -65,11 +65,13 @@ console_error_panic_hook = { workspace = true }
 console_log = { workspace = true }
 getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
 js-sys = { workspace = true }
+log = { workspace = true }
 wasm-bindgen = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
 itertools = { workspace = true }
+log = { workspace = true }
 serde_json = { workspace = true }
 serial_test = { workspace = true }
 solana-program-core = { path = ".", features = ["dev-context-only-utils"] }
@@ -102,6 +104,7 @@ dev-context-only-utils = [
     "bv",
     "bytemuck",
     "curve25519",
+    "log",
     "num-traits",
     "serde",
     "sha2",
@@ -112,6 +115,7 @@ frozen-abi = [
     "dep:solana-frozen-abi-macro",
     "solana-short-vec/frozen-abi",
 ]
+log = ["dep:log"]
 num-traits = [
     "dep:num-traits",
     "solana-program-memory/num-traits"
