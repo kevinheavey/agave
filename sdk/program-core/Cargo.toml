@@ -45,7 +45,7 @@ solana-short-vec = { workspace = true, optional = true }
 # upgrades Borsh's dependency to hashbrown 0.13.
 # Remove this once borsh 0.11 or 1.0 is released, which correctly declares the
 # hashbrown dependency as optional.
-[target.'cfg(all(target_os = "solana"))'.dependencies]
+[target.'cfg(target_os = "solana")'.dependencies]
 getrandom = { workspace = true, features = ["custom"], optional = true }
 solana-define-syscall = { workspace = true }
 
