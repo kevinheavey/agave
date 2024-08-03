@@ -81,7 +81,9 @@
 //!
 //! [sysvardoc]: https://docs.solanalabs.com/runtime/sysvars
 
-use crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey};
+use crate::pubkey::Pubkey;
+#[cfg(feature = "bincode")]
+use crate::{account_info::AccountInfo, program_error::ProgramError};
 #[allow(deprecated)]
 pub use sysvar_ids::ALL_IDS;
 
@@ -183,6 +185,7 @@ pub trait SysvarId {
     fn check_id(pubkey: &Pubkey) -> bool;
 }
 
+#[cfg(feature = "bincode")]
 /// A type that holds sysvar data.
 pub trait Sysvar:
     SysvarId + Default + Sized + serde::Serialize + serde::de::DeserializeOwned
@@ -249,6 +252,7 @@ macro_rules! impl_sysvar_get {
     };
 }
 
+#[cfg(feature = "bincode")]
 /// Handler for retrieving a slice of sysvar data from the `sol_get_sysvar`
 /// syscall.
 fn get_sysvar(

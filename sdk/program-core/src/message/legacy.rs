@@ -11,6 +11,8 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
+#[cfg(feature = "bincode")]
+use crate::system_instruction;
 #[allow(deprecated)]
 pub use builtins::{BUILTIN_PROGRAMS_KEYS, MAYBE_BUILTIN_KEY_OR_SYSVAR};
 #[cfg(target_arch = "wasm32")]
@@ -22,7 +24,7 @@ use {
         instruction::{CompiledInstruction, Instruction},
         message::{compiled_keys::CompiledKeys, MessageHeader},
         pubkey::Pubkey,
-        system_instruction, system_program, sysvar,
+        system_program, sysvar,
     },
     solana_sanitize::{Sanitize, SanitizeError},
     solana_short_vec as short_vec,
@@ -481,6 +483,7 @@ impl Message {
     /// # create_offline_initialize_tx(&client, program_id, &payer)?;
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    #[cfg(feature = "bincode")]
     pub fn new_with_nonce(
         mut instructions: Vec<Instruction>,
         payer: Option<&Pubkey>,
@@ -514,7 +517,7 @@ impl Message {
     }
 
     /// Compute the blake3 hash of this transaction's message.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(all(feature = "bincode", not(target_os = "solana")))]
     pub fn hash(&self) -> Hash {
         let message_bytes = self.serialize();
         Self::hash_raw_message(&message_bytes)
@@ -534,6 +537,7 @@ impl Message {
         compile_instruction(ix, &self.account_keys)
     }
 
+    #[cfg(feature = "bincode")]
     pub fn serialize(&self) -> Vec<u8> {
         bincode::serialize(self).unwrap()
     }

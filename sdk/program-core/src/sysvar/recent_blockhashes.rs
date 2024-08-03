@@ -18,10 +18,10 @@
 
 #![allow(deprecated)]
 #![allow(clippy::arithmetic_side_effects)]
+#[cfg(feature = "bincode")]
+use crate::sysvar::Sysvar;
 use {
-    crate::{
-        declare_deprecated_sysvar_id, fee_calculator::FeeCalculator, hash::Hash, sysvar::Sysvar,
-    },
+    crate::{declare_deprecated_sysvar_id, fee_calculator::FeeCalculator, hash::Hash},
     std::{cmp::Ordering, collections::BinaryHeap, iter::FromIterator, ops::Deref},
 };
 
@@ -146,6 +146,7 @@ impl<T: Ord> Iterator for IntoIterSorted<T> {
     }
 }
 
+#[cfg(feature = "bincode")]
 impl Sysvar for RecentBlockhashes {
     fn size_of() -> usize {
         // hard-coded so that we don't have to construct an empty

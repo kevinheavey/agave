@@ -1,5 +1,6 @@
 //! This sysvar is deprecated and unused.
 
+#[cfg(feature = "bincode")]
 use crate::sysvar::Sysvar;
 
 crate::declare_sysvar_id!("SysvarRewards111111111111111111111111111111", Rewards);
@@ -19,4 +20,5 @@ impl Rewards {
     }
 }
 
+#[cfg(feature = "bincode")]
 impl Sysvar for Rewards {}

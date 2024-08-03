@@ -145,10 +145,12 @@ impl VersionedMessage {
         }
     }
 
+    #[cfg(feature = "bincode")]
     pub fn serialize(&self) -> Vec<u8> {
         bincode::serialize(self).unwrap()
     }
 
+    #[cfg(feature = "bincode")]
     /// Compute the blake3 hash of this transaction's message
     pub fn hash(&self) -> Hash {
         let message_bytes = self.serialize();

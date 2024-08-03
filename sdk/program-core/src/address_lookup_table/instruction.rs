@@ -1,11 +1,9 @@
+#[cfg(feature = "bincode")]
+use crate::instruction::AccountMeta;
+#[cfg(any(feature = "bincode", feature = "curve25519", target_os = "solana"))]
+use crate::instruction::Instruction;
 use {
-    crate::{
-        address_lookup_table::program::id,
-        clock::Slot,
-        instruction::{AccountMeta, Instruction},
-        pubkey::Pubkey,
-        system_program,
-    },
+    crate::{clock::Slot, pubkey::Pubkey},
     serde_derive::{Deserialize, Serialize},
 };
 
@@ -75,11 +73,11 @@ pub fn derive_lookup_table_address(
 ) -> (Pubkey, u8) {
     Pubkey::find_program_address(
         &[authority_address.as_ref(), &recent_block_slot.to_le_bytes()],
-        &id(),
+        &crate::address_lookup_table::program::id(),
     )
 }
 
-#[cfg(any(feature = "curve25519", target_os = "solana"))]
+#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
 /// Constructs an instruction to create a table account and returns
 /// the instruction and the table account's derived address.
 fn create_lookup_table_common(
@@ -91,7 +89,7 @@ fn create_lookup_table_common(
     let (lookup_table_address, bump_seed) =
         derive_lookup_table_address(&authority_address, recent_slot);
     let instruction = Instruction::new_with_bincode(
-        id(),
+        crate::address_lookup_table::program::id(),
         &ProgramInstruction::CreateLookupTable {
             recent_slot,
             bump_seed,
@@ -100,14 +98,14 @@ fn create_lookup_table_common(
             AccountMeta::new(lookup_table_address, false),
             AccountMeta::new_readonly(authority_address, authority_is_signer),
             AccountMeta::new(payer_address, true),
-            AccountMeta::new_readonly(system_program::id(), false),
+            AccountMeta::new_readonly(crate::system_program::id(), false),
         ],
     );
 
     (instruction, lookup_table_address)
 }
 
-#[cfg(any(feature = "curve25519", target_os = "solana"))]
+#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
 /// Constructs an instruction to create a table account and returns
 /// the instruction and the table account's derived address.
 ///
@@ -124,7 +122,7 @@ pub fn create_lookup_table_signed(
     create_lookup_table_common(authority_address, payer_address, recent_slot, true)
 }
 
-#[cfg(any(feature = "curve25519", target_os = "solana"))]
+#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
 /// Constructs an instruction to create a table account and returns
 /// the instruction and the table account's derived address.
 ///
@@ -144,9 +142,10 @@ pub fn create_lookup_table(
 /// Constructs an instruction that freezes an address lookup
 /// table so that it can never be closed or extended again. Empty
 /// lookup tables cannot be frozen.
+#[cfg(feature = "bincode")]
 pub fn freeze_lookup_table(lookup_table_address: Pubkey, authority_address: Pubkey) -> Instruction {
     Instruction::new_with_bincode(
-        id(),
+        crate::address_lookup_table::program::id(),
         &ProgramInstruction::FreezeLookupTable,
         vec![
             AccountMeta::new(lookup_table_address, false),
@@ -155,6 +154,7 @@ pub fn freeze_lookup_table(lookup_table_address: Pubkey, authority_address: Pubk
     )
 }
 
+#[cfg(feature = "bincode")]
 /// Constructs an instruction which extends an address lookup
 /// table account with new addresses.
 pub fn extend_lookup_table(
@@ -171,17 +171,18 @@ pub fn extend_lookup_table(
     if let Some(payer_address) = payer_address {
         accounts.extend([
             AccountMeta::new(payer_address, true),
-            AccountMeta::new_readonly(system_program::id(), false),
+            AccountMeta::new_readonly(crate::system_program::id(), false),
         ]);
     }
 
     Instruction::new_with_bincode(
-        id(),
+        crate::address_lookup_table::program::id(),
         &ProgramInstruction::ExtendLookupTable { new_addresses },
         accounts,
     )
 }
 
+#[cfg(feature = "bincode")]
 /// Constructs an instruction that deactivates an address lookup
 /// table so that it cannot be extended again and will be unusable
 /// and eligible for closure after a short amount of time.
@@ -190,7 +191,7 @@ pub fn deactivate_lookup_table(
     authority_address: Pubkey,
 ) -> Instruction {
     Instruction::new_with_bincode(
-        id(),
+        crate::address_lookup_table::program::id(),
         &ProgramInstruction::DeactivateLookupTable,
         vec![
             AccountMeta::new(lookup_table_address, false),
@@ -199,6 +200,7 @@ pub fn deactivate_lookup_table(
     )
 }
 
+#[cfg(feature = "bincode")]
 /// Returns an instruction that closes an address lookup table
 /// account. The account will be deallocated and the lamports
 /// will be drained to the recipient address.
@@ -208,7 +210,7 @@ pub fn close_lookup_table(
     recipient_address: Pubkey,
 ) -> Instruction {
     Instruction::new_with_bincode(
-        id(),
+        crate::address_lookup_table::program::id(),
         &ProgramInstruction::CloseLookupTable,
         vec![
             AccountMeta::new(lookup_table_address, false),

@@ -11,7 +11,7 @@ edition = { workspace = true }
 rust-version = "1.75.0"                               # solana platform-tools rust version
 
 [dependencies]
-bincode = { workspace = true }
+bincode = { workspace = true, optional = true }
 blake3 = { workspace = true, features = ["digest", "traits-preview"] }
 borsh = { workspace = true, optional = true }
 borsh0-10 = { package = "borsh", version = "0.10.3", optional = true }
@@ -87,12 +87,14 @@ targets = ["x86_64-unknown-linux-gnu"]
 crate-type = ["cdylib", "rlib"]
 
 [features]
+bincode = ["dep:bincode"]
 borsh = ["dep:borsh", "dep:borsh0-10"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 curve25519 = ["dep:curve25519-dalek"]
 dev-context-only-utils = [
     "dep:arbitrary",
     "dep:qualifier_attr",
+    "bincode",
     "borsh",
     "bytemuck",
     "curve25519",

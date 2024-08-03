@@ -13,12 +13,14 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
+#[cfg(feature = "bincode")]
+use bincode::serialize;
 #[cfg(feature = "borsh")]
 use borsh::BorshSerialize;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
 use {
-    crate::pubkey::Pubkey, bincode::serialize, serde::Serialize, solana_sanitize::Sanitize,
+    crate::pubkey::Pubkey, serde::Serialize, solana_sanitize::Sanitize,
     solana_short_vec as short_vec, thiserror::Error,
 };
 
@@ -451,6 +453,7 @@ impl Instruction {
     ///    )
     /// }
     /// ```
+    #[cfg(feature = "bincode")]
     pub fn new_with_bincode<T: Serialize>(
         program_id: Pubkey,
         data: &T,
@@ -650,6 +653,7 @@ pub struct CompiledInstruction {
 impl Sanitize for CompiledInstruction {}
 
 impl CompiledInstruction {
+    #[cfg(feature = "bincode")]
     pub fn new<T: Serialize>(program_ids_index: u8, data: &T, accounts: Vec<u8>) -> Self {
         let data = serialize(data).unwrap();
         Self {

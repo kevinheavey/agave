@@ -160,10 +160,12 @@
 //! ```
 
 pub use crate::epoch_rewards::EpochRewards;
+#[cfg(feature = "bincode")]
 use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
 
 crate::declare_sysvar_id!("SysvarEpochRewards1111111111111111111111111", EpochRewards);
 
+#[cfg(feature = "bincode")]
 impl Sysvar for EpochRewards {
     impl_sysvar_get!(sol_get_epoch_rewards_sysvar);
 }

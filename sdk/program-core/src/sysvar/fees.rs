@@ -20,12 +20,9 @@
 
 #![allow(deprecated)]
 
-use {
-    crate::{
-        fee_calculator::FeeCalculator, impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar,
-    },
-    solana_sdk_macro::CloneZeroed,
-};
+#[cfg(feature = "bincode")]
+use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
+use {crate::fee_calculator::FeeCalculator, solana_sdk_macro::CloneZeroed};
 
 crate::declare_deprecated_sysvar_id!("SysvarFees111111111111111111111111111111111", Fees);
 
@@ -49,6 +46,7 @@ impl Fees {
     }
 }
 
+#[cfg(feature = "bincode")]
 impl Sysvar for Fees {
     impl_sysvar_get!(sol_get_fees_sysvar);
 }

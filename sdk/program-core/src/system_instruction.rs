@@ -39,15 +39,15 @@
 //! [`invoke_signed`]: crate::program::invoke_signed
 //! [`AccountInfo`]: crate::account_info::AccountInfo
 
+#[cfg(feature = "bincode")]
+use crate::{
+    instruction::{AccountMeta, Instruction},
+    nonce, system_program,
+    sysvar::{recent_blockhashes, rent},
+};
 #[allow(deprecated)]
 use {
-    crate::{
-        instruction::{AccountMeta, Instruction},
-        nonce,
-        pubkey::Pubkey,
-        system_program,
-        sysvar::{recent_blockhashes, rent},
-    },
+    crate::pubkey::Pubkey,
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     thiserror::Error,
@@ -438,6 +438,7 @@ pub enum SystemInstruction {
 ///
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn create_account(
     from_pubkey: &Pubkey,
     to_pubkey: &Pubkey,
@@ -460,6 +461,7 @@ pub fn create_account(
     )
 }
 
+#[cfg(feature = "bincode")]
 // we accept `to` as a parameter so that callers do their own error handling when
 //   calling create_with_seed()
 pub fn create_account_with_seed(
@@ -671,6 +673,7 @@ pub fn create_account_with_seed(
 ///
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn assign(pubkey: &Pubkey, owner: &Pubkey) -> Instruction {
     let account_metas = vec![AccountMeta::new(*pubkey, true)];
     Instruction::new_with_bincode(
@@ -680,6 +683,7 @@ pub fn assign(pubkey: &Pubkey, owner: &Pubkey) -> Instruction {
     )
 }
 
+#[cfg(feature = "bincode")]
 pub fn assign_with_seed(
     address: &Pubkey, // must match create_with_seed(base, seed, owner)
     base: &Pubkey,
@@ -882,6 +886,7 @@ pub fn assign_with_seed(
 ///
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn transfer(from_pubkey: &Pubkey, to_pubkey: &Pubkey, lamports: u64) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*from_pubkey, true),
@@ -894,6 +899,7 @@ pub fn transfer(from_pubkey: &Pubkey, to_pubkey: &Pubkey, lamports: u64) -> Inst
     )
 }
 
+#[cfg(feature = "bincode")]
 pub fn transfer_with_seed(
     from_pubkey: &Pubkey, // must match create_with_seed(base, seed, owner)
     from_base: &Pubkey,
@@ -1102,6 +1108,7 @@ pub fn transfer_with_seed(
 ///
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn allocate(pubkey: &Pubkey, space: u64) -> Instruction {
     let account_metas = vec![AccountMeta::new(*pubkey, true)];
     Instruction::new_with_bincode(
@@ -1111,6 +1118,7 @@ pub fn allocate(pubkey: &Pubkey, space: u64) -> Instruction {
     )
 }
 
+#[cfg(feature = "bincode")]
 pub fn allocate_with_seed(
     address: &Pubkey, // must match create_with_seed(base, seed, owner)
     base: &Pubkey,
@@ -1275,6 +1283,7 @@ pub fn allocate_with_seed(
 ///
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn transfer_many(from_pubkey: &Pubkey, to_lamports: &[(Pubkey, u64)]) -> Vec<Instruction> {
     to_lamports
         .iter()
@@ -1282,6 +1291,7 @@ pub fn transfer_many(from_pubkey: &Pubkey, to_lamports: &[(Pubkey, u64)]) -> Vec
         .collect()
 }
 
+#[cfg(feature = "bincode")]
 pub fn create_nonce_account_with_seed(
     from_pubkey: &Pubkey,
     nonce_pubkey: &Pubkey,
@@ -1424,6 +1434,7 @@ pub fn create_nonce_account_with_seed(
 /// #
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn create_nonce_account(
     from_pubkey: &Pubkey,
     nonce_pubkey: &Pubkey,
@@ -1574,6 +1585,7 @@ pub fn create_nonce_account(
 /// #
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn advance_nonce_account(nonce_pubkey: &Pubkey, authorized_pubkey: &Pubkey) -> Instruction {
     let account_metas = vec![
         AccountMeta::new(*nonce_pubkey, false),
@@ -1660,6 +1672,7 @@ pub fn advance_nonce_account(nonce_pubkey: &Pubkey, authorized_pubkey: &Pubkey) 
 /// #
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn withdraw_nonce_account(
     nonce_pubkey: &Pubkey,
     authorized_pubkey: &Pubkey,
@@ -1742,6 +1755,7 @@ pub fn withdraw_nonce_account(
 /// #
 /// # Ok::<(), anyhow::Error>(())
 /// ```
+#[cfg(feature = "bincode")]
 pub fn authorize_nonce_account(
     nonce_pubkey: &Pubkey,
     authorized_pubkey: &Pubkey,
@@ -1760,6 +1774,7 @@ pub fn authorize_nonce_account(
 
 /// One-time idempotent upgrade of legacy nonce versions in order to bump
 /// them out of chain blockhash domain.
+#[cfg(feature = "bincode")]
 pub fn upgrade_nonce_account(nonce_pubkey: Pubkey) -> Instruction {
     let account_metas = vec![AccountMeta::new(nonce_pubkey, /*is_signer:*/ false)];
     Instruction::new_with_bincode(

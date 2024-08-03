@@ -127,10 +127,12 @@
 //! ```
 
 pub use crate::clock::Clock;
+#[cfg(feature = "bincode")]
 use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
 
 crate::declare_sysvar_id!("SysvarC1ock11111111111111111111111111111111", Clock);
 
+#[cfg(feature = "bincode")]
 impl Sysvar for Clock {
     impl_sysvar_get!(sol_get_clock_sysvar);
 }

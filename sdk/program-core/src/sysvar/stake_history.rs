@@ -45,15 +45,17 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
+use crate::clock::Epoch;
 pub use crate::stake_history::StakeHistory;
+#[cfg(feature = "bincode")]
 use crate::{
-    clock::Epoch,
     stake_history::{StakeHistoryEntry, StakeHistoryGetEntry, MAX_ENTRIES},
     sysvar::{get_sysvar, Sysvar, SysvarId},
 };
 
 crate::declare_sysvar_id!("SysvarStakeHistory1111111111111111111111111", StakeHistory);
 
+#[cfg(feature = "bincode")]
 impl Sysvar for StakeHistory {
     // override
     fn size_of() -> usize {
@@ -66,9 +68,11 @@ impl Sysvar for StakeHistory {
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct StakeHistorySysvar(pub Epoch);
 
+#[cfg(feature = "bincode")]
 // precompute so we can statically allocate buffer
 const EPOCH_AND_ENTRY_SERIALIZED_SIZE: u64 = 32;
 
+#[cfg(feature = "bincode")]
 impl StakeHistoryGetEntry for StakeHistorySysvar {
     fn get_entry(&self, target_epoch: Epoch) -> Option<StakeHistoryEntry> {
         let current_epoch = self.0;

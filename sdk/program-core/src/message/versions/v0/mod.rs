@@ -9,6 +9,8 @@
 //! [`v0`]: crate::message::v0
 //! [future message format]: https://docs.solanalabs.com/proposals/versioned-transactions
 
+#[cfg(feature = "bincode")]
+use crate::message::MESSAGE_VERSION_PREFIX;
 pub use loaded::*;
 use {
     crate::{
@@ -18,7 +20,7 @@ use {
         instruction::{CompiledInstruction, Instruction},
         message::{
             compiled_keys::{CompileError, CompiledKeys},
-            AccountKeys, MessageHeader, MESSAGE_VERSION_PREFIX,
+            AccountKeys, MessageHeader,
         },
         pubkey::Pubkey,
     },
@@ -288,6 +290,7 @@ impl Message {
         })
     }
 
+    #[cfg(feature = "bincode")]
     /// Serialize this message with a version #0 prefix using bincode encoding.
     pub fn serialize(&self) -> Vec<u8> {
         bincode::serialize(&(MESSAGE_VERSION_PREFIX, self)).unwrap()

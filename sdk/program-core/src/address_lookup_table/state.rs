@@ -1,10 +1,11 @@
+#[cfg(feature = "bincode")]
+use crate::instruction::InstructionError;
 #[cfg(feature = "frozen-abi")]
 use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
 use {
     crate::{
         address_lookup_table::error::AddressLookupError,
         clock::Slot,
-        instruction::InstructionError,
         pubkey::Pubkey,
         slot_hashes::{SlotHashes, MAX_ENTRIES},
     },
@@ -123,6 +124,7 @@ pub struct AddressLookupTable<'a> {
 }
 
 impl<'a> AddressLookupTable<'a> {
+    #[cfg(feature = "bincode")]
     /// Serialize an address table's updated meta data and zero
     /// any leftover bytes.
     pub fn overwrite_meta_data(
@@ -181,6 +183,7 @@ impl<'a> AddressLookupTable<'a> {
             .ok_or(AddressLookupError::InvalidLookupIndex)
     }
 
+    #[cfg(feature = "bincode")]
     /// Serialize an address table including its addresses
     pub fn serialize_for_tests(self) -> Result<Vec<u8>, InstructionError> {
         let mut data = vec![0; LOOKUP_TABLE_META_SIZE];
@@ -191,7 +194,7 @@ impl<'a> AddressLookupTable<'a> {
         Ok(data)
     }
 
-    #[cfg(feature = "bytemuck")]
+    #[cfg(all(feature = "bincode", feature = "bytemuck"))]
     /// Efficiently deserialize an address table without allocating
     /// for stored addresses.
     pub fn deserialize(data: &'a [u8]) -> Result<AddressLookupTable<'a>, InstructionError> {

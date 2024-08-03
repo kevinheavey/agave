@@ -40,6 +40,7 @@
 //!
 
 pub use crate::last_restart_slot::LastRestartSlot;
+#[cfg(feature = "bincode")]
 use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
 
 crate::declare_sysvar_id!(
@@ -47,6 +48,7 @@ crate::declare_sysvar_id!(
     LastRestartSlot
 );
 
+#[cfg(feature = "bincode")]
 impl Sysvar for LastRestartSlot {
     impl_sysvar_get!(sol_get_last_restart_slot);
 }

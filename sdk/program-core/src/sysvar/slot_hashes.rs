@@ -46,18 +46,15 @@
 //! ```
 
 pub use crate::slot_hashes::SlotHashes;
-use crate::{
-    account_info::AccountInfo, clock::Slot, hash::Hash, program_error::ProgramError, sysvar::Sysvar,
-};
+#[cfg(feature = "bincode")]
+use crate::{account_info::AccountInfo, program_error::ProgramError, sysvar::Sysvar};
+use crate::{clock::Slot, hash::Hash};
 #[cfg(feature = "bytemuck")]
-use {
-    bytemuck_derive::{Pod, Zeroable},
-    slot_hashes::MAX_ENTRIES,
-    sysvar::{get_sysvar, SysvarId},
-};
+use bytemuck_derive::{Pod, Zeroable};
 
 crate::declare_sysvar_id!("SysvarS1otHashes111111111111111111111111111", SlotHashes);
 
+#[cfg(feature = "bincode")]
 impl Sysvar for SlotHashes {
     // override
     fn size_of() -> usize {
@@ -81,7 +78,7 @@ struct PodSlotHash {
 /// API for querying the `SlotHashes` sysvar.
 pub struct SlotHashesSysvar;
 
-#[cfg(feature = "bytemuck")]
+#[cfg(all(feature = "bincode", feature = "bytemuck"))]
 impl SlotHashesSysvar {
     /// Get a value from the sysvar entries by its key.
     /// Returns `None` if the key is not found.
@@ -105,9 +102,10 @@ impl SlotHashesSysvar {
     }
 }
 
-#[cfg(feature = "bytemuck")]
+#[cfg(all(feature = "bincode", feature = "bytemuck"))]
 fn get_pod_slot_hashes() -> Result<Vec<PodSlotHash>, ProgramError> {
-    let mut pod_hashes = vec![PodSlotHash::default(); MAX_ENTRIES];
+    use crate::sysvar::SysvarId;
+    let mut pod_hashes = vec![PodSlotHash::default(); crate::slot_hashes::MAX_ENTRIES];
     {
         let data = bytemuck::try_cast_slice_mut::<PodSlotHash, u8>(&mut pod_hashes)
             .map_err(|_| ProgramError::InvalidAccountData)?;
@@ -119,7 +117,7 @@ fn get_pod_slot_hashes() -> Result<Vec<PodSlotHash>, ProgramError> {
 
         let offset = 8; // Vector length as `u64`.
         let length = (SlotHashes::size_of() as u64).saturating_sub(offset);
-        get_sysvar(data, &SlotHashes::id(), offset, length)?;
+        crate::sysvar::get_sysvar(data, &SlotHashes::id(), offset, length)?;
     }
     Ok(pod_hashes)
 }

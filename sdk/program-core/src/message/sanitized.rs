@@ -1,3 +1,7 @@
+#[cfg(feature = "bincode")]
+use crate::{
+    nonce::NONCED_TX_MARKER_IX_INDEX, system_instruction::SystemInstruction, system_program,
+};
 use {
     crate::{
         ed25519_program,
@@ -9,12 +13,8 @@ use {
             AccountKeys, AddressLoader, AddressLoaderError, MessageHeader,
             SanitizedVersionedMessage, VersionedMessage,
         },
-        nonce::NONCED_TX_MARKER_IX_INDEX,
-        program_utils::limited_deserialize,
         pubkey::Pubkey,
         secp256k1_program,
-        system_instruction::SystemInstruction,
-        system_program,
         sysvar::instructions::{BorrowedAccountMeta, BorrowedInstruction},
     },
     solana_sanitize::{Sanitize, SanitizeError},
@@ -343,6 +343,7 @@ impl SanitizedMessage {
             })
     }
 
+    #[cfg(feature = "bincode")]
     /// If the message uses a durable nonce, return the pubkey of the nonce account
     pub fn get_durable_nonce(&self) -> Option<&Pubkey> {
         self.instructions()
@@ -355,7 +356,9 @@ impl SanitizedMessage {
             )
             .filter(|ix| {
                 matches!(
-                    limited_deserialize(&ix.data, 4 /* serialized size of AdvanceNonceAccount */),
+                    crate::program_utils::limited_deserialize(
+                        &ix.data, 4 /* serialized size of AdvanceNonceAccount */
+                    ),
                     Ok(SystemInstruction::AdvanceNonceAccount)
                 )
             })
