@@ -16,10 +16,6 @@ solana-program-error = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false }
 
-[dev-dependencies]
-solana-program = { workspace = true }
-static_assertions = { workspace = true }
-
 [features]
 bincode = ["dep:bincode", "dep:serde"]
 

@@ -5640,11 +5640,9 @@ version = "2.1.0"
 dependencies = [
  "bincode",
  "serde",
- "solana-program",
  "solana-program-error",
  "solana-program-memory",
  "solana-pubkey",
- "static_assertions",
 ]
 
 [[package]]

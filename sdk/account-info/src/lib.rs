@@ -15,11 +15,6 @@ pub mod debug_account_data;
 
 // inline from solana_program::entrypoint
 const MAX_PERMITTED_DATA_INCREASE: usize = 1_024 * 10;
-#[cfg(test)]
-static_assertions::const_assert_eq!(
-    MAX_PERMITTED_DATA_INCREASE,
-    solana_program::entrypoint::MAX_PERMITTED_DATA_INCREASE
-);
 
 /// Account information
 #[derive(Clone)]

@@ -310,6 +310,7 @@ unsafe impl std::alloc::GlobalAlloc for BumpAllocator {
     }
 }
 
+// WARNING: if this is changed, the duplicate definition in solana_account_info must also be changed
 /// Maximum number of bytes a program may add to an account during a single realloc
 pub const MAX_PERMITTED_DATA_INCREASE: usize = 1_024 * 10;
 
