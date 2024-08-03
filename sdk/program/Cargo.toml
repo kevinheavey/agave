@@ -35,6 +35,7 @@ solana-program-core = { workspace = true, features = [
     "base64",
     "bincode",
     "borsh",
+    "bv",
     "bytemuck",
     "curve25519",
     "serde",
