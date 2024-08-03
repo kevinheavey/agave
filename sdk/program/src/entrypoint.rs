@@ -7,7 +7,7 @@
 extern crate alloc;
 pub use solana_program_error::ProgramResult;
 use {
-    crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey},
+    crate::{account_info::AccountInfo, pubkey::Pubkey},
     alloc::vec::Vec,
     std::{
         alloc::Layout,
