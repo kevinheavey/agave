@@ -538,8 +538,9 @@ pub use solana_short_vec as short_vec;
 pub use wasm_bindgen::prelude::wasm_bindgen;
 pub use {
     solana_account_info::{self as account_info, debug_account_data},
-    solana_entrypoint::{self as entrypoint, custom_heap_default, custom_panic_default},
-    solana_entrypoint::entrypoint,
+    solana_entrypoint::{
+        self as entrypoint, custom_heap_default, custom_panic_default, entrypoint,
+    },
     solana_msg::msg,
     solana_pubkey as pubkey,
 };

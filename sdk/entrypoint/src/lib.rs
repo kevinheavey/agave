@@ -5,10 +5,10 @@
 //! [`bpf_loader`]: crate::bpf_loader
 
 extern crate alloc;
-pub use solana_program_error::ProgramResult;
+// need to re-export msg for custom_heap_default macro
 use {
     alloc::vec::Vec,
-    solana_account_info::AccountInfo, 
+    solana_account_info::AccountInfo,
     solana_pubkey::Pubkey,
     std::{
         alloc::Layout,
@@ -19,8 +19,7 @@ use {
         slice::{from_raw_parts, from_raw_parts_mut},
     },
 };
-// need to re-export msg for custom_heap_default macro
-pub use solana_msg::msg as __msg;
+pub use {solana_msg::msg as __msg, solana_program_error::ProgramResult};
 
 /// User implemented function to process an instruction
 ///
@@ -126,8 +125,7 @@ macro_rules! entrypoint {
         /// # Safety
         #[no_mangle]
         pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
-            let (program_id, accounts, instruction_data) =
-                unsafe { $crate::deserialize(input) };
+            let (program_id, accounts, instruction_data) = unsafe { $crate::deserialize(input) };
             match $process_instruction(&program_id, &accounts, &instruction_data) {
                 Ok(()) => $crate::SUCCESS,
                 Err(error) => error.into(),
