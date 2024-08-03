@@ -45,8 +45,8 @@ solana-short-vec = { workspace = true, optional = true }
 # upgrades Borsh's dependency to hashbrown 0.13.
 # Remove this once borsh 0.11 or 1.0 is released, which correctly declares the
 # hashbrown dependency as optional.
-[target.'cfg(target_os = "solana")'.dependencies]
-getrandom = { workspace = true, features = ["custom"] }
+[target.'cfg(all(target_os = "solana"))'.dependencies]
+getrandom = { workspace = true, features = ["custom"], optional = true }
 solana-define-syscall = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
@@ -54,10 +54,10 @@ arbitrary = { workspace = true, features = ["derive"], optional = true }
 base64 = { workspace = true, features = ["alloc", "std"] }
 bitflags = { workspace = true }
 curve25519-dalek = { workspace = true, optional = true }
-rand = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dev-dependencies]
 arbitrary = { workspace = true, features = ["derive"] }
+rand = { workspace = true }
 solana-logger = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
@@ -86,7 +86,7 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 bincode = ["dep:bincode", "serde"]
-borsh = ["dep:borsh", "dep:borsh0-10"]
+borsh = ["dep:borsh", "dep:borsh0-10", "dep:getrandom"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 curve25519 = ["dep:curve25519-dalek"]
 dev-context-only-utils = [
