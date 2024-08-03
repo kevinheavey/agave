@@ -7,10 +7,11 @@
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
+#[cfg(feature = "sha2")]
+use sha2::{Digest, Sha256};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
 use {
-    sha2::{Digest, Sha256},
     solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
     thiserror::Error,
@@ -44,11 +45,13 @@ const MAX_BASE58_LEN: usize = 44;
 #[repr(transparent)]
 pub struct Hash(pub(crate) [u8; HASH_BYTES]);
 
+#[cfg(feature = "sha2")]
 #[derive(Clone, Default)]
 pub struct Hasher {
     hasher: Sha256,
 }
 
+#[cfg(feature = "sha2")]
 impl Hasher {
     pub fn hash(&mut self, val: &[u8]) {
         self.hasher.update(val);
@@ -140,6 +143,7 @@ impl Hash {
     }
 }
 
+#[cfg(any(feature = "sha2", target_os = "solana"))]
 /// Return a Sha256 hash for the given data.
 pub fn hashv(vals: &[&[u8]]) -> Hash {
     // Perform the calculation inline, calling this from within a program is
@@ -165,11 +169,13 @@ pub fn hashv(vals: &[&[u8]]) -> Hash {
     }
 }
 
+#[cfg(any(feature = "sha2", target_os = "solana"))]
 /// Return a Sha256 hash for the given data.
 pub fn hash(val: &[u8]) -> Hash {
     hashv(&[val])
 }
 
+#[cfg(any(feature = "sha2", target_os = "solana"))]
 /// Return the hash of the given hash extended with the given value.
 pub fn extend_and_hash(id: &Hash, val: &[u8]) -> Hash {
     let mut hash_data = id.as_ref().to_vec();

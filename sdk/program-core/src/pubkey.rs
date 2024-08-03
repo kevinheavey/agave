@@ -11,7 +11,6 @@ use bytemuck_derive::{Pod, Zeroable};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
 use {
-    crate::hash::hashv,
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     std::{
@@ -31,6 +30,7 @@ pub const MAX_SEEDS: usize = 16;
 /// Maximum string length of a base58 encoded pubkey
 const MAX_BASE58_LEN: usize = 44;
 
+#[cfg(any(feature = "sha2", target_os = "solana"))]
 const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
@@ -191,6 +191,7 @@ impl Pubkey {
         Self::from(b)
     }
 
+    #[cfg(any(feature = "sha2", target_os = "solana"))]
     pub fn create_with_seed(
         base: &Pubkey,
         seed: &str,
@@ -207,7 +208,7 @@ impl Pubkey {
                 return Err(PubkeyError::IllegalOwner);
             }
         }
-        let hash = hashv(&[base.as_ref(), seed.as_ref(), owner]);
+        let hash = crate::hash::hashv(&[base.as_ref(), seed.as_ref(), owner]);
         Ok(Pubkey::from(hash.to_bytes()))
     }
 
@@ -464,7 +465,7 @@ impl Pubkey {
     /// #
     /// # Ok::<(), anyhow::Error>(())
     /// ```
-    #[cfg(any(feature = "curve25519", target_os = "solana"))]
+    #[cfg(any(all(feature = "curve25519", feature = "sha2"), target_os = "solana"))]
     pub fn find_program_address(seeds: &[&[u8]], program_id: &Pubkey) -> (Pubkey, u8) {
         Self::try_find_program_address(seeds, program_id)
             .unwrap_or_else(|| panic!("Unable to find a viable program address bump seed"))
@@ -482,7 +483,7 @@ impl Pubkey {
     /// See the documentation for [`find_program_address`] for a full description.
     ///
     /// [`find_program_address`]: Pubkey::find_program_address
-    #[cfg(any(feature = "curve25519", target_os = "solana"))]
+    #[cfg(any(all(feature = "curve25519", feature = "sha2"), target_os = "solana"))]
     #[allow(clippy::same_item_push)]
     pub fn try_find_program_address(seeds: &[&[u8]], program_id: &Pubkey) -> Option<(Pubkey, u8)> {
         // Perform the calculation inline, calling this from within a program is
@@ -567,7 +568,7 @@ impl Pubkey {
     /// assert_eq!(expected_pda, actual_pda);
     /// # Ok::<(), anyhow::Error>(())
     /// ```
-    #[cfg(any(feature = "curve25519", target_os = "solana"))]
+    #[cfg(any(all(feature = "curve25519", feature = "sha2"), target_os = "solana"))]
     pub fn create_program_address(
         seeds: &[&[u8]],
         program_id: &Pubkey,

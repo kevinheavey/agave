@@ -37,6 +37,7 @@ solana-program-core = { workspace = true, features = [
     "bytemuck",
     "curve25519",
     "serde",
+    "sha2"
 ] }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }

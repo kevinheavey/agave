@@ -1,11 +1,8 @@
-use crate::{
-    fee_calculator::FeeCalculator,
-    hash::{hashv, Hash},
-    pubkey::Pubkey,
-};
+use crate::{fee_calculator::FeeCalculator, hash::Hash, pubkey::Pubkey};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 
+#[cfg(any(feature = "sha2", target_os = "solana"))]
 const DURABLE_NONCE_HASH_PREFIX: &[u8] = "DURABLE_NONCE".as_bytes();
 
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -54,8 +51,12 @@ impl Data {
 }
 
 impl DurableNonce {
+    #[cfg(any(feature = "sha2", target_os = "solana"))]
     pub fn from_blockhash(blockhash: &Hash) -> Self {
-        Self(hashv(&[DURABLE_NONCE_HASH_PREFIX, blockhash.as_ref()]))
+        Self(crate::hash::hashv(&[
+            DURABLE_NONCE_HASH_PREFIX,
+            blockhash.as_ref(),
+        ]))
     }
 
     /// Hash value used as recent_blockhash field in Transactions.

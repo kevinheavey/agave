@@ -1,6 +1,6 @@
 #[cfg(feature = "bincode")]
 use crate::instruction::AccountMeta;
-#[cfg(any(feature = "bincode", feature = "curve25519", target_os = "solana"))]
+#[cfg(any(feature = "bincode", target_os = "solana"))]
 use crate::instruction::Instruction;
 use crate::{clock::Slot, pubkey::Pubkey};
 
@@ -63,7 +63,7 @@ pub enum ProgramInstruction {
     CloseLookupTable,
 }
 
-#[cfg(any(feature = "curve25519", target_os = "solana"))]
+#[cfg(any(all(feature = "curve25519", feature = "sha2"), target_os = "solana"))]
 /// Derives the address of an address table account from a wallet address and a recent block's slot.
 pub fn derive_lookup_table_address(
     authority_address: &Pubkey,

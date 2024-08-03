@@ -28,7 +28,7 @@ qualifier_attr = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_bytes = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-sha2 = { workspace = true }
+sha2 = { workspace = true, optional = true }
 sha3 = { workspace = true }
 solana-atomic-u64 = { workspace = true }
 solana-decode-error = { workspace = true }
@@ -99,6 +99,7 @@ dev-context-only-utils = [
     "bytemuck",
     "curve25519",
     "serde",
+    "sha2"
 ]
 frozen-abi = [
     "dep:solana-frozen-abi",
@@ -112,3 +113,4 @@ serde = [
     "dep:solana-short-vec",
     "bv/serde"
 ]
+sha2 = ["dep:sha2"]

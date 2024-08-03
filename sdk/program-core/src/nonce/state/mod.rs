@@ -52,6 +52,7 @@ impl Versions {
         }
     }
 
+    #[cfg(any(feature = "sha2", target_os = "solana"))]
     /// Upgrades legacy nonces out of chain blockhash domains.
     pub fn upgrade(self) -> Option<Self> {
         match self {

@@ -16,9 +16,9 @@
 //! [`loader_upgradeable_instruction`]: crate::loader_upgradeable_instruction
 
 use crate::pubkey::Pubkey;
-#[cfg(any(feature = "curve25519", target_os = "solana"))]
+#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
 use crate::sysvar;
-#[cfg(any(feature = "bincode", feature = "curve25519", target_os = "solana"))]
+#[cfg(feature = "bincode")]
 use crate::{
     instruction::{AccountMeta, Instruction, InstructionError},
     loader_upgradeable_instruction::UpgradeableLoaderInstruction,
@@ -88,7 +88,7 @@ impl UpgradeableLoaderState {
     }
 }
 
-#[cfg(any(feature = "curve25519", target_os = "solana"))]
+#[cfg(any(all(feature = "curve25519", feature = "sha2"), target_os = "solana"))]
 /// Returns the program data address for a program ID
 pub fn get_program_data_address(program_address: &Pubkey) -> Pubkey {
     Pubkey::find_program_address(&[program_address.as_ref()], &id()).0
