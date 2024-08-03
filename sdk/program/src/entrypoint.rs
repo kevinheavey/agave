@@ -5,6 +5,7 @@
 //! [`bpf_loader`]: crate::bpf_loader
 
 extern crate alloc;
+pub use solana_program_error::ProgramResult;
 use {
     crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey},
     alloc::vec::Vec,
@@ -14,12 +15,9 @@ use {
         mem::{size_of, MaybeUninit},
         ptr::null_mut,
         rc::Rc,
-        result::Result as ResultGeneric,
         slice::{from_raw_parts, from_raw_parts_mut},
     },
 };
-
-pub type ProgramResult = ResultGeneric<(), ProgramError>;
 
 /// User implemented function to process an instruction
 ///
