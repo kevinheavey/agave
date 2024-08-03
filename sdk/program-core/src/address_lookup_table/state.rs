@@ -191,6 +191,7 @@ impl<'a> AddressLookupTable<'a> {
         Ok(data)
     }
 
+    #[cfg(feature = "bytemuck")]
     /// Efficiently deserialize an address table without allocating
     /// for stored addresses.
     pub fn deserialize(data: &'a [u8]) -> Result<AddressLookupTable<'a>, InstructionError> {

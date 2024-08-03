@@ -5,10 +5,11 @@
 
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
+#[cfg(feature = "bytemuck")]
+use bytemuck_derive::{Pod, Zeroable};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
 use {
-    bytemuck_derive::{Pod, Zeroable},
     sha2::{Digest, Sha256},
     solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
@@ -37,20 +38,8 @@ const MAX_BASE58_LEN: usize = 44;
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
     borsh(crate = "borsh")
 )]
-#[derive(
-    Serialize,
-    Deserialize,
-    Clone,
-    Copy,
-    Default,
-    Eq,
-    PartialEq,
-    Ord,
-    PartialOrd,
-    Hash,
-    Pod,
-    Zeroable,
-)]
+#[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
+#[derive(Serialize, Deserialize, Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[repr(transparent)]
 pub struct Hash(pub(crate) [u8; HASH_BYTES]);
 

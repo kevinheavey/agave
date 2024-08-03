@@ -31,7 +31,11 @@ solana-decode-error = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-msg = { workspace = true }
-solana-program-core = { workspace = true, features = ["borsh", "curve25519"] }
+solana-program-core = { workspace = true, features = [
+    "borsh",
+    "bytemuck",
+    "curve25519",
+] }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }

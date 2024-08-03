@@ -46,16 +46,14 @@
 //! ```
 
 pub use crate::slot_hashes::SlotHashes;
+use crate::{
+    account_info::AccountInfo, clock::Slot, hash::Hash, program_error::ProgramError, sysvar::Sysvar,
+};
+#[cfg(feature = "bytemuck")]
 use {
-    crate::{
-        account_info::AccountInfo,
-        clock::Slot,
-        hash::Hash,
-        program_error::ProgramError,
-        slot_hashes::MAX_ENTRIES,
-        sysvar::{get_sysvar, Sysvar, SysvarId},
-    },
     bytemuck_derive::{Pod, Zeroable},
+    slot_hashes::MAX_ENTRIES,
+    sysvar::{get_sysvar, SysvarId},
 };
 
 crate::declare_sysvar_id!("SysvarS1otHashes111111111111111111111111111", SlotHashes);
@@ -72,7 +70,8 @@ impl Sysvar for SlotHashes {
     }
 }
 
-#[derive(Copy, Clone, Default, Pod, Zeroable)]
+#[derive(Copy, Clone, Default)]
+#[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
 #[repr(C)]
 struct PodSlotHash {
     slot: Slot,
@@ -82,6 +81,7 @@ struct PodSlotHash {
 /// API for querying the `SlotHashes` sysvar.
 pub struct SlotHashesSysvar;
 
+#[cfg(feature = "bytemuck")]
 impl SlotHashesSysvar {
     /// Get a value from the sysvar entries by its key.
     /// Returns `None` if the key is not found.
@@ -105,6 +105,7 @@ impl SlotHashesSysvar {
     }
 }
 
+#[cfg(feature = "bytemuck")]
 fn get_pod_slot_hashes() -> Result<Vec<PodSlotHash>, ProgramError> {
     let mut pod_hashes = vec![PodSlotHash::default(); MAX_ENTRIES];
     {

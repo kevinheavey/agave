@@ -17,8 +17,8 @@ borsh = { workspace = true, optional = true }
 borsh0-10 = { package = "borsh", version = "0.10.3", optional = true }
 bs58 = { workspace = true }
 bv = { workspace = true, features = ["serde"] }
-bytemuck = { workspace = true }
-bytemuck_derive = { workspace = true }
+bytemuck = { workspace = true, optional = true }
+bytemuck_derive = { workspace = true, optional = true }
 lazy_static = { workspace = true }
 log = { workspace = true }
 memoffset = { workspace = true }
@@ -88,11 +88,13 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 borsh = ["dep:borsh", "dep:borsh0-10"]
+bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 curve25519 = ["dep:curve25519-dalek"]
 dev-context-only-utils = [
     "dep:arbitrary",
     "dep:qualifier_attr",
     "borsh",
+    "bytemuck",
     "curve25519",
 ]
 frozen-abi = [
