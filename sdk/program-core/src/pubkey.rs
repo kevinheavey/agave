@@ -839,7 +839,7 @@ macro_rules! declare_deprecated_id {
 ///
 /// ```
 /// use std::str::FromStr;
-/// use solana_program_core::{pubkey, pubkey::Pubkey};
+/// use solana_program_core::{const_pubkey as pubkey, pubkey::Pubkey};
 ///
 /// static ID: Pubkey = pubkey!("My11111111111111111111111111111111111111111");
 ///
