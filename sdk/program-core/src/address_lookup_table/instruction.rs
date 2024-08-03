@@ -1,6 +1,6 @@
 #[cfg(feature = "bincode")]
 use crate::instruction::AccountMeta;
-#[cfg(any(feature = "bincode", target_os = "solana"))]
+#[cfg(feature = "bincode")]
 use crate::instruction::Instruction;
 use crate::{clock::Slot, pubkey::Pubkey};
 

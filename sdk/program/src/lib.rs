@@ -493,6 +493,8 @@ pub mod vote;
 
 #[cfg(target_arch = "wasm32")]
 pub use solana_program_core::wasm;
+#[cfg(not(target_os = "solana"))]
+pub use solana_program_core::{example_mocks, program_stubs};
 #[deprecated(since = "2.1.0", note = "Use `solana-program-memory` crate instead")]
 pub use solana_program_memory as program_memory;
 #[deprecated(since = "2.1.0", note = "Use `solana-sanitize` crate instead")]
@@ -509,12 +511,11 @@ pub use {
         account_info, address_lookup_table, bpf_loader, bpf_loader_deprecated,
         bpf_loader_upgradeable, clock, compute_units, custom_heap_default, custom_panic_default,
         debug_account_data, declare_deprecated_sysvar_id, declare_sysvar_id, ed25519_program,
-        entrypoint, epoch_rewards, epoch_schedule, example_mocks, fee_calculator, hash,
-        impl_sysvar_get, instruction, keccak, lamports, last_restart_slot,
-        loader_upgradeable_instruction, log, message, nonce, program, program_error,
-        program_option, program_pack, program_stubs, program_utils, rent, secp256k1_program,
-        slot_hashes, slot_history, stable_layout, stake_history, syscalls, system_instruction,
-        system_program, sysvar,
+        entrypoint, epoch_rewards, epoch_schedule, fee_calculator, hash, impl_sysvar_get,
+        instruction, keccak, lamports, last_restart_slot, loader_upgradeable_instruction, log,
+        message, nonce, program, program_error, program_option, program_pack, program_utils, rent,
+        secp256k1_program, slot_hashes, slot_history, stable_layout, stake_history, syscalls,
+        system_instruction, system_program, sysvar,
     },
 };
 
