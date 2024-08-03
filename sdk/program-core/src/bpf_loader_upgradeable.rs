@@ -15,14 +15,14 @@
 //!
 //! [`loader_upgradeable_instruction`]: crate::loader_upgradeable_instruction
 
+#[cfg(any(feature = "curve25519", target_os = "solana"))]
+use crate::sysvar;
 use crate::{
     instruction::{AccountMeta, Instruction, InstructionError},
     loader_upgradeable_instruction::UpgradeableLoaderInstruction,
     pubkey::Pubkey,
     system_instruction,
 };
-#[cfg(any(feature = "curve25519", target_os = "solana"))]
-use crate::sysvar;
 
 crate::declare_id!("BPFLoaderUpgradeab1e11111111111111111111111");
 
