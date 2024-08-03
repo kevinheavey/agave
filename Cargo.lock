@@ -6965,7 +6965,6 @@ dependencies = [
  "solana-sdk-macro",
  "solana-short-vec",
  "static_assertions",
- "thiserror",
  "wasm-bindgen",
 ]
 

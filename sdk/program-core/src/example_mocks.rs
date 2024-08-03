@@ -78,9 +78,20 @@ pub mod solana_rpc_client {
 
 pub mod solana_rpc_client_api {
     pub mod client_error {
-        #[derive(thiserror::Error, Debug)]
-        #[error("mock-error")]
+        use core::fmt;
+
+        #[derive(Debug)]
         pub struct ClientError;
+        impl std::error::Error for ClientError {}
+
+        impl fmt::Display for ClientError {
+            #[allow(clippy::used_underscore_binding)]
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                #[allow(unused_variables, deprecated)]
+                let Self {} = self;
+                f.write_str("mock-error")
+            }
+        }
         pub type Result<T> = std::result::Result<T, ClientError>;
     }
 }
@@ -89,11 +100,22 @@ pub mod solana_rpc_client_nonce_utils {
     use {
         super::solana_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
         crate::nonce::state::{Data, DurableNonce, Versions},
+        core::fmt,
     };
 
-    #[derive(thiserror::Error, Debug)]
-    #[error("mock-error")]
+    #[derive(Debug)]
     pub struct Error;
+
+    impl std::error::Error for Error {}
+
+    impl fmt::Display for Error {
+        #[allow(clippy::used_underscore_binding)]
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            #[allow(unused_variables, deprecated)]
+            let Self {} = self;
+            f.write_str("mock-error")
+        }
+    }
 
     pub fn data_from_account<T: ReadableAccount + StateMut<Versions>>(
         _account: &T,
@@ -188,11 +210,21 @@ pub mod solana_sdk {
     }
 
     pub mod signer {
-        use thiserror::Error;
+        use core::fmt;
 
-        #[derive(Error, Debug)]
-        #[error("mock-error")]
+        #[derive(Debug)]
         pub struct SignerError;
+
+        impl std::error::Error for SignerError {}
+
+        impl fmt::Display for SignerError {
+            #[allow(clippy::used_underscore_binding)]
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                #[allow(unused_variables, deprecated)]
+                let Self {} = self;
+                f.write_str("mock-error")
+            }
+        }
     }
 
     pub mod transaction {

@@ -17,7 +17,6 @@ use {
         fmt, mem,
         str::FromStr,
     },
-    thiserror::Error,
 };
 
 /// Number of bytes in a pubkey
@@ -33,15 +32,28 @@ const MAX_BASE58_LEN: usize = 44;
 const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Error, Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PubkeyError {
     /// Length of the seed is too long for address generation
-    #[error("Length of the seed is too long for address generation")]
     MaxSeedLengthExceeded,
-    #[error("Provided seeds do not result in a valid address")]
     InvalidSeeds,
-    #[error("Provided owner is not allowed")]
     IllegalOwner,
+}
+
+impl std::error::Error for PubkeyError {}
+
+impl fmt::Display for PubkeyError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            PubkeyError::MaxSeedLengthExceeded => {
+                f.write_str("Length of the seed is too long for address generation")
+            }
+            PubkeyError::InvalidSeeds => {
+                f.write_str("Provided seeds do not result in a valid address")
+            }
+            PubkeyError::IllegalOwner => f.write_str("Provided owner is not allowed"),
+        }
+    }
 }
 
 impl num_traits::FromPrimitive for PubkeyError {
@@ -124,12 +136,21 @@ pub struct Pubkey(pub(crate) [u8; 32]);
 impl solana_sanitize::Sanitize for Pubkey {}
 
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Error, Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ParsePubkeyError {
-    #[error("String is the wrong size")]
     WrongSize,
-    #[error("Invalid Base58 string")]
     Invalid,
+}
+
+impl std::error::Error for ParsePubkeyError {}
+
+impl fmt::Display for ParsePubkeyError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            ParsePubkeyError::WrongSize => f.write_str("String is the wrong size"),
+            ParsePubkeyError::Invalid => f.write_str("Invalid Base58 string"),
+        }
+    }
 }
 
 impl num_traits::FromPrimitive for ParsePubkeyError {

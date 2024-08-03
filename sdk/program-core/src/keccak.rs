@@ -9,7 +9,6 @@ use sha3::{Digest, Keccak256};
 use {
     solana_sanitize::Sanitize,
     std::{convert::TryFrom, fmt, mem, str::FromStr},
-    thiserror::Error,
 };
 
 pub const HASH_BYTES: usize = 32;
@@ -67,12 +66,21 @@ impl fmt::Display for Hash {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Error)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ParseHashError {
-    #[error("string decoded to wrong size for hash")]
     WrongSize,
-    #[error("failed to decoded string to hash")]
     Invalid,
+}
+
+impl std::error::Error for ParseHashError {}
+
+impl fmt::Display for ParseHashError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            ParseHashError::WrongSize => f.write_str("string decoded to wrong size for hash"),
+            ParseHashError::Invalid => f.write_str("failed to decoded string to hash"),
+        }
+    }
 }
 
 impl FromStr for Hash {

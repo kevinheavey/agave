@@ -5,8 +5,8 @@ use crate::{
 };
 use {
     crate::{instruction::Instruction, message::MessageHeader, pubkey::Pubkey},
+    core::fmt,
     std::collections::BTreeMap,
-    thiserror::Error,
 };
 
 /// A helper struct to collect pubkeys compiled for a set of instructions
@@ -17,14 +17,30 @@ pub(crate) struct CompiledKeys {
 }
 
 #[cfg_attr(target_os = "solana", allow(dead_code))]
-#[derive(PartialEq, Debug, Error, Eq, Clone)]
+#[derive(PartialEq, Debug, Eq, Clone)]
 pub enum CompileError {
-    #[error("account index overflowed during compilation")]
     AccountIndexOverflow,
-    #[error("address lookup table index overflowed during compilation")]
     AddressTableLookupIndexOverflow,
-    #[error("encountered unknown account key `{0}` during instruction compilation")]
     UnknownInstructionKey(Pubkey),
+}
+
+impl std::error::Error for CompileError {}
+
+impl fmt::Display for CompileError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            CompileError::AccountIndexOverflow => {
+                f.write_str("account index overflowed during compilation")
+            }
+            CompileError::AddressTableLookupIndexOverflow => {
+                f.write_str("address lookup table index overflowed during compilation")
+            }
+            CompileError::UnknownInstructionKey(p) => write!(
+                f,
+                "encountered unknown account key `{p}` during instruction compilation",
+            ),
+        }
+    }
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Eq)]

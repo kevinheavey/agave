@@ -17,9 +17,9 @@ use {
         secp256k1_program,
         sysvar::instructions::{BorrowedAccountMeta, BorrowedInstruction},
     },
+    core::fmt,
     solana_sanitize::{Sanitize, SanitizeError},
     std::{borrow::Cow, collections::HashSet, convert::TryFrom},
-    thiserror::Error,
 };
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -81,16 +81,42 @@ pub enum SanitizedMessage {
     V0(v0::LoadedMessage<'static>),
 }
 
-#[derive(PartialEq, Debug, Error, Eq, Clone)]
+#[derive(PartialEq, Debug, Eq, Clone)]
 pub enum SanitizeMessageError {
-    #[error("index out of bounds")]
     IndexOutOfBounds,
-    #[error("value out of bounds")]
     ValueOutOfBounds,
-    #[error("invalid value")]
     InvalidValue,
-    #[error("{0}")]
-    AddressLoaderError(#[from] AddressLoaderError),
+    AddressLoaderError(AddressLoaderError),
+}
+
+impl std::error::Error for SanitizeMessageError {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        #[allow(deprecated)]
+        match self {
+            SanitizeMessageError::IndexOutOfBounds { .. } => None,
+            SanitizeMessageError::ValueOutOfBounds { .. } => None,
+            SanitizeMessageError::InvalidValue { .. } => None,
+            SanitizeMessageError::AddressLoaderError { 0: source, .. } => Some(source),
+        }
+    }
+}
+impl fmt::Display for SanitizeMessageError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            SanitizeMessageError::IndexOutOfBounds => f.write_str("index out of bounds"),
+            SanitizeMessageError::ValueOutOfBounds => f.write_str("value out of bounds"),
+            SanitizeMessageError::InvalidValue => f.write_str("invalid value"),
+            SanitizeMessageError::AddressLoaderError(e) => {
+                write!(f, "{e}")
+            }
+        }
+    }
+}
+impl ::core::convert::From<AddressLoaderError> for SanitizeMessageError {
+    #[allow(deprecated)]
+    fn from(source: AddressLoaderError) -> Self {
+        SanitizeMessageError::AddressLoaderError { 0: source }
+    }
 }
 
 impl From<SanitizeError> for SanitizeMessageError {
