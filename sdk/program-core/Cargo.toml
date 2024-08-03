@@ -87,10 +87,14 @@ targets = ["x86_64-unknown-linux-gnu"]
 crate-type = ["cdylib", "rlib"]
 
 [features]
-default = ["borsh"]
 borsh = ["dep:borsh", "dep:borsh0-10"]
 curve25519 = ["dep:curve25519-dalek"]
-dev-context-only-utils = ["dep:arbitrary", "dep:qualifier_attr", "curve25519"]
+dev-context-only-utils = [
+    "dep:arbitrary",
+    "dep:qualifier_attr",
+    "borsh",
+    "curve25519",
+]
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
