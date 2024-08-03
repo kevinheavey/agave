@@ -19,6 +19,7 @@ bs58 = { workspace = true }
 bv = { workspace = true }
 bytemuck = { workspace = true, optional = true }
 bytemuck_derive = { workspace = true, optional = true }
+five8_const = { workspace = true }
 lazy_static = { workspace = true }
 log = { workspace = true }
 memoffset = { workspace = true }
