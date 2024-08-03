@@ -6236,10 +6236,6 @@ dependencies = [
 [[package]]
 name = "solana-decode-error"
 version = "2.1.0"
-dependencies = [
- "num-derive",
- "num-traits",
-]
 
 [[package]]
 name = "solana-define-syscall"

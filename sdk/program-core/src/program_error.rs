@@ -3,10 +3,11 @@
 #![allow(clippy::arithmetic_side_effects)]
 #[cfg(feature = "borsh")]
 use borsh::io::Error as BorshIoError;
+#[cfg(feature = "num-traits")]
+use num_traits::ToPrimitive;
 use {
     crate::{instruction::InstructionError, msg, pubkey::PubkeyError},
     core::fmt,
-    num_traits::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
     std::convert::TryFrom,
 };
@@ -107,13 +108,13 @@ impl fmt::Display for ProgramError {
 pub trait PrintProgramError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive;
+        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError;
 }
 
 impl PrintProgramError for ProgramError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive,
+        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError,
     {
         match self {
             Self::Custom(error) => {
@@ -321,6 +322,7 @@ impl TryFrom<InstructionError> for ProgramError {
     }
 }
 
+#[cfg(feature = "num-traits")]
 impl<T> From<T> for InstructionError
 where
     T: ToPrimitive,

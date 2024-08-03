@@ -56,6 +56,7 @@ impl fmt::Display for PubkeyError {
     }
 }
 
+#[cfg(feature = "num-traits")]
 impl num_traits::FromPrimitive for PubkeyError {
     #[inline]
     fn from_i64(n: i64) -> Option<Self> {
@@ -75,6 +76,7 @@ impl num_traits::FromPrimitive for PubkeyError {
     }
 }
 
+#[cfg(feature = "num-traits")]
 impl num_traits::ToPrimitive for PubkeyError {
     #[inline]
     fn to_i64(&self) -> Option<i64> {
@@ -153,6 +155,7 @@ impl fmt::Display for ParsePubkeyError {
     }
 }
 
+#[cfg(feature = "num-traits")]
 impl num_traits::FromPrimitive for ParsePubkeyError {
     #[inline]
     fn from_i64(n: i64) -> Option<Self> {
@@ -170,6 +173,7 @@ impl num_traits::FromPrimitive for ParsePubkeyError {
     }
 }
 
+#[cfg(feature = "num-traits")]
 impl num_traits::ToPrimitive for ParsePubkeyError {
     #[inline]
     fn to_i64(&self) -> Option<i64> {

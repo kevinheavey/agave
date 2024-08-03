@@ -74,6 +74,7 @@ pub trait SyscallStubs: Sync + Send {
         0
     }
     /// # Safety
+    #[cfg(feature = "num-traits")]
     unsafe fn sol_memcpy(&self, dst: *mut u8, src: *const u8, n: usize) {
         stubs::sol_memcpy(dst, src, n)
     }

@@ -99,6 +99,7 @@ impl fmt::Display for SystemError {
     }
 }
 
+#[cfg(feature = "num-traits")]
 impl num_traits::FromPrimitive for SystemError {
     #[inline]
     fn from_i64(n: i64) -> Option<Self> {
@@ -130,6 +131,7 @@ impl num_traits::FromPrimitive for SystemError {
     }
 }
 
+#[cfg(feature = "num-traits")]
 impl num_traits::ToPrimitive for SystemError {
     #[inline]
     fn to_i64(&self) -> Option<i64> {

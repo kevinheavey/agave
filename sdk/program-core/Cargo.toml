@@ -23,7 +23,7 @@ five8_const = { workspace = true }
 lazy_static = { workspace = true }
 log = { workspace = true }
 memoffset = { workspace = true }
-num-traits = { workspace = true }
+num-traits = { workspace = true, optional = true }
 qualifier_attr = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_bytes = { workspace = true, optional = true }
@@ -102,6 +102,7 @@ dev-context-only-utils = [
     "bv",
     "bytemuck",
     "curve25519",
+    "num-traits",
     "serde",
     "sha2",
     "sha3"
@@ -110,6 +111,10 @@ frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
     "solana-short-vec/frozen-abi",
+]
+num-traits = [
+    "dep:num-traits",
+    "solana-program-memory/num-traits"
 ]
 serde = [
     "dep:serde",

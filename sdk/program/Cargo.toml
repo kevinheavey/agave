@@ -39,6 +39,7 @@ solana-program-core = { workspace = true, features = [
     "bv",
     "bytemuck",
     "curve25519",
+    "num-traits",
     "serde",
     "sha2",
     "sha3",

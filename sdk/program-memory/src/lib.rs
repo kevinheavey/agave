@@ -16,6 +16,7 @@ pub mod syscalls {
 ///
 /// Hidden to share with bpf_loader without being part of the API surface.
 #[doc(hidden)]
+#[cfg(feature = "num-traits")]
 pub fn is_nonoverlapping<N>(src: N, src_len: N, dst: N, dst_len: N) -> bool
 where
     N: Ord + num_traits::SaturatingSub,
@@ -32,8 +33,10 @@ where
 #[cfg(not(target_os = "solana"))]
 #[allow(clippy::arithmetic_side_effects)]
 pub mod stubs {
+    #[cfg(feature = "num-traits")]
     use super::is_nonoverlapping;
     /// # Safety
+    #[cfg(feature = "num-traits")]
     pub unsafe fn sol_memcpy(dst: *mut u8, src: *const u8, n: usize) {
         // cannot be overlapping
         assert!(
@@ -97,6 +100,7 @@ pub mod stubs {
 ///
 /// Specifying an `n` greater than either the length of `dst` or `src` will
 /// likely introduce undefined behavior.
+#[cfg(any(target_os = "solana", feature = "num-traits"))]
 #[inline]
 pub fn sol_memcpy(dst: &mut [u8], src: &[u8], n: usize) {
     #[cfg(target_os = "solana")]
