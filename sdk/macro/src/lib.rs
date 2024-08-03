@@ -126,6 +126,21 @@ impl ToTokens for ProgramSdkPubkey {
     }
 }
 
+struct ProgramCorePubkey(proc_macro2::TokenStream);
+
+impl Parse for ProgramCorePubkey {
+    fn parse(input: ParseStream) -> Result<Self> {
+        parse_id(input, quote! { ::solana_program_core::pubkey::Pubkey }).map(Self)
+    }
+}
+
+impl ToTokens for ProgramCorePubkey {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let id = &self.0;
+        tokens.extend(quote! {#id})
+    }
+}
+
 struct Id(proc_macro2::TokenStream);
 
 impl Parse for Id {
@@ -167,6 +182,23 @@ impl ToTokens for ProgramSdkId {
     }
 }
 
+struct ProgramCoreId(proc_macro2::TokenStream);
+impl Parse for ProgramCoreId {
+    fn parse(input: ParseStream) -> Result<Self> {
+        parse_id(input, quote! { ::solana_program_core::pubkey::Pubkey }).map(Self)
+    }
+}
+
+impl ToTokens for ProgramCoreId {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        id_to_tokens(
+            &self.0,
+            quote! { ::solana_program_core::pubkey::Pubkey },
+            tokens,
+        )
+    }
+}
+
 struct ProgramSdkIdDeprecated(proc_macro2::TokenStream);
 impl Parse for ProgramSdkIdDeprecated {
     fn parse(input: ParseStream) -> Result<Self> {
@@ -180,6 +212,23 @@ impl ToTokens for ProgramSdkIdDeprecated {
     }
 }
 
+struct ProgramCoreIdDeprecated(proc_macro2::TokenStream);
+impl Parse for ProgramCoreIdDeprecated {
+    fn parse(input: ParseStream) -> Result<Self> {
+        parse_id(input, quote! { ::solana_program_core::pubkey::Pubkey }).map(Self)
+    }
+}
+
+impl ToTokens for ProgramCoreIdDeprecated {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        deprecated_id_to_tokens(
+            &self.0,
+            quote! { ::solana_program_core::pubkey::Pubkey },
+            tokens,
+        )
+    }
+}
+
 #[proc_macro]
 pub fn pubkey(input: TokenStream) -> TokenStream {
     let id = parse_macro_input!(input as SdkPubkey);
@@ -189,6 +238,13 @@ pub fn pubkey(input: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn program_pubkey(input: TokenStream) -> TokenStream {
     let id = parse_macro_input!(input as ProgramSdkPubkey);
+    TokenStream::from(quote! {#id})
+}
+
+// temp hack for new crate
+#[proc_macro]
+pub fn program_core_pubkey(input: TokenStream) -> TokenStream {
+    let id = parse_macro_input!(input as ProgramCorePubkey);
     TokenStream::from(quote! {#id})
 }
 
@@ -210,9 +266,23 @@ pub fn program_declare_id(input: TokenStream) -> TokenStream {
     TokenStream::from(quote! {#id})
 }
 
+// temp hack for new crate
+#[proc_macro]
+pub fn program_core_declare_id(input: TokenStream) -> TokenStream {
+    let id = parse_macro_input!(input as ProgramCoreId);
+    TokenStream::from(quote! {#id})
+}
+
 #[proc_macro]
 pub fn program_declare_deprecated_id(input: TokenStream) -> TokenStream {
     let id = parse_macro_input!(input as ProgramSdkIdDeprecated);
+    TokenStream::from(quote! {#id})
+}
+
+// temp hack for new crate
+#[proc_macro]
+pub fn program_core_declare_deprecated_id(input: TokenStream) -> TokenStream {
+    let id = parse_macro_input!(input as ProgramCoreIdDeprecated);
     TokenStream::from(quote! {#id})
 }
 

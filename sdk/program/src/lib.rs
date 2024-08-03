@@ -469,8 +469,6 @@
 // Allows macro expansion of `use ::solana_program::*` to work within this crate
 extern crate self as solana_program;
 
-pub mod account_info;
-pub mod address_lookup_table;
 pub mod big_mod_exp;
 pub mod blake3;
 #[cfg(feature = "borsh")]
@@ -479,58 +477,22 @@ pub mod borsh;
 pub mod borsh0_10;
 #[cfg(feature = "borsh")]
 pub mod borsh1;
-pub mod bpf_loader;
-pub mod bpf_loader_deprecated;
-pub mod bpf_loader_upgradeable;
-pub mod clock;
-pub mod compute_units;
-pub mod debug_account_data;
-pub mod ed25519_program;
-pub mod entrypoint;
 pub mod entrypoint_deprecated;
-pub mod epoch_rewards;
-pub mod epoch_schedule;
 pub mod epoch_stake;
 pub mod feature;
-pub mod fee_calculator;
-pub mod hash;
 pub mod incinerator;
-pub mod instruction;
-pub mod keccak;
-pub mod lamports;
-pub mod last_restart_slot;
 pub mod loader_instruction;
-pub mod loader_upgradeable_instruction;
 pub mod loader_v4;
 pub mod loader_v4_instruction;
-pub mod log;
-pub mod message;
 pub mod native_token;
-pub mod nonce;
-pub mod program;
-pub mod program_error;
-pub mod program_option;
-pub mod program_pack;
-pub mod program_stubs;
-pub mod program_utils;
 pub mod pubkey;
-pub mod rent;
-pub mod secp256k1_program;
 pub mod serde_varint;
 pub mod serialize_utils;
-pub mod slot_hashes;
-pub mod slot_history;
-pub mod stable_layout;
 pub mod stake;
-pub mod stake_history;
-pub mod syscalls;
-pub mod system_instruction;
-pub mod system_program;
-pub mod sysvar;
 pub mod vote;
-pub mod wasm;
 
-pub use solana_msg::msg;
+#[cfg(target_arch = "wasm32")]
+pub use solana_program_core::wasm;
 #[deprecated(since = "2.1.0", note = "Use `solana-program-memory` crate instead")]
 pub use solana_program_memory as program_memory;
 #[deprecated(since = "2.1.0", note = "Use `solana-sanitize` crate instead")]
@@ -541,6 +503,20 @@ pub use solana_secp256k1_recover as secp256k1_recover;
 pub use solana_short_vec as short_vec;
 #[cfg(target_arch = "wasm32")]
 pub use wasm_bindgen::prelude::wasm_bindgen;
+pub use {
+    solana_msg::msg,
+    solana_program_core::{
+        account_info, address_lookup_table, bpf_loader, bpf_loader_deprecated,
+        bpf_loader_upgradeable, clock, compute_units, custom_heap_default, custom_panic_default,
+        debug_account_data, declare_deprecated_sysvar_id, declare_sysvar_id, ed25519_program,
+        entrypoint, epoch_rewards, epoch_schedule, example_mocks, fee_calculator, hash,
+        impl_sysvar_get, instruction, keccak, lamports, last_restart_slot,
+        loader_upgradeable_instruction, log, message, nonce, program, program_error,
+        program_option, program_pack, program_stubs, program_utils, rent, secp256k1_program,
+        slot_hashes, slot_history, stable_layout, stake_history, syscalls, system_instruction,
+        system_program, sysvar,
+    },
+};
 
 /// The [config native program][np].
 ///
@@ -759,15 +735,6 @@ macro_rules! unchecked_div_by_const {
         quotient
     }};
 }
-
-// This module is purposefully listed after all other exports: because of an
-// interaction within rustdoc between the reexports inside this module of
-// `solana_program`'s top-level modules, and `solana_sdk`'s glob re-export of
-// `solana_program`'s top-level modules, if this module is not lexically last
-// rustdoc fails to generate documentation for the re-exports within
-// `solana_sdk`.
-#[cfg(not(target_os = "solana"))]
-pub mod example_mocks;
 
 #[cfg(test)]
 mod tests {

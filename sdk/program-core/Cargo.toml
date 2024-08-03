@@ -1,15 +1,14 @@
 [package]
-name = "solana-program"
-description = "Solana Program"
-documentation = "https://docs.rs/solana-program"
-readme = "README.md"
+name = "solana-program-core"
+description = "Solana Program Core SDK"
+documentation = "https://docs.rs/solana-program-core"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
 homepage = { workspace = true }
 license = { workspace = true }
 edition = { workspace = true }
-rust-version = "1.75.0"                          # solana platform-tools rust version
+rust-version = "1.75.0"                               # solana platform-tools rust version
 
 [dependencies]
 bincode = { workspace = true }
@@ -17,11 +16,15 @@ blake3 = { workspace = true, features = ["digest", "traits-preview"] }
 borsh = { workspace = true, optional = true }
 borsh0-10 = { package = "borsh", version = "0.10.3", optional = true }
 bs58 = { workspace = true }
+bv = { workspace = true, features = ["serde"] }
+bytemuck = { workspace = true }
+bytemuck_derive = { workspace = true }
 lazy_static = { workspace = true }
 log = { workspace = true }
 memoffset = { workspace = true }
 num-derive = { workspace = true }
 num-traits = { workspace = true, features = ["i128"] }
+qualifier_attr = { workspace = true, optional = true }
 serde = { workspace = true }
 serde_bytes = { workspace = true }
 serde_derive = { workspace = true }
@@ -32,11 +35,9 @@ solana-decode-error = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-msg = { workspace = true }
-solana-program-core = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
-solana-secp256k1-recover = { workspace = true }
 solana-short-vec = { workspace = true }
 thiserror = { workspace = true }
 
@@ -51,19 +52,29 @@ getrandom = { workspace = true, features = ["custom"] }
 solana-define-syscall = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
-num-bigint = { workspace = true }
+arbitrary = { workspace = true, features = ["derive"], optional = true }
+base64 = { workspace = true, features = ["alloc", "std"] }
+bitflags = { workspace = true }
+curve25519-dalek = { workspace = true }
 rand = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dev-dependencies]
 arbitrary = { workspace = true, features = ["derive"] }
-libsecp256k1 = { workspace = true, features = ["hmac"] } # used by doctests
+solana-logger = { workspace = true }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+console_error_panic_hook = { workspace = true }
+console_log = { workspace = true }
+getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
+js-sys = { workspace = true }
+wasm-bindgen = { workspace = true }
 
 [dev-dependencies]
-array-bytes = { workspace = true }
-assert_matches = { workspace = true }
+anyhow = { workspace = true }
 itertools = { workspace = true }
 serde_json = { workspace = true }
-solana-program-core = { workspace = true, features = ["dev-context-only-utils"] }
+serial_test = { workspace = true }
+static_assertions = { workspace = true }
 
 [build-dependencies]
 rustc_version = { workspace = true }
@@ -76,6 +87,10 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 default = ["borsh"]
-dev-context-only-utils = ["solana-program-core/dev-context-only-utils"]
-borsh = ["dep:borsh", "dep:borsh0-10", "solana-program-core/borsh"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "solana-short-vec/frozen-abi"]
+borsh = ["dep:borsh", "dep:borsh0-10"]
+dev-context-only-utils = ["dep:arbitrary", "dep:qualifier_attr"]
+frozen-abi = [
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "solana-short-vec/frozen-abi",
+]
