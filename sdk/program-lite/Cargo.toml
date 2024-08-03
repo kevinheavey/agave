@@ -45,7 +45,7 @@ solana-secp256k1-recover = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 base64 = { workspace = true, features = ["alloc", "std"] }
-curve25519-dalek = { workspace = true }
+curve25519-dalek = { workspace = true, optional = true }
 
 [target.'cfg(not(target_os = "solana"))'.dev-dependencies]
 arbitrary = { workspace = true, features = ["derive"] }
@@ -75,6 +75,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 crate-type = ["cdylib", "rlib"]
 
 [features]
+curve25519 = ["dep:curve25519-dalek"]
 default = ["borsh"]
 borsh = ["dep:borsh"]
 frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "solana-short-vec/frozen-abi"]
