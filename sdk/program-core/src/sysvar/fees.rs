@@ -20,9 +20,9 @@
 
 #![allow(deprecated)]
 
+use crate::fee_calculator::FeeCalculator;
 #[cfg(feature = "bincode")]
 use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
-use crate::fee_calculator::FeeCalculator;
 
 crate::declare_deprecated_sysvar_id!("SysvarFees111111111111111111111111111111111", Fees);
 
