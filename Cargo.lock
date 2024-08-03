@@ -6289,6 +6289,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-entrypoint"
+version = "2.1.0"
+dependencies = [
+ "solana-account-info",
+ "solana-msg",
+ "solana-program-error",
+ "solana-pubkey",
+]
+
+[[package]]
 name = "solana-faucet"
 version = "2.1.0"
 dependencies = [
@@ -6951,6 +6961,7 @@ dependencies = [
  "solana-atomic-u64",
  "solana-decode-error",
  "solana-define-syscall",
+ "solana-entrypoint",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-hash",
