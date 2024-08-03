@@ -11,7 +11,6 @@ use {
         BankingStageStats,
     },
     itertools::Itertools,
-    solana_compute_budget::compute_budget_processor::process_compute_budget_instructions,
     solana_feature_set as feature_set,
     solana_ledger::token_balances::collect_token_balances,
     solana_measure::{measure::Measure, measure_us},
