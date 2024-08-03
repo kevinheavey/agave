@@ -25,6 +25,8 @@ use {
     std::convert::TryFrom,
 };
 
+pub type ProgramResult = std::result::Result<(), ProgramError>;
+
 /// Reasons the program may fail
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(Clone, Debug, Eq, PartialEq)]
