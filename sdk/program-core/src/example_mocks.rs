@@ -204,7 +204,6 @@ pub mod solana_sdk {
                 message::{Message, VersionedMessage},
                 pubkey::Pubkey,
             },
-            serde_derive::Serialize,
         };
 
         pub struct VersionedTransaction {
@@ -224,7 +223,7 @@ pub mod solana_sdk {
             }
         }
 
-        #[derive(Serialize)]
+        #[cfg_attr(feature = "serde", derive(serde_derive::Serialize))]
         pub struct Transaction {
             pub message: Message,
         }

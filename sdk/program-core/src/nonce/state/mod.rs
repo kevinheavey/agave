@@ -4,11 +4,11 @@ mod current;
 pub use current::{Data, DurableNonce, State};
 use {
     crate::{hash::Hash, pubkey::Pubkey},
-    serde_derive::{Deserialize, Serialize},
     std::collections::HashSet,
 };
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Versions {
     Legacy(Box<State>),
     /// Current variants have durable nonce and blockhash domains separated.

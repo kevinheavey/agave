@@ -3,7 +3,8 @@
 //! [ubpfl]: crate::bpf_loader_upgradeable
 
 #[repr(u8)]
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum UpgradeableLoaderInstruction {
     /// Initialize a Buffer account.
     ///
@@ -31,7 +32,7 @@ pub enum UpgradeableLoaderInstruction {
         /// Offset at which to write the given bytes.
         offset: u32,
         /// Serialized program data
-        #[serde(with = "serde_bytes")]
+        #[cfg_attr(feature = "serde", serde(with = "serde_bytes"))]
         bytes: Vec<u8>,
     },
 

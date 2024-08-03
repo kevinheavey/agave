@@ -39,7 +39,8 @@ const MAX_BASE58_LEN: usize = 44;
     borsh(crate = "borsh")
 )]
 #[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
-#[derive(Serialize, Deserialize, Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[repr(transparent)]
 pub struct Hash(pub(crate) [u8; HASH_BYTES]);
 

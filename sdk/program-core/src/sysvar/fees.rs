@@ -32,7 +32,8 @@ crate::declare_deprecated_sysvar_id!("SysvarFees11111111111111111111111111111111
     note = "Please do not use, will no longer be available in the future"
 )]
 #[repr(C)]
-#[derive(Serialize, Deserialize, Debug, CloneZeroed, Default, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, CloneZeroed, Default, PartialEq, Eq)]
 pub struct Fees {
     pub fee_calculator: FeeCalculator,
 }

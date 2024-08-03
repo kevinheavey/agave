@@ -12,7 +12,8 @@ use {
 };
 
 /// Reasons the program may fail
-#[derive(Clone, Debug, Deserialize, Eq, Error, PartialEq, Serialize)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Clone, Debug, Eq, Error, PartialEq)]
 pub enum ProgramError {
     /// Allows on-chain programs to implement program-specific error types and see them returned
     /// by the Solana runtime. A program-specific error may be any type that is represented as

@@ -12,7 +12,8 @@ use bv::{BitVec, BitsMut};
 
 /// A bitvector indicating which slots are present in the past epoch.
 #[repr(C)]
-#[derive(Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Clone, PartialEq, Eq)]
 pub struct SlotHistory {
     pub bits: BitVec<u64>,
     pub next_slot: Slot,

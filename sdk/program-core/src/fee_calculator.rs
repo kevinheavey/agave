@@ -5,8 +5,12 @@ use {crate::clock::DEFAULT_MS_PER_SLOT, log::*};
 
 #[repr(C)]
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Serialize, Deserialize, Default, PartialEq, Eq, Clone, Copy, Debug)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize, Deserialize),
+    serde(rename_all = "camelCase")
+)]
+#[derive(Default, PartialEq, Eq, Clone, Copy, Debug)]
 pub struct FeeCalculator {
     /// The current cost of a signature.
     ///
@@ -24,12 +28,16 @@ impl FeeCalculator {
 }
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize, Deserialize),
+    serde(rename_all = "camelCase")
+)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 pub struct FeeRateGovernor {
     // The current cost of a signature  This amount may increase/decrease over time based on
     // cluster processing load.
-    #[serde(skip)]
+    #[cfg_attr(feature = "serde", serde(skip))]
     pub lamports_per_signature: u64,
 
     // The target cost of a signature when the cluster is operating around target_signatures_per_slot

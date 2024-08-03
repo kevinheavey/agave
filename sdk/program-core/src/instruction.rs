@@ -19,9 +19,11 @@ use bincode::serialize;
 use borsh::BorshSerialize;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
+use {crate::pubkey::Pubkey, solana_sanitize::Sanitize, thiserror::Error};
+#[cfg(feature = "serde")]
 use {
-    crate::pubkey::Pubkey, serde::Serialize, solana_sanitize::Sanitize,
-    solana_short_vec as short_vec, thiserror::Error,
+    serde_derive::{Deserialize, Serialize},
+    solana_short_vec as short_vec,
 };
 
 /// Reasons the runtime might have rejected an instruction.
@@ -32,7 +34,8 @@ use {
 /// dangerous to include error strings from 3rd party crates because they could
 /// change at any time and changes to them are difficult to detect.
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
-#[derive(Serialize, Deserialize, Debug, Error, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Error, PartialEq, Eq, Clone)]
 pub enum InstructionError {
     /// Deprecated! Use CustomError instead!
     /// The program instruction returned an error
@@ -328,7 +331,8 @@ pub enum InstructionError {
 /// should be specified as signers during `Instruction` construction. The
 /// program must still validate during execution that the account is a signer.
 #[cfg(not(target_arch = "wasm32"))]
-#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Instruction {
     /// Pubkey of the program that executes this instruction.
     pub program_id: Pubkey,
@@ -454,7 +458,7 @@ impl Instruction {
     /// }
     /// ```
     #[cfg(feature = "bincode")]
-    pub fn new_with_bincode<T: Serialize>(
+    pub fn new_with_bincode<T: serde::Serialize>(
         program_id: Pubkey,
         data: &T,
         accounts: Vec<AccountMeta>,
@@ -543,7 +547,8 @@ pub fn checked_add(a: u64, b: u64) -> Result<u64, InstructionError> {
 /// a minor hazard: use [`AccountMeta::new_readonly`] to specify that an account
 /// is not writable.
 #[repr(C)]
-#[derive(Debug, Default, PartialEq, Eq, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Default, PartialEq, Eq, Clone)]
 pub struct AccountMeta {
     /// An account's public key.
     pub pubkey: Pubkey,
@@ -637,16 +642,20 @@ impl AccountMeta {
 ///
 /// [`Message`]: crate::message::Message
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize, Deserialize),
+    serde(rename_all = "camelCase")
+)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct CompiledInstruction {
     /// Index into the transaction keys array indicating the program account that executes this instruction.
     pub program_id_index: u8,
     /// Ordered indices into the transaction keys array indicating which accounts to pass to the program.
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub accounts: Vec<u8>,
     /// The program input data.
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub data: Vec<u8>,
 }
 
@@ -654,7 +663,7 @@ impl Sanitize for CompiledInstruction {}
 
 impl CompiledInstruction {
     #[cfg(feature = "bincode")]
-    pub fn new<T: Serialize>(program_ids_index: u8, data: &T, accounts: Vec<u8>) -> Self {
+    pub fn new<T: serde::Serialize>(program_ids_index: u8, data: &T, accounts: Vec<u8>) -> Self {
         let data = serialize(data).unwrap();
         Self {
             program_id_index: program_ids_index,

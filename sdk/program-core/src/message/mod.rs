@@ -92,8 +92,12 @@ pub const MESSAGE_HEADER_LENGTH: usize = 3;
 ///
 /// [PoH]: https://docs.solanalabs.com/consensus/synchronization
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone, Copy)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize, Deserialize),
+    serde(rename_all = "camelCase")
+)]
+#[derive(Default, Debug, PartialEq, Eq, Clone, Copy)]
 pub struct MessageHeader {
     /// The number of signatures required for this message to be considered
     /// valid. The signers of those signatures must match the first

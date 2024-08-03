@@ -33,7 +33,8 @@ pub fn set_entries_for_tests_only(entries: usize) {
 pub type SlotHash = (Slot, Hash);
 
 #[repr(C)]
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug, Default)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(PartialEq, Eq, Debug, Default)]
 pub struct SlotHashes(Vec<SlotHash>);
 
 impl SlotHashes {

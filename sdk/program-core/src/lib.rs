@@ -97,7 +97,7 @@ pub use solana_sdk_macro::program_core_declare_id as declare_id;
 /// assert_eq!(ID, my_id);
 /// ```
 pub use solana_sdk_macro::program_core_pubkey as pubkey;
-
+#[cfg(feature = "serde")]
 #[macro_use]
 extern crate serde_derive;
 

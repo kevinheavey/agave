@@ -2,12 +2,10 @@
 use crate::instruction::AccountMeta;
 #[cfg(any(feature = "bincode", feature = "curve25519", target_os = "solana"))]
 use crate::instruction::Instruction;
-use {
-    crate::{clock::Slot, pubkey::Pubkey},
-    serde_derive::{Deserialize, Serialize},
-};
+use crate::{clock::Slot, pubkey::Pubkey};
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum ProgramInstruction {
     /// Create an address lookup table
     ///

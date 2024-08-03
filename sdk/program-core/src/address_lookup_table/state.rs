@@ -9,7 +9,6 @@ use {
         pubkey::Pubkey,
         slot_hashes::{SlotHashes, MAX_ENTRIES},
     },
-    serde_derive::{Deserialize, Serialize},
     std::borrow::Cow,
 };
 
@@ -29,7 +28,8 @@ pub enum LookupTableStatus {
 
 /// Address lookup table metadata
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct LookupTableMeta {
     /// Lookup tables cannot be closed until the deactivation slot is
     /// no longer "recent" (not accessible in the `SlotHashes` sysvar).
@@ -107,7 +107,8 @@ impl LookupTableMeta {
 
 /// Program account states
 #[cfg_attr(feature = "frozen-abi", derive(AbiEnumVisitor, AbiExample))]
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone)]
 #[allow(clippy::large_enum_variant)]
 pub enum ProgramState {
     /// Account is not initialized.

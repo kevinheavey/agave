@@ -21,7 +21,8 @@ pub struct LoadedMessage<'a> {
 
 /// Collection of addresses loaded from on-chain lookup tables, split
 /// by readonly and writable.
-#[derive(Clone, Default, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Clone, Default, Debug, PartialEq, Eq)]
 pub struct LoadedAddresses {
     /// List of addresses for writable loaded accounts
     pub writable: Vec<Pubkey>,

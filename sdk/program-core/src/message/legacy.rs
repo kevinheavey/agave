@@ -27,8 +27,12 @@ use {
         system_program, sysvar,
     },
     solana_sanitize::{Sanitize, SanitizeError},
-    solana_short_vec as short_vec,
     std::{collections::HashSet, convert::TryFrom, str::FromStr},
+};
+#[cfg(feature = "serde")]
+use {
+    serde_derive::{Deserialize, Serialize},
+    solana_short_vec as short_vec,
 };
 
 #[deprecated(
@@ -128,15 +132,19 @@ fn compile_instructions(ixs: &[Instruction], keys: &[Pubkey]) -> Vec<CompiledIns
     frozen_abi(digest = "hPGFnQYLp3Ps4XLg7NHHvC7tDfNGMMBCN3x2jGXpF3G"),
     derive(AbiExample)
 )]
-#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize, Deserialize),
+    serde(rename_all = "camelCase")
+)]
+#[derive(Default, Debug, PartialEq, Eq, Clone)]
 pub struct Message {
     /// The message header, identifying signed and read-only `account_keys`.
     // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
     pub header: MessageHeader,
 
     /// All the account keys used by this transaction.
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub account_keys: Vec<Pubkey>,
 
     /// The id of a recent ledger entry.
@@ -144,7 +152,7 @@ pub struct Message {
 
     /// Programs that will be executed in sequence and committed in one atomic transaction if all
     /// succeed.
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub instructions: Vec<CompiledInstruction>,
 }
 
@@ -165,14 +173,14 @@ pub struct Message {
     pub header: MessageHeader,
 
     #[wasm_bindgen(skip)]
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub account_keys: Vec<Pubkey>,
 
     /// The id of a recent ledger entry.
     pub recent_blockhash: Hash,
 
     #[wasm_bindgen(skip)]
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub instructions: Vec<CompiledInstruction>,
 }
 

@@ -29,7 +29,8 @@ crate::declare_id!("BPFLoaderUpgradeab1e11111111111111111111111");
 
 /// Upgradeable loader account states
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum UpgradeableLoaderState {
     /// Account is not initialized.
     Uninitialized,

@@ -16,7 +16,7 @@ blake3 = { workspace = true, features = ["digest", "traits-preview"] }
 borsh = { workspace = true, optional = true }
 borsh0-10 = { package = "borsh", version = "0.10.3", optional = true }
 bs58 = { workspace = true }
-bv = { workspace = true, features = ["serde"] }
+bv = { workspace = true }
 bytemuck = { workspace = true, optional = true }
 bytemuck_derive = { workspace = true, optional = true }
 lazy_static = { workspace = true }
@@ -25,9 +25,9 @@ memoffset = { workspace = true }
 num-derive = { workspace = true }
 num-traits = { workspace = true, features = ["i128"] }
 qualifier_attr = { workspace = true, optional = true }
-serde = { workspace = true }
-serde_bytes = { workspace = true }
-serde_derive = { workspace = true }
+serde = { workspace = true, optional = true }
+serde_bytes = { workspace = true, optional = true }
+serde_derive = { workspace = true, optional = true }
 sha2 = { workspace = true }
 sha3 = { workspace = true }
 solana-atomic-u64 = { workspace = true }
@@ -38,7 +38,7 @@ solana-msg = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
-solana-short-vec = { workspace = true }
+solana-short-vec = { workspace = true, optional = true }
 thiserror = { workspace = true }
 
 # This is currently needed to build on-chain programs reliably.
@@ -87,7 +87,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 crate-type = ["cdylib", "rlib"]
 
 [features]
-bincode = ["dep:bincode"]
+bincode = ["dep:bincode", "serde"]
 borsh = ["dep:borsh", "dep:borsh0-10"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 curve25519 = ["dep:curve25519-dalek"]
@@ -98,9 +98,17 @@ dev-context-only-utils = [
     "borsh",
     "bytemuck",
     "curve25519",
+    "serde",
 ]
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
     "solana-short-vec/frozen-abi",
+]
+serde = [
+    "dep:serde",
+    "dep:serde_bytes",
+    "dep:serde_derive",
+    "dep:solana-short-vec",
+    "bv/serde"
 ]
