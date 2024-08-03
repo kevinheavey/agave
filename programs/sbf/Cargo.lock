@@ -5380,7 +5380,6 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk-macro",
  "solana-short-vec",
- "thiserror",
  "wasm-bindgen",
 ]
 
