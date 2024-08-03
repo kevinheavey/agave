@@ -34,6 +34,7 @@ solana-msg = { workspace = true }
 solana-program-core = { workspace = true, features = [
     "base64",
     "bincode",
+    "blake3",
     "borsh",
     "bv",
     "bytemuck",

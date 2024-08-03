@@ -12,7 +12,7 @@ rust-version = "1.75.0"                               # solana platform-tools ru
 
 [dependencies]
 bincode = { workspace = true, optional = true }
-blake3 = { workspace = true, features = ["digest", "traits-preview"] }
+blake3 = { workspace = true, features = ["digest", "traits-preview"], optional = true }
 borsh = { workspace = true, optional = true }
 borsh0-10 = { package = "borsh", version = "0.10.3", optional = true }
 bs58 = { workspace = true }
@@ -87,6 +87,7 @@ crate-type = ["cdylib", "rlib"]
 [features]
 base64 = ["dep:base64"]
 bincode = ["dep:bincode", "serde"]
+blake3 = ["dep:blake3"]
 borsh = ["dep:borsh", "dep:borsh0-10", "dep:getrandom"]
 bv = ["dep:bv"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
@@ -96,6 +97,7 @@ dev-context-only-utils = [
     "dep:qualifier_attr",
     "base64",
     "bincode",
+    "blake3",
     "borsh",
     "bv",
     "bytemuck",
