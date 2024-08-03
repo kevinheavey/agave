@@ -5,6 +5,7 @@ use wasm_bindgen::prelude::*;
 pub mod hash;
 pub mod instructions;
 pub mod pubkey;
+#[cfg(feature = "bincode")]
 pub mod system_instruction;
 
 /// Initialize Javascript logging and panic handler

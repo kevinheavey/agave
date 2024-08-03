@@ -166,14 +166,18 @@ pub struct Message {
     frozen_abi(digest = "hPGFnQYLp3Ps4XLg7NHHvC7tDfNGMMBCN3x2jGXpF3G"),
     derive(AbiExample)
 )]
-#[derive(Serialize, Deserialize, Default, Debug, PartialEq, Eq, Clone)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize, Deserialize),
+    serde(rename_all = "camelCase")
+)]
+#[derive(Default, Debug, PartialEq, Eq, Clone)]
 pub struct Message {
     #[wasm_bindgen(skip)]
     pub header: MessageHeader,
 
-    #[wasm_bindgen(skip)]
     #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
+    #[wasm_bindgen(skip)]
     pub account_keys: Vec<Pubkey>,
 
     /// The id of a recent ledger entry.

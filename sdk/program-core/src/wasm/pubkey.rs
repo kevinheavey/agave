@@ -7,6 +7,7 @@ use {
     wasm_bindgen::{prelude::*, JsCast},
 };
 
+#[cfg(all(feature = "curve25519", feature = "sha2"))]
 fn js_value_to_seeds_vec(array_of_uint8_arrays: &[JsValue]) -> Result<Vec<Vec<u8>>, JsValue> {
     let vec_vec_u8 = array_of_uint8_arrays
         .iter()
@@ -64,6 +65,7 @@ impl Pubkey {
         self.to_string()
     }
 
+    #[cfg(feature = "curve25519")]
     /// Check if a `Pubkey` is on the ed25519 curve.
     pub fn isOnCurve(&self) -> bool {
         self.is_on_curve()
@@ -79,11 +81,13 @@ impl Pubkey {
         self.0.clone().into()
     }
 
+    #[cfg(feature = "sha2")]
     /// Derive a Pubkey from another Pubkey, string seed, and a program id
     pub fn createWithSeed(base: &Pubkey, seed: &str, owner: &Pubkey) -> Result<Pubkey, JsValue> {
         Pubkey::create_with_seed(base, seed, owner).map_err(display_to_jsvalue)
     }
 
+    #[cfg(all(feature = "curve25519", feature = "sha2"))]
     /// Derive a program address from seeds and a program id
     pub fn createProgramAddress(
         seeds: Box<[JsValue]>,
@@ -99,6 +103,7 @@ impl Pubkey {
             .map_err(display_to_jsvalue)
     }
 
+    #[cfg(all(feature = "curve25519", feature = "sha2"))]
     /// Find a valid program address
     ///
     /// Returns:
