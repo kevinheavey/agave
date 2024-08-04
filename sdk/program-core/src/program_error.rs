@@ -3,14 +3,13 @@
 #![allow(clippy::arithmetic_side_effects)]
 #[cfg(feature = "borsh")]
 use borsh::io::Error as BorshIoError;
-#[cfg(feature = "num-traits")]
-use num_traits::ToPrimitive;
 use {
-    crate::{instruction::InstructionError, msg, pubkey::PubkeyError},
+    crate::{instruction::InstructionError, pubkey::PubkeyError},
     core::fmt,
-    solana_decode_error::DecodeError,
     std::convert::TryFrom,
 };
+#[cfg(feature = "num-traits")]
+use {num_traits::ToPrimitive, solana_decode_error::DecodeError, solana_msg::msg};
 
 /// Reasons the program may fail
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -105,16 +104,26 @@ impl fmt::Display for ProgramError {
     }
 }
 
+#[cfg(feature = "num-traits")]
 pub trait PrintProgramError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError;
+        E: 'static
+            + std::error::Error
+            + DecodeError<E>
+            + PrintProgramError
+            + num_traits::FromPrimitive;
 }
 
+#[cfg(feature = "num-traits")]
 impl PrintProgramError for ProgramError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError,
+        E: 'static
+            + std::error::Error
+            + DecodeError<E>
+            + PrintProgramError
+            + num_traits::FromPrimitive,
     {
         match self {
             Self::Custom(error) => {
