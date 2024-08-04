@@ -220,7 +220,7 @@ pub fn sol_memset(s: &mut [u8], c: u8, n: usize) {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(feature = "num-traits", test))]
 mod tests {
     use super::*;
 
