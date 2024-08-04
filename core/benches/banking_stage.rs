@@ -8,6 +8,8 @@ use {
 
 extern crate test;
 
+#[allow(deprecated)]
+use solana_sdk::pubkey;
 use {
     crossbeam_channel::{unbounded, Receiver},
     log::*,
@@ -59,8 +61,6 @@ use {
     },
     test::Bencher,
 };
-#[allow(deprecated)]
-use solana_sdk::pubkey;
 
 fn check_txs(receiver: &Arc<Receiver<WorkingBankEntry>>, ref_tx_count: usize) {
     let mut total = 0;

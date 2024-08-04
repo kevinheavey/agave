@@ -2,6 +2,8 @@
 
 extern crate test;
 
+#[allow(deprecated)]
+use solana_sdk::pubkey;
 use {
     rand::{thread_rng, Rng},
     solana_gossip::{
@@ -27,8 +29,6 @@ use {
     std::{collections::HashMap, net::UdpSocket, sync::Arc, time::Duration},
     test::Bencher,
 };
-#[allow(deprecated)]
-use solana_sdk::pubkey;
 
 #[bench]
 fn broadcast_shreds_bench(bencher: &mut Bencher) {

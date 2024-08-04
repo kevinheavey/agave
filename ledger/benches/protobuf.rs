@@ -2,6 +2,8 @@
 #![feature(test)]
 extern crate test;
 
+#[allow(deprecated)]
+use solana_sdk::pubkey;
 use {
     bincode::{deserialize, serialize},
     solana_ledger::{
@@ -15,8 +17,6 @@ use {
     std::path::Path,
     test::Bencher,
 };
-#[allow(deprecated)]
-use solana_sdk::pubkey;
 
 fn create_rewards() -> Rewards {
     (0..100)

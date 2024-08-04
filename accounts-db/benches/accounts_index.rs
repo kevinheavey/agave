@@ -2,6 +2,8 @@
 
 extern crate test;
 
+#[allow(deprecated)]
+use solana_sdk::pubkey;
 use {
     rand::{thread_rng, Rng},
     solana_accounts_db::{
@@ -15,8 +17,6 @@ use {
     std::sync::Arc,
     test::Bencher,
 };
-#[allow(deprecated)]
-use solana_sdk::pubkey;
 
 #[bench]
 fn bench_accounts_index(bencher: &mut Bencher) {
