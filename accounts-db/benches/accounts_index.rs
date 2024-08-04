@@ -11,10 +11,12 @@ use {
             ACCOUNTS_INDEX_CONFIG_FOR_BENCHMARKS,
         },
     },
-    solana_sdk::{account::AccountSharedData, pubkey},
+    solana_sdk::account::AccountSharedData,
     std::sync::Arc,
     test::Bencher,
 };
+#[allow(deprecated)]
+use solana_sdk::pubkey;
 
 #[bench]
 fn bench_accounts_index(bencher: &mut Bencher) {

@@ -14,7 +14,6 @@ use {
     },
     solana_runtime::{bank::Bank, bank_forks::BankForks},
     solana_sdk::{
-        pubkey,
         signature::{Keypair, Signer},
         timing::{timestamp, AtomicInterval},
     },
@@ -28,6 +27,8 @@ use {
     std::{collections::HashMap, net::UdpSocket, sync::Arc, time::Duration},
     test::Bencher,
 };
+#[allow(deprecated)]
+use solana_sdk::pubkey;
 
 #[bench]
 fn broadcast_shreds_bench(bencher: &mut Bencher) {

@@ -50,8 +50,10 @@ use {
 };
 
 mod smallest_length_44_public_key {
+    #[allow(deprecated)]
     use solana_sdk::{pubkey, pubkey::Pubkey};
 
+    #[allow(deprecated)]
     pub(super) static PUBKEY: Pubkey = pubkey!("21111111111111111111111111111111111111111111");
 
     #[test]

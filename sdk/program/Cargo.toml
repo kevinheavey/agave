@@ -30,6 +30,7 @@ solana-atomic-u64 = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
+solana-logger = { workspace = true, optional = true }
 solana-msg = { workspace = true }
 solana-program-core = { workspace = true, features = [
     "base64",
@@ -89,4 +90,9 @@ crate-type = ["cdylib", "rlib"]
 default = ["borsh"]
 dev-context-only-utils = ["solana-program-core/dev-context-only-utils"]
 borsh = ["dep:borsh", "dep:borsh0-10", "solana-program-core/borsh"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "solana-short-vec/frozen-abi"]
+frozen-abi = [
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "dep:solana-logger",
+    "solana-short-vec/frozen-abi"
+]

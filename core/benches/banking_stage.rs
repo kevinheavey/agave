@@ -46,7 +46,6 @@ use {
         genesis_config::GenesisConfig,
         hash::Hash,
         message::Message,
-        pubkey,
         signature::{Keypair, Signature, Signer},
         system_instruction, system_transaction,
         timing::{duration_as_us, timestamp},
@@ -60,6 +59,8 @@ use {
     },
     test::Bencher,
 };
+#[allow(deprecated)]
+use solana_sdk::pubkey;
 
 fn check_txs(receiver: &Arc<Receiver<WorkingBankEntry>>, ref_tx_count: usize) {
     let mut total = 0;

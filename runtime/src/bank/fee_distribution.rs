@@ -359,11 +359,13 @@ pub mod tests {
             create_genesis_config_with_vote_accounts, ValidatorVoteKeypairs,
         },
         solana_sdk::{
-            account::AccountSharedData, feature_set, native_token::sol_to_lamports, pubkey,
+            account::AccountSharedData, feature_set, native_token::sol_to_lamports,
             rent::Rent, signature::Signer,
         },
         std::sync::RwLock,
     };
+    #[allow(deprecated)]
+    use solana_sdk::pubkey;
 
     #[test]
     fn test_deposit_or_burn_fee() {

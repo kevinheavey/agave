@@ -173,7 +173,7 @@ impl FeeRateGovernor {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {super::*, log::info};
 
     #[test]
     fn test_fee_rate_governor_burn() {

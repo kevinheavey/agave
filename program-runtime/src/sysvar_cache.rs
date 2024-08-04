@@ -50,7 +50,9 @@ pub struct SysvarCache {
 
 // declare_deprecated_sysvar_id doesn't support const.
 // These sysvars are going away anyway.
+#[allow(deprecated)]
 const FEES_ID: Pubkey = solana_sdk::pubkey!("SysvarFees111111111111111111111111111111111");
+#[allow(deprecated)]
 const RECENT_BLOCKHASHES_ID: Pubkey =
     solana_sdk::pubkey!("SysvarRecentB1ockHashes11111111111111111111");
 

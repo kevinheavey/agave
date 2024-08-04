@@ -10,11 +10,13 @@ use {
         get_tmp_ledger_path_auto_delete,
     },
     solana_runtime::bank::RewardType,
-    solana_sdk::{clock::Slot, pubkey},
+    solana_sdk::clock::Slot,
     solana_transaction_status::{Reward, Rewards},
     std::path::Path,
     test::Bencher,
 };
+#[allow(deprecated)]
+use solana_sdk::pubkey;
 
 fn create_rewards() -> Rewards {
     (0..100)
