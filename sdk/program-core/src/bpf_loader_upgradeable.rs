@@ -16,7 +16,7 @@
 //! [`loader_upgradeable_instruction`]: crate::loader_upgradeable_instruction
 
 use crate::pubkey::Pubkey;
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 use crate::sysvar;
 #[cfg(feature = "bincode")]
 use crate::{
@@ -141,7 +141,7 @@ pub fn write(
     )
 }
 
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 /// Returns the instructions required to deploy a program with a specified
 /// maximum program length.  The maximum length must be large enough to
 /// accommodate any future upgrades.
@@ -179,7 +179,7 @@ pub fn deploy_with_max_program_len(
     ])
 }
 
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 /// Returns the instructions required to upgrade a program.
 pub fn upgrade(
     program_address: &Pubkey,
@@ -256,7 +256,7 @@ pub fn set_buffer_authority_checked(
     )
 }
 
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 /// Returns the instructions required to set a program's authority.
 pub fn set_upgrade_authority(
     program_address: &Pubkey,
@@ -275,7 +275,7 @@ pub fn set_upgrade_authority(
     Instruction::new_with_bincode(id(), &UpgradeableLoaderInstruction::SetAuthority, metas)
 }
 
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 /// Returns the instructions required to set a program's authority. If using this instruction, the new authority
 /// must sign.
 pub fn set_upgrade_authority_checked(
@@ -333,7 +333,7 @@ pub fn close_any(
     Instruction::new_with_bincode(id(), &UpgradeableLoaderInstruction::Close, metas)
 }
 
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 /// Returns the instruction required to extend the size of a program's
 /// executable data account
 pub fn extend_program(

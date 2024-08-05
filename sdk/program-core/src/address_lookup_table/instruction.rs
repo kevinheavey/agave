@@ -75,7 +75,7 @@ pub fn derive_lookup_table_address(
     )
 }
 
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 /// Constructs an instruction to create a table account and returns
 /// the instruction and the table account's derived address.
 fn create_lookup_table_common(
@@ -103,7 +103,7 @@ fn create_lookup_table_common(
     (instruction, lookup_table_address)
 }
 
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 /// Constructs an instruction to create a table account and returns
 /// the instruction and the table account's derived address.
 ///
@@ -120,7 +120,7 @@ pub fn create_lookup_table_signed(
     create_lookup_table_common(authority_address, payer_address, recent_slot, true)
 }
 
-#[cfg(all(feature = "bincode", any(feature = "curve25519", target_os = "solana")))]
+#[cfg(all(feature = "bincode", any(all(feature = "curve25519", feature = "sha2"), target_os = "solana")))]
 /// Constructs an instruction to create a table account and returns
 /// the instruction and the table account's derived address.
 ///
