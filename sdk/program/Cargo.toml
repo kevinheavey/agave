@@ -98,4 +98,9 @@ crate-type = ["cdylib", "rlib"]
 default = ["borsh"]
 borsh = ["dep:borsh", "dep:borsh0-10"]
 dev-context-only-utils = ["dep:qualifier_attr"]
-frozen-abi = ["dep:rustc_version", "dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "solana-short-vec/frozen-abi"]
+frozen-abi = [
+    "dep:rustc_version",
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "solana-short-vec/frozen-abi",
+]
