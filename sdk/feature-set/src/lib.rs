@@ -843,7 +843,7 @@ pub mod vote_only_retransmitter_signed_fec_sets {
 }
 
 pub mod enable_turbine_extended_fanout_experiments {
-    solana_sdk::declare_id!("BZn14Liea52wtBwrXUxTv6vojuTTmfc7XGEDTXrvMD7b");
+    solana_program::declare_id!("BZn14Liea52wtBwrXUxTv6vojuTTmfc7XGEDTXrvMD7b");
 }
 
 lazy_static! {
