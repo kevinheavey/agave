@@ -271,7 +271,6 @@ mod tests {
             },
         },
         bincode::serialize,
-        solana_feature_set::FeatureSet,
         solana_program_runtime::invoke_context::mock_process_instruction,
         solana_sdk::{
             account::{self, Account, AccountSharedData, ReadableAccount},

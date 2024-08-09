@@ -443,7 +443,7 @@ impl TestValidatorGenesis {
                 .for_each(|(maybe_account, feature_id)| {
                     if maybe_account
                         .as_ref()
-                        .and_then(solana_feature_set::from_account)
+                        .and_then(solana_sdk::feature::from_account)
                         .and_then(|feature| feature.activated_at)
                         .is_none()
                     {

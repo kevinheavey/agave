@@ -855,7 +855,7 @@ pub mod enable_transaction_loading_failure_fees {
 }
 
 pub mod enable_turbine_extended_fanout_experiments {
-    solana_sdk::declare_id!("BZn14Liea52wtBwrXUxTv6vojuTTmfc7XGEDTXrvMD7b");
+    solana_program::declare_id!("BZn14Liea52wtBwrXUxTv6vojuTTmfc7XGEDTXrvMD7b");
 }
 
 pub mod deprecate_legacy_vote_ixs {

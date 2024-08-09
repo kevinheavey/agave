@@ -330,7 +330,6 @@ pub mod tests {
             create_genesis_config, create_genesis_config_with_leader,
             create_genesis_config_with_vote_accounts, ValidatorVoteKeypairs,
         },
-        solana_feature_set as feature_set,
         solana_sdk::{
             account::AccountSharedData, native_token::sol_to_lamports, pubkey, rent::Rent,
             signature::Signer,
