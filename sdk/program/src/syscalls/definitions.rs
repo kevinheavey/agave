@@ -1,5 +1,7 @@
 #[cfg(target_feature = "static-syscalls")]
 pub use solana_define_syscall::sys_hash;
+#[deprecated(since = "2.1.0", note = "Use solana_hasher::sol_sha256 instead")]
+pub use solana_hasher::sol_sha256;
 #[deprecated(since = "2.1.0", note = "Use `solana_instruction::syscalls` instead")]
 pub use solana_instruction::syscalls::{
     sol_get_processed_sibling_instruction, sol_get_stack_height,
