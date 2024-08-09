@@ -190,7 +190,7 @@ impl Hash {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "frozen-abi", RUSTC_WITH_SPECIALIZATION))]
 mod tests {
     use super::*;
     use solana_frozen_abi::abi_example::AbiExample;
