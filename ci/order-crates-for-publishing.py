@@ -64,7 +64,7 @@ def is_self_dev_dep_with_dev_context_only_utils(package, dependency, wrong_self_
     return is_special_cased
 
 
-# `cargo publish`` is fine with circular dev-dependencies if
+# `cargo publish` is fine with circular dev-dependencies if
 # they are path deps.
 # However, cargo still fails if deps are path deps with versions
 # (this when you use `workspace = true`): https://github.com/rust-lang/cargo/issues/4242
