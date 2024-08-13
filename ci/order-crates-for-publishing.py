@@ -39,11 +39,11 @@ def is_path_dev_dep(package, dependency, wrong_path_dev_dependencies):
 
 def should_add(package, dependency, wrong_path_dev_dependencies):
     related_to_solana = dependency['name'].startswith('solana')
-    self_dev_dep_with_dev_context_only_utils = is_path_dev_dep(
+    path_dev_dep = is_path_dev_dep(
         package, dependency, wrong_path_dev_dependencies
     )
 
-    return related_to_solana and not self_dev_dep_with_dev_context_only_utils
+    return related_to_solana and not path_dev_dep
 
 def get_packages():
     metadata = load_metadata()
