@@ -86,9 +86,6 @@ def should_add(package, dependency, wrong_self_dev_dependencies):
     self_dev_dep_with_dev_context_only_utils = is_self_dev_dep_with_dev_context_only_utils(
         package, dependency, wrong_self_dev_dependencies
     )
-    if package["name"] == "solana-sanitize":
-        print(dependency)
-        print(is_path_dev_dep(dependency))
     return (
         related_to_solana
         and not self_dev_dep_with_dev_context_only_utils
