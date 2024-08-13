@@ -38,7 +38,8 @@ def is_path_dev_dep(package, dependency, wrong_path_dev_dependencies):
     return is_special_cased
 
 def should_add(package, dependency, wrong_path_dev_dependencies):
-    related_to_solana = dependency['name'].startswith('solana')
+    name = dependency['name']
+    related_to_solana = name.startswith('solana') or name.startswith('agave')
     path_dev_dep = is_path_dev_dep(
         package, dependency, wrong_path_dev_dependencies
     )
