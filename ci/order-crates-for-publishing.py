@@ -21,8 +21,11 @@ def load_metadata():
     return json.loads(subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE).communicate()[0])
 
-# Cargo publish if fine with circular dev-dependencies if
+# Cargo publish is fine with circular dev-dependencies if
 # they are path deps.
+# However, cargo still fails if deps are path deps with versions
+# (this when you use `workspace = true`): https://github.com/rust-lang/cargo/issues/4242
+# This function checks for these good and bad uses of dev dependencies.
 def is_path_dev_dep(package, dependency, wrong_path_dev_dependencies):
     no_explicit_version = '*'
     is_special_cased = False
