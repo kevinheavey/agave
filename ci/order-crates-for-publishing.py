@@ -70,9 +70,9 @@ def get_packages():
     for dependency in circular_dependencies:
         sys.stderr.write('Error: Circular dependency: {}\n'.format(dependency))
     for dependency in wrong_path_dev_dependencies:
-        sys.stderr.write('Error: wrong dev-context-only-utils circular dependency. try: ' +
-            '{} = {{ path = ".", features = {} }}\n'
-            .format(dependency['name'], json.dumps(dependency['features']))
+        sys.stderr.write('Error: wrong circular dev dependency. try using a path dependency: ' +
+            '{} = {{ path = "$path_to_crate" }}\n'
+            .format(dependency['name'])
         )
 
     if len(circular_dependencies) != 0 or len(wrong_path_dev_dependencies) != 0:
