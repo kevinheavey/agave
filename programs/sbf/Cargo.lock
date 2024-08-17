@@ -5139,7 +5139,6 @@ dependencies = [
  "bytemuck",
  "bytemuck_derive",
  "js-sys",
- "rustc_version",
  "serde",
  "serde_derive",
  "solana-atomic-u64",
