@@ -17,6 +17,7 @@
 //! 3. Add desired logic to check for and switch on feature availability.
 //!
 //! For more information on how features are picked up, see comments for `Feature`.
+#![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(min_specialization))]
 
 use {
     lazy_static::lazy_static,
@@ -1110,7 +1111,7 @@ lazy_static! {
 }
 
 /// `FeatureSet` holds the set of currently active/inactive runtime features
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct FeatureSet {
     pub active: HashMap<Pubkey, Slot>,
