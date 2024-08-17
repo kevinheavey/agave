@@ -29,12 +29,17 @@ js-sys = { workspace = true }
 wasm-bindgen = { workspace = true }
 
 [build-dependencies]
-rustc_version = { workspace = true }
+rustc_version = { workspace = true, optional = true }
 
 [features]
 borsh = ["dep:borsh", "std"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 default = ["std"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "std"]
+frozen-abi = [
+    "dep:rustc_version",
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "std"
+]
 serde = ["dep:serde", "dep:serde_derive"]
 std = []
