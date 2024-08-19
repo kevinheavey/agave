@@ -43,3 +43,6 @@ frozen-abi = [
 ]
 serde = ["dep:serde", "dep:serde_derive"]
 std = []
+
+[lints]
+workspace = true
