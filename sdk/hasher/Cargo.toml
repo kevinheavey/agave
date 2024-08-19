@@ -27,3 +27,6 @@ sha2 = ["dep:sha2"]
 
 [dev-dependencies]
 bs58 = { workspace = true }
+
+[lints]
+workspace = true
