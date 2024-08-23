@@ -30,6 +30,8 @@ use {
     solana_type_overrides::sync::{Arc, RwLock},
     std::collections::{HashMap, HashSet},
 };
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen_test::wasm_bindgen_test as test;
 
 // This module contains the implementation of TransactionProcessingCallback
 mod mock_bank;

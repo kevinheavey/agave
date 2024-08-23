@@ -24,7 +24,6 @@ solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-loader-v4-program = { workspace = true }
 solana-log-collector = { workspace = true }
 solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
 solana-program-runtime = { workspace = true }
 solana-runtime-transaction = { workspace = true }
 solana-sdk = { workspace = true }
@@ -45,7 +44,7 @@ lazy_static = { workspace = true }
 libsecp256k1 = { workspace = true }
 prost = { workspace = true }
 rand = { workspace = true }
-shuttle = { workspace = true }
+# shuttle = { workspace = true }
 solana-bpf-loader-program = { workspace = true }
 solana-compute-budget-program = { workspace = true }
 solana-logger = { workspace = true }
@@ -53,6 +52,9 @@ solana-sdk = { workspace = true, features = ["dev-context-only-utils"] }
 # See order-crates-for-publishing.py for using this unusual `path = "."`
 solana-svm = { path = ".", features = ["dev-context-only-utils"] }
 solana-svm-conformance = { workspace = true }
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "0.3"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
@@ -70,12 +72,12 @@ frozen-abi = [
     "solana-program-runtime/frozen-abi",
     "solana-sdk/frozen-abi",
 ]
-shuttle-test = [
-    "solana-type-overrides/shuttle-test",
-    "solana-program-runtime/shuttle-test",
-    "solana-bpf-loader-program/shuttle-test",
-    "solana-loader-v4-program/shuttle-test",
-]
+# shuttle-test = [
+#     "solana-type-overrides/shuttle-test",
+#     "solana-program-runtime/shuttle-test",
+#     "solana-bpf-loader-program/shuttle-test",
+#     "solana-loader-v4-program/shuttle-test",
+# ]
 
 [lints]
 workspace = true

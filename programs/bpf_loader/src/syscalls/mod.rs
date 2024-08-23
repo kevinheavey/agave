@@ -518,7 +518,10 @@ fn translate_type_inner<'a, T>(
 ) -> Result<&'a mut T, Error> {
     let host_addr = translate(memory_mapping, access_type, vm_addr, size_of::<T>() as u64)?;
     if !check_aligned {
-        Ok(unsafe { std::mem::transmute::<u64, &mut T>(host_addr) })
+        #[cfg(target_pointer_width = "32")]
+        return Ok(unsafe { std::mem::transmute::<u32, &mut T>(host_addr as u32) });
+        #[cfg(not(target_pointer_width = "32"))]
+        return Ok(unsafe { std::mem::transmute::<u64, &mut T>(host_addr) });
     } else if !address_is_aligned::<T>(host_addr) {
         Err(SyscallError::UnalignedPointer.into())
     } else {

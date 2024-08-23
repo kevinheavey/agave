@@ -301,14 +301,6 @@ impl LoadProgramMetrics {
         saturating_add_assign!(timings.create_executor_load_elf_us, self.load_elf_us);
         saturating_add_assign!(timings.create_executor_verify_code_us, self.verify_code_us);
         saturating_add_assign!(timings.create_executor_jit_compile_us, self.jit_compile_us);
-        datapoint_trace!(
-            "create_executor_trace",
-            ("program_id", self.program_id, String),
-            ("register_syscalls_us", self.register_syscalls_us, i64),
-            ("load_elf_us", self.load_elf_us, i64),
-            ("verify_code_us", self.verify_code_us, i64),
-            ("jit_compile_us", self.jit_compile_us, i64),
-        );
     }
 }
 
@@ -382,24 +374,18 @@ impl ProgramCacheEntry {
         metrics: &mut LoadProgramMetrics,
         reloading: bool,
     ) -> Result<Self, Box<dyn std::error::Error>> {
-        let load_elf_time = Measure::start("load_elf_time");
         // The following unused_mut exception is needed for architectures that do not
         // support JIT compilation.
         #[allow(unused_mut)]
         let mut executable = Executable::load(elf_bytes, program_runtime_environment.clone())?;
-        metrics.load_elf_us = load_elf_time.end_as_us();
 
         if !reloading {
-            let verify_code_time = Measure::start("verify_code_time");
             executable.verify::<RequisiteVerifier>()?;
-            metrics.verify_code_us = verify_code_time.end_as_us();
         }
 
         #[cfg(all(not(target_os = "windows"), target_arch = "x86_64"))]
         {
-            let jit_compile_time = Measure::start("jit_compile_time");
             executable.jit_compile()?;
-            metrics.jit_compile_us = jit_compile_time.end_as_us();
         }
 
         Ok(Self {

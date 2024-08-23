@@ -472,7 +472,6 @@ impl<'a> InvokeContext<'a> {
         timings: &mut ExecuteTimings,
     ) -> Result<(), InstructionError> {
         let instruction_context = self.transaction_context.get_current_instruction_context()?;
-        let process_executable_chain_time = Measure::start("process_executable_chain_time");
 
         let builtin_id = {
             debug_assert!(instruction_context.get_number_of_program_accounts() <= 1);
@@ -554,14 +553,6 @@ impl<'a> InvokeContext<'a> {
         if builtin_id == program_id && result.is_ok() && *compute_units_consumed == 0 {
             return Err(InstructionError::BuiltinProgramsMustConsumeComputeUnits);
         }
-
-        saturating_add_assign!(
-            timings
-                .execute_accessories
-                .process_instructions
-                .process_executable_chain_us,
-            process_executable_chain_time.end_as_us()
-        );
         result
     }
 

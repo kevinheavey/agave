@@ -103,7 +103,6 @@ impl MessageProcessor {
                         invoke_context.transaction_context.pop()
                     })
             } else {
-                let time = Measure::start("execute_instruction");
                 let mut compute_units_consumed = 0;
                 let result = invoke_context.process_instruction(
                     instruction.data,
@@ -112,26 +111,12 @@ impl MessageProcessor {
                     &mut compute_units_consumed,
                     execute_timings,
                 );
-                let time = time.end_as_us();
                 *accumulated_consumed_units =
                     accumulated_consumed_units.saturating_add(compute_units_consumed);
-                execute_timings.details.accumulate_program(
-                    program_id,
-                    time,
-                    compute_units_consumed,
-                    result.is_err(),
-                );
                 invoke_context.timings = {
                     execute_timings.details.accumulate(&invoke_context.timings);
                     ExecuteDetailsTimings::default()
                 };
-                saturating_add_assign!(
-                    execute_timings
-                        .execute_accessories
-                        .process_instructions
-                        .total_us,
-                    time
-                );
                 result
             };
 

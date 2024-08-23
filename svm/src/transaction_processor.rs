@@ -24,7 +24,7 @@ use {
     solana_compute_budget::compute_budget::ComputeBudget,
     solana_loader_v4_program::create_program_runtime_environment_v2,
     solana_log_collector::LogCollector,
-    solana_measure::{measure::Measure, measure_us},
+    solana_measure::{measure::Measure},
     solana_program_runtime::{
         invoke_context::{EnvironmentConfig, InvokeContext},
         loaded_programs::{
@@ -235,7 +235,7 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
         let mut error_metrics = TransactionErrorMetrics::default();
         let mut execute_timings = ExecuteTimings::default();
 
-        let (validation_results, validate_fees_us) = measure_us!(self.validate_fees(
+        let validation_results = self.validate_fees(
             callbacks,
             config.account_overrides,
             sanitized_txs,
@@ -248,9 +248,9 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
                 .rent_collector
                 .unwrap_or(&RentCollector::default()),
             &mut error_metrics
-        ));
+        );
 
-        let (mut program_cache_for_tx_batch, program_cache_us) = measure_us!({
+        let mut program_cache_for_tx_batch = {
             let mut program_accounts_map = Self::filter_executable_program_accounts(
                 callbacks,
                 sanitized_txs,
@@ -279,9 +279,9 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
             }
 
             program_cache_for_tx_batch
-        });
+        };
 
-        let (loaded_transactions, load_accounts_us) = measure_us!(load_accounts(
+        let loaded_transactions = load_accounts(
             callbacks,
             sanitized_txs,
             validation_results,
@@ -292,10 +292,10 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
                 .rent_collector
                 .unwrap_or(&RentCollector::default()),
             &program_cache_for_tx_batch,
-        ));
+        );
 
-        let (processing_results, execution_us): (Vec<TransactionProcessingResult>, u64) =
-            measure_us!(loaded_transactions
+        let processing_results: Vec<TransactionProcessingResult> =
+            loaded_transactions
                 .into_iter()
                 .zip(sanitized_txs.iter())
                 .map(|(load_result, tx)| match load_result {
@@ -321,7 +321,7 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
                         Ok(executed_tx)
                     }
                 })
-                .collect());
+                .collect();
 
         // Skip eviction when there's no chance this particular tx batch has increased the size of
         // ProgramCache entries. Note that loaded_missing is deliberately defined, so that there's
@@ -337,20 +337,6 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
                     self.slot,
                 );
         }
-
-        debug!(
-            "load: {}us execute: {}us txs_len={}",
-            load_accounts_us,
-            execution_us,
-            sanitized_txs.len(),
-        );
-
-        execute_timings
-            .saturating_add_in_place(ExecuteTimingType::ValidateFeesUs, validate_fees_us);
-        execute_timings
-            .saturating_add_in_place(ExecuteTimingType::ProgramCacheUs, program_cache_us);
-        execute_timings.saturating_add_in_place(ExecuteTimingType::LoadUs, load_accounts_us);
-        execute_timings.saturating_add_in_place(ExecuteTimingType::ExecuteUs, execution_us);
 
         LoadAndExecuteSanitizedTransactionsOutput {
             error_metrics,
@@ -773,7 +759,6 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
             compute_budget,
         );
 
-        let mut process_message_time = Measure::start("process_message_time");
         let process_result = MessageProcessor::process_message(
             tx,
             &loaded_transaction.program_indices,
@@ -781,14 +766,8 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
             execute_timings,
             &mut executed_units,
         );
-        process_message_time.stop();
 
         drop(invoke_context);
-
-        saturating_add_assign!(
-            execute_timings.execute_accessories.process_message_us,
-            process_message_time.as_us()
-        );
 
         let mut status = process_result
             .and_then(|info| {

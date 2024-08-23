@@ -55,6 +55,8 @@ use {
         sync::{Arc, RwLock},
     },
 };
+// #[cfg(target_arch = "wasm32")]
+// use wasm_bindgen_test::wasm_bindgen_test as test;
 
 mod mock_bank;
 mod transaction_builder;
@@ -118,44 +120,30 @@ fn cleanup() {
 
 #[test]
 fn execute_fixtures() {
-    let mut base_dir = setup();
-    base_dir.push("instr");
-    base_dir.push("fixtures");
-
     // bpf-loader tests
-    base_dir.push("bpf-loader");
-    run_from_folder(&base_dir, &HashSet::new());
-    base_dir.pop();
-
-    // System program tests
-    base_dir.push("system");
-    // These cases hit a debug_assert here:
-    // https://github.com/anza-xyz/agave/blob/0142c7fa1c46b05d201552102eb91b6d4b10f077/svm/src/transaction_account_state_info.rs#L34
-    let run_as_instr = HashSet::from([
-        OsString::from("7fcde5cb94e1dc44.bin.fix"),
-        OsString::from("9f3c001dcd1803fe.bin.fix"),
-        OsString::from("34ee00c659dc5aa6.bin.fix"),
-        OsString::from("8fd951ecde987723.bin.fix"),
-    ]);
-    run_from_folder(&base_dir, &run_as_instr);
-
-    cleanup();
+    let base_dir = [
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/0732b78f6e65637a.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/17cc2a4cb4e52b6b.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/57313dcd67df8102.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/997ec069a1e03f7b.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/bf05a479df709e92.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/11a9c773abf6946e.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/4dc5943160201c33.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/856b6d181608a874.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/9cbe226ebd08f876.bin.fix").as_slice(),
+        include_bytes!("../../../test-vectors/instr/fixtures/bpf-loader/c7c38bb8a66a7e05.bin.fix").as_slice(),
+    ];
+    run_from_folder(&base_dir);
 }
 
-fn run_from_folder(base_dir: &PathBuf, run_as_instr: &HashSet<OsString>) {
-    for path in std::fs::read_dir(base_dir).unwrap() {
-        let filename = path.as_ref().unwrap().file_name();
-        let mut file = File::open(path.as_ref().unwrap().path()).expect("file not found");
-        let mut buffer = Vec::new();
-        file.read_to_end(&mut buffer).expect("Failed to read file");
-
-        let fixture = InstrFixture::decode(buffer.as_slice()).unwrap();
-        let execute_as_instr = run_as_instr.contains(&filename);
-        run_fixture(fixture, filename, execute_as_instr);
+fn run_from_folder(base_dir: &[&[u8]]) {
+    for path in base_dir {
+        let fixture = InstrFixture::decode(*path).unwrap();
+        run_fixture(fixture, false);
     }
 }
 
-fn run_fixture(fixture: InstrFixture, filename: OsString, execute_as_instr: bool) {
+fn run_fixture(fixture: InstrFixture, execute_as_instr: bool) {
     let input = fixture.input.unwrap();
     let output = fixture.output.as_ref().unwrap();
 
@@ -293,7 +281,6 @@ fn run_fixture(fixture: InstrFixture, filename: OsString, execute_as_instr: bool
             transactions[0].message(),
             compute_budget,
             output,
-            filename,
             input.cu_avail,
         );
         return;
@@ -322,7 +309,6 @@ fn run_fixture(fixture: InstrFixture, filename: OsString, execute_as_instr: bool
                 transactions[0].message(),
                 compute_budget,
                 output,
-                filename,
                 input.cu_avail,
             );
             return;
@@ -330,8 +316,6 @@ fn run_fixture(fixture: InstrFixture, filename: OsString, execute_as_instr: bool
 
         assert_ne!(
             output.result, 0,
-            "Transaction was not successful, but should have been: file {:?}",
-            filename
         );
         return;
     }
@@ -351,7 +335,6 @@ fn run_fixture(fixture: InstrFixture, filename: OsString, execute_as_instr: bool
             .as_ref()
             .map(|x| &x.data)
             .unwrap_or(&Vec::new()),
-        filename,
     );
 }
 
@@ -390,7 +373,6 @@ fn execute_fixture_as_instr(
     sanitized_message: &SanitizedMessage,
     compute_budget: ComputeBudget,
     output: &InstrEffects,
-    filename: OsString,
     cu_avail: u64,
 ) {
     let rent = if let Ok(rent) = batch_processor.sysvar_cache().get_rent() {
@@ -504,14 +486,10 @@ fn execute_fixture_as_instr(
     if output.result == 0 {
         assert!(
             result.is_ok(),
-            "Instruction execution was NOT successful, but should have been: {:?}",
-            filename
         );
     } else {
         assert!(
             result.is_err(),
-            "Instruction execution was successful, but should NOT have been: {:?}",
-            filename
         );
         return;
     }
@@ -528,7 +506,6 @@ fn execute_fixture_as_instr(
         compute_units_consumed,
         cu_avail,
         &return_data.data,
-        filename,
     );
 }
 
@@ -538,7 +515,6 @@ fn verify_accounts_and_data(
     consumed_units: u64,
     cu_avail: u64,
     return_data: &Vec<u8>,
-    filename: OsString,
 ) {
     let idx_map: HashMap<Pubkey, usize> = accounts
         .iter()
@@ -557,26 +533,18 @@ fn verify_accounts_and_data(
         assert_eq!(
             received_data.lamports(),
             item.lamports,
-            "Lamports differ in case: {:?}",
-            filename
         );
         assert_eq!(
             received_data.data(),
             item.data.as_slice(),
-            "Account data differs in case: {:?}",
-            filename
         );
         assert_eq!(
             received_data.owner(),
             &Pubkey::new_from_array(item.owner.clone().try_into().unwrap()),
-            "Account owner differs in case: {:?}",
-            filename
         );
         assert_eq!(
             received_data.executable(),
             item.executable,
-            "Executable boolean differs in case: {:?}",
-            filename
         );
 
         // u64::MAX means we are not considering the epoch
@@ -584,8 +552,6 @@ fn verify_accounts_and_data(
             assert_eq!(
                 received_data.rent_epoch(),
                 item.rent_epoch,
-                "Rent epoch differs in case: {:?}",
-                filename
             );
         }
     }
@@ -593,8 +559,6 @@ fn verify_accounts_and_data(
     assert_eq!(
         consumed_units,
         cu_avail.saturating_sub(output.cu_avail),
-        "Execution units differs in case: {:?}",
-        filename
     );
 
     if return_data.is_empty() {

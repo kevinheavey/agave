@@ -35,7 +35,7 @@ use {
         env,
         fs::{self, File},
         io::Read,
-        time::{SystemTime, UNIX_EPOCH},
+        time::UNIX_EPOCH,
     },
 };
 
@@ -147,7 +147,17 @@ pub fn deploy_program(name: String, deployment_slot: Slot, mock_bank: &MockBankC
             UpgradeableLoaderState::size_of_programdata_metadata().saturating_sub(header.len())
         )
     ];
-    let mut buffer = load_program(name);
+    let clock_sysvar_program = include_bytes!("example-programs/clock-sysvar/clock_sysvar_program.so").to_vec();
+    let hello_solana_program = include_bytes!("example-programs/hello-solana/hello_solana_program.so").to_vec();
+    let simple_transfer_program = include_bytes!("example-programs/simple-transfer/simple_transfer_program.so").to_vec();
+    let transfer_from_account_program = include_bytes!("example-programs/transfer-from-account/transfer_from_account_program.so").to_vec();
+    let mut buffer = match name.as_ref() {
+        "clock-sysvar" => clock_sysvar_program,
+        "hello-solana" => hello_solana_program,
+        "simple-transfer" => simple_transfer_program,
+        "transfer-from-account" => transfer_from_account_program,
+        _ => unreachable!()
+    };
     header.append(&mut complement);
     header.append(&mut buffer);
     account_data.set_data(header);
@@ -181,10 +191,7 @@ pub fn create_executable_environment(
     program_cache.fork_graph = Some(Arc::downgrade(&fork_graph));
 
     // We must fill in the sysvar cache entries
-    let time_now = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("Time went backwards")
-        .as_secs() as i64;
+    let time_now = 1724431452i64;
     let clock = Clock {
         slot: DEPLOYMENT_SLOT,
         epoch_start_timestamp: time_now.saturating_sub(10) as UnixTimestamp,

@@ -106,7 +106,6 @@ macro_rules! deploy_program {
     ($invoke_context:expr, $program_id:expr, $loader_key:expr,
      $account_size:expr, $slot:expr, $drop:expr, $new_programdata:expr $(,)?) => {{
         let mut load_program_metrics = LoadProgramMetrics::default();
-        let mut register_syscalls_time = Measure::start("register_syscalls_time");
         let deployment_slot: Slot = $slot;
         let environments = $invoke_context.get_environments_for_slot(
             deployment_slot.saturating_add(DELAY_VISIBILITY_SLOT_OFFSET)
@@ -121,10 +120,7 @@ macro_rules! deploy_program {
             ic_msg!($invoke_context, "Failed to register syscalls: {}", e);
             InstructionError::ProgramEnvironmentSetupFailure
         })?;
-        register_syscalls_time.stop();
-        load_program_metrics.register_syscalls_us = register_syscalls_time.as_us();
         // Verify using stricter deployment_program_runtime_environment
-        let mut load_elf_time = Measure::start("load_elf_time");
         let executable = Executable::<InvokeContext>::load(
             $new_programdata,
             Arc::new(deployment_program_runtime_environment),
@@ -132,15 +128,10 @@ macro_rules! deploy_program {
             ic_logger_msg!($invoke_context.get_log_collector(), "{}", err);
             InstructionError::InvalidAccountData
         })?;
-        load_elf_time.stop();
-        load_program_metrics.load_elf_us = load_elf_time.as_us();
-        let mut verify_code_time = Measure::start("verify_code_time");
         executable.verify::<RequisiteVerifier>().map_err(|err| {
             ic_logger_msg!($invoke_context.get_log_collector(), "{}", err);
             InstructionError::InvalidAccountData
         })?;
-        verify_code_time.stop();
-        load_program_metrics.verify_code_us = verify_code_time.as_us();
         // Reload but with environments.program_runtime_v1
         let executor = load_program_from_bytes(
             $invoke_context.get_log_collector(),
@@ -412,17 +403,11 @@ pub fn process_instruction_inner(
             process_loader_upgradeable_instruction(invoke_context)
         } else if bpf_loader::check_id(program_id) {
             invoke_context.consume_checked(DEFAULT_LOADER_COMPUTE_UNITS)?;
-            ic_logger_msg!(
-                log_collector,
-                "BPF loader management instructions are no longer supported",
-            );
             Err(InstructionError::UnsupportedProgramId)
         } else if bpf_loader_deprecated::check_id(program_id) {
             invoke_context.consume_checked(DEPRECATED_LOADER_COMPUTE_UNITS)?;
-            ic_logger_msg!(log_collector, "Deprecated loader is no longer supported");
             Err(InstructionError::UnsupportedProgramId)
         } else {
-            ic_logger_msg!(log_collector, "Invalid BPF loader id");
             Err(InstructionError::IncorrectProgramId)
         }
         .map(|_| 0)
@@ -435,7 +420,6 @@ pub fn process_instruction_inner(
         return Err(Box::new(InstructionError::IncorrectProgramId));
     }
 
-    let mut get_or_create_executor_time = Measure::start("get_or_create_executor_time");
     let executor = invoke_context
         .program_cache_for_tx_batch
         .find(program_account.get_key())
@@ -444,11 +428,6 @@ pub fn process_instruction_inner(
             InstructionError::InvalidAccountData
         })?;
     drop(program_account);
-    get_or_create_executor_time.stop();
-    saturating_add_assign!(
-        invoke_context.timings.get_or_create_executor_us,
-        get_or_create_executor_time.as_us()
-    );
 
     executor.ix_usage_counter.fetch_add(1, Ordering::Relaxed);
     match &executor.program {
@@ -1362,13 +1341,11 @@ fn execute<'a, 'b: 'a>(
         .get_feature_set()
         .is_active(&bpf_account_data_direct_mapping::id());
 
-    let mut serialize_time = Measure::start("serialize");
     let (parameter_bytes, regions, accounts_metadata) = serialization::serialize_parameters(
         invoke_context.transaction_context,
         instruction_context,
         !direct_mapping,
     )?;
-    serialize_time.stop();
 
     // save the account addresses so in case we hit an AccessViolation error we
     // can map to a more specific error
@@ -1387,7 +1364,6 @@ fn execute<'a, 'b: 'a>(
         })
         .collect::<Vec<_>>();
 
-    let mut create_vm_time = Measure::start("create_vm");
     let execution_result = {
         let compute_meter_prev = invoke_context.get_remaining();
         create_vm!(vm, executable, regions, accounts_metadata, invoke_context);
@@ -1398,9 +1374,7 @@ fn execute<'a, 'b: 'a>(
                 return Err(Box::new(InstructionError::ProgramEnvironmentSetupFailure));
             }
         };
-        create_vm_time.stop();
 
-        vm.context_object_pointer.execute_time = Some(Measure::start("execute"));
         let (compute_units_consumed, result) = vm.execute_program(executable, !use_jit);
         MEMORY_POOL.with_borrow_mut(|memory_pool| {
             memory_pool.put_stack(stack);
@@ -1409,10 +1383,6 @@ fn execute<'a, 'b: 'a>(
             debug_assert!(memory_pool.heap_len() <= MAX_INSTRUCTION_STACK_DEPTH);
         });
         drop(vm);
-        if let Some(execute_time) = invoke_context.execute_time.as_mut() {
-            execute_time.stop();
-            saturating_add_assign!(invoke_context.timings.execute_us, execute_time.as_us());
-        }
 
         ic_logger_msg!(
             log_collector,
@@ -1493,20 +1463,12 @@ fn execute<'a, 'b: 'a>(
         )
     }
 
-    let mut deserialize_time = Measure::start("deserialize");
     let execute_or_deserialize_result = execution_result.and_then(|_| {
         deserialize_parameters(invoke_context, parameter_bytes.as_slice(), !direct_mapping)
             .map_err(|error| Box::new(error) as Box<dyn std::error::Error>)
     });
-    deserialize_time.stop();
 
     // Update the timings
-    saturating_add_assign!(invoke_context.timings.serialize_us, serialize_time.as_us());
-    saturating_add_assign!(invoke_context.timings.create_vm_us, create_vm_time.as_us());
-    saturating_add_assign!(
-        invoke_context.timings.deserialize_us,
-        deserialize_time.as_us()
-    );
 
     execute_or_deserialize_result
 }

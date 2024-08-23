@@ -136,10 +136,7 @@ pub fn create_genesis_config(lamports: u64) -> (GenesisConfig, Keypair) {
 impl Default for GenesisConfig {
     fn default() -> Self {
         Self {
-            creation_time: SystemTime::now()
-                .duration_since(UNIX_EPOCH)
-                .unwrap()
-                .as_secs() as UnixTimestamp,
+            creation_time: 0,
             accounts: BTreeMap::default(),
             native_instruction_processors: Vec::default(),
             rewards_pools: BTreeMap::default(),
