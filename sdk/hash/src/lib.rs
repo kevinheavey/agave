@@ -120,6 +120,7 @@ impl Hash {
         Self(hash_array)
     }
 
+    #[cfg(feature = "dev-context-only-utils")]
     /// unique Hash for tests and benchmarks.
     pub fn new_unique() -> Self {
         use solana_atomic_u64::AtomicU64;

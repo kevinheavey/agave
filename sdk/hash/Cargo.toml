@@ -35,6 +35,7 @@ rustc_version = { workspace = true, optional = true }
 borsh = ["dep:borsh", "std"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 default = ["std"]
+dev-context-only-utils = []
 frozen-abi = [
     "dep:rustc_version",
     "dep:solana-frozen-abi",
