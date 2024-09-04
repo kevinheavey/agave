@@ -4,15 +4,11 @@
 
 #[deprecated(since = "2.1.0", note = "Use `solana-precompile-error` crate instead.")]
 pub use solana_precompile_error::PrecompileError;
-#[deprecated(since = "2.1.0", note = "Use `solana-precompile-error` crate instead.")]
-pub use solana_precompile_error::PrecompileError;
 use {
     lazy_static::lazy_static,
-    solana_decode_error::DecodeError,
     solana_feature_set::FeatureSet,
     solana_program::instruction::CompiledInstruction,
     solana_pubkey::Pubkey,
-    thiserror::Error,
 };
 
 /// All precompiled programs must implement the `Verify` function
