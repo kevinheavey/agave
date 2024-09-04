@@ -6,6 +6,7 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 extern crate std;
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
+use core::str::from_utf8;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(any(all(feature = "borsh", feature = "std"), target_arch = "wasm32"))]
@@ -64,15 +65,25 @@ impl AsRef<[u8]> for Hash {
     }
 }
 
+fn to_base58(h: &Hash, f: &mut fmt::Formatter) -> fmt::Result {
+    let mut out = [0u8; MAX_BASE58_LEN];
+    let out_slice: &mut [u8] = &mut out;
+    // This will never fail because the only possible error is BufferTooSmall,
+    // and we will never call it with too small a buffer.
+    let len = bs58::encode(h.0).onto(out_slice).unwrap();
+    let as_str = from_utf8(&out[..len]).unwrap();
+    f.write_str(as_str)
+}
+
 impl fmt::Debug for Hash {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        to_base58(self, f)
     }
 }
 
 impl fmt::Display for Hash {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        to_base58(self, f)
     }
 }
 

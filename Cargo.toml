@@ -200,7 +200,7 @@ bincode = "1.3.3"
 bitflags = { version = "2.6.0" }
 blake3 = "1.5.1"
 borsh = { version = "1.5.1", features = ["derive", "unstable__schema"] }
-bs58 = "0.5.1"
+bs58 = { version = "0.5.1", default-features = false }
 bv = "0.11.1"
 byte-unit = "4.0.19"
 bytecount = "0.6.8"
