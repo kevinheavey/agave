@@ -101,13 +101,12 @@ impl FromStr for Hash {
         if s.len() > MAX_BASE58_LEN {
             return Err(ParseHashError::WrongSize);
         }
-        let bytes = bs58::decode(s)
-            .into_vec()
-            .map_err(|_| ParseHashError::Invalid)?;
-        if bytes.len() != mem::size_of::<Hash>() {
+        let mut bytes = [0; HASH_BYTES];
+        let decoded_size = bs58::decode(s).onto(&mut bytes).map_err(|_| ParseHashError::Invalid)?;
+        if decoded_size != mem::size_of::<Hash>() {
             Err(ParseHashError::WrongSize)
         } else {
-            Ok(Hash::new(&bytes))
+            Ok(bytes.into())
         }
     }
 }
