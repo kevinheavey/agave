@@ -33,13 +33,10 @@ pub const MAX_BASE58_LEN: usize = 44;
 /// A hash; the 32-byte output of a hashing algorithm.
 ///
 /// This struct is used most often in `solana-sdk` and related crates to contain
-/// a [SHA-256] hash, but may instead contain a [blake3] hash, as created by the
-/// [`blake3`] module (and used in [`Message::hash`]).
+/// a [SHA-256] hash, but may instead contain a [blake3] hash.
 ///
 /// [SHA-256]: https://en.wikipedia.org/wiki/SHA-2
 /// [blake3]: https://github.com/BLAKE3-team/BLAKE3
-/// [`blake3`]: crate::blake3
-/// [`Message::hash`]: crate::message::Message::hash
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
