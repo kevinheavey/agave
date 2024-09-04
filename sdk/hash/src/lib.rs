@@ -8,7 +8,7 @@ extern crate std;
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(any(feature = "borsh", target_arch = "wasm32"))]
+#[cfg(any(all(feature = "borsh", feature = "std"), target_arch = "wasm32"))]
 use std::string::ToString;
 use {
     core::{convert::TryFrom, fmt, mem, str::FromStr},
