@@ -68,7 +68,7 @@ impl AsRef<[u8]> for Hash {
     }
 }
 
-fn to_base58(h: &Hash, f: &mut fmt::Formatter) -> fmt::Result {
+fn write_as_base58(f: &mut fmt::Formatter, h: &Hash) -> fmt::Result {
     let mut out = [0u8; MAX_BASE58_LEN];
     let out_slice: &mut [u8] = &mut out;
     // This will never fail because the only possible error is BufferTooSmall,
