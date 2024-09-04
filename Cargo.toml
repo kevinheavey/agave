@@ -104,6 +104,8 @@ members = [
     "sdk/cargo-build-sbf",
     "sdk/cargo-test-sbf",
     "sdk/clock",
+    "sdk/decode-error",
+    "sdk/gen-headers",
     "sdk/macro",
     "sdk/msg",
     "sdk/package-metadata-macro",
