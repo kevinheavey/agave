@@ -1,7 +1,5 @@
 #[cfg(target_feature = "static-syscalls")]
 pub use solana_define_syscall::sys_hash;
-#[deprecated(since = "2.1.0", note = "Use solana_sha256_hasher::sol_sha256 instead")]
-pub use solana_sha256_hasher::sol_sha256;
 #[deprecated(since = "2.1.0", note = "Use `solana_msg::sol_log` instead.")]
 pub use solana_msg::sol_log;
 #[deprecated(
@@ -14,6 +12,8 @@ pub use solana_program_memory::syscalls::{sol_memcmp_, sol_memcpy_, sol_memmove_
     note = "Use `solana_secp256k1_recover::sol_secp256k1_recover` instead"
 )]
 pub use solana_secp256k1_recover::sol_secp256k1_recover;
+#[deprecated(since = "2.1.0", note = "Use solana_sha256_hasher::sol_sha256 instead")]
+pub use solana_sha256_hasher::sol_sha256;
 use {
     crate::{
         instruction::{AccountMeta, ProcessedSiblingInstruction},

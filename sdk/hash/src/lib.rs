@@ -102,7 +102,9 @@ impl FromStr for Hash {
             return Err(ParseHashError::WrongSize);
         }
         let mut bytes = [0; HASH_BYTES];
-        let decoded_size = bs58::decode(s).onto(&mut bytes).map_err(|_| ParseHashError::Invalid)?;
+        let decoded_size = bs58::decode(s)
+            .onto(&mut bytes)
+            .map_err(|_| ParseHashError::Invalid)?;
         if decoded_size != mem::size_of::<Hash>() {
             Err(ParseHashError::WrongSize)
         } else {
