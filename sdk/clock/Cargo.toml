@@ -1,6 +1,6 @@
 [package]
 name = "solana-clock"
-description = "Solana Message Sanitization"
+description = "Solana Clock and Time Definitions"
 documentation = "https://docs.rs/solana-sanitize"
 version = { workspace = true }
 authors = { workspace = true }
