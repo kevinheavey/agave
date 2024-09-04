@@ -42,13 +42,13 @@ solana-hash = { workspace = true, features = [
     "serde",
     "std",
 ] }
-solana-hasher = { workspace = true, features = ["sha2"] }
 solana-msg = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-serde-varint = { workspace = true }
+solana-sha256-hasher = { workspace = true, features = ["sha2"] }
 solana-short-vec = { workspace = true }
 thiserror = { workspace = true }
 

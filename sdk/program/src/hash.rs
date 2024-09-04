@@ -5,5 +5,5 @@
 
 pub use {
     solana_hash::{Hash, ParseHashError, HASH_BYTES},
-    solana_hasher::{extend_and_hash, hash, hashv, Hasher},
+    solana_sha256_hasher::{extend_and_hash, hash, hashv, Hasher},
 };

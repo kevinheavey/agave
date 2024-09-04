@@ -6581,7 +6581,7 @@ dependencies = [
  "bytemuck",
  "bytemuck_derive",
  "js-sys",
- "rustc_version 0.4.0",
+ "rustc_version 0.4.1",
  "serde",
  "serde_derive",
  "solana-atomic-u64",
@@ -6590,16 +6590,6 @@ dependencies = [
  "solana-hash",
  "solana-sanitize",
  "wasm-bindgen",
-]
-
-[[package]]
-name = "solana-hasher"
-version = "2.1.0"
-dependencies = [
- "bs58",
- "sha2 0.10.8",
- "solana-define-syscall",
- "solana-hash",
 ]
 
 [[package]]
@@ -6831,7 +6821,7 @@ dependencies = [
  "fast-math",
  "hex",
  "solana-hash",
- "solana-hasher",
+ "solana-sha256-hasher",
 ]
 
 [[package]]
@@ -7044,7 +7034,6 @@ dependencies = [
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-hash",
- "solana-hasher",
  "solana-logger",
  "solana-msg",
  "solana-program-memory",
@@ -7052,6 +7041,7 @@ dependencies = [
  "solana-sdk-macro",
  "solana-secp256k1-recover",
  "solana-serde-varint",
+ "solana-sha256-hasher",
  "solana-short-vec",
  "static_assertions",
  "test-case",
@@ -7608,6 +7598,15 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-short-vec",
+]
+
+[[package]]
+name = "solana-sha256-hasher"
+version = "2.1.0"
+dependencies = [
+ "sha2 0.10.8",
+ "solana-define-syscall",
+ "solana-hash",
 ]
 
 [[package]]

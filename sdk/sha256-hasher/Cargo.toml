@@ -1,7 +1,7 @@
 [package]
-name = "solana-hasher"
+name = "solana-sha256-hasher"
 description = "Solana SHA256 hashing"
-documentation = "https://docs.rs/solana-hasher"
+documentation = "https://docs.rs/solana-sha256-hasher"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
