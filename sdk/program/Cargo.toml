@@ -38,7 +38,6 @@ solana-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi
 solana-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
 solana-hash = { workspace = true, features = [
     "bytemuck",
-    "dev-context-only-utils",
     "serde",
     "std",
 ] }

@@ -6,13 +6,16 @@ use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 extern crate std;
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
-use core::str::from_utf8;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(any(all(feature = "borsh", feature = "std"), target_arch = "wasm32"))]
 use std::string::ToString;
 use {
-    core::{convert::TryFrom, fmt, mem, str::FromStr},
+    core::{
+        convert::TryFrom,
+        fmt, mem,
+        str::{from_utf8, FromStr},
+    },
     solana_sanitize::Sanitize,
 };
 #[cfg(target_arch = "wasm32")]
@@ -133,7 +136,6 @@ impl Hash {
         Self(hash_array)
     }
 
-    #[cfg(feature = "dev-context-only-utils")]
     /// unique Hash for tests and benchmarks.
     pub fn new_unique() -> Self {
         use solana_atomic_u64::AtomicU64;
