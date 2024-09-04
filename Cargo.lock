@@ -7271,7 +7271,6 @@ dependencies = [
 name = "solana-precompile-error"
 version = "2.1.0"
 dependencies = [
- "num-derive",
  "num-traits",
  "solana-decode-error",
 ]
