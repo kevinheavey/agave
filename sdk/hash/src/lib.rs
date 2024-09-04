@@ -80,13 +80,13 @@ fn write_as_base58(f: &mut fmt::Formatter, h: &Hash) -> fmt::Result {
 
 impl fmt::Debug for Hash {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        to_base58(self, f)
+        write_as_base58(f, self)
     }
 }
 
 impl fmt::Display for Hash {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        to_base58(self, f)
+        write_as_base58(f, self)
     }
 }
 
