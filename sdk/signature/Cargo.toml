@@ -19,7 +19,6 @@ serde_derive = { workspace = true, optional = true }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-sanitize = { workspace = true }
-thiserror = { workspace = true }
 
 [dev-dependencies]
 curve25519-dalek = { workspace = true }

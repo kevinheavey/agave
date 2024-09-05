@@ -7639,7 +7639,6 @@ dependencies = [
  "solana-frozen-abi-macro",
  "solana-program",
  "solana-sanitize",
- "thiserror",
 ]
 
 [[package]]

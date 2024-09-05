@@ -6410,7 +6410,6 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-sanitize",
- "thiserror",
 ]
 
 [[package]]

@@ -8,7 +8,6 @@ use {
     core::str::from_utf8,
     generic_array::{typenum::U64, GenericArray},
     std::{fmt, str::FromStr},
-    thiserror::Error,
 };
 
 /// Number of bytes in a signature
@@ -107,12 +106,23 @@ impl TryFrom<Vec<u8>> for Signature {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Error)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ParseSignatureError {
-    #[error("string decoded to wrong size for signature")]
     WrongSize,
-    #[error("failed to decode string to signature")]
     Invalid,
+}
+
+impl std::error::Error for ParseSignatureError {}
+
+impl fmt::Display for ParseSignatureError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            ParseSignatureError::WrongSize => {
+                f.write_str("string decoded to wrong size for signature")
+            }
+            ParseSignatureError::Invalid => f.write_str("failed to decode string to signature"),
+        }
+    }
 }
 
 impl FromStr for Signature {
