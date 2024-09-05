@@ -43,6 +43,8 @@ anyhow = { workspace = true }
 arbitrary = { workspace = true, features = ["derive"] }
 bs58 = { workspace = true, features = ["alloc"] }
 rand = { workspace = true }
+# circular dev deps need to be path deps for `cargo publish` to be happy
+solana-program = { path = "../program" }
 solana-pubkey = { path = ".", features = [
     "borsh",
     "curve25519",
