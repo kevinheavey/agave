@@ -310,7 +310,7 @@ impl Pubkey {
         Self::from(b)
     }
 
-    // If target_os = "solana", then the solana_hasher crate will use
+    // If target_os = "solana", then the solana_sha256_hasher crate will use
     // syscalls which bring no dependencies.
     // When target_os != "solana", this should be opt-in so users
     // don't need the sha2 dependency.
@@ -331,7 +331,7 @@ impl Pubkey {
                 return Err(PubkeyError::IllegalOwner);
             }
         }
-        let hash = solana_hasher::hashv(&[base.as_ref(), seed.as_ref(), owner]);
+        let hash = solana_sha256_hasher::hashv(&[base.as_ref(), seed.as_ref(), owner]);
         Ok(Pubkey::from(hash.to_bytes()))
     }
 
@@ -721,7 +721,7 @@ impl Pubkey {
         // not supported
         #[cfg(not(target_os = "solana"))]
         {
-            let mut hasher = solana_hasher::Hasher::default();
+            let mut hasher = solana_sha256_hasher::Hasher::default();
             for seed in seeds.iter() {
                 hasher.hash(seed);
             }
