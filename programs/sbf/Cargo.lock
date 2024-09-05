@@ -6284,7 +6284,6 @@ dependencies = [
  "bytemuck_derive",
  "byteorder 1.5.0",
  "chrono",
- "derivation-path",
  "digest 0.10.7",
  "ed25519-dalek",
  "ed25519-dalek-bip32",

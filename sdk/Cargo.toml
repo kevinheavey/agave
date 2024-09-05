@@ -54,7 +54,6 @@ bytemuck_derive = { workspace = true }
 byteorder = { workspace = true, optional = true }
 chrono = { workspace = true, features = ["alloc"], optional = true }
 curve25519-dalek = { workspace = true, optional = true }
-derivation-path = { workspace = true }
 digest = { workspace = true, optional = true }
 ed25519-dalek = { workspace = true, optional = true }
 ed25519-dalek-bip32 = { workspace = true, optional = true }
