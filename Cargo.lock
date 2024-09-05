@@ -7075,6 +7075,9 @@ dependencies = [
 [[package]]
 name = "solana-program-option"
 version = "2.1.0"
+dependencies = [
+ "solana-program",
+]
 
 [[package]]
 name = "solana-program-runtime"
