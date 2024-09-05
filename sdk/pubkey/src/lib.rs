@@ -17,7 +17,10 @@ use {
     std::string::ToString,
 };
 #[cfg(any(feature = "std", target_arch = "wasm32"))]
-use {core::str::{from_utf8, FromStr}, std::vec::Vec};
+use {
+    core::str::{from_utf8, FromStr},
+    std::vec::Vec,
+};
 use {
     core::{
         convert::{Infallible, TryFrom},

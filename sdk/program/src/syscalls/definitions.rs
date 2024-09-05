@@ -18,6 +18,8 @@ pub use solana_pubkey::syscalls::{
 pub use solana_secp256k1_recover::sol_secp256k1_recover;
 #[deprecated(since = "2.1.0", note = "Use solana_sha256_hasher::sol_sha256 instead")]
 pub use solana_sha256_hasher::sol_sha256;
+#[deprecated(since = "2.1.0", note = "Use solana_sha256_hasher::sol_sha256 instead")]
+pub use solana_sha256_hasher::sol_sha256;
 use {
     crate::{
         instruction::{AccountMeta, ProcessedSiblingInstruction},
