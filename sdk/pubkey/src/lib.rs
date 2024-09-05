@@ -17,7 +17,7 @@ use {
     std::string::ToString,
 };
 #[cfg(any(feature = "std", target_arch = "wasm32"))]
-use {core::str::FromStr, std::vec::Vec};
+use {core::str::{from_utf8, FromStr}, std::vec::Vec};
 use {
     core::{
         convert::{Infallible, TryFrom},
@@ -228,13 +228,14 @@ impl FromStr for Pubkey {
         if s.len() > MAX_BASE58_LEN {
             return Err(ParsePubkeyError::WrongSize);
         }
-        let pubkey_vec = bs58::decode(s)
-            .into_vec()
+        let mut bytes = [0; PUBKEY_BYTES];
+        let decoded_size = bs58::decode(s)
+            .onto(&mut bytes)
             .map_err(|_| ParsePubkeyError::Invalid)?;
-        if pubkey_vec.len() != core::mem::size_of::<Pubkey>() {
+        if decoded_size != core::mem::size_of::<Pubkey>() {
             Err(ParsePubkeyError::WrongSize)
         } else {
-            Pubkey::try_from(pubkey_vec).map_err(|_| ParsePubkeyError::Invalid)
+            Ok(Pubkey(bytes))
         }
     }
 }
@@ -789,15 +790,25 @@ impl AsMut<[u8]> for Pubkey {
     }
 }
 
+fn write_as_base58(f: &mut fmt::Formatter, p: &Pubkey) -> fmt::Result {
+    let mut out = [0u8; MAX_BASE58_LEN];
+    let out_slice: &mut [u8] = &mut out;
+    // This will never fail because the only possible error is BufferTooSmall,
+    // and we will never call it with too small a buffer.
+    let len = bs58::encode(p.0).onto(out_slice).unwrap();
+    let as_str = from_utf8(&out[..len]).unwrap();
+    f.write_str(as_str)
+}
+
 impl fmt::Debug for Pubkey {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        write_as_base58(f, self)
     }
 }
 
 impl fmt::Display for Pubkey {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        write_as_base58(f, self)
     }
 }
 

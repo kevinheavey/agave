@@ -41,6 +41,7 @@ wasm-bindgen = { workspace = true }
 [dev-dependencies]
 anyhow = { workspace = true }
 arbitrary = { workspace = true, features = ["derive"] }
+bs58 = { workspace = true, features = ["alloc"] }
 rand = { workspace = true }
 solana-pubkey = { path = ".", features = [
     "borsh",
