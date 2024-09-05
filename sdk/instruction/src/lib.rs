@@ -83,7 +83,7 @@ pub mod syscalls;
 ///   construction. A program may still require the fee payer as part of the
 ///   account list if it directly references it.
 ///
-/// [`Message`]: crate::message::Message
+/// [`Message`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html
 ///
 /// Programs may require signatures from some accounts, in which case they
 /// should be specified as signers during `Instruction` construction. The
@@ -389,7 +389,7 @@ impl AccountMeta {
 /// which is the core of a Solana transaction. It is created during the
 /// construction of `Message`. Most users will not interact with it directly.
 ///
-/// [`Message`]: crate::message::Message
+/// [`Message`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "serde",
