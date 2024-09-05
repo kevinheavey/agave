@@ -5,6 +5,7 @@ use serde_derive::{Deserialize, Serialize};
 #[cfg(any(test, feature = "verify"))]
 use std::convert::TryInto;
 use {
+    core::str::from_utf8,
     generic_array::{typenum::U64, GenericArray},
     std::{fmt, str::FromStr},
     thiserror::Error,
@@ -53,15 +54,25 @@ impl AsRef<[u8]> for Signature {
     }
 }
 
+fn write_as_base58(f: &mut fmt::Formatter, s: &Signature) -> fmt::Result {
+    let mut out = [0u8; MAX_BASE58_SIGNATURE_LEN];
+    let out_slice: &mut [u8] = &mut out;
+    // This will never fail because the only possible error is BufferTooSmall,
+    // and we will never call it with too small a buffer.
+    let len = bs58::encode(s.0).onto(out_slice).unwrap();
+    let as_str = from_utf8(&out[..len]).unwrap();
+    f.write_str(as_str)
+}
+
 impl fmt::Debug for Signature {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        write_as_base58(f, self)
     }
 }
 
 impl fmt::Display for Signature {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", bs58::encode(self.0).into_string())
+        write_as_base58(f, self)
     }
 }
 
@@ -111,10 +122,15 @@ impl FromStr for Signature {
         if s.len() > MAX_BASE58_SIGNATURE_LEN {
             return Err(ParseSignatureError::WrongSize);
         }
-        let bytes = bs58::decode(s)
-            .into_vec()
+        let mut bytes = [0; SIGNATURE_BYTES];
+        let decoded_size = bs58::decode(s)
+            .onto(&mut bytes)
             .map_err(|_| ParseSignatureError::Invalid)?;
-        Signature::try_from(bytes).map_err(|_| ParseSignatureError::WrongSize)
+        if decoded_size != SIGNATURE_BYTES {
+            Err(ParseSignatureError::WrongSize)
+        } else {
+            Ok(bytes.into())
+        }
     }
 }
 
