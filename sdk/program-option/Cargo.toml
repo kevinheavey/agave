@@ -1,6 +1,6 @@
 [package]
 name = "solana-program-option"
-description = "A C representation of Rust's Option"
+description = "A C representation of Rust's Option, used in Solana programs."
 documentation = "https://docs.rs/solana-program-option"
 version = { workspace = true }
 authors = { workspace = true }
