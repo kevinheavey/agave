@@ -53,7 +53,7 @@ solana-pubkey = { path = ".", features = [
 ] }
 
 [build-dependencies]
-rustc_version = { workspace = true }
+rustc_version = { workspace = true, optional = true }
 
 [features]
 borsh = ["dep:borsh", "dep:borsh0-10", "std"]
