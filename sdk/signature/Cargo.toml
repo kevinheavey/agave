@@ -26,10 +26,14 @@ ed25519-dalek = { workspace = true }
 solana-program = { workspace = true }
 
 [build-dependencies]
-rustc_version = { workspace = true }
+rustc_version = { workspace = true, optional = true }
 
 [features]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = [
+    "dep:rustc_version",
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro"
+]
 rand = ["dep:rand"]
 serde = ["dep:serde", "dep:serde_derive", "generic-array/serde"]
 verify = ["dep:ed25519-dalek"]

@@ -6406,7 +6406,6 @@ dependencies = [
  "ed25519-dalek",
  "generic-array",
  "rand 0.8.5",
- "rustc_version",
  "serde",
  "serde_derive",
  "solana-sanitize",
