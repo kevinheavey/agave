@@ -1,14 +1,21 @@
 //! 64-byte signature type.
+#![no_std]
 #![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(min_specialization))]
+#[cfg(any(test, feature = "verify"))]
+use core::convert::TryInto;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(any(test, feature = "verify"))]
-use std::convert::TryInto;
 use {
-    core::str::from_utf8,
+    core::{
+        fmt,
+        str::{from_utf8, FromStr},
+    },
     generic_array::{typenum::U64, GenericArray},
-    std::{fmt, str::FromStr},
 };
+#[cfg(feature = "std")]
+extern crate std;
+#[cfg(feature = "std")]
+use std::{error::Error, vec::Vec};
 
 /// Number of bytes in a signature
 pub const SIGNATURE_BYTES: usize = 64;
@@ -26,7 +33,7 @@ impl solana_sanitize::Sanitize for Signature {}
 #[cfg(feature = "rand")]
 impl Signature {
     pub fn new_unique() -> Self {
-        Self::from(std::array::from_fn(|_| rand::random()))
+        Self::from(core::array::from_fn(|_| rand::random()))
     }
 }
 
@@ -97,6 +104,7 @@ impl<'a> TryFrom<&'a [u8]> for Signature {
     }
 }
 
+#[cfg(feature = "std")]
 impl TryFrom<Vec<u8>> for Signature {
     type Error = <[u8; SIGNATURE_BYTES] as TryFrom<Vec<u8>>>::Error;
 
@@ -112,7 +120,8 @@ pub enum ParseSignatureError {
     Invalid,
 }
 
-impl std::error::Error for ParseSignatureError {}
+#[cfg(feature = "std")]
+impl Error for ParseSignatureError {}
 
 impl fmt::Display for ParseSignatureError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

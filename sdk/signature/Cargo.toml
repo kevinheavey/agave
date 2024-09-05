@@ -29,13 +29,16 @@ solana-program = { workspace = true }
 rustc_version = { workspace = true, optional = true }
 
 [features]
+default = ["std"]
 frozen-abi = [
     "dep:rustc_version",
     "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro"
+    "dep:solana-frozen-abi-macro",
+    "std"
 ]
 rand = ["dep:rand"]
 serde = ["dep:serde", "dep:serde_derive", "generic-array/serde"]
+std = []
 verify = ["dep:ed25519-dalek"]
 
 [package.metadata.docs.rs]
