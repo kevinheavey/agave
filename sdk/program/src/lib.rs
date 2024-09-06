@@ -539,10 +539,8 @@ pub use solana_short_vec as short_vec;
 #[cfg(target_arch = "wasm32")]
 pub use wasm_bindgen::prelude::wasm_bindgen;
 pub use {
-    solana_clock as clock,
-    solana_msg::msg,
-    solana_program_option as program_option,
-    solana_pubkey as pubkey
+    solana_clock as clock, solana_msg::msg, solana_program_option as program_option,
+    solana_pubkey as pubkey,
 };
 
 /// The [config native program][np].
