@@ -17,14 +17,12 @@ use {
     std::string::ToString,
 };
 #[cfg(any(feature = "std", target_arch = "wasm32"))]
-use {
-    core::str::{from_utf8, FromStr},
-    std::vec::Vec,
-};
+use std::vec::Vec;
 use {
     core::{
         convert::{Infallible, TryFrom},
         fmt,
+        str::{from_utf8, FromStr}
     },
     num_traits::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
@@ -43,7 +41,6 @@ pub const PUBKEY_BYTES: usize = 32;
 pub const MAX_SEED_LEN: usize = 32;
 /// Maximum number of seeds
 pub const MAX_SEEDS: usize = 16;
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
 /// Maximum string length of a base58 encoded pubkey
 const MAX_BASE58_LEN: usize = 44;
 
@@ -223,7 +220,6 @@ impl<T> DecodeError<T> for ParsePubkeyError {
     }
 }
 
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
 impl FromStr for Pubkey {
     type Err = ParsePubkeyError;
 
