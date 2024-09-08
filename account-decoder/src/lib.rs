@@ -17,7 +17,9 @@ pub mod parse_token_extension;
 pub mod parse_vote;
 pub mod validator_info;
 
-pub use solana_account_decoder_client_types::{UiAccount, UiAccountData, UiAccountEncoding};
+pub use solana_account_decoder_client_types::{
+    UiAccount, UiAccountData, UiAccountEncoding, UiDataSliceConfig,
+};
 use {
     crate::parse_account_data::{parse_account_data_v2, AccountAdditionalDataV2},
     base64::{prelude::BASE64_STANDARD, Engine},
@@ -118,13 +120,6 @@ impl Default for UiFeeCalculator {
             lamports_per_signature: "0".to_string(),
         }
     }
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct UiDataSliceConfig {
-    pub offset: usize,
-    pub length: usize,
 }
 
 fn slice_data(data: &[u8], data_slice_config: Option<UiDataSliceConfig>) -> &[u8] {
