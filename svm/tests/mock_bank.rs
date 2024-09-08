@@ -19,7 +19,6 @@ use {
         account::{AccountSharedData, ReadableAccount, WritableAccount},
         bpf_loader_upgradeable::{self, UpgradeableLoaderState},
         clock::{Clock, UnixTimestamp},
-        feature_set::FeatureSet,
         native_loader,
         pubkey::Pubkey,
         slot_hashes::Slot,
