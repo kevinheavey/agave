@@ -19,9 +19,9 @@ use {
     },
     serde::Serialize,
     serde_json::Value,
-    solana_account_decoder::{
-        encode_ui_account,
-        parse_token::{UiTokenAccount, UiTokenAmount},
+    solana_account_decoder::encode_ui_account,
+    solana_account_decoder_client_types::{
+        token::{UiTokenAccount, UiTokenAmount},
         UiAccountEncoding,
     },
     solana_rpc_client_api::{

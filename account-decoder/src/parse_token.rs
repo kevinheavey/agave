@@ -1,11 +1,11 @@
-pub use solana_account_decoder_client_types::{
-    real_number_string, real_number_string_trimmed, UiTokenAmount,
+pub use solana_account_decoder_client_types::token::{
+    real_number_string, real_number_string_trimmed, TokenAccountType, UiAccountState, UiMint,
+    UiMultisig, UiTokenAccount, UiTokenAmount,
 };
 use {
     crate::{
         parse_account_data::{ParsableAccount, ParseAccountError, SplTokenAdditionalData},
-        parse_token_extension::{parse_extension, UiExtension},
-        StringAmount,
+        parse_token_extension::parse_extension,
     },
     solana_sdk::pubkey::Pubkey,
     spl_token_2022::{
@@ -61,7 +61,7 @@ pub fn parse_token_v2(
                 COption::Some(pubkey) => Some(pubkey.to_string()),
                 COption::None => None,
             },
-            state: account.base.state.into(),
+            state: convert_account_state(account.base.state),
             is_native: account.base.is_native(),
             rent_exempt_reserve: match account.base.is_native {
                 COption::Some(reserve) => {
@@ -131,50 +131,11 @@ pub fn parse_token_v2(
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
-#[serde(rename_all = "camelCase", tag = "type", content = "info")]
-#[allow(clippy::large_enum_variant)]
-pub enum TokenAccountType {
-    Account(UiTokenAccount),
-    Mint(UiMint),
-    Multisig(UiMultisig),
-}
-
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
-#[serde(rename_all = "camelCase")]
-pub struct UiTokenAccount {
-    pub mint: String,
-    pub owner: String,
-    pub token_amount: UiTokenAmount,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub delegate: Option<String>,
-    pub state: UiAccountState,
-    pub is_native: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub rent_exempt_reserve: Option<UiTokenAmount>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub delegated_amount: Option<UiTokenAmount>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub close_authority: Option<String>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    pub extensions: Vec<UiExtension>,
-}
-
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(rename_all = "camelCase")]
-pub enum UiAccountState {
-    Uninitialized,
-    Initialized,
-    Frozen,
-}
-
-impl From<AccountState> for UiAccountState {
-    fn from(state: AccountState) -> Self {
-        match state {
-            AccountState::Uninitialized => UiAccountState::Uninitialized,
-            AccountState::Initialized => UiAccountState::Initialized,
-            AccountState::Frozen => UiAccountState::Frozen,
-        }
+pub(crate) fn convert_account_state(state: AccountState) -> UiAccountState {
+    match state {
+        AccountState::Uninitialized => UiAccountState::Uninitialized,
+        AccountState::Initialized => UiAccountState::Initialized,
+        AccountState::Frozen => UiAccountState::Frozen,
     }
 }
 
@@ -213,27 +174,6 @@ pub fn token_amount_to_ui_amount_v2(
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(rename_all = "camelCase")]
-pub struct UiMint {
-    pub mint_authority: Option<String>,
-    pub supply: StringAmount,
-    pub decimals: u8,
-    pub is_initialized: bool,
-    pub freeze_authority: Option<String>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
-    pub extensions: Vec<UiExtension>,
-}
-
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(rename_all = "camelCase")]
-pub struct UiMultisig {
-    pub num_required_signers: u8,
-    pub num_valid_signers: u8,
-    pub is_initialized: bool,
-    pub signers: Vec<String>,
-}
-
 pub fn get_token_account_mint(data: &[u8]) -> Option<Pubkey> {
     Account::valid_account_data(data)
         .then(|| Pubkey::try_from(data.get(..32)?).ok())
@@ -245,6 +185,7 @@ mod test {
     use {
         super::*,
         crate::parse_token_extension::{UiMemoTransfer, UiMintCloseAuthority},
+        solana_account_decoder_client_types::token::UiExtension,
         spl_pod::optional_keys::OptionalNonZeroPubkey,
         spl_token_2022::extension::{
             immutable_owner::ImmutableOwner, interest_bearing_mint::InterestBearingConfig,
