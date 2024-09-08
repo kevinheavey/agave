@@ -24,6 +24,7 @@ use {
     log::*,
     serde_json::{json, Value},
     solana_account_decoder::{
+        encode_ui_account,
         parse_token::{TokenAccountType, UiTokenAccount, UiTokenAmount},
         UiAccount, UiAccountData, UiAccountEncoding,
     },
@@ -4723,7 +4724,7 @@ pub fn create_rpc_client_mocks() -> crate::mock_sender::Mocks {
                 executable: false,
                 rent_epoch: 0,
             };
-            UiAccount::encode(&pubkey, &account, UiAccountEncoding::Base64, None, None)
+            encode_ui_account(&pubkey, &account, UiAccountEncoding::Base64, None, None)
         },
     })
     .unwrap();

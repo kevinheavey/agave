@@ -5,7 +5,7 @@ use {
     async_trait::async_trait,
     base64::{prelude::BASE64_STANDARD, Engine},
     serde_json::{json, Number, Value},
-    solana_account_decoder::{UiAccount, UiAccountEncoding},
+    solana_account_decoder::{encode_ui_account, UiAccountEncoding},
     solana_rpc_client_api::{
         client_error::Result,
         config::RpcBlockProductionConfig,
@@ -436,7 +436,7 @@ impl RpcSender for MockSender {
                 serde_json::to_value(vec![
                     RpcKeyedAccount {
                         pubkey: PUBKEY.to_string(),
-                        account: UiAccount::encode(
+                        account: encode_ui_account(
                             &pubkey,
                             &account,
                             UiAccountEncoding::Base64,
