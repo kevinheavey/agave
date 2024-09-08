@@ -372,7 +372,7 @@ pub mod enable_partitioned_epoch_reward {
 }
 
 pub mod partitioned_epoch_rewards_superfeature {
-    solana_sdk::declare_id!("PERzQrt5gBD1XEe2c9XdFWqwgHY3mr7cYWbm5V772V8");
+    solana_program::declare_id!("PERzQrt5gBD1XEe2c9XdFWqwgHY3mr7cYWbm5V772V8");
 }
 
 pub mod spl_token_v3_4_0 {
@@ -848,11 +848,11 @@ pub mod vote_only_retransmitter_signed_fec_sets {
 }
 
 pub mod move_precompile_verification_to_svm {
-    solana_sdk::declare_id!("9ypxGLzkMxi89eDerRKXWDXe44UY2z4hBig4mDhNq5Dp");
+    solana_program::declare_id!("9ypxGLzkMxi89eDerRKXWDXe44UY2z4hBig4mDhNq5Dp");
 }
 
 pub mod enable_transaction_loading_failure_fees {
-    solana_sdk::declare_id!("PaymEPK2oqwT9TXAVfadjztH2H6KfLEB9Hhd5Q5frvP");
+    solana_program::declare_id!("PaymEPK2oqwT9TXAVfadjztH2H6KfLEB9Hhd5Q5frvP");
 }
 
 pub mod enable_turbine_extended_fanout_experiments {
