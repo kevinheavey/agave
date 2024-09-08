@@ -11,18 +11,19 @@ use arbitrary::Arbitrary;
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
+use std::vec::Vec;
 #[cfg(feature = "borsh")]
 use {
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
     std::string::ToString,
 };
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
-use std::vec::Vec;
 use {
     core::{
+        array,
         convert::{Infallible, TryFrom},
-        fmt,
-        str::{from_utf8, FromStr}
+        fmt, mem,
+        str::{from_utf8, FromStr},
     },
     num_traits::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
@@ -200,7 +201,7 @@ impl FromPrimitive for ParsePubkeyError {
 impl std::error::Error for ParsePubkeyError {}
 
 impl fmt::Display for ParsePubkeyError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> ::core::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             ParsePubkeyError::WrongSize => f.write_str("String is the wrong size"),
             ParsePubkeyError::Invalid => f.write_str("Invalid Base58 string"),
@@ -231,7 +232,7 @@ impl FromStr for Pubkey {
         let decoded_size = bs58::decode(s)
             .onto(&mut bytes)
             .map_err(|_| ParsePubkeyError::Invalid)?;
-        if decoded_size != core::mem::size_of::<Pubkey>() {
+        if decoded_size != mem::size_of::<Pubkey>() {
             Err(ParsePubkeyError::WrongSize)
         } else {
             Ok(Pubkey(bytes))
@@ -247,7 +248,7 @@ impl From<[u8; 32]> for Pubkey {
 }
 
 impl TryFrom<&[u8]> for Pubkey {
-    type Error = core::array::TryFromSliceError;
+    type Error = array::TryFromSliceError;
 
     #[inline]
     fn try_from(pubkey: &[u8]) -> Result<Self, Self::Error> {
@@ -815,7 +816,7 @@ impl fmt::Display for Pubkey {
 impl borsh0_10::de::BorshDeserialize for Pubkey {
     fn deserialize_reader<R: borsh0_10::maybestd::io::Read>(
         reader: &mut R,
-    ) -> ::core::result::Result<Self, borsh0_10::maybestd::io::Error> {
+    ) -> Result<Self, borsh0_10::maybestd::io::Error> {
         Ok(Self(borsh0_10::BorshDeserialize::deserialize_reader(
             reader,
         )?))
@@ -893,7 +894,7 @@ fn js_value_to_seeds_vec(array_of_uint8_arrays: &[JsValue]) -> Result<Vec<Vec<u8
 }
 
 #[cfg(target_arch = "wasm32")]
-fn display_to_jsvalue<T: std::fmt::Display>(display: T) -> JsValue {
+fn display_to_jsvalue<T: fmt::Display>(display: T) -> JsValue {
     std::string::ToString::to_string(&display).into()
 }
 
@@ -1003,7 +1004,7 @@ impl Pubkey {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, std::str::from_utf8};
+    use super::*;
 
     #[test]
     fn test_new_unique() {
@@ -1085,7 +1086,7 @@ mod tests {
 
         assert!(Pubkey::create_with_seed(
             &Pubkey::new_unique(),
-            std::str::from_utf8(&[0; MAX_SEED_LEN]).unwrap(),
+            from_utf8(&[0; MAX_SEED_LEN]).unwrap(),
             &Pubkey::new_unique(),
         )
         .is_ok());
@@ -1234,8 +1235,7 @@ mod tests {
         let mut to_fake = owner.to_bytes().to_vec();
         to_fake.extend_from_slice(marker);
 
-        let seed = &std::string::String::from_utf8(to_fake[..to_fake.len() - 32].to_vec())
-            .expect("not utf8");
+        let seed = from_utf8(&to_fake[..to_fake.len() - 32]).expect("not utf8");
         let base = &Pubkey::try_from(&to_fake[to_fake.len() - 32..]).unwrap();
 
         Pubkey::create_with_seed(&key, seed, base)
