@@ -76,7 +76,7 @@ mod builtins {
 )]
 #[allow(deprecated)]
 pub fn is_builtin_key_or_sysvar(key: &Pubkey) -> bool {
-    if MAYBE_BUILTIN_KEY_OR_SYSVAR[key.to_bytes()[0] as usize] {
+    if MAYBE_BUILTIN_KEY_OR_SYSVAR[key.as_ref()[0] as usize] {
         return sysvar::is_sysvar_id(key) || BUILTIN_PROGRAMS_KEYS.contains(key);
     }
     false
