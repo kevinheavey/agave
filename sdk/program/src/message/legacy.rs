@@ -63,8 +63,8 @@ mod builtins {
         // the value is "false"), or might be in one of these lists (if the value is "true")
         pub static ref MAYBE_BUILTIN_KEY_OR_SYSVAR: [bool; 256] = {
             let mut temp_table: [bool; 256] = [false; 256];
-            BUILTIN_PROGRAMS_KEYS.iter().for_each(|key| temp_table[key.to_bytes()[0] as usize] = true);
-            sysvar::ALL_IDS.iter().for_each(|key| temp_table[key.to_bytes()[0] as usize] = true);
+            BUILTIN_PROGRAMS_KEYS.iter().for_each(|key| temp_table[key.as_ref()[0] as usize] = true);
+            sysvar::ALL_IDS.iter().for_each(|key| temp_table[key.as_ref()[0] as usize] = true);
             temp_table
         };
     }
