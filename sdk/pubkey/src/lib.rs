@@ -1259,11 +1259,12 @@ mod tests {
     #[test]
     fn test_pubkey_error_from_primitive_exhaustive() {
         for variant in PubkeyError::iter() {
-            let variant_i64 = variant as i64;
+            let variant_i64 = variant.clone() as i64;
             assert_eq!(
                 PubkeyError::from_repr(variant_i64 as usize),
                 PubkeyError::from_i64(variant_i64)
             );
+            assert_eq!(PubkeyError::from(variant_i64 as u64), variant);
         }
     }
 
