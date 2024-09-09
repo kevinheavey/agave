@@ -267,7 +267,6 @@ impl TryFrom<Vec<u8>> for Pubkey {
     }
 }
 
-#[cfg(feature = "std")]
 impl TryFrom<&str> for Pubkey {
     type Error = ParsePubkeyError;
     fn try_from(s: &str) -> Result<Self, Self::Error> {
