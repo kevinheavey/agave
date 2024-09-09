@@ -455,7 +455,7 @@ pub(crate) fn mock_encoded_account(pubkey: &Pubkey) -> UiAccount {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_account_decoder::encode_ui_account};
+    use {super::*, solana_account_decoder::encode_ui_account, solana_sdk::account::Account};
 
     #[test]
     fn test_mock_encoded_account() {
