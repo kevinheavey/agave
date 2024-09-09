@@ -6,8 +6,9 @@ use {
     serde_json::Value,
     solana_program::pubkey::Pubkey,
     solana_sdk::account::WritableAccount,
-    std::io::Read,
 };
+#[cfg(feature = "zstd")]
+use std::io::Read;
 pub mod token;
 
 /// A duplicate representation of an Account for pretty JSON serialization
