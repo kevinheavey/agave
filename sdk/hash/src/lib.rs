@@ -202,6 +202,7 @@ impl Hash {
     }
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 
