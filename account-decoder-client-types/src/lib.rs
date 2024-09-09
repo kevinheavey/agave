@@ -1,4 +1,6 @@
 //! Core RPC client types for solana-account-decoder
+#[cfg(feature = "zstd")]
+use std::io::Read;
 use {
     base64::{prelude::BASE64_STANDARD, Engine},
     core::str::FromStr,
@@ -7,8 +9,6 @@ use {
     solana_program::pubkey::Pubkey,
     solana_sdk::account::WritableAccount,
 };
-#[cfg(feature = "zstd")]
-use std::io::Read;
 pub mod token;
 
 /// A duplicate representation of an Account for pretty JSON serialization

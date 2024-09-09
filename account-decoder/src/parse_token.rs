@@ -131,7 +131,7 @@ pub fn parse_token_v2(
     }
 }
 
-pub(crate) fn convert_account_state(state: AccountState) -> UiAccountState {
+pub fn convert_account_state(state: AccountState) -> UiAccountState {
     match state {
         AccountState::Uninitialized => UiAccountState::Uninitialized,
         AccountState::Initialized => UiAccountState::Initialized,

@@ -228,7 +228,7 @@ fn convert_permanent_delegate(
     }
 }
 
-fn convert_confidential_transfer_mint(
+pub fn convert_confidential_transfer_mint(
     confidential_transfer_mint: extension::confidential_transfer::ConfidentialTransferMint,
 ) -> UiConfidentialTransferMint {
     let authority: Option<Pubkey> = confidential_transfer_mint.authority.into();
@@ -241,7 +241,7 @@ fn convert_confidential_transfer_mint(
     }
 }
 
-fn convert_confidential_transfer_fee_config(
+pub fn convert_confidential_transfer_fee_config(
     confidential_transfer_fee_config: extension::confidential_transfer_fee::ConfidentialTransferFeeConfig,
 ) -> UiConfidentialTransferFeeConfig {
     let authority: Option<Pubkey> = confidential_transfer_fee_config.authority.into();
