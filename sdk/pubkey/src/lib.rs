@@ -5,7 +5,7 @@
 
 #[cfg(any(feature = "std", target_arch = "wasm32"))]
 extern crate std;
-#[cfg(any(test, feature = "dev-context-only-utils"))]
+#[cfg(feature = "dev-context-only-utils")]
 use arbitrary::Arbitrary;
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
