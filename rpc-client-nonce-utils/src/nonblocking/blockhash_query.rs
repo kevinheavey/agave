@@ -122,7 +122,7 @@ mod tests {
         super::*,
         crate::nonblocking::blockhash_query,
         serde_json::{self, json},
-        solana_account_decoder::{encode_ui_account, UiAccount, UiAccountEncoding},
+        solana_account_decoder::{encode_ui_account, UiAccountEncoding},
         solana_rpc_client_api::{
             request::RpcRequest,
             response::{Response, RpcBlockhash, RpcResponseContext},
