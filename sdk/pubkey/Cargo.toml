@@ -42,6 +42,8 @@ wasm-bindgen = { workspace = true }
 anyhow = { workspace = true }
 arbitrary = { workspace = true, features = ["derive"] }
 bs58 = { workspace = true, features = ["alloc"] }
+strum = { workspace = true }
+strum_macros = { workspace = true }
 rand = { workspace = true }
 # circular dev deps need to be path deps for `cargo publish` to be happy,
 # and for now the doc tests need solana-program

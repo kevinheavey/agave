@@ -53,6 +53,9 @@ const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 #[cfg(target_os = "solana")]
 const SUCCESS: u64 = 0;
 
+// Use strum when testing to ensure our FromPrimitive
+// impl is exhaustive
+#[cfg_attr(test, derive(strum_macros::FromRepr, strum_macros::EnumIter))]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PubkeyError {
@@ -160,6 +163,9 @@ pub struct Pubkey(pub(crate) [u8; 32]);
 
 impl solana_sanitize::Sanitize for Pubkey {}
 
+// Use strum when testing to ensure our FromPrimitive
+// impl is exhaustive
+#[cfg_attr(test, derive(strum_macros::FromRepr, strum_macros::EnumIter))]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ParsePubkeyError {
@@ -1004,7 +1010,7 @@ impl Pubkey {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {super::*, strum::IntoEnumIterator};
 
     #[test]
     fn test_new_unique() {
@@ -1248,5 +1254,27 @@ mod tests {
             Err(PubkeyError::IllegalOwner)
         );
         assert!(pubkey_from_seed_by_marker(&PDA_MARKER[1..]).is_ok());
+    }
+
+    #[test]
+    fn test_pubkey_error_from_primitive_exhaustive() {
+        for variant in PubkeyError::iter() {
+            let variant_i64 = variant as i64;
+            assert_eq!(
+                PubkeyError::from_repr(variant_i64 as usize),
+                PubkeyError::from_i64(variant_i64)
+            );
+        }
+    }
+
+    #[test]
+    fn test_parse_pubkey_error_from_primitive_exhaustive() {
+        for variant in ParsePubkeyError::iter() {
+            let variant_i64 = variant as i64;
+            assert_eq!(
+                ParsePubkeyError::from_repr(variant_i64 as usize),
+                ParsePubkeyError::from_i64(variant_i64)
+            );
+        }
     }
 }

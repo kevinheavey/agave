@@ -7180,6 +7180,8 @@ dependencies = [
  "solana-pubkey",
  "solana-sanitize",
  "solana-sha256-hasher",
+ "strum",
+ "strum_macros",
  "wasm-bindgen",
 ]
 
