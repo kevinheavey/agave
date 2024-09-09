@@ -3748,6 +3748,7 @@ mod tests {
         jsonrpc_http_server::{AccessControlAllowOrigin, DomainsValidation, ServerBuilder},
         serde_json::{json, Number},
         solana_account_decoder::encode_ui_account,
+        solana_account_decoder_client_types::UiAccountEncoding,
         solana_rpc_client_api::client_error::ErrorKind,
         solana_sdk::{
             instruction::InstructionError,
