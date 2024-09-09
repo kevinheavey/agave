@@ -202,7 +202,6 @@ impl Hash {
     }
 }
 
-#[cfg(all(test, feature = "frozen-abi", RUSTC_WITH_SPECIALIZATION))]
 mod tests {
     use super::*;
 
