@@ -39,6 +39,7 @@ impl UiAccountData {
             UiAccountData::Binary(blob, encoding) => match encoding {
                 UiAccountEncoding::Base58 => bs58::decode(blob).into_vec().ok(),
                 UiAccountEncoding::Base64 => BASE64_STANDARD.decode(blob).ok(),
+                #[cfg(feature = "zstd")]
                 UiAccountEncoding::Base64Zstd => {
                     BASE64_STANDARD.decode(blob).ok().and_then(|zstd_data| {
                         let mut data = vec![];
@@ -61,6 +62,7 @@ pub enum UiAccountEncoding {
     Base58,
     Base64,
     JsonParsed,
+    #[cfg(feature = "zstd")]
     #[serde(rename = "base64+zstd")]
     Base64Zstd,
 }
