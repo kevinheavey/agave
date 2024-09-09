@@ -12,7 +12,7 @@ use {crate::spinner, solana_sdk::clock::MAX_HASH_AGE_IN_SECONDS, std::cmp::min};
 use {
     crate::{
         http_sender::HttpSender,
-        mock_sender::MockSender,
+        mock_sender::{mock_encoded_account, MockSender},
         rpc_client::{
             GetConfirmedSignaturesForAddress2Config, RpcClientConfig, SerializableMessage,
             SerializableTransaction,
@@ -23,7 +23,6 @@ use {
     bincode::serialize,
     log::*,
     serde_json::{json, Value},
-    solana_account_decoder::encode_ui_account,
     solana_account_decoder_client_types::{
         token::{TokenAccountType, UiTokenAccount, UiTokenAmount},
         UiAccount, UiAccountData, UiAccountEncoding,
@@ -4717,14 +4716,7 @@ pub fn create_rpc_client_mocks() -> crate::mock_sender::Mocks {
         },
         value: {
             let pubkey = Pubkey::from_str("BgvYtJEfmZYdVKiptmMjxGzv8iQoo4MWjsP3QsTkhhxa").unwrap();
-            let account = Account {
-                lamports: 1_000_000,
-                data: vec![],
-                owner: pubkey,
-                executable: false,
-                rent_epoch: 0,
-            };
-            encode_ui_account(&pubkey, &account, UiAccountEncoding::Base64, None, None)
+            mock_encoded_account(&pubkey)
         },
     })
     .unwrap();

@@ -13,17 +13,13 @@ pub use crate::mock_sender::Mocks;
 use {
     crate::{
         http_sender::HttpSender,
-        mock_sender::MockSender,
+        mock_sender::{mock_encoded_account, MockSender},
         nonblocking::{self, rpc_client::get_rpc_request_str},
         rpc_sender::*,
     },
     serde::Serialize,
     serde_json::Value,
-    solana_account_decoder::encode_ui_account,
-    solana_account_decoder_client_types::{
-        token::{UiTokenAccount, UiTokenAmount},
-        UiAccountEncoding,
-    },
+    solana_account_decoder_client_types::token::{UiTokenAccount, UiTokenAmount},
     solana_rpc_client_api::{
         client_error::{Error as ClientError, ErrorKind, Result as ClientResult},
         config::{RpcAccountInfoConfig, *},
@@ -3731,14 +3727,7 @@ pub fn create_rpc_client_mocks() -> crate::mock_sender::Mocks {
         },
         value: {
             let pubkey = Pubkey::from_str("BgvYtJEfmZYdVKiptmMjxGzv8iQoo4MWjsP3QsTkhhxa").unwrap();
-            let account = Account {
-                lamports: 1_000_000,
-                data: vec![],
-                owner: pubkey,
-                executable: false,
-                rent_epoch: 0,
-            };
-            encode_ui_account(&pubkey, &account, UiAccountEncoding::Base64, None, None)
+            mock_encoded_account(&pubkey)
         },
     })
     .unwrap();
@@ -3758,6 +3747,7 @@ mod tests {
         jsonrpc_core::{futures::prelude::*, Error, IoHandler, Params},
         jsonrpc_http_server::{AccessControlAllowOrigin, DomainsValidation, ServerBuilder},
         serde_json::{json, Number},
+        solana_account_decoder::encode_ui_account,
         solana_rpc_client_api::client_error::ErrorKind,
         solana_sdk::{
             instruction::InstructionError,
