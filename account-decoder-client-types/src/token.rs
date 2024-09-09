@@ -32,6 +32,7 @@ impl UiTokenAmount {
     }
 }
 
+#[allow(clippy::arithmetic_side_effects)]
 pub fn real_number_string(amount: u64, decimals: u8) -> String {
     let decimals = decimals as usize;
     if decimals > 0 {
