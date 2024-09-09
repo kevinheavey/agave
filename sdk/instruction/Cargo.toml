@@ -36,13 +36,17 @@ solana-instruction = { path = ".", features = [
 ] }
 
 [build-dependencies]
-rustc_version = { workspace = true }
+rustc_version = { workspace = true, optional = true }
 
 [features]
 bincode = ["dep:bincode", "dep:serde"]
 borsh = ["dep:borsh"]
 dev-context-only-utils = [] # unused but CI fails without this.
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = [
+    "dep:rustc_version",
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro"
+]
 serde = [
     "dep:serde",
     "dep:serde_derive",

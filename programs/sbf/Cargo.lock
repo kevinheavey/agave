@@ -5221,7 +5221,6 @@ dependencies = [
  "getrandom 0.2.10",
  "js-sys",
  "num-traits",
- "rustc_version",
  "serde",
  "serde_derive",
  "solana-define-syscall",
