@@ -123,6 +123,7 @@ impl From<u64> for PubkeyError {
         match error {
             0 => PubkeyError::MaxSeedLengthExceeded,
             1 => PubkeyError::InvalidSeeds,
+            2 => PubkeyError::IllegalOwner,
             _ => panic!("Unsupported PubkeyError"),
         }
     }
