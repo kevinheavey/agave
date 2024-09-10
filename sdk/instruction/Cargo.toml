@@ -30,9 +30,7 @@ js-sys = { workspace = true }
 wasm-bindgen = { workspace = true }
 
 [dev-dependencies]
-solana-instruction = { path = ".", features = [
-    "borsh",
-] }
+solana-instruction = { path = ".", features = ["borsh"] }
 
 [build-dependencies]
 rustc_version = { workspace = true, optional = true }
@@ -43,7 +41,7 @@ borsh = ["dep:borsh"]
 frozen-abi = [
     "dep:rustc_version",
     "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro"
+    "dep:solana-frozen-abi-macro",
 ]
 serde = [
     "dep:serde",
