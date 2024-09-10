@@ -237,7 +237,6 @@ pub enum InstructionError {
 
 impl std::error::Error for InstructionError {}
 
-#[allow(unused_qualifications)]
 impl fmt::Display for InstructionError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
