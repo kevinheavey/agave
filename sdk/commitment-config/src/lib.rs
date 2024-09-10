@@ -1,6 +1,6 @@
 //! Definitions of commitment levels.
 
-use {std::str::FromStr, thiserror::Error};
+use core::{fmt, str::FromStr};
 
 #[cfg_attr(
     feature = "serde",
@@ -129,8 +129,17 @@ impl std::fmt::Display for CommitmentLevel {
     }
 }
 
-#[derive(Error, Debug)]
+#[derive(Debug)]
 pub enum ParseCommitmentLevelError {
-    #[error("invalid variant")]
     Invalid,
+}
+
+impl std::error::Error for ParseCommitmentLevelError {}
+
+impl fmt::Display for ParseCommitmentLevelError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Self::Invalid => f.write_str("invalid variant"),
+        }
+    }
 }
