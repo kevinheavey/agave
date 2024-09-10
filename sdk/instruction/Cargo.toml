@@ -32,7 +32,6 @@ wasm-bindgen = { workspace = true }
 [dev-dependencies]
 solana-instruction = { path = ".", features = [
     "borsh",
-    "dev-context-only-utils",
 ] }
 
 [build-dependencies]
@@ -41,7 +40,6 @@ rustc_version = { workspace = true, optional = true }
 [features]
 bincode = ["dep:bincode", "dep:serde"]
 borsh = ["dep:borsh"]
-dev-context-only-utils = [] # unused but CI fails without this.
 frozen-abi = [
     "dep:rustc_version",
     "dep:solana-frozen-abi",
