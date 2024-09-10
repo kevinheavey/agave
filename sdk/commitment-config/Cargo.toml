@@ -12,7 +12,6 @@ edition = { workspace = true }
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-thiserror = { workspace = true }
 
 [features]
 serde = ["dep:serde", "dep:serde_derive"]

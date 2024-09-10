@@ -6376,7 +6376,6 @@ version = "2.2.0"
 dependencies = [
  "serde",
  "serde_derive",
- "thiserror",
 ]
 
 [[package]]
