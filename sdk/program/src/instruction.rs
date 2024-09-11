@@ -36,7 +36,7 @@ pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
             accounts.resize_with(meta.accounts_len as usize, AccountMeta::default);
 
             let _ = unsafe {
-                sol_get_processed_sibling_instruction(
+                solana_instruction::syscalls::sol_get_processed_sibling_instruction(
                     index as u64,
                     &mut meta,
                     &mut program_id,
