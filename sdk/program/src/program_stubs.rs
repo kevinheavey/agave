@@ -103,6 +103,12 @@ pub trait SyscallStubs: Sync + Send {
                 .join(" ")
         );
     }
+    fn sol_get_processed_sibling_instruction(&self, _index: usize) -> Option<Instruction> {
+        None
+    }
+    fn sol_get_stack_height(&self) -> u64 {
+        0
+    }
 }
 
 struct DefaultSyscallStubs {}
@@ -193,6 +199,17 @@ pub(crate) fn sol_set_return_data(data: &[u8]) {
 
 pub(crate) fn sol_log_data(data: &[&[u8]]) {
     SYSCALL_STUBS.read().unwrap().sol_log_data(data)
+}
+
+pub(crate) fn sol_get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
+    SYSCALL_STUBS
+        .read()
+        .unwrap()
+        .sol_get_processed_sibling_instruction(index)
+}
+
+pub(crate) fn sol_get_stack_height() -> u64 {
+    SYSCALL_STUBS.read().unwrap().sol_get_stack_height()
 }
 
 pub(crate) fn sol_get_epoch_rewards_sysvar(var_addr: *mut u8) -> u64 {

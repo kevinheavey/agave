@@ -236,13 +236,6 @@ fn get_sysvar<T: Default + Sysvar + Sized + serde::de::DeserializeOwned + Clone>
     }
 }
 
-impl solana_instruction::stubs::InstructionSyscallStubs for SyscallStubs {
-    fn sol_get_stack_height(&self) -> u64 {
-        let invoke_context = get_invoke_context();
-        invoke_context.get_stack_height().try_into().unwrap()
-    }
-}
-
 struct SyscallStubs {}
 impl solana_sdk::program_stubs::SyscallStubs for SyscallStubs {
     fn sol_log(&self, message: &str) {
@@ -438,6 +431,11 @@ impl solana_sdk::program_stubs::SyscallStubs for SyscallStubs {
         transaction_context
             .set_return_data(caller, data.to_vec())
             .unwrap();
+    }
+
+    fn sol_get_stack_height(&self) -> u64 {
+        let invoke_context = get_invoke_context();
+        invoke_context.get_stack_height().try_into().unwrap()
     }
 }
 
@@ -795,7 +793,6 @@ impl ProgramTest {
 
             ONCE.call_once(|| {
                 solana_sdk::program_stubs::set_syscall_stubs(Box::new(SyscallStubs {}));
-                solana_instruction::stubs::set_instruction_syscall_stubs(Box::new(SyscallStubs {}));
             });
         }
 

@@ -5220,7 +5220,6 @@ dependencies = [
  "borsh 1.5.1",
  "getrandom 0.2.10",
  "js-sys",
- "lazy_static",
  "num-traits",
  "serde",
  "serde_derive",

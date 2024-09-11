@@ -24,8 +24,6 @@ use {
     solana_short_vec as short_vec,
 };
 pub mod error;
-#[cfg(not(target_os = "solana"))]
-pub mod stubs;
 #[cfg(target_os = "solana")]
 pub mod syscalls;
 
@@ -445,72 +443,5 @@ pub struct ProcessedSiblingInstruction {
     pub accounts_len: u64,
 }
 
-/// Returns a sibling instruction from the processed sibling instruction list.
-///
-/// The processed sibling instruction list is a reverse-ordered list of
-/// successfully processed sibling instructions. For example, given the call flow:
-///
-/// A
-/// B -> C -> D
-/// B -> E
-/// B -> F
-///
-/// Then B's processed sibling instruction list is: `[A]`
-/// Then F's processed sibling instruction list is: `[E, C]`
-pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
-    #[cfg(target_os = "solana")]
-    {
-        let mut meta = ProcessedSiblingInstruction::default();
-        let mut program_id = Pubkey::default();
-
-        if 1 == unsafe {
-            crate::syscalls::sol_get_processed_sibling_instruction(
-                index as u64,
-                &mut meta,
-                &mut program_id,
-                &mut u8::default(),
-                &mut AccountMeta::default(),
-            )
-        } {
-            let mut data = Vec::new();
-            let mut accounts = Vec::new();
-            data.resize_with(meta.data_len as usize, u8::default);
-            accounts.resize_with(meta.accounts_len as usize, AccountMeta::default);
-
-            let _ = unsafe {
-                crate::syscalls::sol_get_processed_sibling_instruction(
-                    index as u64,
-                    &mut meta,
-                    &mut program_id,
-                    data.as_mut_ptr(),
-                    accounts.as_mut_ptr(),
-                )
-            };
-
-            Some(Instruction::new_with_bytes(program_id, &data, accounts))
-        } else {
-            None
-        }
-    }
-
-    #[cfg(not(target_os = "solana"))]
-    crate::stubs::sol_get_processed_sibling_instruction(index)
-}
-
 // Stack height when processing transaction-level instructions
 pub const TRANSACTION_LEVEL_STACK_HEIGHT: usize = 1;
-
-/// Get the current stack height, transaction-level instructions are height
-/// TRANSACTION_LEVEL_STACK_HEIGHT, fist invoked inner instruction is height
-/// TRANSACTION_LEVEL_STACK_HEIGHT + 1, etc...
-pub fn get_stack_height() -> usize {
-    #[cfg(target_os = "solana")]
-    unsafe {
-        crate::syscalls::sol_get_stack_height() as usize
-    }
-
-    #[cfg(not(target_os = "solana"))]
-    {
-        crate::stubs::sol_get_stack_height() as usize
-    }
-}

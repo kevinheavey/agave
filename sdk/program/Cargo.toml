@@ -44,7 +44,6 @@ solana-hash = { workspace = true, features = [
 solana-instruction = { workspace = true, default-features = false, features = [
     "bincode",
     "serde",
-    "set-syscall-stubs"
 ] }
 solana-msg = { workspace = true }
 solana-program-memory = { workspace = true }
