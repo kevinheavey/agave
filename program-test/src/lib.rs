@@ -17,6 +17,7 @@ use {
     solana_bpf_loader_program::serialization::serialize_parameters,
     solana_compute_budget::compute_budget::ComputeBudget,
     solana_feature_set::FEATURE_NAMES,
+    solana_instruction::{error::InstructionError, Instruction},
     solana_log_collector::ic_msg,
     solana_program_runtime::{
         invoke_context::BuiltinFunctionWithContext, loaded_programs::ProgramCacheEntry, stable_log,
@@ -37,7 +38,6 @@ use {
         fee_calculator::{FeeRateGovernor, DEFAULT_TARGET_LAMPORTS_PER_SIGNATURE},
         genesis_config::{ClusterType, GenesisConfig},
         hash::Hash,
-        instruction::{Instruction, InstructionError},
         native_token::sol_to_lamports,
         poh_config::PohConfig,
         program_error::{ProgramError, UNSUPPORTED_SYSVAR},
@@ -236,6 +236,13 @@ fn get_sysvar<T: Default + Sysvar + Sized + serde::de::DeserializeOwned + Clone>
     }
 }
 
+impl solana_instruction::stubs::InstructionSyscallStubs for SyscallStubs {
+    fn sol_get_stack_height(&self) -> u64 {
+        let invoke_context = get_invoke_context();
+        invoke_context.get_stack_height().try_into().unwrap()
+    }
+}
+
 struct SyscallStubs {}
 impl solana_sdk::program_stubs::SyscallStubs for SyscallStubs {
     fn sol_log(&self, message: &str) {
@@ -431,11 +438,6 @@ impl solana_sdk::program_stubs::SyscallStubs for SyscallStubs {
         transaction_context
             .set_return_data(caller, data.to_vec())
             .unwrap();
-    }
-
-    fn sol_get_stack_height(&self) -> u64 {
-        let invoke_context = get_invoke_context();
-        invoke_context.get_stack_height().try_into().unwrap()
     }
 }
 
@@ -793,6 +795,9 @@ impl ProgramTest {
 
             ONCE.call_once(|| {
                 solana_sdk::program_stubs::set_syscall_stubs(Box::new(SyscallStubs {}));
+                solana_instruction::stubs::set_instruction_syscall_stubs(Box::new(
+                    SyscallStubs {},
+                ));
             });
         }
 

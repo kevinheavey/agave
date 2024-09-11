@@ -24,6 +24,9 @@ solana-short-vec = { workspace = true, optional = true }
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-define-syscall = { workspace = true }
 
+[target.'cfg(not(target_os = "solana"))'.dependencies]
+lazy_static = { workspace = true, optional = true }
+
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
 js-sys = { workspace = true }
@@ -49,6 +52,7 @@ serde = [
     "dep:solana-short-vec",
     "solana-pubkey/serde",
 ]
+set-syscall-stubs = ["dep:lazy_static"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

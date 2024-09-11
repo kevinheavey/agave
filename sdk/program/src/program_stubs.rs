@@ -8,7 +8,7 @@ use {
         pubkey::Pubkey,
     },
     base64::{prelude::BASE64_STANDARD, Engine},
-    solana_instruction::{stubs as instruction_stubs, Instruction},
+    solana_instruction::Instruction,
     solana_program_memory::stubs,
     std::sync::{Arc, RwLock},
 };
@@ -102,12 +102,6 @@ pub trait SyscallStubs: Sync + Send {
                 .collect::<Vec<_>>()
                 .join(" ")
         );
-    }
-    fn sol_get_processed_sibling_instruction(&self, index: usize) -> Option<Instruction> {
-        instruction_stubs::sol_get_processed_sibling_instruction(index)
-    }
-    fn sol_get_stack_height(&self) -> u64 {
-        instruction_stubs::sol_get_stack_height()
     }
 }
 
