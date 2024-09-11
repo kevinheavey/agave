@@ -795,9 +795,7 @@ impl ProgramTest {
 
             ONCE.call_once(|| {
                 solana_sdk::program_stubs::set_syscall_stubs(Box::new(SyscallStubs {}));
-                solana_instruction::stubs::set_instruction_syscall_stubs(Box::new(
-                    SyscallStubs {},
-                ));
+                solana_instruction::stubs::set_instruction_syscall_stubs(Box::new(SyscallStubs {}));
             });
         }
 
