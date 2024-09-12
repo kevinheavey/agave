@@ -172,7 +172,7 @@ pub type Result<T> = result::Result<T, TransactionError>;
 #[cfg_attr(
     feature = "frozen-abi",
     derive(AbiExample),
-    frozen_abi(digest = "G1DfdeqgHjQnJAQ8Nxrs8TSbZfv5ZgUf5aW8c36pHXF9")
+    frozen_abi(digest = "686AAhRhjXpqKidmJEdHHcJCL9XxCxebu8Xmku9shp83")
 )]
 #[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize)]
 pub struct Transaction {
