@@ -41,7 +41,7 @@ pub const INCORRECT_AUTHORITY: u64 = to_builtin!(26);
 // Warning: Any new error codes added here must also be:
 // - Added to the below conversions
 // - Added as an equivalent to ProgramError and InstructionError
-// - Be featureized in the BPF loader to return `InstructionError::InvalidError`
+// - Be featurized in the BPF loader to return `InstructionError::InvalidError`
 //   until the feature is activated
 
 /// Reasons the runtime might have rejected an instruction.
