@@ -1,12 +1,15 @@
 #[cfg(all(feature = "serde", feature = "std"))]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(all(feature = "frozen-abi", feature = "std"))]
-use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
 #[cfg(feature = "std")]
 use {
     core::fmt,
     num_traits::ToPrimitive,
     std::string::{String, ToString},
+};
+#[cfg(feature = "frozen-abi")]
+use {
+    solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample},
+    std::format,
 };
 
 /// Builtin return values occupy the upper 32 bits

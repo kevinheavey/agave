@@ -41,6 +41,8 @@ frozen-abi = [
     "dep:rustc_version",
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
+    "serde",
+    "std",
 ]
 serde = [
     "dep:serde",
