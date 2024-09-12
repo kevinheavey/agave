@@ -1,6 +1,6 @@
 pub use solana_instruction::{
-    error::InstructionError, AccountMeta, CompiledInstruction, Instruction,
-    ProcessedSiblingInstruction, TRANSACTION_LEVEL_STACK_HEIGHT,
+    error::InstructionError, syscalls::ProcessedSiblingInstruction, AccountMeta,
+    CompiledInstruction, Instruction, TRANSACTION_LEVEL_STACK_HEIGHT,
 };
 
 /// Returns a sibling instruction from the processed sibling instruction list.

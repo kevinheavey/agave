@@ -328,16 +328,5 @@ impl CompiledInstruction {
     }
 }
 
-/// Use to query and convey information about the sibling instruction components
-/// when calling the `sol_get_processed_sibling_instruction` syscall.
-#[repr(C)]
-#[derive(Default, Debug, Clone, Copy, Eq, PartialEq)]
-pub struct ProcessedSiblingInstruction {
-    /// Length of the instruction data
-    pub data_len: u64,
-    /// Number of AccountMeta structures
-    pub accounts_len: u64,
-}
-
 // Stack height when processing transaction-level instructions
 pub const TRANSACTION_LEVEL_STACK_HEIGHT: usize = 1;
