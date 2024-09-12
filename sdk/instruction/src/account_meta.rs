@@ -1,6 +1,4 @@
-#[cfg(all(feature = "serde", feature = "std"))]
-use serde_derive::{Deserialize, Serialize};
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 use solana_pubkey::Pubkey;
 
 /// Describes a single account read or written by a program during instruction
@@ -17,9 +15,12 @@ use solana_pubkey::Pubkey;
 /// default [`AccountMeta::new`] constructor creates writable accounts, this is
 /// a minor hazard: use [`AccountMeta::new_readonly`] to specify that an account
 /// is not writable.
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 #[repr(C)]
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde_derive::Serialize, serde_derive::Deserialize)
+)]
 #[derive(Debug, Default, PartialEq, Eq, Clone)]
 pub struct AccountMeta {
     /// An account's public key.
@@ -30,7 +31,7 @@ pub struct AccountMeta {
     pub is_writable: bool,
 }
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 impl AccountMeta {
     /// Construct metadata for a writable account.
     ///

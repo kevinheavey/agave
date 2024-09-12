@@ -14,18 +14,16 @@
 #![allow(clippy::arithmetic_side_effects)]
 #![no_std]
 
-#[cfg(all(feature = "borsh", feature = "std"))]
+#[cfg(all(feature = "borsh", any(feature = "std", target_arch = "wasm32")))]
 use borsh::BorshSerialize;
-#[cfg(all(feature = "serde", feature = "std"))]
-use serde_derive::{Deserialize, Serialize};
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 extern crate std;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 use {solana_pubkey::Pubkey, std::vec::Vec};
 pub mod account_meta;
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 pub use account_meta::AccountMeta;
 pub mod error;
 #[cfg(target_os = "solana")]
@@ -90,9 +88,11 @@ pub mod syscalls;
 /// Programs may require signatures from some accounts, in which case they
 /// should be specified as signers during `Instruction` construction. The
 /// program must still validate during execution that the account is a signer.
-#[cfg(feature = "std")]
-#[cfg(not(target_arch = "wasm32"))]
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg(all(feature = "std", not(target_arch = "wasm32")))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde_derive::Serialize, serde_derive::Deserialize)
+)]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Instruction {
     /// Pubkey of the program that executes this instruction.
@@ -106,7 +106,6 @@ pub struct Instruction {
 /// wasm-bindgen version of the Instruction struct.
 /// This duplication is required until https://github.com/rustwasm/wasm-bindgen/issues/3671
 /// is fixed. This must not diverge from the regular non-wasm Instruction struct.
-#[cfg(feature = "std")]
 #[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 pub struct Instruction {
@@ -118,7 +117,7 @@ pub struct Instruction {
     pub data: Vec<u8>,
 }
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", target_arch = "wasm32"))]
 impl Instruction {
     #[cfg(feature = "borsh")]
     /// Create a new instruction from a value, encoded with [`borsh`].

@@ -1,15 +1,10 @@
-#[cfg(all(feature = "serde", feature = "std"))]
-use serde_derive::{Deserialize, Serialize};
+#[cfg(feature = "frozen-abi")]
+use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
 #[cfg(feature = "std")]
 use {
     core::fmt,
     num_traits::ToPrimitive,
     std::string::{String, ToString},
-};
-#[cfg(feature = "frozen-abi")]
-use {
-    solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample},
-    std::format,
 };
 
 /// Builtin return values occupy the upper 32 bits
@@ -61,7 +56,10 @@ pub const INCORRECT_AUTHORITY: u64 = to_builtin!(26);
 /// change at any time and changes to them are difficult to detect.
 #[cfg(feature = "std")]
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde_derive::Serialize, serde_derive::Deserialize)
+)]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum InstructionError {
     /// Deprecated! Use CustomError instead!
