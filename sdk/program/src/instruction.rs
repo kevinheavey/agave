@@ -1,8 +1,8 @@
 #[cfg(feature = "frozen-abi")]
 use solana_frozen_abi_macro::AbiExample;
 pub use solana_instruction::{
-    error::InstructionError, syscalls::ProcessedSiblingInstruction, AccountMeta, Instruction,
-    ProcessedSiblingInstruction, TRANSACTION_LEVEL_STACK_HEIGHT,
+    error::InstructionError, AccountMeta, Instruction, ProcessedSiblingInstruction,
+    TRANSACTION_LEVEL_STACK_HEIGHT,
 };
 use {
     bincode::serialize, serde::Serialize, solana_pubkey::Pubkey, solana_sanitize::Sanitize,
