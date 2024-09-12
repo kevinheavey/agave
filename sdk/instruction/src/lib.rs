@@ -14,16 +14,12 @@
 #![allow(clippy::arithmetic_side_effects)]
 #![no_std]
 
-#[cfg(all(feature = "borsh", any(feature = "std", target_arch = "wasm32")))]
-use borsh::BorshSerialize;
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
+#[cfg(feature = "std")]
 extern crate std;
-#[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::wasm_bindgen;
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
+#[cfg(feature = "std")]
 use {solana_pubkey::Pubkey, std::vec::Vec};
 pub mod account_meta;
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
+#[cfg(feature = "std")]
 pub use account_meta::AccountMeta;
 pub mod error;
 #[cfg(target_os = "solana")]
@@ -106,8 +102,8 @@ pub struct Instruction {
 /// wasm-bindgen version of the Instruction struct.
 /// This duplication is required until https://github.com/rustwasm/wasm-bindgen/issues/3671
 /// is fixed. This must not diverge from the regular non-wasm Instruction struct.
-#[cfg(target_arch = "wasm32")]
-#[wasm_bindgen]
+#[cfg(all(feature = "std", target_arch = "wasm32"))]
+#[wasm_bindgen::prelude::wasm_bindgen]
 pub struct Instruction {
     #[wasm_bindgen(skip)]
     pub program_id: Pubkey,
@@ -117,7 +113,7 @@ pub struct Instruction {
     pub data: Vec<u8>,
 }
 
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
+#[cfg(feature = "std")]
 impl Instruction {
     #[cfg(feature = "borsh")]
     /// Create a new instruction from a value, encoded with [`borsh`].
@@ -165,7 +161,7 @@ impl Instruction {
     ///    )
     /// }
     /// ```
-    pub fn new_with_borsh<T: BorshSerialize>(
+    pub fn new_with_borsh<T: borsh::BorshSerialize>(
         program_id: Pubkey,
         data: &T,
         accounts: Vec<AccountMeta>,

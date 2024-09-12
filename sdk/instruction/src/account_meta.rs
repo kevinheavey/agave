@@ -1,4 +1,3 @@
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
 use solana_pubkey::Pubkey;
 
 /// Describes a single account read or written by a program during instruction
@@ -15,7 +14,6 @@ use solana_pubkey::Pubkey;
 /// default [`AccountMeta::new`] constructor creates writable accounts, this is
 /// a minor hazard: use [`AccountMeta::new_readonly`] to specify that an account
 /// is not writable.
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
 #[repr(C)]
 #[cfg_attr(
     feature = "serde",
@@ -31,7 +29,6 @@ pub struct AccountMeta {
     pub is_writable: bool,
 }
 
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
 impl AccountMeta {
     /// Construct metadata for a writable account.
     ///
