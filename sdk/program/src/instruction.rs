@@ -1,5 +1,5 @@
 pub use solana_instruction::{
-    checked_add, error::InstructionError, AccountMeta, CompiledInstruction, Instruction,
+    error::InstructionError, AccountMeta, CompiledInstruction, Instruction,
     ProcessedSiblingInstruction, TRANSACTION_LEVEL_STACK_HEIGHT,
 };
 
