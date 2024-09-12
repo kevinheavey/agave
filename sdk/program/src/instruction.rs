@@ -69,3 +69,12 @@ pub fn get_stack_height() -> usize {
         crate::program_stubs::sol_get_stack_height() as usize
     }
 }
+
+// TODO: remove this.
+/// Addition that returns [`InstructionError::InsufficientFunds`] on overflow.
+///
+/// This is an internal utility function.
+#[doc(hidden)]
+pub fn checked_add(a: u64, b: u64) -> Result<u64, InstructionError> {
+    a.checked_add(b).ok_or(InstructionError::InsufficientFunds)
+}

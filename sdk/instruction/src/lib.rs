@@ -275,14 +275,6 @@ impl Instruction {
     }
 }
 
-/// Addition that returns [`InstructionError::InsufficientFunds`] on overflow.
-///
-/// This is an internal utility function.
-#[doc(hidden)]
-pub fn checked_add(a: u64, b: u64) -> Result<u64, InstructionError> {
-    a.checked_add(b).ok_or(InstructionError::InsufficientFunds)
-}
-
 /// Describes a single account read or written by a program during instruction
 /// execution.
 ///
