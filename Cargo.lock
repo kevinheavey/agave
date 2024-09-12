@@ -6659,8 +6659,6 @@ dependencies = [
  "solana-frozen-abi-macro",
  "solana-instruction",
  "solana-pubkey",
- "solana-sanitize",
- "solana-short-vec",
  "wasm-bindgen",
 ]
 

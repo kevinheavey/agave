@@ -5225,8 +5225,6 @@ dependencies = [
  "serde_derive",
  "solana-define-syscall",
  "solana-pubkey",
- "solana-sanitize",
- "solana-short-vec",
  "wasm-bindgen",
 ]
 
