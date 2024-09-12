@@ -1,8 +1,13 @@
-#[cfg(feature = "serde")]
+#[cfg(all(feature = "serde", feature = "std"))]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(feature = "frozen-abi")]
+#[cfg(all(feature = "frozen-abi", feature = "std"))]
 use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
-use {core::fmt, num_traits::ToPrimitive};
+#[cfg(feature = "std")]
+use {
+    core::fmt,
+    num_traits::ToPrimitive,
+    std::string::{String, ToString},
+};
 
 /// Builtin return values occupy the upper 32 bits
 const BUILTIN_BIT_SHIFT: usize = 32;
@@ -51,6 +56,7 @@ pub const INCORRECT_AUTHORITY: u64 = to_builtin!(26);
 /// an error be consistent across software versions.  For example, it is
 /// dangerous to include error strings from 3rd party crates because they could
 /// change at any time and changes to them are difficult to detect.
+#[cfg(feature = "std")]
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -235,8 +241,10 @@ pub enum InstructionError {
     // conversions must also be added
 }
 
+#[cfg(feature = "std")]
 impl std::error::Error for InstructionError {}
 
+#[cfg(feature = "std")]
 impl fmt::Display for InstructionError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
@@ -376,6 +384,7 @@ impl fmt::Display for InstructionError {
     }
 }
 
+#[cfg(feature = "std")]
 impl<T> From<T> for InstructionError
 where
     T: ToPrimitive,

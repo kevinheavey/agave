@@ -36,6 +36,7 @@ rustc_version = { workspace = true, optional = true }
 [features]
 bincode = ["dep:bincode", "dep:serde"]
 borsh = ["dep:borsh"]
+default = ["std"]
 frozen-abi = [
     "dep:rustc_version",
     "dep:solana-frozen-abi",
@@ -46,6 +47,7 @@ serde = [
     "dep:serde_derive",
     "solana-pubkey/serde",
 ]
+std = []
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
