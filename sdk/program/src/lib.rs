@@ -515,7 +515,6 @@ pub mod stable_layout;
 pub mod stake;
 pub mod stake_history;
 pub mod syscalls;
-pub mod system_instruction;
 pub mod system_program;
 pub mod sysvar;
 pub mod vote;
@@ -542,6 +541,7 @@ pub use {
     solana_clock as clock,
     solana_msg::msg,
     solana_program_option as program_option, solana_pubkey as pubkey, solana_rent as rent,
+    solana_system_instruction as system_instruction,
 };
 
 /// The [config native program][np].

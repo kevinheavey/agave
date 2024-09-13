@@ -38,18 +38,19 @@
 //! [`invoke`]: crate::program::invoke
 //! [`invoke_signed`]: crate::program::invoke_signed
 //! [`AccountInfo`]: crate::account_info::AccountInfo
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 
 #[allow(deprecated)]
 use {
     crate::{
-        instruction::{AccountMeta, Instruction},
-        nonce,
-        pubkey::Pubkey,
-        system_program,
+        nonce, system_program,
         sysvar::{recent_blockhashes, rent},
     },
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
+    solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample},
+    solana_instruction::{AccountMeta, Instruction},
+    solana_pubkey::Pubkey,
     thiserror::Error,
 };
 
