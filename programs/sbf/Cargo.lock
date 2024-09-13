@@ -5756,6 +5756,7 @@ dependencies = [
  "solana-short-vec",
  "solana-slot-hashes",
  "solana-stable-layout",
+ "solana-system-instruction",
  "solana-transaction-error",
  "thiserror",
  "wasm-bindgen",
@@ -6969,6 +6970,16 @@ name = "solana-svm-transaction"
 version = "2.1.0"
 dependencies = [
  "solana-sdk",
+]
+
+[[package]]
+name = "solana-system-instruction"
+version = "2.1.0"
+dependencies = [
+ "num-derive",
+ "num-traits",
+ "solana-decode-error",
+ "solana-pubkey",
 ]
 
 [[package]]

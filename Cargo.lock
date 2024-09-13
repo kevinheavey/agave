@@ -7380,6 +7380,7 @@ dependencies = [
  "solana-short-vec",
  "solana-slot-hashes",
  "solana-stable-layout",
+ "solana-system-instruction",
  "solana-transaction-error",
  "static_assertions",
  "test-case",
@@ -8346,6 +8347,21 @@ name = "solana-svm-transaction"
 version = "2.1.0"
 dependencies = [
  "solana-sdk",
+]
+
+[[package]]
+name = "solana-system-instruction"
+version = "2.1.0"
+dependencies = [
+ "num-derive",
+ "num-traits",
+ "solana-decode-error",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
+ "solana-instruction",
+ "solana-program",
+ "solana-pubkey",
+ "static_assertions",
 ]
 
 [[package]]
