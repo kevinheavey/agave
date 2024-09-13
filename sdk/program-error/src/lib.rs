@@ -94,7 +94,7 @@ impl fmt::Display for ProgramError {
              => f.write_str("Length of the seed is too long for address generation"),
             ProgramError::InvalidSeeds
              => f.write_str("Provided seeds do not result in a valid address"),
-            ProgramError::BorshIoError(s) =>  write!(f,"IO Error: {s}"),
+            ProgramError::BorshIoError(s) =>  write!(f, "IO Error: {s}"),
             ProgramError::AccountNotRentExempt
              => f.write_str("An account does not have enough lamports to be rent-exempt"),
             ProgramError::UnsupportedSysvar
