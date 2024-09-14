@@ -143,6 +143,7 @@ members = [
     "sdk/serialize-utils",
     "sdk/sha256-hasher",
     "sdk/signature",
+    "sdk/signer",
     "sdk/slot-hashes",
     "sdk/slot-history",
     "sdk/stable-layout",
@@ -359,6 +360,7 @@ quinn = "0.11.4"
 quinn-proto = "0.11.7"
 quote = "1.0"
 rand = "0.8.5"
+rand0-7 = { package = "rand", version = "0.7" }
 rand_chacha = "0.3.1"
 rayon = "1.10.0"
 reed-solomon-erasure = "6.0.0"
@@ -488,6 +490,7 @@ solana-serde-varint = { path = "sdk/serde-varint", version = "=2.2.0" }
 solana-serialize-utils = { path = "sdk/serialize-utils", version = "=2.2.0" }
 solana-sha256-hasher = { path = "sdk/sha256-hasher", version = "=2.2.0" }
 solana-signature = { path = "sdk/signature", version = "=2.2.0", default-features = false }
+solana-signer = { path = "sdk/signer", version = "=2.2.0" }
 solana-slot-hashes = { path = "sdk/slot-hashes", version = "=2.2.0" }
 solana-slot-history = { path = "sdk/slot-history", version = "=2.2.0" }
 solana-time-utils = { path = "sdk/time-utils", version = "=2.2.0" }
