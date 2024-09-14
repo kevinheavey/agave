@@ -540,6 +540,7 @@ pub use {
     solana_clock as clock,
     solana_entrypoint::{
         self as entrypoint, custom_heap_default, custom_panic_default, entrypoint,
+        entrypoint_no_alloc,
     },
     solana_msg::msg,
     solana_native_token as native_token, solana_program_option as program_option,
