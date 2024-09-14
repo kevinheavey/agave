@@ -1,4 +1,4 @@
-#![cfg_attr(RUSTC_WITH_SPECIALIZATION, feature(min_specialization))]
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 //! The Solana [`Account`] type.
 
 #[cfg(feature = "dev-context-only-utils")]

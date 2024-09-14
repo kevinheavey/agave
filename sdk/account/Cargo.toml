@@ -20,9 +20,6 @@ solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-logger = { workspace = true, optional = true }
 solana-program = { workspace = true }
 
-[build-dependencies]
-rustc_version = { workspace = true }
-
 [features]
 dev-context-only-utils = ["dep:qualifier_attr"]
 frozen-abi = [
