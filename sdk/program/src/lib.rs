@@ -538,8 +538,9 @@ pub use solana_short_vec as short_vec;
 pub use wasm_bindgen::prelude::wasm_bindgen;
 pub use {
     solana_account_info::{self as account_info, debug_account_data},
-    solana_clock as clock, solana_msg::msg, solana_program_option as program_option,
-    solana_pubkey as pubkey,
+    solana_clock as clock,
+    solana_msg::msg,
+    solana_program_option as program_option, solana_pubkey as pubkey,
 };
 
 /// The [config native program][np].
