@@ -173,7 +173,7 @@ macro_rules! entrypoint_no_alloc {
             const MAX_ACCOUNT_INFOS: usize = 64;
             let mut accounts = [UNINIT_ACCOUNT_INFO; MAX_ACCOUNT_INFOS];
             let (program_id, num_accounts, instruction_data) =
-                unsafe { $crate::entrypoint::deserialize_into(input, &mut accounts) };
+                unsafe { $crate::deserialize_into(input, &mut accounts) };
             // Use `slice_assume_init_ref` once it's stabilized
             let accounts = &*(&accounts[..num_accounts] as *const [MaybeUninit<AccountInfo<'_>>]
                 as *const [AccountInfo<'_>]);
@@ -181,7 +181,7 @@ macro_rules! entrypoint_no_alloc {
             #[inline(never)]
             fn call_program(program_id: &Pubkey, accounts: &[AccountInfo], data: &[u8]) -> u64 {
                 match $process_instruction(program_id, accounts, data) {
-                    Ok(()) => $crate::entrypoint::SUCCESS,
+                    Ok(()) => $crate::SUCCESS,
                     Err(error) => error.into(),
                 }
             }
