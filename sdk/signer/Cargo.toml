@@ -1,0 +1,33 @@
+[package]
+name = "solana-signer"
+description = "Solana abstractions and implementations for transaction signers."
+documentation = "https://docs.rs/solana-signer"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+bs58 = { workspace = true }
+ed25519-dalek = { workspace = true }
+ed25519-dalek-bip32 = { workspace = true }
+hmac = { workspace = true }
+itertools = { workspace = true }
+pbkdf2 = { workspace = true }
+rand0-7 = { workspace = true }
+serde_json = { workspace = true }
+sha2 = { workspace = true }
+solana-derivation-path = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-signature = { workspace = true, features = ["verify" ]}
+solana-transaction-error = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+static_assertions = { workspace = true }
+tiny-bip39 = { workspace = true }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]

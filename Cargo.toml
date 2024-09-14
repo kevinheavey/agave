@@ -121,6 +121,7 @@ members = [
     "sdk/serde-varint",
     "sdk/sha256-hasher",
     "sdk/signature",
+    "sdk/signer",
     "sdk/transaction-error",
     "send-transaction-service",
     "short-vec",
@@ -330,6 +331,7 @@ quinn = "0.11.4"
 quinn-proto = "0.11.7"
 quote = "1.0"
 rand = "0.8.5"
+rand0-7 = { package = "rand", version = "0.7" }
 rand_chacha = "0.3.1"
 rayon = "1.10.0"
 reed-solomon-erasure = "6.0.0"
@@ -437,6 +439,7 @@ solana-sanitize = { path = "sanitize", version = "=2.1.0" }
 solana-serde-varint = { path = "sdk/serde-varint", version = "=2.1.0" }
 solana-sha256-hasher = { path = "sdk/sha256-hasher", version = "=2.1.0" }
 solana-signature = { path = "sdk/signature", version = "=2.1.0", default-features = false }
+solana-signer = { path = "sdk/signer", version = "=2.1.0" }
 solana-timings = { path = "timings", version = "=2.1.0" }
 solana-unified-scheduler-logic = { path = "unified-scheduler-logic", version = "=2.1.0" }
 solana-unified-scheduler-pool = { path = "unified-scheduler-pool", version = "=2.1.0" }
