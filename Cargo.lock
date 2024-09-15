@@ -8370,6 +8370,7 @@ dependencies = [
  "serde_derive",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
+ "solana-instruction",
  "solana-program",
  "solana-sanitize",
 ]
