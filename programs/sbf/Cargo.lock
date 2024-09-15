@@ -5730,6 +5730,7 @@ dependencies = [
  "solana-sha256-hasher",
  "solana-short-vec",
  "solana-slot-hashes",
+ "solana-transaction-error",
  "thiserror",
  "wasm-bindgen",
 ]
@@ -7030,7 +7031,6 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-instruction",
- "solana-program",
  "solana-sanitize",
 ]
 
