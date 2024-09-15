@@ -7247,6 +7247,7 @@ dependencies = [
  "solana-serde-varint",
  "solana-sha256-hasher",
  "solana-short-vec",
+ "solana-transaction-error",
  "static_assertions",
  "test-case",
  "thiserror",
@@ -8313,7 +8314,6 @@ dependencies = [
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-instruction",
- "solana-program",
  "solana-sanitize",
 ]
 
