@@ -5923,7 +5923,6 @@ dependencies = [
  "jsonrpc-core",
  "reqwest",
  "reqwest-middleware",
- "semver",
  "serde",
  "serde_derive",
  "serde_json",
@@ -5932,7 +5931,6 @@ dependencies = [
  "solana-rpc-response",
  "solana-sdk",
  "solana-transaction-status-client-types",
- "solana-version",
  "thiserror",
 ]
 
