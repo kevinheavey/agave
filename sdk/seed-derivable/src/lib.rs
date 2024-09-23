@@ -1,4 +1,4 @@
-//! Abstractions and implementations for transaction signers.
+//! The interface by which keys are derived.
 use {
     ed25519_dalek_bip32::Error as Bip32Error,
     solana_derivation_path::DerivationPath,
