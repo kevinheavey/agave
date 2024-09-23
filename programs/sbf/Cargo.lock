@@ -5608,6 +5608,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-presigner"
+version = "2.1.0"
+dependencies = [
+ "solana-pubkey",
+ "solana-signature",
+ "solana-signer",
+]
+
+[[package]]
 name = "solana-program"
 version = "2.1.0"
 dependencies = [
@@ -6598,6 +6607,7 @@ dependencies = [
  "solana-decode-error",
  "solana-derivation-path",
  "solana-feature-set",
+ "solana-presigner",
  "solana-program",
  "solana-program-memory",
  "solana-sanitize",

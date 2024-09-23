@@ -33,6 +33,7 @@ full = [
     "libsecp256k1",
     "sha3",
     "digest",
+    "dep:solana-presigner",
     "dep:solana-seed-derivable",
     "dep:solana-seed-phrase",
     "dep:solana-transaction-error"
@@ -94,6 +95,7 @@ solana-frozen-abi = { workspace = true, optional = true, features = [
 solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
+solana-presigner = { workspace = true, optional = true }
 solana-program = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-sanitize = { workspace = true }
