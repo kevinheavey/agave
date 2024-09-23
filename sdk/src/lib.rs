@@ -36,9 +36,7 @@
 extern crate self as solana_sdk;
 
 #[cfg(feature = "full")]
-pub use solana_signer::{self as signer, signers};
-#[cfg(not(feature = "full"))]
-pub mod signer {}
+pub use signer::signers;
 #[cfg(not(target_os = "solana"))]
 pub use solana_program::program_stubs;
 // These solana_program imports could be *-imported, but that causes a bunch of
@@ -100,6 +98,7 @@ pub mod rpc_port;
 pub mod secp256k1_instruction;
 pub mod shred_version;
 pub mod signature;
+pub mod signer;
 pub mod simple_vote_transaction_checker;
 pub mod system_transaction;
 pub mod timing;
