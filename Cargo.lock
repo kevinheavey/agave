@@ -7779,6 +7779,7 @@ dependencies = [
  "solana-sdk",
  "solana-sdk-macro",
  "solana-secp256k1-recover",
+ "solana-seed-derivable",
  "solana-serde-varint",
  "solana-short-vec",
  "solana-signature",
@@ -7819,6 +7820,16 @@ name = "solana-security-txt"
 version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "468aa43b7edb1f9b7b7b686d5c3aeb6630dc1708e86e31343499dd5c4d775183"
+
+[[package]]
+name = "solana-seed-derivable"
+version = "2.1.0"
+dependencies = [
+ "ed25519-dalek",
+ "ed25519-dalek-bip32",
+ "solana-derivation-path",
+ "solana-signer",
+]
 
 [[package]]
 name = "solana-send-transaction-service"
@@ -7893,14 +7904,12 @@ version = "2.1.0"
 dependencies = [
  "bs58",
  "ed25519-dalek",
- "ed25519-dalek-bip32",
  "hmac 0.12.1",
  "itertools 0.12.1",
  "pbkdf2 0.11.0",
  "rand 0.7.3",
  "serde_json",
  "sha2 0.10.8",
- "solana-derivation-path",
  "solana-pubkey",
  "solana-signature",
  "solana-transaction-error",
