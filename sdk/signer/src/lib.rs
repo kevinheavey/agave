@@ -1,6 +1,5 @@
 //! Abstractions and implementations for transaction signers.
 use {
-    crate::presigner::PresignerError,
     itertools::Itertools,
     solana_pubkey::Pubkey,
     solana_signature::Signature,
@@ -17,8 +16,13 @@ use {
 
 pub mod keypair;
 pub mod null_signer;
-pub mod presigner;
 pub mod signers;
+
+#[derive(Debug, Error, PartialEq, Eq)]
+pub enum PresignerError {
+    #[error("pre-generated signature cannot verify data")]
+    VerificationFailure,
+}
 
 #[derive(Debug, Error, PartialEq, Eq)]
 pub enum SignerError {
