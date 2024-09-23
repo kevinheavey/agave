@@ -13,7 +13,7 @@ edition = { workspace = true }
 pbkdf2 = { workspace = true }
 hmac = { workspace = true }
 sha2 = { workspace = true }
-solana-signer = { workspace = true }
+solana-signer = { workspace = true, features = ["keypair"] }
 
 [dev-dependencies]
 tiny-bip39 = { workspace = true }
