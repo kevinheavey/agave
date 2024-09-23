@@ -13,6 +13,7 @@ edition = { workspace = true }
 ed25519-dalek = { workspace = true }
 ed25519-dalek-bip32 = { workspace = true }
 solana-derivation-path = { workspace = true }
+solana-seed-phrase = { workspace = true }
 solana-signer = { workspace = true }
 
 [package.metadata.docs.rs]
