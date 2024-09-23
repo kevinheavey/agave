@@ -12,14 +12,12 @@ edition = { workspace = true }
 [dependencies]
 bs58 = { workspace = true, features = ["std"] }
 ed25519-dalek = { workspace = true }
-ed25519-dalek-bip32 = { workspace = true }
 hmac = { workspace = true }
 itertools = { workspace = true }
 pbkdf2 = { workspace = true }
 rand0-7 = { workspace = true }
 serde_json = { workspace = true }
 sha2 = { workspace = true }
-solana-derivation-path = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-signature = { workspace = true, features = ["verify"] }
 solana-transaction-error = { workspace = true }
