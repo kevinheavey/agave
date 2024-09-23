@@ -1,12 +1,10 @@
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 use {
-    crate::{EncodableKey, EncodableKeypair, SeedDerivable, Signer, SignerError},
+    crate::{EncodableKey, EncodableKeypair, Signer, SignerError},
     ed25519_dalek::Signer as DalekSigner,
-    ed25519_dalek_bip32::Error as Bip32Error,
     hmac::Hmac,
     rand0_7::{rngs::OsRng, CryptoRng, RngCore},
-    solana_derivation_path::DerivationPath,
     solana_pubkey::Pubkey,
     solana_signature::Signature,
     std::{
@@ -96,6 +94,12 @@ impl Keypair {
     }
 }
 
+impl From<ed25519_dalek::Keypair> for Keypair {
+    fn from(value: ed25519_dalek::Keypair) -> Self {
+        Self(value)
+    }
+}
+
 #[cfg(test)]
 static_assertions::const_assert_eq!(Keypair::SECRET_KEY_LENGTH, ed25519_dalek::SECRET_KEY_LENGTH);
 
@@ -138,26 +142,6 @@ impl EncodableKey for Keypair {
 
     fn write<W: Write>(&self, writer: &mut W) -> Result<String, Box<dyn error::Error>> {
         write_keypair(self, writer)
-    }
-}
-
-impl SeedDerivable for Keypair {
-    fn from_seed(seed: &[u8]) -> Result<Self, Box<dyn error::Error>> {
-        keypair_from_seed(seed)
-    }
-
-    fn from_seed_and_derivation_path(
-        seed: &[u8],
-        derivation_path: Option<DerivationPath>,
-    ) -> Result<Self, Box<dyn error::Error>> {
-        keypair_from_seed_and_derivation_path(seed, derivation_path)
-    }
-
-    fn from_seed_phrase_and_passphrase(
-        seed_phrase: &str,
-        passphrase: &str,
-    ) -> Result<Self, Box<dyn error::Error>> {
-        keypair_from_seed_phrase_and_passphrase(seed_phrase, passphrase)
     }
 }
 
@@ -212,30 +196,6 @@ pub fn keypair_from_seed(seed: &[u8]) -> Result<Keypair, Box<dyn error::Error>> 
     let public = ed25519_dalek::PublicKey::from(&secret);
     let dalek_keypair = ed25519_dalek::Keypair { secret, public };
     Ok(Keypair(dalek_keypair))
-}
-
-/// Generates a Keypair using Bip32 Hierarchical Derivation if derivation-path is provided;
-/// otherwise generates the base Bip44 Solana keypair from the seed
-pub fn keypair_from_seed_and_derivation_path(
-    seed: &[u8],
-    derivation_path: Option<DerivationPath>,
-) -> Result<Keypair, Box<dyn error::Error>> {
-    let derivation_path = derivation_path.unwrap_or_default();
-    bip32_derived_keypair(seed, derivation_path).map_err(|err| err.to_string().into())
-}
-
-/// Generates a Keypair using Bip32 Hierarchical Derivation
-fn bip32_derived_keypair(
-    seed: &[u8],
-    derivation_path: DerivationPath,
-) -> Result<Keypair, Bip32Error> {
-    let extended = ed25519_dalek_bip32::ExtendedSecretKey::from_seed(seed)
-        .and_then(|extended| extended.derive(&derivation_path))?;
-    let extended_public_key = extended.public_key();
-    Ok(Keypair(ed25519_dalek::Keypair {
-        secret: extended.secret_key,
-        public: extended_public_key,
-    }))
 }
 
 pub fn generate_seed_from_seed_phrase_and_passphrase(

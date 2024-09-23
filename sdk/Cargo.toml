@@ -36,6 +36,7 @@ full = [
     "digest",
     "solana-pubkey/rand",
     "dep:solana-precompile-error",
+    "dep:solana-seed-derivable",
     "dep:solana-transaction-error"
 ]
 borsh = ["dep:borsh", "solana-program/borsh", "solana-secp256k1-recover/borsh"]
@@ -114,6 +115,7 @@ solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-serde-varint = { workspace = true }
 solana-short-vec = { workspace = true }
+solana-seed-derivable = { workspace = true, optional = true }
 solana-signer = { workspace = true, optional = true }
 solana-signature = { workspace = true, features = [
     "rand",
