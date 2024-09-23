@@ -14,6 +14,7 @@ use {
     thiserror::Error,
 };
 
+#[cfg(feature = "keypair")]
 pub mod keypair;
 pub mod null_signer;
 pub mod signers;

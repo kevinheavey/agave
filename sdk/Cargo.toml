@@ -120,7 +120,7 @@ solana-serde-varint = { workspace = true }
 solana-short-vec = { workspace = true }
 solana-seed-derivable = { workspace = true, optional = true }
 solana-seed-phrase = { workspace = true, optional = true }
-solana-signer = { workspace = true, optional = true }
+solana-signer = { workspace = true, optional = true, features = ["keypair"] }
 solana-signature = { workspace = true, features = [
     "rand",
     "serde",
