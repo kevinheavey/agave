@@ -97,6 +97,7 @@ solana-frozen-abi = { workspace = true, optional = true, features = [
 solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
+solana-instruction = { workspace = true }
 solana-native-token = { workspace = true }
 solana-precompile-error = { workspace = true, optional = true }
 solana-program = { workspace = true }
@@ -113,7 +114,6 @@ solana-signature = { workspace = true, features = [
     "std",
     "verify",
 ], optional = true }
-solana-instruction = { workspace = true }
 thiserror = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
