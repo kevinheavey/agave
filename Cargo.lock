@@ -8128,6 +8128,7 @@ dependencies = [
  "serde_json",
  "solana-pubkey",
  "solana-signature",
+ "solana-signer",
  "solana-transaction-error",
  "static_assertions",
  "thiserror",
