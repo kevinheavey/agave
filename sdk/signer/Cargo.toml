@@ -14,21 +14,22 @@ bs58 = { workspace = true, features = ["std"], optional = true }
 ed25519-dalek = { workspace = true, optional = true }
 itertools = { workspace = true }
 rand0-7 = { workspace = true, optional = true }
-serde_json = { workspace = true, optional = true }
 solana-pubkey = { workspace = true }
 solana-signature = { workspace = true }
 solana-transaction-error = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
+serde_json = { workspace = true }
+solana-signer = { path = ".", features = ["dev-context-only-utils"] }
 static_assertions = { workspace = true }
 
 [features]
+dev-context-only-utils = ["keypair"]
 keypair = [
     "dep:bs58",
     "dep:ed25519-dalek",
     "dep:rand0-7",
-    "dep:serde_json"
 ]
 
 [package.metadata.docs.rs]
