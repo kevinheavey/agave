@@ -92,7 +92,7 @@ impl ::solana_frozen_abi::abi_example::EvenAsOpaque for PacketFlags {
 //   https://github.com/ryoqun/serde-array-comparisons
 #[serde_as]
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(Clone, Eq, Serialize, Deserialize)]
+#[derive(Clone, Eq, Deserialize)]
 #[repr(C)]
 pub struct Packet {
     // Bytes past Packet.meta.size are not valid to read from.
@@ -100,6 +100,46 @@ pub struct Packet {
     #[serde_as(as = "Bytes")]
     buffer: [u8; PACKET_DATA_SIZE],
     meta: Meta,
+}
+
+impl serde::Serialize for Packet {
+    fn serialize<S>(
+        &self,
+        s: S,
+    ) -> core::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut serde_state = serde::Serializer::serialize_struct(
+            s,
+            "Packet",
+            false as usize + 1 + 1,
+        )?;
+        serde_state.serialize_field("buffer", {
+            struct SerializeWith<'a> {
+                values: (&'a [u8; PACKET_DATA_SIZE],),
+                phantom: core::marker::PhantomData<Packet>,
+            }
+            impl<'a> serde::Serialize for SerializeWith<'a> {
+                fn serialize<S>(
+                    &self,
+                    s: S,
+                ) -> core::result::Result<S::Ok, S::Error>
+                where
+                    S: serde::Serializer,
+                {
+                    s.serialize_bytes(self.values.0)
+                }
+            }
+            &SerializeWith {
+                values: (&self.buffer,),
+                phantom: core::marker::PhantomData::<Packet>,
+            }
+        })?;
+        serde_state.serialize_field("meta", &self.meta)?;
+        serde_state.end()
+    }
 }
 
 impl Packet {
