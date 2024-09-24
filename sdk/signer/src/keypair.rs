@@ -156,8 +156,36 @@ impl EncodableKeypair for Keypair {
 
 /// Reads a JSON-encoded `Keypair` from a `Reader` implementor
 pub fn read_keypair<R: Read>(reader: &mut R) -> Result<Keypair, Box<dyn error::Error>> {
-    let bytes: Vec<u8> = serde_json::from_reader(reader)?;
-    Keypair::from_bytes(&bytes)
+    let mut buffer = String::new();
+    reader.read_to_string(&mut buffer)?;
+    let trimmed = buffer.trim();
+    if !trimmed.starts_with('[') || !trimmed.ends_with(']') {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidData,
+            "Input must be a JSON array",
+        )
+        .into());
+    }
+    let contents = &trimmed[1..trimmed.len() - 1];
+    let elements_vec: Vec<&str> = contents.split(',').map(|s| s.trim()).collect();
+    let len = elements_vec.len();
+    let elements: [&str; ed25519_dalek::KEYPAIR_LENGTH] =
+        elements_vec.try_into().map_err(|_| {
+            std::io::Error::new(
+                std::io::ErrorKind::InvalidData,
+                format!(
+                    "Expected {} elements, found {}",
+                    ed25519_dalek::KEYPAIR_LENGTH,
+                    len
+                ),
+            )
+        })?;
+    let mut out = [0u8; ed25519_dalek::KEYPAIR_LENGTH];
+    for (idx, element) in elements.into_iter().enumerate() {
+        let parsed: u8 = element.parse()?;
+        out[idx] = parsed;
+    }
+    Keypair::from_bytes(&out)
         .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e.to_string()).into())
 }
 
@@ -172,9 +200,24 @@ pub fn write_keypair<W: Write>(
     writer: &mut W,
 ) -> Result<String, Box<dyn error::Error>> {
     let keypair_bytes = keypair.0.to_bytes();
-    let serialized = serde_json::to_string(&keypair_bytes.to_vec())?;
-    writer.write_all(serialized.as_bytes())?;
-    Ok(serialized)
+    let mut result = Vec::with_capacity(64 * 4 + 2); // Estimate capacity: 64 numbers * (up to 3 digits + 1 comma) + 2 brackets
+
+    result.push(b'['); // Opening bracket
+
+    for (i, &num) in keypair_bytes.iter().enumerate() {
+        if i > 0 {
+            result.push(b','); // Comma separator for all elements except the first
+        }
+
+        // Convert number to string and then to bytes
+        let num_str = num.to_string();
+        result.extend_from_slice(num_str.as_bytes());
+    }
+
+    result.push(b']'); // Closing bracket
+    writer.write_all(&result)?;
+    let as_string = String::from_utf8(result)?;
+    Ok(as_string)
 }
 
 /// Writes a `Keypair` to a file with JSON-encoding
