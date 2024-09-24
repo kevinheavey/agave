@@ -1,5 +1,5 @@
 //! configuration for network inflation
-#[cfg_attr(feature = "frozen-abi", feature(min_specialization))]
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 
