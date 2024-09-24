@@ -6983,7 +6983,6 @@ dependencies = [
  "ed25519-dalek",
  "itertools 0.12.1",
  "rand 0.7.3",
- "serde_json",
  "solana-pubkey",
  "solana-signature",
  "solana-transaction-error",
