@@ -4694,7 +4694,6 @@ version = "2.1.0"
 dependencies = [
  "bincode",
  "qualifier_attr",
- "rustc_version",
  "serde",
  "serde_bytes",
  "serde_derive",
