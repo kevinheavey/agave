@@ -1149,7 +1149,7 @@ pub fn read_pubkey_file(infile: &str) -> Result<Pubkey, Box<dyn std::error::Erro
         .into());
     }
     let contents = &trimmed[1..trimmed.len() - 1];
-    Ok(Pubkey::from_str(&contents)?)
+    Ok(Pubkey::from_str(contents)?)
 }
 
 #[cfg(test)]
