@@ -1136,10 +1136,20 @@ pub fn write_pubkey_file(outfile: &str, pubkey: Pubkey) -> Result<(), Box<dyn st
 
 #[cfg(all(feature = "std", not(target_os = "solana")))]
 pub fn read_pubkey_file(infile: &str) -> Result<Pubkey, Box<dyn std::error::Error>> {
-    let f = std::fs::File::open(infile)?;
-    let printable: String = serde_json::from_reader(f)?;
-
-    Ok(Pubkey::from_str(&printable)?)
+    use std::io::Read;
+    let mut f = std::fs::File::open(infile)?;
+    let mut buffer = String::new();
+    f.read_to_string(&mut buffer)?;
+    let trimmed = buffer.trim();
+    if !trimmed.starts_with('"') || !trimmed.ends_with('"') {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidData,
+            "Input must be a JSON string.",
+        )
+        .into());
+    }
+    let contents = &trimmed[1..trimmed.len() - 1];
+    Ok(Pubkey::from_str(&contents)?)
 }
 
 #[cfg(test)]

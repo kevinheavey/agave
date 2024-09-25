@@ -21,7 +21,6 @@ num-traits = { workspace = true }
 rand = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-serde_json = { workspace = true, optional = true }
 solana-atomic-u64 = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true, features = [
@@ -73,7 +72,7 @@ frozen-abi = [
 ]
 serde = ["dep:serde", "dep:serde_derive"]
 sha2 = ["dep:solana-sha256-hasher", "solana-sha256-hasher/sha2"]
-std = ["dep:rand", "dep:serde_json"]
+std = ["dep:rand"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
