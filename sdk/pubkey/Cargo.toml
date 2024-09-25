@@ -65,14 +65,15 @@ borsh = ["dep:borsh", "dep:borsh0-10", "std"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 curve25519 = ["dep:curve25519-dalek", "sha2"]
 default = ["std"]
-dev-context-only-utils = ["dep:arbitrary", "std"]
+dev-context-only-utils = ["dep:arbitrary", "rand"]
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro"
 ]
+rand = ["dep:rand", "std"]
 serde = ["dep:serde", "dep:serde_derive"]
 sha2 = ["dep:solana-sha256-hasher", "solana-sha256-hasher/sha2"]
-std = ["dep:rand"]
+std = []
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
