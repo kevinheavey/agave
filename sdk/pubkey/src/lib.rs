@@ -1123,9 +1123,7 @@ pub fn new_rand() -> Pubkey {
 #[cfg(all(feature = "std", not(target_os = "solana")))]
 pub fn write_pubkey_file(outfile: &str, pubkey: Pubkey) -> Result<(), Box<dyn std::error::Error>> {
     use std::io::Write;
-
-    let printable = std::format!("{pubkey}");
-    let serialized = serde_json::to_string(&printable)?;
+    let serialized = std::format!("\"{pubkey}\"");
 
     if let Some(outdir) = std::path::Path::new(&outfile).parent() {
         std::fs::create_dir_all(outdir)?;
