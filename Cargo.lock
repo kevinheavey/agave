@@ -6452,6 +6452,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-cpi"
+version = "2.1.0"
+dependencies = [
+ "solana-account-info",
+ "solana-define-syscall",
+ "solana-instruction",
+ "solana-program",
+ "solana-program-error",
+ "solana-pubkey",
+ "solana-stable-layout",
+]
+
+[[package]]
 name = "solana-curve25519"
 version = "2.1.0"
 dependencies = [
@@ -7225,6 +7238,7 @@ dependencies = [
  "solana-account-info",
  "solana-atomic-u64",
  "solana-clock",
+ "solana-cpi",
  "solana-decode-error",
  "solana-define-syscall",
  "solana-frozen-abi",
