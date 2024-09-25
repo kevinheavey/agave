@@ -1009,7 +1009,7 @@ impl Pubkey {
 }
 
 /// New random Pubkey for tests and benchmarks.
-#[cfg(all(feature = "std", not(target_os = "solana")))]
+#[cfg(all(feature = "rand", not(target_os = "solana")))]
 pub fn new_rand() -> Pubkey {
     Pubkey::from(rand::random::<[u8; PUBKEY_BYTES]>())
 }
