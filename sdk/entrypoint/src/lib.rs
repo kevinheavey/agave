@@ -20,9 +20,8 @@ use {
 };
 // need to re-export msg for custom_heap_default macro
 pub use {
-    solana_account_info::MAX_PERMITTED_DATA_INCREASE,
-    solana_msg::msg as __msg,
-    solana_program_error::ProgramResult
+    solana_account_info::MAX_PERMITTED_DATA_INCREASE, solana_msg::msg as __msg,
+    solana_program_error::ProgramResult,
 };
 
 /// User implemented function to process an instruction
