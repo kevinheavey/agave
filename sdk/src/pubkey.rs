@@ -5,4 +5,4 @@ pub use solana_program::pubkey::{
 #[cfg(feature = "full")]
 pub use solana_program::pubkey::{new_rand, read_pubkey_file, write_pubkey_file};
 #[cfg(target_os = "solana")]
-pub use solana_program::syscalls;
+pub use solana_program::pubkey::syscalls;
