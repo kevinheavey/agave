@@ -10,7 +10,7 @@ use {
     ed25519_dalek::{ed25519::signature::Signature, Signer, Verifier},
     solana_feature_set::{ed25519_precompile_verify_strict, FeatureSet},
     solana_instruction::Instruction,
-    solana_precompile_error::PrecompileError
+    solana_precompile_error::PrecompileError,
 };
 
 pub const PUBKEY_SERIALIZED_SIZE: usize = 32;
