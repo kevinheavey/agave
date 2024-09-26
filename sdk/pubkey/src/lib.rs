@@ -1121,7 +1121,10 @@ pub fn new_rand() -> Pubkey {
 }
 
 #[cfg(all(feature = "std", not(target_os = "solana")))]
-pub fn write_pubkey_file(outfile: &str, pubkey: Pubkey) -> Result<(), std::boxed::Box<dyn std::error::Error>> {
+pub fn write_pubkey_file(
+    outfile: &str,
+    pubkey: Pubkey,
+) -> Result<(), std::boxed::Box<dyn std::error::Error>> {
     use std::io::Write;
     let serialized = std::format!("\"{pubkey}\"");
 
