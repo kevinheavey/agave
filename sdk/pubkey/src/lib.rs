@@ -13,7 +13,7 @@ use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(any(feature = "std", target_arch = "wasm32"))]
-use std::{boxed::Box, string::String, vec::Vec};
+use std::vec::Vec;
 #[cfg(feature = "borsh")]
 use {
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
@@ -1121,7 +1121,7 @@ pub fn new_rand() -> Pubkey {
 }
 
 #[cfg(all(feature = "std", not(target_os = "solana")))]
-pub fn write_pubkey_file(outfile: &str, pubkey: Pubkey) -> Result<(), Box<dyn std::error::Error>> {
+pub fn write_pubkey_file(outfile: &str, pubkey: Pubkey) -> Result<(), std::boxed::Box<dyn std::error::Error>> {
     use std::io::Write;
     let serialized = std::format!("\"{pubkey}\"");
 
@@ -1135,10 +1135,10 @@ pub fn write_pubkey_file(outfile: &str, pubkey: Pubkey) -> Result<(), Box<dyn st
 }
 
 #[cfg(all(feature = "std", not(target_os = "solana")))]
-pub fn read_pubkey_file(infile: &str) -> Result<Pubkey, Box<dyn std::error::Error>> {
+pub fn read_pubkey_file(infile: &str) -> Result<Pubkey, std::boxed::Box<dyn std::error::Error>> {
     use std::io::Read;
     let mut f = std::fs::File::open(infile)?;
-    let mut buffer = String::new();
+    let mut buffer = std::string::String::new();
     f.read_to_string(&mut buffer)?;
     let trimmed = buffer.trim();
     if !trimmed.starts_with('"') || !trimmed.ends_with('"') {
@@ -1434,7 +1434,7 @@ mod tests {
     }
 
     #[test]
-    fn test_read_write_pubkey() -> Result<(), Box<dyn std::error::Error>> {
+    fn test_read_write_pubkey() -> Result<(), std::boxed::Box<dyn std::error::Error>> {
         let filename = "test_pubkey.json";
         let pubkey = new_rand();
         write_pubkey_file(filename, pubkey)?;
