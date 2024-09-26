@@ -1,5 +1,6 @@
 #[deprecated(since = "2.1.0", note = "Use `solana_cpi::syscalls` instead")]
 pub use solana_cpi::syscalls::{sol_get_return_data, sol_invoke_signed_rust, sol_set_return_data};
+use solana_define_syscall::define_syscall;
 #[cfg(target_feature = "static-syscalls")]
 pub use solana_define_syscall::sys_hash;
 #[deprecated(since = "2.1.0", note = "Use `solana_instruction::syscalls` instead")]
@@ -24,7 +25,6 @@ pub use solana_pubkey::syscalls::{
 pub use solana_secp256k1_recover::sol_secp256k1_recover;
 #[deprecated(since = "2.1.0", note = "Use solana_sha256_hasher::sol_sha256 instead")]
 pub use solana_sha256_hasher::sol_sha256;
-use solana_define_syscall::define_syscall;
 define_syscall!(fn sol_log_64_(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64));
 define_syscall!(fn sol_log_compute_units_());
 define_syscall!(fn sol_keccak256(vals: *const u8, val_len: u64, hash_result: *mut u8) -> u64);
