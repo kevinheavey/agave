@@ -6912,7 +6912,6 @@ dependencies = [
  "serde_derive",
  "solana-decode-error",
  "solana-instruction",
- "solana-program-error",
  "solana-pubkey",
 ]
 
