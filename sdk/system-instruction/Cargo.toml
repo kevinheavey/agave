@@ -23,7 +23,6 @@ solana-program-error = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false, features = ["serde"] }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
-thiserror = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }

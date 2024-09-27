@@ -8367,7 +8367,6 @@ dependencies = [
  "solana-program-error",
  "solana-pubkey",
  "static_assertions",
- "thiserror",
 ]
 
 [[package]]
