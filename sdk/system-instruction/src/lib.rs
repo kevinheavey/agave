@@ -19,7 +19,7 @@
 //! or they can be [program derived addresses][pda],
 //! where write access to accounts is granted by an owning program.
 //!
-//! [pda]: crate::pubkey::Pubkey::find_program_address
+//! [pda]: https://docs.rs/solana-pubkey/latest/solana_pubkey/struct.Pubkey.html#method.find_program_address
 //!
 //! The system program ID is defined in [`system_program`].
 //!
@@ -34,10 +34,11 @@
 //! and these variants are linked from the documentation for their constructors.
 //!
 //! [`RpcClient`]: https://docs.rs/solana-client/latest/solana_client/rpc_client/struct.RpcClient.html
-//! [cpi]: crate::program
-//! [`invoke`]: crate::program::invoke
-//! [`invoke_signed`]: crate::program::invoke_signed
-//! [`AccountInfo`]: crate::account_info::AccountInfo
+//! [cpi]: https://docs.rs/solana-program/latest/solana_program/program/
+//! [`invoke`]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
+//! [`invoke_signed`]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke_signed.html
+//! [`AccountInfo`]: https://docs.rs/solana-account-info/latest/solana_account_info/struct.AccountInfo.html
+//! [`system_program`]: https://docs.rs/solana-program/latest/solana_program/system_program/index.html
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 
 #[allow(deprecated)]
@@ -377,7 +378,7 @@ pub enum SystemInstruction {
 /// [`SystemInstruction::CreateAccount`].
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// Account creation typically involves three steps: [`allocate`] space,
 /// [`transfer`] lamports for rent, [`assign`] to its owning program. The
@@ -454,8 +455,8 @@ pub enum SystemInstruction {
 /// virtually by the program itself via [`invoke_signed`], `payer` being signed
 /// for by the client that submitted the transaction.
 ///
-/// [pda]: Pubkey::find_program_address
-/// [`invoke_signed`]: crate::program::invoke_signed
+/// [pda]: https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke_signed.html
 ///
 /// ```
 /// # use borsh::{BorshDeserialize, BorshSerialize};
@@ -588,7 +589,7 @@ pub fn create_account_with_seed(
 /// [`SystemInstruction::Assign`].
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// # Required signers
 ///
@@ -671,8 +672,8 @@ pub fn create_account_with_seed(
 /// itself via [`invoke_signed`], `payer` being signed for by the client that
 /// submitted the transaction.
 ///
-/// [pda]: Pubkey::find_program_address
-/// [`invoke_signed`]: crate::program::invoke_signed
+/// [pda]: https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke_signed.html
 ///
 /// ```
 /// # use borsh::{BorshDeserialize, BorshSerialize};
@@ -799,7 +800,7 @@ pub fn assign_with_seed(
 /// [`SystemInstruction::Transfer`].
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// # Required signers
 ///
@@ -882,8 +883,8 @@ pub fn assign_with_seed(
 /// itself via [`invoke_signed`], `payer` being signed for by the client that
 /// submitted the transaction.
 ///
-/// [pda]: Pubkey::find_program_address
-/// [`invoke_signed`]: crate::program::invoke_signed
+/// [pda]: https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke_signed.html
 ///
 /// ```
 /// # use borsh::{BorshDeserialize, BorshSerialize};
@@ -1016,7 +1017,7 @@ pub fn transfer_with_seed(
 /// [`SystemInstruction::Allocate`].
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// The transaction will fail if the account already has size greater than 0,
 /// or if the requested size is greater than [`MAX_PERMITTED_DATA_LENGTH`].
@@ -1102,8 +1103,8 @@ pub fn transfer_with_seed(
 /// itself via [`invoke_signed`], `payer` being signed for by the client that
 /// submitted the transaction.
 ///
-/// [pda]: Pubkey::find_program_address
-/// [`invoke_signed`]: crate::program::invoke_signed
+/// [pda]: https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke_signed.html
 ///
 /// ```
 /// # use borsh::{BorshDeserialize, BorshSerialize};
@@ -1232,7 +1233,7 @@ pub fn allocate_with_seed(
 /// [`SystemInstruction::Transfer`]s.
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// # Required signers
 ///
@@ -1297,8 +1298,8 @@ pub fn allocate_with_seed(
 /// [`invoke_signed`], `payer` being signed for by the client that submitted the
 /// transaction.
 ///
-/// [pda]: Pubkey::find_program_address
-/// [`invoke_signed`]: crate::program::invoke_signed
+/// [pda]: https://docs.rs/solana-program/latest/solana_program/pubkey/struct.Pubkey.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke_signed.html
 ///
 /// ```
 /// # use borsh::{BorshDeserialize, BorshSerialize};
@@ -1412,7 +1413,7 @@ pub fn create_nonce_account_with_seed(
 /// [`SystemInstruction::InitializeNonceAccount`].
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// A [durable transaction nonce][dtn] is a special account that enables
 /// execution of transactions that have been signed in the past.
@@ -1426,7 +1427,7 @@ pub fn create_nonce_account_with_seed(
 /// minutes, then successfully execute that transaction.
 ///
 /// [dtn]: https://docs.solanalabs.com/implemented-proposals/durable-tx-nonces
-/// [rbh]: crate::message::Message::recent_blockhash
+/// [rbh]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#structfield.recent_blockhash
 /// [nonce]: https://en.wikipedia.org/wiki/Cryptographic_nonce
 ///
 /// Durable transaction nonces are an alternative to the standard recent
@@ -1441,8 +1442,8 @@ pub fn create_nonce_account_with_seed(
 /// the [`blockhash`] field of [`nonce::state::Data`], which is deserialized
 /// from the nonce account data.
 ///
-/// [`blockhash`]: crate::nonce::state::Data::blockhash
-/// [`nonce::state::Data`]: crate::nonce::state::Data
+/// [`blockhash`]: https://docs.rs/solana-program/latest/solana_program/nonce/state/struct.Data.html#method.blockhash
+/// [`nonce::state::Data`]: https://docs.rs/solana-program/latest/solana_program/nonce/state/struct.Data.html
 ///
 /// The basic durable transaction nonce lifecycle is
 ///
@@ -1549,7 +1550,7 @@ pub fn create_nonce_account(
 /// [`SystemInstruction::AdvanceNonceAccount`].
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// Every transaction that relies on a durable transaction nonce must contain a
 /// [`SystemInstruction::AdvanceNonceAccount`] instruction as the first
@@ -1569,9 +1570,9 @@ pub fn create_nonce_account(
 /// For further description of durable transaction nonces see
 /// [`create_nonce_account`].
 ///
-/// [`Message`]: crate::message::Message
-/// [`Message::new_with_nonce`]: crate::message::Message::new_with_nonce
-/// [`recent_blockhash`]: crate::message::Message::recent_blockhash
+/// [`Message`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html
+/// [`Message::new_with_nonce`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#method.new_with_nonce
+/// [`recent_blockhash`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#structfield.recent_blockhash
 /// [dfa]: https://docs.rs/solana-rpc-client-nonce-utils/latest/solana_rpc_client_nonce_utils/fn.data_from_account.html
 ///
 /// # Required signers
@@ -1686,7 +1687,7 @@ pub fn advance_nonce_account(nonce_pubkey: &Pubkey, authorized_pubkey: &Pubkey) 
 /// [`SystemInstruction::WithdrawNonceAccount`].
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// Withdrawing the entire balance of a nonce account will cause the runtime to
 /// destroy it upon successful completion of the transaction.
@@ -1779,7 +1780,7 @@ pub fn withdraw_nonce_account(
 /// [`SystemInstruction::AuthorizeNonceAccount`].
 ///
 /// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: crate::program::invoke
+/// [invoked]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke.html
 ///
 /// This constructor creates a [`SystemInstruction::AuthorizeNonceAccount`]
 /// instruction.
