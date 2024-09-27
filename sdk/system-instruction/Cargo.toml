@@ -15,24 +15,29 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 num-derive = { workspace = true }
 num-traits = { workspace = true }
+serde = { workspace = true }
+serde_derive = { workspace = true }
 solana-decode-error = { workspace = true }
-solana-pubkey = { workspace = true, default-features = false }
+solana-instruction = { workspace = true, features = ["bincode", "std"] }
+solana-program-error = { workspace = true }
+solana-pubkey = { workspace = true, default-features = false, features = ["serde"] }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
+thiserror = { workspace = true }
 
 [dev-dependencies]
+anyhow = { workspace = true }
+borsh = { workspace = true }
 solana-instruction = { workspace = true }
 solana-program = { path = "../program", default-features = false }
+solana-program-error = { workspace = true, features = ["borsh"] }
 static_assertions = { workspace = true }
 
 [features]
-default = ["std"]
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
-    "std"
 ]
-std = []
 
 [lints]
 workspace = true
