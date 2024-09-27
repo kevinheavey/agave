@@ -19,7 +19,6 @@ serde = { workspace = true }
 serde_derive = { workspace = true }
 solana-decode-error = { workspace = true }
 solana-instruction = { workspace = true, features = ["bincode", "std"] }
-solana-program-error = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false, features = ["serde"] }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
