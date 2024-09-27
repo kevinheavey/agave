@@ -7085,7 +7085,6 @@ dependencies = [
 name = "solana-system-instruction"
 version = "2.2.0"
 dependencies = [
- "num-derive",
  "num-traits",
  "serde",
  "serde_derive",

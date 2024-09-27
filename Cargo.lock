@@ -8467,7 +8467,6 @@ version = "2.2.0"
 dependencies = [
  "anyhow",
  "borsh 1.5.1",
- "num-derive",
  "num-traits",
  "serde",
  "serde_derive",
@@ -8479,6 +8478,8 @@ dependencies = [
  "solana-program-error",
  "solana-pubkey",
  "static_assertions",
+ "strum",
+ "strum_macros",
 ]
 
 [[package]]

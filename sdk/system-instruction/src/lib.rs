@@ -43,7 +43,7 @@
 #[allow(deprecated)]
 use {
     core::fmt,
-    num_derive::{FromPrimitive, ToPrimitive},
+    num_traits::{FromPrimitive, ToPrimitive},
     serde_derive::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
     solana_instruction::{AccountMeta, Instruction},
@@ -59,7 +59,10 @@ const NONCE_STATE_SIZE: usize = 80;
 #[cfg(test)]
 static_assertions::const_assert_eq!(solana_program::nonce::State::size(), NONCE_STATE_SIZE);
 
-#[derive(Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+// Use strum when testing to ensure our FromPrimitive
+// impl is exhaustive
+#[cfg_attr(test, derive(strum_macros::FromRepr, strum_macros::EnumIter))]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq)]
 pub enum SystemError {
     AccountAlreadyInUse,
     ResultWithNegativeLamports,
@@ -70,6 +73,58 @@ pub enum SystemError {
     NonceNoRecentBlockhashes,
     NonceBlockhashNotExpired,
     NonceUnexpectedBlockhashValue,
+}
+
+impl FromPrimitive for SystemError {
+    #[inline]
+    fn from_i64(n: i64) -> Option<Self> {
+        if n == Self::AccountAlreadyInUse as i64 {
+            Some(Self::AccountAlreadyInUse)
+        } else if n == Self::ResultWithNegativeLamports as i64 {
+            Some(Self::ResultWithNegativeLamports)
+        } else if n == Self::InvalidProgramId as i64 {
+            Some(Self::InvalidProgramId)
+        } else if n == Self::InvalidAccountDataLength as i64 {
+            Some(Self::InvalidAccountDataLength)
+        } else if n == Self::MaxSeedLengthExceeded as i64 {
+            Some(Self::MaxSeedLengthExceeded)
+        } else if n == Self::AddressWithSeedMismatch as i64 {
+            Some(Self::AddressWithSeedMismatch)
+        } else if n == Self::NonceNoRecentBlockhashes as i64 {
+            Some(Self::NonceNoRecentBlockhashes)
+        } else if n == Self::NonceBlockhashNotExpired as i64 {
+            Some(Self::NonceBlockhashNotExpired)
+        } else if n == Self::NonceUnexpectedBlockhashValue as i64 {
+            Some(Self::NonceUnexpectedBlockhashValue)
+        } else {
+            None
+        }
+    }
+    #[inline]
+    fn from_u64(n: u64) -> Option<Self> {
+        Self::from_i64(n as i64)
+    }
+}
+
+impl ToPrimitive for SystemError {
+    #[inline]
+    fn to_i64(&self) -> Option<i64> {
+        Some(match *self {
+            Self::AccountAlreadyInUse => Self::AccountAlreadyInUse as i64,
+            Self::ResultWithNegativeLamports => Self::ResultWithNegativeLamports as i64,
+            Self::InvalidProgramId => Self::InvalidProgramId as i64,
+            Self::InvalidAccountDataLength => Self::InvalidAccountDataLength as i64,
+            Self::MaxSeedLengthExceeded => Self::MaxSeedLengthExceeded as i64,
+            Self::AddressWithSeedMismatch => Self::AddressWithSeedMismatch as i64,
+            Self::NonceNoRecentBlockhashes => Self::NonceNoRecentBlockhashes as i64,
+            Self::NonceBlockhashNotExpired => Self::NonceBlockhashNotExpired as i64,
+            Self::NonceUnexpectedBlockhashValue => Self::NonceUnexpectedBlockhashValue as i64,
+        })
+    }
+    #[inline]
+    fn to_u64(&self) -> Option<u64> {
+        self.to_i64().map(|x| x as u64)
+    }
 }
 
 impl std::error::Error for SystemError {}
@@ -1807,7 +1862,7 @@ pub fn upgrade_nonce_account(nonce_pubkey: Pubkey) -> Instruction {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {super::*, strum::IntoEnumIterator};
 
     fn get_keys(instruction: &Instruction) -> Vec<Pubkey> {
         instruction.accounts.iter().map(|x| x.pubkey).collect()
@@ -1848,5 +1903,17 @@ mod tests {
         );
         assert_eq!(solana_program::sysvar::rent::ID, RENT_ID);
         assert_eq!(solana_program::system_program::ID, SYSTEM_PROGRAM_ID);
+    }
+
+    #[test]
+    fn test_system_error_from_primitive_exhaustive() {
+        for variant in SystemError::iter() {
+            let variant_i64 = variant.clone() as i64;
+            assert_eq!(
+                SystemError::from_repr(variant_i64 as usize),
+                SystemError::from_i64(variant_i64)
+            );
+            assert_eq!(SystemError::from_i64(variant_i64).unwrap(), variant);
+        }
     }
 }

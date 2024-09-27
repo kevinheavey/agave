@@ -13,7 +13,6 @@ edition = { workspace = true }
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-num-derive = { workspace = true }
 num-traits = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
@@ -30,6 +29,8 @@ solana-instruction = { workspace = true }
 solana-program = { path = "../program", default-features = false }
 solana-program-error = { workspace = true, features = ["borsh"] }
 static_assertions = { workspace = true }
+strum = { workspace = true }
+strum_macros = { workspace = true }
 
 [features]
 frozen-abi = [
