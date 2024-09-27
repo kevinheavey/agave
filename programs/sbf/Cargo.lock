@@ -7093,7 +7093,6 @@ dependencies = [
  "solana-instruction",
  "solana-program-error",
  "solana-pubkey",
- "thiserror",
 ]
 
 [[package]]

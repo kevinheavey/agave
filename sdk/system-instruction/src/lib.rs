@@ -42,12 +42,12 @@
 
 #[allow(deprecated)]
 use {
+    core::fmt,
     num_derive::{FromPrimitive, ToPrimitive},
     serde_derive::{Deserialize, Serialize},
     solana_decode_error::DecodeError,
     solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
-    thiserror::Error,
 };
 
 // inline some constants to avoid dependencies
@@ -59,26 +59,53 @@ const NONCE_STATE_SIZE: usize = 80;
 #[cfg(test)]
 static_assertions::const_assert_eq!(solana_program::nonce::State::size(), NONCE_STATE_SIZE);
 
-#[derive(Error, Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Debug, Serialize, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum SystemError {
-    #[error("an account with the same address already exists")]
     AccountAlreadyInUse,
-    #[error("account does not have enough SOL to perform the operation")]
     ResultWithNegativeLamports,
-    #[error("cannot assign account to this program id")]
     InvalidProgramId,
-    #[error("cannot allocate account data of this length")]
     InvalidAccountDataLength,
-    #[error("length of requested seed is too long")]
     MaxSeedLengthExceeded,
-    #[error("provided address does not match addressed derived from seed")]
     AddressWithSeedMismatch,
-    #[error("advancing stored nonce requires a populated RecentBlockhashes sysvar")]
     NonceNoRecentBlockhashes,
-    #[error("stored nonce is still in recent_blockhashes")]
     NonceBlockhashNotExpired,
-    #[error("specified nonce does not match stored nonce")]
     NonceUnexpectedBlockhashValue,
+}
+
+impl std::error::Error for SystemError {}
+
+impl fmt::Display for SystemError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            SystemError::AccountAlreadyInUse => {
+                f.write_str("an account with the same address already exists")
+            }
+            SystemError::ResultWithNegativeLamports => {
+                f.write_str("account does not have enough SOL to perform the operation")
+            }
+            SystemError::InvalidProgramId => {
+                f.write_str("cannot assign account to this program id")
+            }
+            SystemError::InvalidAccountDataLength => {
+                f.write_str("cannot allocate account data of this length")
+            }
+            SystemError::MaxSeedLengthExceeded => {
+                f.write_str("length of requested seed is too long")
+            }
+            SystemError::AddressWithSeedMismatch => {
+                f.write_str("provided address does not match addressed derived from seed")
+            }
+            SystemError::NonceNoRecentBlockhashes => {
+                f.write_str("advancing stored nonce requires a populated RecentBlockhashes sysvar")
+            }
+            SystemError::NonceBlockhashNotExpired => {
+                f.write_str("stored nonce is still in recent_blockhashes")
+            }
+            SystemError::NonceUnexpectedBlockhashValue => {
+                f.write_str("specified nonce does not match stored nonce")
+            }
+        }
+    }
 }
 
 impl<T> DecodeError<T> for SystemError {
