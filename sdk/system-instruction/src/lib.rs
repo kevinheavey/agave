@@ -192,7 +192,7 @@ static_assertions::const_assert_eq!(MAX_PERMITTED_DATA_LENGTH, 10_485_760);
 /// An instruction to the system program.
 #[cfg_attr(
     feature = "frozen-abi",
-    frozen_abi(digest = "2LnVTnJg7LxB1FawNZLoQEY8yiYx3MT3paTdx4s5kAXU"),
+    solana_frozen_abi_macro::frozen_abi(digest = "2LnVTnJg7LxB1FawNZLoQEY8yiYx3MT3paTdx4s5kAXU"),
     derive(
         solana_frozen_abi_macro::AbiExample,
         solana_frozen_abi_macro::AbiEnumVisitor
