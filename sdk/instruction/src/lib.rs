@@ -113,6 +113,11 @@ pub struct Instruction {
     pub data: Vec<u8>,
 }
 
+#[cfg(all(feature = "bincode", feature = "serde"))]
+type BincodeTrait = serde::Serialize;
+#[cfg(all(feature = "bincode", not(feature = "serde")))]
+type BincodeTrait = bincode::Encode;
+
 #[cfg(feature = "std")]
 impl Instruction {
     #[cfg(feature = "borsh")]
@@ -212,7 +217,7 @@ impl Instruction {
     ///    )
     /// }
     /// ```
-    pub fn new_with_bincode<T: serde::Serialize>(
+    pub fn new_with_bincode<T: BincodeTrait>(
         program_id: Pubkey,
         data: &T,
         accounts: Vec<AccountMeta>,
