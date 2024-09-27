@@ -6978,8 +6978,13 @@ version = "2.1.0"
 dependencies = [
  "num-derive",
  "num-traits",
+ "serde",
+ "serde_derive",
  "solana-decode-error",
+ "solana-instruction",
+ "solana-program-error",
  "solana-pubkey",
+ "thiserror",
 ]
 
 [[package]]
