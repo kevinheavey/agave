@@ -8273,6 +8273,7 @@ dependencies = [
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-instruction",
+ "solana-logger",
  "solana-program",
  "solana-program-error",
  "solana-pubkey",
