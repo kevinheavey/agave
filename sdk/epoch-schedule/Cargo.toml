@@ -24,9 +24,8 @@ solana-clock = { workspace = true }
 static_assertions = { workspace = true }
 
 [features]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "std"]
+frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 serde = ["dep:serde", "dep:serde_derive"]
-std = []
 
 [lints]
 workspace = true
