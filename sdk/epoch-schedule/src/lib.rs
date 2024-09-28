@@ -11,6 +11,9 @@
 //! the chain there is a "warmup" period, where epochs are short, with subsequent
 //! epochs increasing in slots until they last for [`DEFAULT_SLOTS_PER_EPOCH`].
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
+#![no_std]
+#[cfg(feature = "std")]
+extern crate std;
 
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
