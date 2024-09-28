@@ -40,8 +40,8 @@ frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
     "solana-feature-set/frozen-abi",
-    "solana-program/frozen-abi",
     "solana-account/frozen-abi",
+    "solana-program/frozen-abi",
     "solana-short-vec/frozen-abi",
     "solana-signature/frozen-abi"
 ]
