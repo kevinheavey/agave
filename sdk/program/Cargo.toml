@@ -149,7 +149,8 @@ frozen-abi = [
     "solana-instruction/frozen-abi",
     "solana-pubkey/frozen-abi",
     "solana-rent/frozen-abi",
-    "solana-short-vec/frozen-abi"
+    "solana-short-vec/frozen-abi",
+    "solana-system-instruction/frozen-abi"
 ]
 
 [lints]
