@@ -3,7 +3,10 @@
 //! [rent]: https://docs.solanalabs.com/implemented-proposals/rent
 
 #![allow(clippy::arithmetic_side_effects)]
+#![no_std]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
+#[cfg(feature = "frozen-abi")]
+extern crate std;
 
 use solana_sdk_macro::CloneZeroed;
 
