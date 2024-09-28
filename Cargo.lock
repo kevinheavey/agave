@@ -6902,6 +6902,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-limited-deserialize"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "serde",
+ "solana-instruction",
+ "solana-program",
+]
+
+[[package]]
 name = "solana-loader-v4-program"
 version = "2.1.0"
 dependencies = [
@@ -7232,6 +7242,7 @@ dependencies = [
  "solana-frozen-abi-macro",
  "solana-hash",
  "solana-instruction",
+ "solana-limited-deserialize",
  "solana-logger",
  "solana-msg",
  "solana-program-error",

@@ -47,6 +47,7 @@ solana-instruction = { workspace = true, default-features = false, features = [
     "serde",
     "std",
 ] }
+solana-limited-deserialize = { workspace = true }
 solana-msg = { workspace = true }
 solana-program-error = { workspace = true, features = ["serde"] }
 solana-program-memory = { workspace = true }
