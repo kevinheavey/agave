@@ -8462,7 +8462,6 @@ dependencies = [
 name = "solana-version"
 version = "2.1.0"
 dependencies = [
- "log",
  "semver 1.0.23",
  "serde",
  "serde_derive",
@@ -8470,7 +8469,6 @@ dependencies = [
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-sanitize",
- "solana-sdk",
  "solana-serde-varint",
 ]
 
