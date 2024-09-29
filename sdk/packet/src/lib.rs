@@ -4,7 +4,7 @@
 #[cfg(feature = "bincode")]
 use bincode::{Options, Result};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::AbiEXample;
+use solana_frozen_abi_macro::AbiExample;
 use {
     bitflags::bitflags,
     std::{
