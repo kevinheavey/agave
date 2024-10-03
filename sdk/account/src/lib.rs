@@ -3,10 +3,13 @@
 
 #[cfg(feature = "dev-context-only-utils")]
 use qualifier_attr::qualifiers;
+#[cfg(feature = "serde")]
+use serde::ser::{Serialize, Serializer};
 #[cfg(feature = "frozen-abi")]
 use solana_frozen_abi_macro::{frozen_abi, AbiExample};
+#[cfg(feature = "bincode")]
+use solana_program::sysvar::Sysvar;
 use {
-    serde::ser::{Serialize, Serializer},
     solana_program::{
         account_info::AccountInfo,
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
@@ -15,7 +18,6 @@ use {
         lamports::LamportsError,
         loader_v4,
         pubkey::Pubkey,
-        sysvar::Sysvar,
     },
     std::{
         cell::{Ref, RefCell},
@@ -34,13 +36,17 @@ use {
     derive(AbiExample),
     frozen_abi(digest = "2SUJNHbXMPWrsSXmDTFc4VHx2XQ85fT5Leabefh5Nwe7")
 )]
-#[derive(serde_derive::Deserialize, PartialEq, Eq, Clone, Default)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde_derive::Deserialize),
+    serde(rename_all = "camelCase")
+)]
+#[derive(PartialEq, Eq, Clone, Default)]
 pub struct Account {
     /// lamports in the account
     pub lamports: u64,
     /// data held in this account
-    #[serde(with = "serde_bytes")]
+    #[cfg_attr(feature = "serde", serde(with = "serde_bytes"))]
     pub data: Vec<u8>,
     /// the program that owns this account. If executable, the program that loads this account.
     pub owner: Pubkey,
@@ -51,6 +57,7 @@ pub struct Account {
 }
 
 // mod because we need 'Account' below to have the name 'Account' to match expected serialization
+#[cfg(feature = "serde")]
 mod account_serialize {
     #[cfg(feature = "frozen-abi")]
     use solana_frozen_abi_macro::{frozen_abi, AbiExample};
@@ -96,6 +103,7 @@ mod account_serialize {
     }
 }
 
+#[cfg(feature = "serde")]
 impl Serialize for Account {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -105,6 +113,7 @@ impl Serialize for Account {
     }
 }
 
+#[cfg(feature = "serde")]
 impl Serialize for AccountSharedData {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -118,8 +127,12 @@ impl Serialize for AccountSharedData {
 /// This will be the in-memory representation of the 'Account' struct data.
 /// The existing 'Account' structure cannot easily change due to downstream projects.
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
-#[derive(PartialEq, Eq, Clone, Default, serde_derive::Deserialize)]
-#[serde(from = "Account")]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde_derive::Deserialize),
+    serde(from = "Account")
+)]
+#[derive(PartialEq, Eq, Clone, Default)]
 pub struct AccountSharedData {
     /// lamports in the account
     lamports: u64,
@@ -440,6 +453,7 @@ fn shared_new_ref<T: WritableAccount>(
     Rc::new(RefCell::new(shared_new::<T>(lamports, space, owner)))
 }
 
+#[cfg(feature = "bincode")]
 fn shared_new_data<T: serde::Serialize, U: WritableAccount>(
     lamports: u64,
     state: &T,
@@ -454,6 +468,8 @@ fn shared_new_data<T: serde::Serialize, U: WritableAccount>(
         Epoch::default(),
     ))
 }
+
+#[cfg(feature = "bincode")]
 fn shared_new_ref_data<T: serde::Serialize, U: WritableAccount>(
     lamports: u64,
     state: &T,
@@ -464,6 +480,7 @@ fn shared_new_ref_data<T: serde::Serialize, U: WritableAccount>(
     )?))
 }
 
+#[cfg(feature = "bincode")]
 fn shared_new_data_with_space<T: serde::Serialize, U: WritableAccount>(
     lamports: u64,
     state: &T,
@@ -476,6 +493,8 @@ fn shared_new_data_with_space<T: serde::Serialize, U: WritableAccount>(
 
     Ok(account)
 }
+
+#[cfg(feature = "bincode")]
 fn shared_new_ref_data_with_space<T: serde::Serialize, U: WritableAccount>(
     lamports: u64,
     state: &T,
@@ -487,12 +506,14 @@ fn shared_new_ref_data_with_space<T: serde::Serialize, U: WritableAccount>(
     )?))
 }
 
+#[cfg(feature = "bincode")]
 fn shared_deserialize_data<T: serde::de::DeserializeOwned, U: ReadableAccount>(
     account: &U,
 ) -> Result<T, bincode::Error> {
     bincode::deserialize(account.data())
 }
 
+#[cfg(feature = "bincode")]
 fn shared_serialize_data<T: serde::Serialize, U: WritableAccount>(
     account: &mut U,
     state: &T,
@@ -510,6 +531,7 @@ impl Account {
     pub fn new_ref(lamports: u64, space: usize, owner: &Pubkey) -> Rc<RefCell<Self>> {
         shared_new_ref(lamports, space, owner)
     }
+    #[cfg(feature = "bincode")]
     pub fn new_data<T: serde::Serialize>(
         lamports: u64,
         state: &T,
@@ -517,6 +539,7 @@ impl Account {
     ) -> Result<Self, bincode::Error> {
         shared_new_data(lamports, state, owner)
     }
+    #[cfg(feature = "bincode")]
     pub fn new_ref_data<T: serde::Serialize>(
         lamports: u64,
         state: &T,
@@ -524,6 +547,7 @@ impl Account {
     ) -> Result<RefCell<Self>, bincode::Error> {
         shared_new_ref_data(lamports, state, owner)
     }
+    #[cfg(feature = "bincode")]
     pub fn new_data_with_space<T: serde::Serialize>(
         lamports: u64,
         state: &T,
@@ -532,6 +556,7 @@ impl Account {
     ) -> Result<Self, bincode::Error> {
         shared_new_data_with_space(lamports, state, space, owner)
     }
+    #[cfg(feature = "bincode")]
     pub fn new_ref_data_with_space<T: serde::Serialize>(
         lamports: u64,
         state: &T,
@@ -543,9 +568,11 @@ impl Account {
     pub fn new_rent_epoch(lamports: u64, space: usize, owner: &Pubkey, rent_epoch: Epoch) -> Self {
         shared_new_rent_epoch(lamports, space, owner, rent_epoch)
     }
+    #[cfg(feature = "bincode")]
     pub fn deserialize_data<T: serde::de::DeserializeOwned>(&self) -> Result<T, bincode::Error> {
         shared_deserialize_data(self)
     }
+    #[cfg(feature = "bincode")]
     pub fn serialize_data<T: serde::Serialize>(&mut self, state: &T) -> Result<(), bincode::Error> {
         shared_serialize_data(self, state)
     }
@@ -636,6 +663,7 @@ impl AccountSharedData {
     pub fn new_ref(lamports: u64, space: usize, owner: &Pubkey) -> Rc<RefCell<Self>> {
         shared_new_ref(lamports, space, owner)
     }
+    #[cfg(feature = "bincode")]
     pub fn new_data<T: serde::Serialize>(
         lamports: u64,
         state: &T,
@@ -643,6 +671,7 @@ impl AccountSharedData {
     ) -> Result<Self, bincode::Error> {
         shared_new_data(lamports, state, owner)
     }
+    #[cfg(feature = "bincode")]
     pub fn new_ref_data<T: serde::Serialize>(
         lamports: u64,
         state: &T,
@@ -650,6 +679,7 @@ impl AccountSharedData {
     ) -> Result<RefCell<Self>, bincode::Error> {
         shared_new_ref_data(lamports, state, owner)
     }
+    #[cfg(feature = "bincode")]
     pub fn new_data_with_space<T: serde::Serialize>(
         lamports: u64,
         state: &T,
@@ -658,6 +688,7 @@ impl AccountSharedData {
     ) -> Result<Self, bincode::Error> {
         shared_new_data_with_space(lamports, state, space, owner)
     }
+    #[cfg(feature = "bincode")]
     pub fn new_ref_data_with_space<T: serde::Serialize>(
         lamports: u64,
         state: &T,
@@ -669,9 +700,11 @@ impl AccountSharedData {
     pub fn new_rent_epoch(lamports: u64, space: usize, owner: &Pubkey, rent_epoch: Epoch) -> Self {
         shared_new_rent_epoch(lamports, space, owner, rent_epoch)
     }
+    #[cfg(feature = "bincode")]
     pub fn deserialize_data<T: serde::de::DeserializeOwned>(&self) -> Result<T, bincode::Error> {
         shared_deserialize_data(self)
     }
+    #[cfg(feature = "bincode")]
     pub fn serialize_data<T: serde::Serialize>(&mut self, state: &T) -> Result<(), bincode::Error> {
         shared_serialize_data(self, state)
     }
@@ -680,6 +713,7 @@ impl AccountSharedData {
 pub type InheritableAccountFields = (u64, Epoch);
 pub const DUMMY_INHERITABLE_ACCOUNT_FIELDS: InheritableAccountFields = (1, INITIAL_RENT_EPOCH);
 
+#[cfg(feature = "bincode")]
 pub fn create_account_with_fields<S: Sysvar>(
     sysvar: &S,
     (lamports, rent_epoch): InheritableAccountFields,
@@ -691,10 +725,12 @@ pub fn create_account_with_fields<S: Sysvar>(
     account
 }
 
+#[cfg(feature = "bincode")]
 pub fn create_account_for_test<S: Sysvar>(sysvar: &S) -> Account {
     create_account_with_fields(sysvar, DUMMY_INHERITABLE_ACCOUNT_FIELDS)
 }
 
+#[cfg(feature = "bincode")]
 /// Create an `Account` from a `Sysvar`.
 pub fn create_account_shared_data_with_fields<S: Sysvar>(
     sysvar: &S,
@@ -703,6 +739,7 @@ pub fn create_account_shared_data_with_fields<S: Sysvar>(
     AccountSharedData::from(create_account_with_fields(sysvar, fields))
 }
 
+#[cfg(feature = "bincode")]
 pub fn create_account_shared_data_for_test<S: Sysvar>(sysvar: &S) -> AccountSharedData {
     AccountSharedData::from(create_account_with_fields(
         sysvar,
@@ -710,11 +747,13 @@ pub fn create_account_shared_data_for_test<S: Sysvar>(sysvar: &S) -> AccountShar
     ))
 }
 
+#[cfg(feature = "bincode")]
 /// Create a `Sysvar` from an `Account`'s data.
 pub fn from_account<S: Sysvar, T: ReadableAccount>(account: &T) -> Option<S> {
     bincode::deserialize(account.data()).ok()
 }
 
+#[cfg(feature = "bincode")]
 /// Serialize a `Sysvar` into an `Account`'s data.
 pub fn to_account<S: Sysvar, T: WritableAccount>(sysvar: &S, account: &mut T) -> Option<()> {
     bincode::serialize_into(account.data_as_mut_slice(), sysvar).ok()
