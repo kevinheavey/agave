@@ -51,9 +51,7 @@ impl UiAccountData {
                     })
                 }
                 #[cfg(not(feature = "zstd"))]
-                UiAccountEncoding::Base64Zstd => {
-                    None
-                }
+                UiAccountEncoding::Base64Zstd => None,
                 UiAccountEncoding::Binary | UiAccountEncoding::JsonParsed => None,
             },
         }
