@@ -50,6 +50,10 @@ impl UiAccountData {
                             .ok()
                     })
                 }
+                #[cfg(not(feature = "zstd"))]
+                UiAccountEncoding::Base64Zstd => {
+                    None
+                }
                 UiAccountEncoding::Binary | UiAccountEncoding::JsonParsed => None,
             },
         }
@@ -63,7 +67,6 @@ pub enum UiAccountEncoding {
     Base58,
     Base64,
     JsonParsed,
-    #[cfg(feature = "zstd")]
     #[serde(rename = "base64+zstd")]
     Base64Zstd,
 }
