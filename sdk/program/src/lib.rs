@@ -502,7 +502,6 @@ pub mod loader_v4_instruction;
 pub mod log;
 pub mod message;
 pub mod native_token;
-pub mod nonce;
 pub mod program;
 pub mod program_error;
 pub mod program_stubs;
@@ -542,7 +541,8 @@ pub use {
     solana_account_info::{self as account_info, debug_account_data},
     solana_clock as clock,
     solana_msg::msg,
-    solana_program_option as program_option, solana_pubkey as pubkey, solana_rent as rent,
+    solana_nonce as nonce, solana_program_option as program_option, solana_pubkey as pubkey,
+    solana_rent as rent,
 };
 
 /// The [config native program][np].
