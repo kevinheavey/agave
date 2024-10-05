@@ -8467,6 +8467,7 @@ version = "2.2.0"
 dependencies = [
  "anyhow",
  "borsh 1.5.1",
+ "js-sys",
  "num-traits",
  "serde",
  "serde_derive",
@@ -8481,6 +8482,7 @@ dependencies = [
  "static_assertions",
  "strum",
  "strum_macros",
+ "wasm-bindgen",
 ]
 
 [[package]]

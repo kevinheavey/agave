@@ -7085,12 +7085,14 @@ dependencies = [
 name = "solana-system-instruction"
 version = "2.2.0"
 dependencies = [
+ "js-sys",
  "num-traits",
  "serde",
  "serde_derive",
  "solana-decode-error",
  "solana-instruction",
  "solana-pubkey",
+ "wasm-bindgen",
 ]
 
 [[package]]
