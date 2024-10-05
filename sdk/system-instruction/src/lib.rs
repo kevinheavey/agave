@@ -50,6 +50,8 @@ use {
     solana_instruction::{AccountMeta, Instruction},
     solana_pubkey::Pubkey,
 };
+#[cfg(target_arch = "wasm32")]
+mod wasm;
 
 // inline some constants to avoid dependencies
 const RECENT_BLOCKHASHES_ID: Pubkey =
