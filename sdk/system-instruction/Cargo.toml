@@ -23,6 +23,10 @@ solana-instruction = { workspace = true, features = ["bincode", "std"] }
 solana-logger = { workspace = true, optional = true }
 solana-pubkey = { workspace = true, default-features = false, features = ["serde"] }
 
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+js-sys = { workspace = true }
+wasm-bindgen = { workspace = true }
+
 [dev-dependencies]
 anyhow = { workspace = true }
 borsh = { workspace = true }
