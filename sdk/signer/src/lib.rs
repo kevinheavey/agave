@@ -73,9 +73,9 @@ impl fmt::Display for SignerError {
         match self {
             SignerError::KeypairPubkeyMismatch => f.write_str("keypair-pubkey mismatch"),
             SignerError::NotEnoughSigners => f.write_str("not enough signers"),
-            SignerError::TransactionError(_0) => f.write_str("transaction error"),
+            SignerError::TransactionError(_) => f.write_str("transaction error"),
             SignerError::Custom(e) => write!(f, "custom error: {e}",),
-            SignerError::PresignerError(_0) => f.write_str("presigner error"),
+            SignerError::PresignerError(_) => f.write_str("presigner error"),
             SignerError::Connection(e) => write!(f, "connection error: {e}",),
             SignerError::InvalidInput(s) => write!(f, "invalid input: {s}",),
             SignerError::NoDeviceFound => f.write_str("no device found"),
