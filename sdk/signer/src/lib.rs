@@ -1,7 +1,6 @@
 //! Abstractions and implementations for transaction signers.
 use {
     core::fmt,
-    itertools::Itertools,
     solana_pubkey::Pubkey,
     solana_signature::Signature,
     solana_transaction_error::TransactionError,
@@ -164,7 +163,17 @@ impl std::fmt::Debug for dyn Signer {
 
 /// Removes duplicate signers while preserving order. O(n²)
 pub fn unique_signers(signers: Vec<&dyn Signer>) -> Vec<&dyn Signer> {
-    signers.into_iter().unique_by(|s| s.pubkey()).collect()
+    let capacity = signers.len();
+    let mut out = Vec::with_capacity(capacity);
+    let mut seen = std::collections::HashSet::with_capacity(capacity);
+    for signer in signers {
+        let pubkey = signer.pubkey();
+        if !seen.contains(&pubkey) {
+            seen.insert(pubkey);
+            out.push(signer);
+        }
+    }
+    out
 }
 
 /// The `EncodableKey` trait defines the interface by which cryptographic keys/keypairs are read,
