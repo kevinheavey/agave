@@ -166,6 +166,9 @@ pub fn read_keypair<R: Read>(reader: &mut R) -> Result<Keypair, Box<dyn error::E
         )
         .into());
     }
+    // we already checked that the string has at least two chars,
+    // so 1..trimmed.len() - 1 won't be out of bounds
+    #[allow(clippy::arithmetic_side_effects)]
     let contents = &trimmed[1..trimmed.len() - 1];
     let elements_vec: Vec<&str> = contents.split(',').map(|s| s.trim()).collect();
     let len = elements_vec.len();
