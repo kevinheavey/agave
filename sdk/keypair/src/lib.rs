@@ -71,7 +71,7 @@ impl Keypair {
 
     /// Gets this `Keypair`'s SecretKey
     pub fn secret(&self) -> &ed25519_dalek::SecretKey {
-        &self.0.as_bytes()
+        self.0.as_bytes()
     }
 
     /// Allows Keypair cloning
