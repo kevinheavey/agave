@@ -21,7 +21,7 @@ fn create_test_transactions(message_length: u16) -> Vec<Transaction> {
     (0..TX_COUNT)
         .map(|_| {
             let mut rng = thread_rng();
-            let privkey = ed25519_dalek::Keypair::generate(&mut rng);
+            let privkey = ed25519_dalek::SigningKey::generate(&mut rng);
             let message: Vec<u8> = (0..message_length).map(|_| rng.gen_range(0, 255)).collect();
             let instruction = new_ed25519_instruction(&privkey, &message);
             let mint_keypair = Keypair::new();
