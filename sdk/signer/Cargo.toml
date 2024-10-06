@@ -17,7 +17,6 @@ rand0-7 = { workspace = true, optional = true }
 solana-pubkey = { workspace = true }
 solana-signature = { workspace = true }
 solana-transaction-error = { workspace = true }
-thiserror = { workspace = true }
 
 [dev-dependencies]
 serde_json = { workspace = true }
