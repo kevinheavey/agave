@@ -93,6 +93,34 @@ impl Keypair {
     }
 }
 
+#[cfg(target_arch = "wasm32")]
+#[allow(non_snake_case)]
+#[wasm_bindgen]
+impl Keypair {
+    /// Create a new `Keypair `
+    #[wasm_bindgen(constructor)]
+    pub fn constructor() -> Keypair {
+        Keypair::new()
+    }
+
+    /// Convert a `Keypair` to a `Uint8Array`
+    pub fn toBytes(&self) -> Box<[u8]> {
+        self.to_bytes().into()
+    }
+
+    /// Recover a `Keypair` from a `Uint8Array`
+    pub fn fromBytes(bytes: &[u8]) -> Result<Keypair, JsValue> {
+        Keypair::from_bytes(bytes).map_err(|e| e.to_string().into())
+    }
+
+    /// Return the `Pubkey` for this `Keypair`
+    #[wasm_bindgen(js_name = pubkey)]
+    pub fn js_pubkey(&self) -> Pubkey {
+        // `wasm_bindgen` does not support traits (`Signer) yet
+        self.pubkey()
+    }
+}
+
 impl From<ed25519_dalek::Keypair> for Keypair {
     fn from(value: ed25519_dalek::Keypair) -> Self {
         Self(value)
