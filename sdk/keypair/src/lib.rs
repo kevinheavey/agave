@@ -223,7 +223,7 @@ pub fn write_keypair<W: Write>(
     keypair: &Keypair,
     writer: &mut W,
 ) -> Result<String, Box<dyn error::Error>> {
-    let keypair_bytes = keypair.0.to_bytes();
+    let keypair_bytes = keypair.to_bytes();
     let mut result = Vec::with_capacity(64 * 4 + 2); // Estimate capacity: 64 numbers * (up to 3 digits + 1 comma) + 2 brackets
 
     result.push(b'['); // Opening bracket
@@ -300,7 +300,7 @@ mod tests {
         assert!(Path::new(&outfile).exists());
         assert_eq!(
             keypair_vec,
-            read_keypair_file(&outfile).unwrap().0.to_bytes().to_vec()
+            read_keypair_file(&outfile).unwrap().to_bytes().to_vec()
         );
 
         #[cfg(unix)]
