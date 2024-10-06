@@ -1,5 +1,6 @@
 //! Abstractions and implementations for transaction signers.
 use {
+    core::fmt,
     itertools::Itertools,
     solana_pubkey::Pubkey,
     solana_signature::Signature,
@@ -11,7 +12,6 @@ use {
         ops::Deref,
         path::Path,
     },
-    thiserror::Error,
 };
 
 #[cfg(feature = "keypair")]
@@ -19,48 +19,87 @@ pub mod keypair;
 pub mod null_signer;
 pub mod signers;
 
-#[derive(Debug, Error, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum PresignerError {
-    #[error("pre-generated signature cannot verify data")]
     VerificationFailure,
 }
 
-#[derive(Debug, Error, PartialEq, Eq)]
+impl std::error::Error for PresignerError {}
+
+impl fmt::Display for PresignerError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Self::VerificationFailure => f.write_str("pre-generated signature cannot verify data"),
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Eq)]
 pub enum SignerError {
-    #[error("keypair-pubkey mismatch")]
     KeypairPubkeyMismatch,
-
-    #[error("not enough signers")]
     NotEnoughSigners,
-
-    #[error("transaction error")]
-    TransactionError(#[from] TransactionError),
-
-    #[error("custom error: {0}")]
+    TransactionError(TransactionError),
     Custom(String),
-
     // Presigner-specific Errors
-    #[error("presigner error")]
-    PresignerError(#[from] PresignerError),
-
+    PresignerError(PresignerError),
     // Remote Keypair-specific Errors
-    #[error("connection error: {0}")]
     Connection(String),
-
-    #[error("invalid input: {0}")]
     InvalidInput(String),
-
-    #[error("no device found")]
     NoDeviceFound,
-
-    #[error("{0}")]
     Protocol(String),
-
-    #[error("{0}")]
     UserCancel(String),
-
-    #[error("too many signers")]
     TooManySigners,
+}
+
+impl std::error::Error for SignerError {
+    fn source(&self) -> ::core::option::Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::KeypairPubkeyMismatch => None,
+            Self::NotEnoughSigners => None,
+            Self::TransactionError(e) => Some(e),
+            Self::Custom(_) => None,
+            Self::PresignerError(e) => Some(e),
+            Self::Connection(_) => None,
+            Self::InvalidInput(_) => None,
+            Self::NoDeviceFound => None,
+            Self::Protocol(_) => None,
+            Self::UserCancel(_) => None,
+            Self::TooManySigners => None,
+        }
+    }
+}
+impl fmt::Display for SignerError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            SignerError::KeypairPubkeyMismatch => f.write_str("keypair-pubkey mismatch"),
+            SignerError::NotEnoughSigners => f.write_str("not enough signers"),
+            SignerError::TransactionError(_0) => f.write_str("transaction error"),
+            SignerError::Custom(e) => write!(f, "custom error: {e}",),
+            SignerError::PresignerError(_0) => f.write_str("presigner error"),
+            SignerError::Connection(e) => write!(f, "connection error: {e}",),
+            SignerError::InvalidInput(s) => write!(f, "invalid input: {s}",),
+            SignerError::NoDeviceFound => f.write_str("no device found"),
+            SignerError::Protocol(s) => {
+                write!(f, "{s}")
+            }
+            SignerError::UserCancel(s) => {
+                write!(f, "{s}")
+            }
+            SignerError::TooManySigners => f.write_str("too many signers"),
+        }
+    }
+}
+
+impl From<TransactionError> for SignerError {
+    fn from(source: TransactionError) -> Self {
+        SignerError::TransactionError(source)
+    }
+}
+
+impl From<PresignerError> for SignerError {
+    fn from(source: PresignerError) -> Self {
+        SignerError::PresignerError(source)
+    }
 }
 
 /// The `Signer` trait declares operations that all digital signature providers
