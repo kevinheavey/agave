@@ -7983,7 +7983,6 @@ version = "2.1.0"
 dependencies = [
  "bs58",
  "ed25519-dalek",
- "itertools 0.12.1",
  "rand 0.7.3",
  "serde_json",
  "solana-pubkey",
