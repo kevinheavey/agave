@@ -44,12 +44,16 @@ impl Keypair {
 
     /// Recovers a `Keypair` from a byte array
     pub fn from_bytes(slice: &[u8]) -> Result<Self, ed25519_dalek::SignatureError> {
-        let Ok(bytes): Result<[u8; 64], _> = slice.try_into() else {
-            return Err(ed25519_dalek::SignatureError::from_source(String::from(
-                "candidate keypair byte array is too short",
-            )));
-        };
-        Ok(Self(ed25519_dalek::SigningKey::from_keypair_bytes(&bytes)?))
+        let arr: [u8; ed25519_dalek::KEYPAIR_LENGTH] = slice
+            .get(0..ed25519_dalek::KEYPAIR_LENGTH)
+            .ok_or_else(|| {
+                ed25519_dalek::SignatureError::from_source(String::from(
+                    "candidate keypair byte array is too short",
+                ))
+            })?
+            .try_into()
+            .unwrap();
+        Ok(Self(ed25519_dalek::SigningKey::from_keypair_bytes(&arr)?))
     }
 
     /// Returns this `Keypair` as a byte array
