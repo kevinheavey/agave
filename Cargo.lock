@@ -8131,7 +8131,6 @@ dependencies = [
  "solana-signer",
  "solana-transaction-error",
  "static_assertions",
- "thiserror",
 ]
 
 [[package]]
