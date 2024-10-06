@@ -116,17 +116,17 @@ solana-pubkey = { workspace = true, default-features = false, features = ["std"]
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
-solana-serde-varint = { workspace = true }
-solana-short-vec = { workspace = true }
 solana-seed-derivable = { workspace = true, optional = true }
 solana-seed-phrase = { workspace = true, optional = true }
-solana-signer = { workspace = true, optional = true, features = ["keypair"] }
+solana-serde-varint = { workspace = true }
+solana-short-vec = { workspace = true }
 solana-signature = { workspace = true, features = [
     "rand",
     "serde",
     "std",
     "verify",
 ], optional = true }
+solana-signer = { workspace = true, optional = true, features = ["keypair"] }
 solana-time-utils = { workspace = true }
 solana-transaction-error = { workspace = true, features = ["serde"], optional = true }
 thiserror = { workspace = true }
