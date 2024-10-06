@@ -739,7 +739,7 @@ mod test {
 
     fn new_test_keypair() -> Keypair {
         let keypair = ed25519_dalek::SigningKey::from_bytes(&[0u8; 32]);
-        Keypair::from_bytes(&keypair.to_bytes()).unwrap()
+        Keypair::from_bytes(&keypair.to_keypair_bytes()).unwrap()
     }
 
     fn new_test_v0_transaction() -> VersionedTransaction {
