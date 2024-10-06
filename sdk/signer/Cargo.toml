@@ -12,7 +12,7 @@ edition = { workspace = true }
 [dependencies]
 bs58 = { workspace = true, features = ["std"], optional = true }
 ed25519-dalek = { workspace = true, optional = true }
-rand0-7 = { workspace = true, optional = true }
+rand = { workspace = true, optional = true }
 solana-pubkey = { workspace = true }
 solana-signature = { workspace = true }
 solana-transaction-error = { workspace = true }
@@ -30,7 +30,7 @@ dev-context-only-utils = ["keypair"]
 keypair = [
     "dep:bs58",
     "dep:ed25519-dalek",
-    "dep:rand0-7",
+    "dep:rand",
 ]
 
 [package.metadata.docs.rs]
