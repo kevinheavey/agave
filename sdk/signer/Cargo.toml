@@ -11,7 +11,7 @@ edition = { workspace = true }
 
 [dependencies]
 bs58 = { workspace = true, features = ["std"], optional = true }
-ed25519-dalek = { workspace = true, optional = true }
+ed25519-dalek = { workspace = true, features = ["rand_core"], optional = true }
 rand = { workspace = true, optional = true }
 solana-pubkey = { workspace = true }
 solana-signature = { workspace = true }
@@ -27,11 +27,7 @@ static_assertions = { workspace = true }
 
 [features]
 dev-context-only-utils = ["keypair"]
-keypair = [
-    "dep:bs58",
-    "dep:ed25519-dalek",
-    "dep:rand",
-]
+keypair = ["dep:bs58", "dep:ed25519-dalek", "dep:rand"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
