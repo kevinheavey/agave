@@ -8268,6 +8268,7 @@ dependencies = [
  "solana-signer",
  "solana-transaction-error",
  "static_assertions",
+ "wasm-bindgen",
 ]
 
 [[package]]

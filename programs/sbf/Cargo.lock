@@ -6985,6 +6985,7 @@ dependencies = [
  "solana-pubkey",
  "solana-signature",
  "solana-transaction-error",
+ "wasm-bindgen",
 ]
 
 [[package]]
