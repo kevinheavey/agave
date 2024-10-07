@@ -64,7 +64,7 @@ impl Keypair {
 
     /// Returns this `Keypair` as a base58-encoded string
     pub fn to_base58_string(&self) -> String {
-        bs58::encode(&self.0.to_bytes()).into_string()
+        bs58::encode(&self.to_bytes()).into_string()
     }
 
     /// Gets this `Keypair`'s SecretKey
@@ -362,5 +362,13 @@ mod tests {
         // PartialEq
         let keypair2 = keypair_from_seed(&[0u8; 32]).unwrap();
         assert_eq!(keypair, keypair2);
+    }
+
+    #[test]
+    fn test_base58() {
+        let keypair = keypair_from_seed(&[0u8; 32]).unwrap();
+        let as_base58 = keypair.to_base58_string();
+        let parsed = Keypair::from_base58_string(&as_base58);
+        assert_eq!(keypair, parsed);
     }
 }
