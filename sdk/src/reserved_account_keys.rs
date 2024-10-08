@@ -5,9 +5,10 @@
 #![cfg(feature = "full")]
 
 use {
-    crate::{
+    crate::{compute_budget, native_loader},
+    solana_program::{
         address_lookup_table, bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
-        compute_budget, config, ed25519_program, feature, loader_v4, native_loader, pubkey::Pubkey,
+        config, ed25519_program, feature, loader_v4, pubkey::Pubkey,
         secp256k1_program, stake, system_program, sysvar, vote,
     },
     lazy_static::lazy_static,
@@ -17,12 +18,12 @@ use {
 
 // Inline zk token program id since it isn't available in the sdk
 mod zk_token_proof_program {
-    solana_sdk::declare_id!("ZkTokenProof1111111111111111111111111111111");
+    solana_program::declare_id!("ZkTokenProof1111111111111111111111111111111");
 }
 
 // Inline zk-elgamal-proof program id since it isn't available in the sdk
 mod zk_elgamal_proof_program {
-    solana_sdk::declare_id!("ZkE1Gama1Proof11111111111111111111111111111");
+    solana_program::declare_id!("ZkE1Gama1Proof11111111111111111111111111111");
 }
 
 // ReservedAccountKeys is not serialized into or deserialized from bank
