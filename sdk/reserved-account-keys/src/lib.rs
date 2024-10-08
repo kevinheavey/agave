@@ -2,19 +2,24 @@
 //! New reserved account keys may be added as long as they specify a feature
 //! gate that transitions the key into read-only at an epoch boundary.
 
-#![cfg(feature = "full")]
-
 use {
-    crate::{compute_budget, native_loader},
-    solana_program::{
-        address_lookup_table, bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
-        config, ed25519_program, feature, loader_v4, pubkey::Pubkey,
-        secp256k1_program, stake, system_program, sysvar, vote,
-    },
     lazy_static::lazy_static,
     solana_feature_set::{self as feature_set, FeatureSet},
+    solana_program::{
+        address_lookup_table, bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, config,
+        ed25519_program, feature, loader_v4, pubkey::Pubkey, secp256k1_program, stake,
+        system_program, sysvar, vote,
+    },
     std::collections::{HashMap, HashSet},
 };
+
+pub mod native_loader {
+    solana_program::declare_id!("NativeLoader1111111111111111111111111111111");
+}
+
+pub mod compute_budget {
+    solana_program::declare_id!("ComputeBudget111111111111111111111111111111");
+}
 
 // Inline zk token program id since it isn't available in the sdk
 mod zk_token_proof_program {

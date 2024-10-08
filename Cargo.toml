@@ -140,6 +140,7 @@ members = [
     "sdk/program-pack",
     "sdk/pubkey",
     "sdk/rent",
+    "sdk/reserved-account-keys",
     "sdk/sanitize",
     "sdk/seed-derivable",
     "sdk/seed-phrase",
@@ -491,6 +492,7 @@ solana-quic-client = { path = "quic-client", version = "=2.2.0" }
 solana-rayon-threadlimit = { path = "rayon-threadlimit", version = "=2.2.0" }
 solana-remote-wallet = { path = "remote-wallet", version = "=2.2.0", default-features = false }
 solana-rent = { path = "sdk/rent", version = "=2.2.0", default-features = false }
+solana-reserved-account-keys = { path = "sdk/reserved-account-keys", version = "=2.2.0", default-features = false }
 solana-reward-info = { path = "sdk/reward-info", version = "=2.2.0" }
 solana-sanitize = { path = "sdk/sanitize", version = "=2.2.0" }
 solana-seed-derivable = { path = "sdk/seed-derivable", version = "=2.2.0" }
