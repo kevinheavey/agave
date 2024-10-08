@@ -5,31 +5,15 @@
 use {
     lazy_static::lazy_static,
     solana_feature_set::{self as feature_set, FeatureSet},
-    solana_program::{
-        address_lookup_table, bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, config,
-        ed25519_program, feature, loader_v4, pubkey::Pubkey, secp256k1_program, stake, system_program,
-        sysvar, vote,
+    solana_pubkey::Pubkey,
+    solana_sdk_ids::{
+        address_lookup_table, bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
+        compute_budget, config, ed25519_program, feature, loader_v4, native_loader,
+        secp256k1_program, stake, system_program, sysvar, vote, zk_elgamal_proof_program,
+        zk_token_proof_program,
     },
     std::collections::{HashMap, HashSet},
 };
-
-pub mod native_loader {
-    solana_program::declare_id!("NativeLoader1111111111111111111111111111111");
-}
-
-pub mod compute_budget {
-    solana_program::declare_id!("ComputeBudget111111111111111111111111111111");
-}
-
-// Inline zk token program id since it isn't available in the sdk
-mod zk_token_proof_program {
-    solana_program::declare_id!("ZkTokenProof1111111111111111111111111111111");
-}
-
-// Inline zk-elgamal-proof program id since it isn't available in the sdk
-mod zk_elgamal_proof_program {
-    solana_program::declare_id!("ZkE1Gama1Proof11111111111111111111111111111");
-}
 
 // ReservedAccountKeys is not serialized into or deserialized from bank
 // snapshots but the bank requires this trait to be implemented anyways.
@@ -156,12 +140,12 @@ impl ReservedAccount {
 lazy_static! {
     static ref RESERVED_ACCOUNTS: Vec<ReservedAccount> = [
         // builtin programs
-        ReservedAccount::new_pending(address_lookup_table::program::id(), feature_set::add_new_reserved_account_keys::id()),
+        ReservedAccount::new_pending(address_lookup_table::id(), feature_set::add_new_reserved_account_keys::id()),
         ReservedAccount::new_active(bpf_loader::id()),
         ReservedAccount::new_active(bpf_loader_deprecated::id()),
         ReservedAccount::new_active(bpf_loader_upgradeable::id()),
         ReservedAccount::new_pending(compute_budget::id(), feature_set::add_new_reserved_account_keys::id()),
-        ReservedAccount::new_active(config::program::id()),
+        ReservedAccount::new_active(config::id()),
         ReservedAccount::new_pending(ed25519_program::id(), feature_set::add_new_reserved_account_keys::id()),
         ReservedAccount::new_active(feature::id()),
         ReservedAccount::new_pending(loader_v4::id(), feature_set::add_new_reserved_account_keys::id()),
@@ -170,7 +154,7 @@ lazy_static! {
         ReservedAccount::new_active(stake::config::id()),
         ReservedAccount::new_active(stake::program::id()),
         ReservedAccount::new_active(system_program::id()),
-        ReservedAccount::new_active(vote::program::id()),
+        ReservedAccount::new_active(vote::id()),
         ReservedAccount::new_pending(zk_elgamal_proof_program::id(), feature_set::add_new_reserved_account_keys::id()),
         ReservedAccount::new_pending(zk_token_proof_program::id(), feature_set::add_new_reserved_account_keys::id()),
 

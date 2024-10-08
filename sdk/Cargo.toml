@@ -119,6 +119,7 @@ solana-pubkey = { workspace = true, default-features = false, features = ["std"]
 solana-reserved-account-keys = { workspace = true }
 solana-reward-info = { workspace = true, features = ["serde"] }
 solana-sanitize = { workspace = true }
+solana-sdk-ids = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
 solana-seed-derivable = { workspace = true, optional = true }

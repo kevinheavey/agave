@@ -2,7 +2,7 @@
 
 #![cfg(feature = "full")]
 
-pub use solana_reserved_account_keys::compute_budget::{check_id, id, ID};
+pub use solana_sdk_ids::compute_budget::{check_id, id, ID};
 #[cfg(feature = "borsh")]
 use {
     crate::instruction::Instruction,
