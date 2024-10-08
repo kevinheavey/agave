@@ -103,7 +103,7 @@ solana-precompile-error = { workspace = true, optional = true }
 solana-program = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false, features = ["std"] }
-solana-reserved-account-keys = { workspace = true }
+solana-reserved-account-keys = { workspace = true, features = ["std"] }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
