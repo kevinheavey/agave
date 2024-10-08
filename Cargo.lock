@@ -5676,8 +5676,8 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-program",
- "solana-sdk",
+ "solana-account",
+ "solana-pubkey",
  "zstd",
 ]
 

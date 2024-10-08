@@ -6,8 +6,8 @@ use {
     core::str::FromStr,
     serde_derive::{Deserialize, Serialize},
     serde_json::Value,
-    solana_program::pubkey::Pubkey,
-    solana_sdk::account::WritableAccount,
+    solana_account::WritableAccount,
+    solana_pubkey::Pubkey,
 };
 pub mod token;
 

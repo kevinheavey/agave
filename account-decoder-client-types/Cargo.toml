@@ -15,8 +15,8 @@ bs58 = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-program = { workspace = true }
-solana-sdk = { workspace = true }
+solana-account = { workspace = true }
+solana-pubkey = { workspace = true }
 zstd = { workspace = true, optional = true }
 
 [features]
