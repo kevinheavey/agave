@@ -5897,8 +5897,6 @@ dependencies = [
 name = "solana-reserved-account-keys"
 version = "2.1.0"
 dependencies = [
- "lazy_static",
- "solana-feature-set",
  "solana-program",
 ]
 

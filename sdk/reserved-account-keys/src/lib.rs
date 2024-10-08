@@ -1,14 +1,17 @@
 //! Collection of reserved account keys that cannot be write-locked by transactions.
 //! New reserved account keys may be added as long as they specify a feature
 //! gate that transitions the key into read-only at an epoch boundary.
-
+#![no_std]
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
+#[cfg(feature = "std")]
+extern crate std;
+#[cfg(feature = "std")]
 use {
-    lazy_static::lazy_static,
     solana_feature_set::{self as feature_set, FeatureSet},
     solana_program::{
         address_lookup_table, bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, config,
-        ed25519_program, feature, loader_v4, pubkey::Pubkey, secp256k1_program, stake,
-        system_program, sysvar, vote,
+        ed25519_program, feature, loader_v4, pubkey::Pubkey, secp256k1_program, stake, system_program,
+        sysvar, vote,
     },
     std::collections::{HashMap, HashSet},
 };
@@ -41,6 +44,7 @@ impl ::solana_frozen_abi::abi_example::AbiExample for ReservedAccountKeys {
     }
 }
 
+#[cfg(feature = "std")]
 /// `ReservedAccountKeys` holds the set of currently active/inactive
 /// account keys that are reserved by the protocol and may not be write-locked
 /// during transaction processing.
@@ -53,12 +57,14 @@ pub struct ReservedAccountKeys {
     inactive: HashMap<Pubkey, Pubkey>,
 }
 
+#[cfg(feature = "std")]
 impl Default for ReservedAccountKeys {
     fn default() -> Self {
         Self::new(&RESERVED_ACCOUNTS)
     }
 }
 
+#[cfg(feature = "std")]
 impl ReservedAccountKeys {
     /// Compute a set of active / inactive reserved account keys from a list of
     /// keys with a designated feature id. If a reserved account key doesn't
@@ -125,6 +131,7 @@ impl ReservedAccountKeys {
     }
 }
 
+#[cfg(feature = "std")]
 /// `ReservedAccount` represents a reserved account that will not be
 /// write-lockable by transactions. If a feature id is set, the account will
 /// become read-only only after the feature has been activated.
@@ -134,6 +141,7 @@ struct ReservedAccount {
     feature_id: Option<Pubkey>,
 }
 
+#[cfg(feature = "std")]
 impl ReservedAccount {
     fn new_pending(key: Pubkey, feature_id: Pubkey) -> Self {
         Self {
@@ -150,11 +158,12 @@ impl ReservedAccount {
     }
 }
 
+#[cfg(feature = "std")]
 // New reserved accounts should be added in alphabetical order and must specify
 // a feature id for activation. Reserved accounts cannot be removed from this
 // list without breaking consensus.
-lazy_static! {
-    static ref RESERVED_ACCOUNTS: Vec<ReservedAccount> = [
+lazy_static::lazy_static! {
+    static ref RESERVED_ACCOUNTS: std::vec::Vec<ReservedAccount> = [
         // builtin programs
         ReservedAccount::new_pending(address_lookup_table::program::id(), feature_set::add_new_reserved_account_keys::id()),
         ReservedAccount::new_active(bpf_loader::id()),
@@ -228,7 +237,7 @@ mod tests {
         let feature_ids = [Pubkey::new_unique(), Pubkey::new_unique()];
         let active_reserved_key = Pubkey::new_unique();
         let pending_reserved_keys = [Pubkey::new_unique(), Pubkey::new_unique()];
-        let reserved_accounts = vec![
+        let reserved_accounts = std::vec![
             ReservedAccount::new_active(active_reserved_key),
             ReservedAccount::new_pending(pending_reserved_keys[0], feature_ids[0]),
             ReservedAccount::new_pending(pending_reserved_keys[1], feature_ids[1]),
