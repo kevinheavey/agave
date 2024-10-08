@@ -1,14 +1,14 @@
 //! Collection of reserved account keys that cannot be write-locked by transactions.
 //! New reserved account keys may be added as long as they specify a feature
 //! gate that transitions the key into read-only at an epoch boundary.
-
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 use {
     lazy_static::lazy_static,
     solana_feature_set::{self as feature_set, FeatureSet},
     solana_program::{
         address_lookup_table, bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, config,
-        ed25519_program, feature, loader_v4, pubkey::Pubkey, secp256k1_program, stake,
-        system_program, sysvar, vote,
+        ed25519_program, feature, loader_v4, pubkey::Pubkey, secp256k1_program, stake, system_program,
+        sysvar, vote,
     },
     std::collections::{HashMap, HashSet},
 };

@@ -7950,6 +7950,8 @@ version = "2.2.0"
 dependencies = [
  "lazy_static",
  "solana-feature-set",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
  "solana-program",
 ]
 
