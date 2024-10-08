@@ -7630,7 +7630,10 @@ version = "2.1.0"
 dependencies = [
  "lazy_static",
  "solana-feature-set",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
  "solana-program",
+ "solana-reserved-account-keys",
 ]
 
 [[package]]
