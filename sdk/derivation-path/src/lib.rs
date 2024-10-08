@@ -36,7 +36,7 @@ impl fmt::Display for DerivationPathError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             DerivationPathError::InvalidDerivationPath(p) => {
-                ::core::write!(f, "invalid derivation path: {p}",)
+                write!(f, "invalid derivation path: {p}",)
             }
             DerivationPathError::Infallible => f.write_str("infallible"),
         }
