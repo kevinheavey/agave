@@ -103,6 +103,7 @@ members = [
     "sdk",
     "sdk/account-info",
     "sdk/atomic-u64",
+    "sdk/bincode",
     "sdk/cargo-build-sbf",
     "sdk/cargo-test-sbf",
     "sdk/clock",
@@ -112,7 +113,6 @@ members = [
     "sdk/gen-headers",
     "sdk/hash",
     "sdk/instruction",
-    "sdk/limited-deserialize",
     "sdk/macro",
     "sdk/msg",
     "sdk/package-metadata-macro",
@@ -369,6 +369,7 @@ solana-banks-client = { path = "banks-client", version = "=2.1.0" }
 solana-banks-interface = { path = "banks-interface", version = "=2.1.0" }
 solana-banks-server = { path = "banks-server", version = "=2.1.0" }
 solana-bench-tps = { path = "bench-tps", version = "=2.1.0" }
+solana-bincode = { path = "sdk/bincode", version = "=2.1.0" }
 solana-bloom = { path = "bloom", version = "=2.1.0" }
 solana-bn254 = { path = "curves/bn254", version = "=2.1.0" }
 solana-bpf-loader-program = { path = "programs/bpf_loader", version = "=2.1.0" }
@@ -410,7 +411,6 @@ solana-inline-spl = { path = "inline-spl", version = "=2.1.0" }
 solana-instruction = { path = "sdk/instruction", version = "=2.1.0", default-features = false }
 solana-lattice-hash = { path = "lattice-hash", version = "=2.1.0" }
 solana-ledger = { path = "ledger", version = "=2.1.0" }
-solana-limited-deserialize = { path = "sdk/limited-deserialize", version = "=2.1.0" }
 solana-loader-v4-program = { path = "programs/loader-v4", version = "=2.1.0" }
 solana-local-cluster = { path = "local-cluster", version = "=2.1.0" }
 solana-log-collector = { path = "log-collector", version = "=2.1.0" }

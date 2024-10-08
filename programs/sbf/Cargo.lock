@@ -4829,6 +4829,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-bincode"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "serde",
+ "solana-instruction",
+]
+
+[[package]]
 name = "solana-bloom"
 version = "2.1.0"
 dependencies = [
@@ -5464,15 +5473,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-limited-deserialize"
-version = "2.1.0"
-dependencies = [
- "bincode",
- "serde",
- "solana-instruction",
-]
-
-[[package]]
 name = "solana-loader-v4-program"
 version = "2.1.0"
 dependencies = [
@@ -5648,12 +5648,12 @@ dependencies = [
  "sha3",
  "solana-account-info",
  "solana-atomic-u64",
+ "solana-bincode",
  "solana-clock",
  "solana-decode-error",
  "solana-define-syscall",
  "solana-hash",
  "solana-instruction",
- "solana-limited-deserialize",
  "solana-msg",
  "solana-program-error",
  "solana-program-memory",

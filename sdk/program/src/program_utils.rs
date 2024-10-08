@@ -1,1 +1,1 @@
-pub use solana_limited_deserialize::limited_deserialize;
+pub use solana_bincode::limited_deserialize;

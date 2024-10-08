@@ -1,7 +1,7 @@
 [package]
-name = "solana-limited-deserialize"
-description = "Solana function for deserializing with a limit"
-documentation = "https://docs.rs/solana-limited-deserialize"
+name = "solana-bincode"
+description = "Solana bincode utilities"
+documentation = "https://docs.rs/solana-bincode"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
