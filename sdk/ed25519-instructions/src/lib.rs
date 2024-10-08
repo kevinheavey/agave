@@ -2,8 +2,6 @@
 //!
 //! [np]: https://docs.solanalabs.com/runtime/programs#ed25519-program
 
-#![cfg(feature = "full")]
-
 use {
     bytemuck::bytes_of,
     bytemuck_derive::{Pod, Zeroable},

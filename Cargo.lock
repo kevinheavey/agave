@@ -6811,6 +6811,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-ed25519-instruction"
+version = "2.2.0"
+dependencies = [
+ "bytemuck",
+ "bytemuck_derive",
+ "ed25519-dalek",
+ "solana-feature-set",
+ "solana-instruction",
+ "solana-precompile-error",
+]
+
+[[package]]
 name = "solana-ed25519-program-tests"
 version = "2.2.0"
 dependencies = [
