@@ -18,7 +18,7 @@ solana-frozen-abi = { workspace = true, optional = true, features = [
 solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-program = { workspace = true }
+solana-pubkey = { workspace = true, default-features = false }
 
 [dev-dependencies]
 solana-reserved-account-keys = { path = ".", features = ["dev-context-only-utils"] }
