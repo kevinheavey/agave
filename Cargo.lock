@@ -7524,6 +7524,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-reserved-account-keys"
+version = "2.1.0"
+dependencies = [
+ "lazy_static",
+ "solana-feature-set",
+ "solana-program",
+]
+
+[[package]]
 name = "solana-rpc"
 version = "2.1.0"
 dependencies = [
@@ -7857,6 +7866,7 @@ dependencies = [
  "solana-logger",
  "solana-program",
  "solana-program-memory",
+ "solana-reserved-account-keys",
  "solana-sanitize",
  "solana-sdk",
  "solana-sdk-macro",
