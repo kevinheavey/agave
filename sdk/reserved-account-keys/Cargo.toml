@@ -10,9 +10,23 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-lazy_static = { workspace = true }
-solana-feature-set = { workspace = true }
+lazy_static = { workspace = true, optional = true }
+solana-feature-set = { workspace = true, optional = true }
+solana-frozen-abi = { workspace = true, optional = true, features = [
+    "frozen-abi",
+] }
+solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+    "frozen-abi",
+] }
 solana-program = { workspace = true }
+
+[dev-dependencies]
+solana-reserved-account-keys = { path = ".", features = ["dev-context-only-utils"] }
+
+[features]
+dev-context-only-utils = ["std"]
+frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "std"]
+std = ["dep:lazy_static", "dep:solana-feature-set"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
