@@ -128,6 +128,7 @@ members = [
     "sdk/program-option",
     "sdk/program-pack",
     "sdk/pubkey",
+    "sdk/quic-definitions",
     "sdk/rent",
     "sdk/sanitize",
     "sdk/seed-derivable",
@@ -463,6 +464,7 @@ solana-program-test = { path = "program-test", version = "=2.1.0" }
 solana-pubkey = { path = "sdk/pubkey", version = "=2.1.0", default-features = false }
 solana-pubsub-client = { path = "pubsub-client", version = "=2.1.0" }
 solana-quic-client = { path = "quic-client", version = "=2.1.0" }
+solana-quic-definitions = { path = "sdk/quic-definitions", version = "=2.1.0" }
 solana-rayon-threadlimit = { path = "rayon-threadlimit", version = "=2.1.0" }
 solana-remote-wallet = { path = "remote-wallet", version = "=2.1.0", default-features = false }
 solana-rent = { path = "sdk/rent", version = "=2.1.0", default-features = false }
