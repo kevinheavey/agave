@@ -5278,6 +5278,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-feature"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "serde",
+ "serde_derive",
+ "solana-account-info",
+ "solana-instruction",
+ "solana-program-error",
+ "solana-pubkey",
+ "solana-rent",
+ "solana-system-instruction",
+]
+
+[[package]]
 name = "solana-feature-set"
 version = "2.1.0"
 dependencies = [
@@ -5672,6 +5687,7 @@ dependencies = [
  "solana-clock",
  "solana-decode-error",
  "solana-define-syscall",
+ "solana-feature",
  "solana-hash",
  "solana-instruction",
  "solana-msg",
