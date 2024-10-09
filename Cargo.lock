@@ -7460,6 +7460,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-quic-definitions"
+version = "2.1.0"
+dependencies = [
+ "solana-signer",
+]
+
+[[package]]
 name = "solana-rayon-threadlimit"
 version = "2.1.0"
 dependencies = [
@@ -7831,6 +7838,7 @@ dependencies = [
  "solana-presigner",
  "solana-program",
  "solana-program-memory",
+ "solana-quic-definitions",
  "solana-sanitize",
  "solana-sdk",
  "solana-sdk-macro",
