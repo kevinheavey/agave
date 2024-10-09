@@ -2,9 +2,9 @@
 //!
 //! [sv]: https://docs.solanalabs.com/runtime/sysvars#slothashes
 //!
-//! The sysvar ID is declared in [`sysvar::slot_hashes`].
+//! The sysvar ID is declared in [`solana_program::sysvar::slot_hashes`].
 //!
-//! [`sysvar::slot_hashes`]: https://docs.rs/solana-program/latest/solana_program/sysvar/slot_hashes/index.html
+//! [`solana_program::sysvar::slot_hashes`]: https://docs.rs/solana-program/latest/solana_program/sysvar/slot_hashes/index.html
 
 use {
     solana_hash::Hash,
