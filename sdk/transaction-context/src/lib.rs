@@ -1,11 +1,25 @@
 //! Data shared between program runtime and built-in programs as well as SBF programs.
 #![deny(clippy::indexing_slicing)]
 
-#[cfg(all(not(target_os = "solana"), feature = "full", debug_assertions))]
-use crate::signature::Signature;
+#[cfg(all(
+    not(target_os = "solana"),
+    feature = "debug_assertions",
+    debug_assertions
+))]
+use solana_signature::Signature;
+#[cfg(not(target_os = "solana"))]
 use {
-    crate::{instruction::InstructionError, pubkey::Pubkey},
+    solana_account::WritableAccount,
+    // not inlining MAX_PERMITTED_DATA_INCREASE because we already
+    // depend on solana_account_info indirectly
+    solana_account_info::MAX_PERMITTED_DATA_INCREASE,
+    solana_rent::Rent,
+    std::mem::MaybeUninit,
+};
+use {
     solana_account::{AccountSharedData, ReadableAccount},
+    solana_instruction::error::InstructionError,
+    solana_pubkey::Pubkey,
     std::{
         cell::{Ref, RefCell, RefMut},
         collections::HashSet,
@@ -13,18 +27,23 @@ use {
         rc::Rc,
     },
 };
-#[cfg(not(target_os = "solana"))]
-use {
-    crate::{
-        rent::Rent,
-        system_instruction::{
-            MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION, MAX_PERMITTED_DATA_LENGTH,
-        },
-    },
-    solana_account::WritableAccount,
-    solana_program::entrypoint::MAX_PERMITTED_DATA_INCREASE,
-    std::mem::MaybeUninit,
-};
+
+// Inlined to avoid solana_program dep
+const MAX_PERMITTED_DATA_LENGTH: u64 = 10 * 1024 * 1024;
+#[cfg(test)]
+static_assertions::const_assert_eq!(
+    MAX_PERMITTED_DATA_LENGTH,
+    solana_program::system_instruction::MAX_PERMITTED_DATA_LENGTH
+);
+
+// Inlined to avoid solana_program dep
+const MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION: i64 =
+    MAX_PERMITTED_DATA_LENGTH as i64 * 2;
+#[cfg(test)]
+static_assertions::const_assert_eq!(
+    MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION,
+    solana_program::system_instruction::MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION
+);
 
 /// Index of an account inside of the TransactionContext or an InstructionContext.
 pub type IndexOfAccount = u16;
@@ -144,7 +163,11 @@ pub struct TransactionContext {
     #[cfg(not(target_os = "solana"))]
     rent: Rent,
     /// Useful for debugging to filter by or to look it up on the explorer
-    #[cfg(all(not(target_os = "solana"), feature = "full", debug_assertions))]
+    #[cfg(all(
+        not(target_os = "solana"),
+        feature = "debug_assertions",
+        debug_assertions
+    ))]
     signature: Signature,
 }
 
@@ -172,7 +195,11 @@ impl TransactionContext {
             accounts_resize_delta: RefCell::new(0),
             remove_accounts_executable_flag_checks: true,
             rent,
-            #[cfg(all(not(target_os = "solana"), feature = "full", debug_assertions))]
+            #[cfg(all(
+                not(target_os = "solana"),
+                feature = "debug_assertions",
+                debug_assertions
+            ))]
             signature: Signature::default(),
         }
     }
@@ -200,13 +227,21 @@ impl TransactionContext {
     }
 
     /// Stores the signature of the current transaction
-    #[cfg(all(not(target_os = "solana"), feature = "full", debug_assertions))]
+    #[cfg(all(
+        not(target_os = "solana"),
+        feature = "debug_assertions",
+        debug_assertions
+    ))]
     pub fn set_signature(&mut self, signature: &Signature) {
         self.signature = *signature;
     }
 
     /// Returns the signature of the current transaction
-    #[cfg(all(not(target_os = "solana"), feature = "full", debug_assertions))]
+    #[cfg(all(
+        not(target_os = "solana"),
+        feature = "debug_assertions",
+        debug_assertions
+    ))]
     pub fn get_signature(&self) -> &Signature {
         &self.signature
     }
@@ -445,7 +480,11 @@ impl TransactionContext {
 }
 
 /// Return data at the end of a transaction
-#[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq, Serialize)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde_derive::Deserialize, serde_derive::Serialize)
+)]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct TransactionReturnData {
     pub program_id: Pubkey,
     pub data: Vec<u8>,
@@ -969,7 +1008,7 @@ impl<'a> BorrowedAccount<'a> {
     }
 
     /// Deserializes the account data into a state
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(all(not(target_os = "solana"), feature = "bincode"))]
     pub fn get_state<T: serde::de::DeserializeOwned>(&self) -> Result<T, InstructionError> {
         self.account
             .deserialize_data()
@@ -977,7 +1016,7 @@ impl<'a> BorrowedAccount<'a> {
     }
 
     /// Serializes a state into the account data
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(all(not(target_os = "solana"), feature = "bincode"))]
     pub fn set_state<T: serde::Serialize>(&mut self, state: &T) -> Result<(), InstructionError> {
         let data = self.get_data_mut()?;
         let serialized_size =

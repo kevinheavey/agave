@@ -28,6 +28,7 @@ full = [
     "rand0-7",
     "serde_json",
     "solana-signature",
+    "solana-transaction-context/debug_assertions",
     "ed25519-dalek",
     "libsecp256k1",
     "sha3",
@@ -134,6 +135,10 @@ solana-signature = { workspace = true, features = [
 ], optional = true }
 solana-signer = { workspace = true, optional = true }
 solana-time-utils = { workspace = true }
+solana-transaction-context = { workspace = true, features = [
+    "bincode",
+    "debug_assertions",
+] }
 solana-transaction-error = { workspace = true, features = ["serde"], optional = true }
 thiserror = { workspace = true }
 
