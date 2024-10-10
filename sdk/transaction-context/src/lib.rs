@@ -8,14 +8,7 @@
 ))]
 use solana_signature::Signature;
 #[cfg(not(target_os = "solana"))]
-use {
-    solana_account::WritableAccount,
-    // not inlining MAX_PERMITTED_DATA_INCREASE because we already
-    // depend on solana_account_info indirectly
-    solana_account_info::MAX_PERMITTED_DATA_INCREASE,
-    solana_rent::Rent,
-    std::mem::MaybeUninit,
-};
+use {solana_account::WritableAccount, solana_rent::Rent, std::mem::MaybeUninit};
 use {
     solana_account::{AccountSharedData, ReadableAccount},
     solana_instruction::error::InstructionError,
@@ -43,6 +36,14 @@ const MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION: i64 =
 static_assertions::const_assert_eq!(
     MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION,
     solana_program::system_instruction::MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION
+);
+
+// Inlined to avoid solana_account_info dep
+const MAX_PERMITTED_DATA_INCREASE: usize = 1_024 * 10;
+#[cfg(test)]
+static_assertions::const_assert_eq!(
+    MAX_PERMITTED_DATA_INCREASE,
+    solana_account_info::MAX_PERMITTED_DATA_INCREASE
 );
 
 /// Index of an account inside of the TransactionContext or an InstructionContext.
