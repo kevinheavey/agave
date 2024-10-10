@@ -31,6 +31,7 @@ static_assertions::const_assert_eq!(
 );
 
 // Inlined to avoid solana_program dep
+#[cfg(not(target_os = "solana"))]
 const MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION: i64 =
     MAX_PERMITTED_DATA_LENGTH as i64 * 2;
 #[cfg(test)]
@@ -40,6 +41,7 @@ static_assertions::const_assert_eq!(
 );
 
 // Inlined to avoid solana_account_info dep
+#[cfg(not(target_os = "solana"))]
 const MAX_PERMITTED_DATA_INCREASE: usize = 1_024 * 10;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
