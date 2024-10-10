@@ -36,12 +36,12 @@ static_assertions = { workspace = true }
 
 [features]
 bincode = ["dep:bincode", "serde", "solana-account/bincode"]
+debug_assertions = ["dep:solana-signature"]
 dev-context-only-utils = [
     "bincode",
     "debug_assertions",
-    "solana-account/dev-context-only-utils",
+    "solana-account/dev-context-only-utils"
 ]
-debug_assertions = ["dep:solana-signature"]
 serde = ["dep:serde", "dep:serde_derive"]
 
 [lints]
