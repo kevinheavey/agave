@@ -28,6 +28,7 @@ full = [
     "rand0-7",
     "serde_json",
     "solana-signature",
+    "solana-transaction-context/debug_assertions",
     "ed25519-dalek",
     "ed25519-dalek-bip32",
     "libsecp256k1",
@@ -114,6 +115,10 @@ solana-signature = { workspace = true, features = [
     "std",
     "verify",
 ], optional = true }
+solana-transaction-context = { workspace = true, features = [
+    "bincode",
+    "debug_assertions",
+] }
 thiserror = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
