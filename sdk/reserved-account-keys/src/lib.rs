@@ -109,13 +109,11 @@ pub mod sysvar {
     }
 }
 
-// Inline zk token program id since it isn't available in the sdk
-mod zk_token_proof_program {
+pub mod zk_token_proof_program {
     solana_pubkey::declare_id!("ZkTokenProof1111111111111111111111111111111");
 }
 
-// Inline zk-elgamal-proof program id since it isn't available in the sdk
-mod zk_elgamal_proof_program {
+pub mod zk_elgamal_proof_program {
     solana_pubkey::declare_id!("ZkE1Gama1Proof11111111111111111111111111111");
 }
 
