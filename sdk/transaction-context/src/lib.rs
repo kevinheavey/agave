@@ -23,6 +23,7 @@ use {
 };
 
 // Inlined to avoid solana_program dep
+#[cfg(not(target_os = "solana"))]
 const MAX_PERMITTED_DATA_LENGTH: u64 = 10 * 1024 * 1024;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
