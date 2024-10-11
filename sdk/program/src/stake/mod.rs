@@ -10,7 +10,7 @@ pub mod state;
 pub mod tools;
 
 pub mod program {
-    pub use solana_reserved_account_keys::stake::{check_id, id, ID};
+    pub use solana_reserved_account_keys::stake::program::{check_id, id, ID};
 }
 
 /// The minimum number of epochs before stake account that is delegated to a delinquent vote
