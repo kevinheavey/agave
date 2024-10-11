@@ -98,9 +98,6 @@ pub mod sysvar {
     pub mod rewards {
         solana_pubkey::declare_id!("SysvarRewards111111111111111111111111111111");
     }
-    pub mod rent {
-        solana_pubkey::declare_id!("SysvarRent111111111111111111111111111111111");
-    }
     pub mod slot_hashes {
         solana_pubkey::declare_id!("SysvarS1otHashes111111111111111111111111111");
     }
