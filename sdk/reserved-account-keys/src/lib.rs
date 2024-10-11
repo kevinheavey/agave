@@ -57,7 +57,12 @@ pub mod secp256k1_program {
 }
 
 pub mod stake {
-    solana_pubkey::declare_id!("Stake11111111111111111111111111111111111111");
+    pub mod config {
+        solana_pubkey::declare_deprecated_id!("StakeConfig11111111111111111111111111111111");
+    }
+    pub mod program {
+        solana_pubkey::declare_id!("Stake11111111111111111111111111111111111111");
+    }
 }
 
 pub mod system_program {
@@ -248,12 +253,12 @@ impl ReservedAccount {
 lazy_static::lazy_static! {
     static ref RESERVED_ACCOUNTS: std::vec::Vec<ReservedAccount> = [
         // builtin programs
-        ReservedAccount::new_pending(address_lookup_table::program::id(), feature_set::add_new_reserved_account_keys::id()),
+        ReservedAccount::new_pending(address_lookup_table::id(), feature_set::add_new_reserved_account_keys::id()),
         ReservedAccount::new_active(bpf_loader::id()),
         ReservedAccount::new_active(bpf_loader_deprecated::id()),
         ReservedAccount::new_active(bpf_loader_upgradeable::id()),
         ReservedAccount::new_pending(compute_budget::id(), feature_set::add_new_reserved_account_keys::id()),
-        ReservedAccount::new_active(config::program::id()),
+        ReservedAccount::new_active(config::id()),
         ReservedAccount::new_pending(ed25519_program::id(), feature_set::add_new_reserved_account_keys::id()),
         ReservedAccount::new_active(feature::id()),
         ReservedAccount::new_pending(loader_v4::id(), feature_set::add_new_reserved_account_keys::id()),
@@ -262,7 +267,7 @@ lazy_static::lazy_static! {
         ReservedAccount::new_active(stake::config::id()),
         ReservedAccount::new_active(stake::program::id()),
         ReservedAccount::new_active(system_program::id()),
-        ReservedAccount::new_active(vote::program::id()),
+        ReservedAccount::new_active(vote::id()),
         ReservedAccount::new_pending(zk_elgamal_proof_program::id(), feature_set::add_new_reserved_account_keys::id()),
         ReservedAccount::new_pending(zk_token_proof_program::id(), feature_set::add_new_reserved_account_keys::id()),
 
