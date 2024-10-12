@@ -40,15 +40,20 @@ define_syscall!(fn sol_alt_bn128_group_op(group_op: u64, input: *const u8, input
 define_syscall!(fn sol_big_mod_exp(params: *const u8, result: *mut u8) -> u64);
 define_syscall!(fn sol_remaining_compute_units() -> u64);
 define_syscall!(fn sol_alt_bn128_compression(op: u64, input: *const u8, input_size: u64, result: *mut u8) -> u64);
-define_syscall!(fn sol_get_sysvar(sysvar_id_addr: *const u8, result: *mut u8, offset: u64, length: u64) -> u64);
-define_syscall!(fn sol_get_epoch_stake(vote_address: *const u8) -> u64);
 
-// these are to be deprecated once they are superceded by sol_get_sysvar
-define_syscall!(fn sol_get_clock_sysvar(addr: *mut u8) -> u64);
-define_syscall!(fn sol_get_epoch_schedule_sysvar(addr: *mut u8) -> u64);
-define_syscall!(fn sol_get_rent_sysvar(addr: *mut u8) -> u64);
-define_syscall!(fn sol_get_last_restart_slot(addr: *mut u8) -> u64);
-define_syscall!(fn sol_get_epoch_rewards_sysvar(addr: *mut u8) -> u64);
-
-// this cannot go through sol_get_sysvar but can be removed once no longer in use
-define_syscall!(fn sol_get_fees_sysvar(addr: *mut u8) -> u64);
+#[deprecated(
+    since = "2.1.0",
+    note = "Use `solana_sysvar::syscalls` instead"
+)]
+pub use {
+    solana_sysvar::sysvalls::{
+        sol_get_sysvar,
+        sol_get_epoch_stake,
+        sol_get_clock_sysvar,
+        sol_get_epoch_schedule_sysvar,
+        sol_get_rent_sysvar,
+        sol_get_last_restart_slot,
+        sol_get_epoch_rewards_sysvar,
+        sol_get_fees_sysvar
+    }
+};

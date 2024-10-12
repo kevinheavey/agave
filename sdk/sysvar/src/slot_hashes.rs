@@ -46,17 +46,15 @@
 //! ```
 
 pub use {
-    crate::slot_hashes::SlotHashes,
+    solana_slot_hashes::SlotHashes,
     solana_reserved_account_keys::sysvar::slot_hashes::{check_id, id, ID},
 };
 use {
-    crate::{
-        account_info::AccountInfo,
-        hash::Hash,
-        program_error::ProgramError,
-        slot_hashes::MAX_ENTRIES,
-        sysvar::{get_sysvar, Sysvar, SysvarId},
-    },
+    solana_account_info::AccountInfo,
+    solana_hash::Hash,
+    solana_program_error::ProgramError,
+    solana_slot_hashes::MAX_ENTRIES,
+    crate::{get_sysvar, Sysvar, SysvarId},
     bytemuck_derive::{Pod, Zeroable},
     solana_clock::Slot,
 };

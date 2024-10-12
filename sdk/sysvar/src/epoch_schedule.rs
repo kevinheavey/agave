@@ -127,7 +127,7 @@
 //! ```
 use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
 pub use {
-    crate::epoch_schedule::EpochSchedule,
+    solana_epoch_schedule::EpochSchedule,
     solana_reserved_account_keys::sysvar::epoch_schedule::{check_id, id, ID},
 };
 
