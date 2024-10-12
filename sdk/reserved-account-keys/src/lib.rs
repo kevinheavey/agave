@@ -4,9 +4,9 @@
 #![no_std]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(target_os = "solana")))]
 extern crate std;
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(target_os = "solana")))]
 use {
     solana_feature_set::{self as feature_set, FeatureSet},
     solana_pubkey::Pubkey,
@@ -133,7 +133,7 @@ impl ::solana_frozen_abi::abi_example::AbiExample for ReservedAccountKeys {
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(target_os = "solana")))]
 /// `ReservedAccountKeys` holds the set of currently active/inactive
 /// account keys that are reserved by the protocol and may not be write-locked
 /// during transaction processing.
@@ -146,14 +146,14 @@ pub struct ReservedAccountKeys {
     inactive: HashMap<Pubkey, Pubkey>,
 }
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(target_os = "solana")))]
 impl Default for ReservedAccountKeys {
     fn default() -> Self {
         Self::new(&RESERVED_ACCOUNTS)
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(target_os = "solana")))]
 impl ReservedAccountKeys {
     /// Compute a set of active / inactive reserved account keys from a list of
     /// keys with a designated feature id. If a reserved account key doesn't
@@ -220,7 +220,7 @@ impl ReservedAccountKeys {
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(target_os = "solana")))]
 /// `ReservedAccount` represents a reserved account that will not be
 /// write-lockable by transactions. If a feature id is set, the account will
 /// become read-only only after the feature has been activated.
@@ -230,7 +230,7 @@ struct ReservedAccount {
     feature_id: Option<Pubkey>,
 }
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(target_os = "solana")))]
 impl ReservedAccount {
     fn new_pending(key: Pubkey, feature_id: Pubkey) -> Self {
         Self {
@@ -247,7 +247,7 @@ impl ReservedAccount {
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(target_os = "solana")))]
 // New reserved accounts should be added in alphabetical order and must specify
 // a feature id for activation. Reserved accounts cannot be removed from this
 // list without breaking consensus.
