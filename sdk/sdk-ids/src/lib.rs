@@ -98,7 +98,7 @@ pub mod sysvar {
         solana_pubkey::declare_id!("SysvarS1otHistory11111111111111111111111111");
     }
     pub mod stake_history {
-        solana_pubkey::declare_id!("SysvarS1otHistory11111111111111111111111111");
+        solana_pubkey::declare_id!("SysvarStakeHistory1111111111111111111111111");
     }
 }
 
