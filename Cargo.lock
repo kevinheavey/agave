@@ -7040,6 +7040,7 @@ dependencies = [
  "byte-unit",
  "clap 3.2.23",
  "serde",
+ "serde_derive",
  "serde_json",
  "solana-logger",
  "solana-version",
