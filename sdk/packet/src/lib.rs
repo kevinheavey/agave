@@ -1,5 +1,6 @@
 //! The definition of a Solana network packet.
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
 #[cfg(feature = "bincode")]
 use bincode::{Options, Result};
