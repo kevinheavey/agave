@@ -10,8 +10,6 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-lazy_static = { workspace = true, optional = true }
-solana-feature-set = { workspace = true, optional = true }
 solana-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
@@ -19,6 +17,10 @@ solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
 solana-pubkey = { workspace = true, default-features = false }
+
+[target.'cfg(not(target_os = "solana"))'.dependencies]
+lazy_static = { workspace = true, optional = true }
+solana-feature-set = { workspace = true, optional = true }
 
 [dev-dependencies]
 solana-program = { path = "../program" }
