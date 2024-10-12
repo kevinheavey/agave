@@ -40,6 +40,7 @@
 //! [`AccountInfo`]: https://docs.rs/solana-account-info/latest/solana_account_info/struct.AccountInfo.html
 //! [`system_program`]: https://docs.rs/solana-program/latest/solana_program/system_program/index.html
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
 #[allow(deprecated)]
 use {
