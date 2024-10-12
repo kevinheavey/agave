@@ -3,6 +3,7 @@
 //! gate that transitions the key into read-only at an epoch boundary.
 #![no_std]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #[cfg(feature = "std")]
 extern crate std;
 #[cfg(feature = "std")]
