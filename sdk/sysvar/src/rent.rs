@@ -128,7 +128,7 @@
 //! ```
 use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
 pub use {
-    crate::rent::Rent,
+    solana_rent::Rent,
     solana_reserved_account_keys::sysvar::rent::{check_id, id, ID},
 };
 

@@ -81,7 +81,11 @@
 //!
 //! [sysvardoc]: https://docs.solanalabs.com/runtime/sysvars
 
-use crate::{account_info::AccountInfo, program_error::ProgramError, pubkey::Pubkey};
+use {
+    solana_account_info::AccountInfo,
+    solana_program_error::ProgramError,
+    solana_pubkey::Pubkey
+};
 #[allow(deprecated)]
 pub use {
     solana_reserved_account_keys::sysvar::{check_id, id, ID},
@@ -100,6 +104,8 @@ pub mod rewards;
 pub mod slot_hashes;
 pub mod slot_history;
 pub mod stake_history;
+#[cfg(target_os = "solana")]
+pub mod syscalls;
 
 #[deprecated(
     since = "2.0.0",
@@ -298,7 +304,7 @@ fn get_sysvar(
 mod tests {
     use {
         super::*,
-        crate::{
+        solana_program::{
             entrypoint::SUCCESS,
             program_error::ProgramError,
             program_stubs::{set_syscall_stubs, SyscallStubs},

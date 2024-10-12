@@ -34,18 +34,16 @@ use qualifier_attr::qualifiers;
 pub use solana_reserved_account_keys::sysvar::instructions::{check_id, id, ID};
 #[cfg(not(target_os = "solana"))]
 use {
-    crate::serialize_utils::{append_slice, append_u16, append_u8},
+    solana_serialize_utils::{append_slice, append_u16, append_u8},
     bitflags::bitflags,
 };
 use {
-    crate::{
-        account_info::AccountInfo,
-        instruction::{AccountMeta, Instruction},
-        program_error::ProgramError,
-        pubkey::Pubkey,
-        serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
-    },
+    solana_account_info::AccountInfo,
+    solana_instruction::{AccountMeta, Instruction},
+    solana_program_error::ProgramError,
+    solana_pubkey::Pubkey,
     solana_sanitize::SanitizeError,
+    solana_serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
 };
 
 /// Instructions sysvar, dummy type.

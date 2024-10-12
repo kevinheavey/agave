@@ -39,9 +39,11 @@
 //! ```
 //!
 
-use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
+use {
+    crate::{impl_sysvar_get, sysvar::Sysvar},
+    solana_program_error::ProgramError
+};
 pub use {
-    crate::last_restart_slot::LastRestartSlot,
     solana_reserved_account_keys::sysvar::last_restart_slot::{check_id, id, ID},
 };
 
@@ -49,4 +51,12 @@ crate::impl_sysvar_id!(LastRestartSlot);
 
 impl Sysvar for LastRestartSlot {
     impl_sysvar_get!(sol_get_last_restart_slot);
+}
+
+/// Information about the last restart slot (hard fork).
+#[repr(C)]
+#[derive(serde_derive::Serialize, serde_derive::Deserialize, Debug, CloneZeroed, PartialEq, Eq, Default)]
+pub struct LastRestartSlot {
+    /// The last restart `Slot`.
+    pub last_restart_slot: u64,
 }
