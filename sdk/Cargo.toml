@@ -27,6 +27,7 @@ full = [
     "rand",
     "rand0-7",
     "serde_json",
+    "solana-reserved-account-keys/std",
     "solana-signature",
     "ed25519-dalek",
     "ed25519-dalek-bip32",
