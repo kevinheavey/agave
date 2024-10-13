@@ -144,6 +144,7 @@ solana-pubkey = { workspace = true, default-features = false, features = ["std"]
 solana-quic-definitions = { workspace = true, optional = true }
 solana-reserved-account-keys = { workspace = true }
 solana-reward-info = { workspace = true, features = ["serde"] }
+solana-rent-debits = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-ids = { workspace = true }
 solana-sdk-macro = { workspace = true }
