@@ -125,6 +125,8 @@ members = [
     "sdk/program-pack",
     "sdk/pubkey",
     "sdk/rent",
+    "sdk/rent-debits",
+    "sdk/reward-info",
     "sdk/sanitize",
     "sdk/serde-varint",
     "sdk/serialize-utils",
@@ -463,6 +465,7 @@ solana-slot-hashes = { path = "sdk/slot-hashes", version = "=2.1.0" }
 solana-timings = { path = "timings", version = "=2.1.0" }
 solana-unified-scheduler-logic = { path = "unified-scheduler-logic", version = "=2.1.0" }
 solana-unified-scheduler-pool = { path = "unified-scheduler-pool", version = "=2.1.0" }
+solana-rent-debits = { path = "sdk/rent-debits", version = "=2.1.0" }
 solana-rpc = { path = "rpc", version = "=2.1.0" }
 solana-rpc-client = { path = "rpc-client", version = "=2.1.0", default-features = false }
 solana-rpc-client-api = { path = "rpc-client-api", version = "=2.1.0" }
