@@ -104,8 +104,8 @@ solana-frozen-abi-macro = { workspace = true, optional = true, features = [
 solana-program = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false, features = ["std"] }
-solana-reward-info = { workspace = true, features = ["serde"] }
 solana-rent-debits = { workspace = true }
+solana-reward-info = { workspace = true, features = ["serde"] }
 solana-sanitize = { workspace = true }
 solana-sdk-macro = { workspace = true }
 solana-secp256k1-recover = { workspace = true }
