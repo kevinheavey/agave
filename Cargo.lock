@@ -7475,7 +7475,6 @@ dependencies = [
  "log",
  "percentage",
  "prost",
- "prost-build",
  "prost-types",
  "qualifier_attr",
  "rand 0.8.5",
