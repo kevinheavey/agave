@@ -64,11 +64,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        solana_account::{state_traits::StateMut, AccountSharedData},
-        solana_pubkey::Pubkey,
-    };
+    use {super::*, solana_pubkey::Pubkey};
 
     #[test]
     fn test_account_state() {
