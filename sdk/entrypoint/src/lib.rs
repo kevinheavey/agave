@@ -103,8 +103,8 @@ pub const NON_DUP_MARKER: u8 = u8::MAX;
 /// pub mod entrypoint {
 ///
 ///     use solana_account_info::AccountInfo;
-///     use solana_entrypoint::entrypoint;
-///     use solana_entrypoint::ProgramResult;
+///     use solana_program_entrypoint::entrypoint;
+///     use solana_program_entrypoint::ProgramResult;
 ///     use solana_msg::msg;
 ///     use solana_pubkey::Pubkey;
 ///

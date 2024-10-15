@@ -538,15 +538,14 @@ pub use wasm_bindgen::prelude::wasm_bindgen;
 pub use {
     solana_account_info::{self as account_info, debug_account_data},
     solana_clock as clock,
-    solana_entrypoint::{
+    solana_msg::msg,
+    solana_native_token as native_token,
+    solana_program_entrypoint::{
         self as entrypoint, custom_heap_default, custom_panic_default, entrypoint,
         entrypoint_no_alloc,
     },
-    solana_msg::msg,
-    solana_native_token as native_token, solana_program_option as program_option,
-    solana_pubkey as pubkey, solana_rent as rent,
+    solana_program_option as program_option, solana_pubkey as pubkey, solana_rent as rent,
 };
-
 /// The [config native program][np].
 ///
 /// [np]: https://docs.solanalabs.com/runtime/programs#config-program

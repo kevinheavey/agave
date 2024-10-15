@@ -5264,7 +5264,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-entrypoint"
+name = "solana-program-entrypoint"
 version = "2.1.0"
 dependencies = [
  "solana-account-info",
@@ -5711,7 +5711,7 @@ dependencies = [
  "solana-clock",
  "solana-decode-error",
  "solana-define-syscall",
- "solana-entrypoint",
+ "solana-program-entrypoint",
  "solana-epoch-schedule",
  "solana-hash",
  "solana-instruction",

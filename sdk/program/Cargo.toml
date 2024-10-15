@@ -37,7 +37,6 @@ solana-atomic-u64 = { workspace = true }
 solana-bincode = { workspace = true }
 solana-clock = { workspace = true, features = ["serde"] }
 solana-decode-error = { workspace = true }
-solana-entrypoint = { workspace = true }
 solana-epoch-schedule = { workspace = true, features = ["serde"] }
 solana-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi"] }
 solana-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
@@ -53,6 +52,7 @@ solana-instruction = { workspace = true, default-features = false, features = [
 ] }
 solana-msg = { workspace = true }
 solana-native-token = { workspace = true }
+solana-program-entrypoint = { workspace = true }
 solana-program-error = { workspace = true, features = ["serde"] }
 solana-program-memory = { workspace = true }
 solana-program-option = { workspace = true }
