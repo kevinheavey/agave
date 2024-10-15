@@ -183,6 +183,7 @@
 //! [ed25519]: https://ed25519.cr.yp.to/
 //! [`Keypair`]: https://docs.rs/solana-sdk/latest/solana_sdk/signer/keypair/struct.Keypair.html
 //! [SHA-256]: https://en.wikipedia.org/wiki/SHA-2
+//! [`Sol`]: native_token::Sol
 //! [_lamports_]: https://solana.com/docs/intro#what-are-sols
 //!
 //! # Serialization
