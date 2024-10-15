@@ -1122,7 +1122,7 @@ pub fn new_rand() -> Pubkey {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, std::fs::remove_file, strum::IntoEnumIterator};
+    use {super::*, strum::IntoEnumIterator};
 
     #[test]
     fn test_new_unique() {
