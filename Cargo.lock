@@ -6658,6 +6658,7 @@ name = "solana-feature-set"
 version = "2.1.0"
 dependencies = [
  "lazy_static",
+ "solana-clock",
  "solana-epoch-schedule",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
