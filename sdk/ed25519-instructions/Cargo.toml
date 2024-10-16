@@ -14,7 +14,7 @@ bytemuck = { workspace = true }
 bytemuck_derive = { workspace = true }
 ed25519-dalek = { workspace = true }
 solana-feature-set = { workspace = true }
-solana-instruction = { workspace = true }
+solana-instruction = { workspace = true, features = ["std"] }
 solana-precompile-error = { workspace = true }
 
 [package.metadata.docs.rs]
