@@ -7333,6 +7333,7 @@ dependencies = [
  "solana-sha256-hasher",
  "solana-short-vec",
  "solana-slot-hashes",
+ "solana-sysvar",
  "static_assertions",
  "test-case",
  "thiserror",
@@ -8304,6 +8305,29 @@ dependencies = [
  "solana-program-runtime",
  "solana-sdk",
  "solana-type-overrides",
+]
+
+[[package]]
+name = "solana-sysvar"
+version = "2.1.0"
+dependencies = [
+ "bincode",
+ "bitflags 2.6.0",
+ "bytemuck",
+ "num-traits",
+ "serde",
+ "serde_derive",
+ "solana-account-info",
+ "solana-clock",
+ "solana-define-syscall",
+ "solana-epoch-schedule",
+ "solana-instruction",
+ "solana-program-error",
+ "solana-pubkey",
+ "solana-rent",
+ "solana-reserved-account-keys",
+ "solana-serialize-utils",
+ "solana-slot-hashes",
 ]
 
 [[package]]
