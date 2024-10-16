@@ -20,7 +20,7 @@
 #![allow(clippy::arithmetic_side_effects)]
 pub use solana_reserved_account_keys::sysvar::recent_blockhashes::{check_id, id, ID};
 use {
-    crate::{fee_calculator::FeeCalculator, sysvar::Sysvar},
+    solana_fee_calculator::FeeCalculator, crate::sysvar::Sysvar,
     solana_hash::Hash,
     std::{cmp::Ordering, collections::BinaryHeap, iter::FromIterator, ops::Deref},
 };

@@ -125,7 +125,10 @@
 //! #
 //! # Ok::<(), anyhow::Error>(())
 //! ```
-use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
+use {
+    crate::{impl_sysvar_get, sysvar::Sysvar},
+    program_error::ProgramError,
+};
 pub use {
     solana_epoch_schedule::EpochSchedule,
     solana_reserved_account_keys::sysvar::epoch_schedule::{check_id, id, ID},

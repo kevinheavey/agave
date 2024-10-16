@@ -126,7 +126,10 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
+use {
+    crate::{impl_sysvar_get, sysvar::Sysvar},
+    solana_program_error::ProgramError
+};
 pub use {
     solana_clock::Clock,
     solana_reserved_account_keys::sysvar::clock::{check_id, id, ID},

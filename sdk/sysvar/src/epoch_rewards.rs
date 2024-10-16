@@ -159,9 +159,13 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use {crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar}, solana_hash::Hash, solana_sdk_macro::CloneZeroed};
+use {
+    crate::{impl_sysvar_get, sysvar::Sysvar},
+    solana_hash::Hash, solana_sdk_macro::CloneZeroed
+    solana_program_error::ProgramError
+};
 pub use {
-    crate::epoch_rewards::EpochRewards,
+    solana_epoch_rewards::EpochRewards,
     solana_reserved_account_keys::sysvar::epoch_rewards::{check_id, id, ID},
 };
 

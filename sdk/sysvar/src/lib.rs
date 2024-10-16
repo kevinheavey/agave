@@ -148,11 +148,11 @@ pub fn is_sysvar_id(id: &Pubkey) -> bool {
 macro_rules! impl_sysvar_id(
     ($type:ty) => {
         impl $crate::sysvar::SysvarId for $type {
-            fn id() -> $crate::pubkey::Pubkey {
+            fn id() -> ::solana_pubkey::Pubkey {
                 id()
             }
 
-            fn check_id(pubkey: &$crate::pubkey::Pubkey) -> bool {
+            fn check_id(pubkey: &::solana_pubkey::Pubkey) -> bool {
                 check_id(pubkey)
             }
         }
@@ -165,12 +165,12 @@ macro_rules! impl_sysvar_id(
 macro_rules! impl_deprecated_sysvar_id(
     ($type:ty) => {
         impl $crate::sysvar::SysvarId for $type {
-            fn id() -> $crate::pubkey::Pubkey {
+            fn id() -> ::solana_pubkey::Pubkey {
                 #[allow(deprecated)]
                 id()
             }
 
-            fn check_id(pubkey: &$crate::pubkey::Pubkey) -> bool {
+            fn check_id(pubkey: &::solana_pubkey::Pubkey) -> bool {
                 #[allow(deprecated)]
                 check_id(pubkey)
             }
@@ -264,7 +264,7 @@ macro_rules! impl_sysvar_get {
             let result = $crate::program_stubs::$syscall_name(var_addr);
 
             match result {
-                $crate::entrypoint::SUCCESS => Ok(var),
+                ::solana_program_entrypoint::SUCCESS => Ok(var),
                 e => Err(e.into()),
             }
         }
@@ -295,7 +295,7 @@ fn get_sysvar(
     let result = crate::program_stubs::sol_get_sysvar(sysvar_id, var_addr, offset, length);
 
     match result {
-        crate::entrypoint::SUCCESS => Ok(()),
+        solana_program_entrypoint::SUCCESS => Ok(()),
         e => Err(e.into()),
     }
 }
