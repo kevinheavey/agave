@@ -40,7 +40,7 @@
 //!
 
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_program_error::ProgramError
 };
 pub use {

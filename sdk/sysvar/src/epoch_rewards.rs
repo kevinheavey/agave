@@ -161,7 +161,7 @@
 
 use {
     crate::{impl_sysvar_get, sysvar::Sysvar},
-    solana_hash::Hash, solana_sdk_macro::CloneZeroed
+    solana_hash::Hash, solana_sdk_macro::CloneZeroed,
     solana_program_error::ProgramError
 };
 pub use {

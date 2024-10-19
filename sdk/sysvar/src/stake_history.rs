@@ -52,7 +52,7 @@ pub use {
 use {
     crate::{
         stake_history::{StakeHistoryEntry, StakeHistoryGetEntry, MAX_ENTRIES},
-        sysvar::{get_sysvar, Sysvar, SysvarId},
+        get_sysvar, Sysvar, SysvarId,
     },
     solana_clock::Epoch,
 };

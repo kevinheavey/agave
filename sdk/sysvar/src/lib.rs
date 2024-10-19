@@ -147,7 +147,7 @@ pub fn is_sysvar_id(id: &Pubkey) -> bool {
 #[macro_export]
 macro_rules! impl_sysvar_id(
     ($type:ty) => {
-        impl $crate::sysvar::SysvarId for $type {
+        impl $crate::SysvarId for $type {
             fn id() -> ::solana_pubkey::Pubkey {
                 id()
             }

@@ -126,8 +126,9 @@
 //! #
 //! # Ok::<(), anyhow::Error>(())
 //! ```
-use crate::{impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar};
+use crate::{impl_sysvar_get, Sysvar};
 pub use {
+    solana_program_error::ProgramError,
     solana_rent::Rent,
     solana_reserved_account_keys::sysvar::rent::{check_id, id, ID},
 };

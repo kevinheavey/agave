@@ -47,7 +47,7 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use crate::sysvar::Sysvar;
+use crate::Sysvar;
 pub use {
     solana_account_info::AccountInfo, solana_program_error::ProgramError, solana_slot_history::SlotHistory,
     solana_reserved_account_keys::sysvar::slot_history::{check_id, id, ID},
