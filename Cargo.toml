@@ -356,6 +356,7 @@ rolling-file = "0.2.0"
 rpassword = "7.3"
 rustls = { version = "0.23.15", default-features = false }
 scopeguard = "1.2.0"
+secp256k1 = "0.30.0"
 semver = "1.0.23"
 seqlock = "0.2.0"
 serde = "1.0.210" # must match the serde_derive version, see https://github.com/serde-rs/serde/issues/2584#issuecomment-1685252251

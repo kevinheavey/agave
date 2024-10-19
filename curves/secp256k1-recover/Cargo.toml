@@ -23,7 +23,7 @@ thiserror = { workspace = true }
 solana-define-syscall = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
-libsecp256k1 = { workspace = true }
+secp256k1 = { workspace = true, features = ["global-context", "recovery"] }
 
 [dev-dependencies]
 anyhow = { workspace = true }
