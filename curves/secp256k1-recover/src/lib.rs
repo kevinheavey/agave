@@ -177,12 +177,11 @@ solana_define_syscall::define_syscall!(fn sol_secp256k1_recover(hash: *const u8,
 /// #     0x1E, 0xBF, 0x06, 0x8E, 0x8A, 0x9F, 0xA9, 0xC3,
 /// #     0xA5, 0xEA, 0x21, 0xAC, 0xED, 0x5B, 0x22, 0x13,
 /// # ];
-/// let signature = secp256k1::Signature::parse_standard_slice(&signature_bytes)
+/// let mut signature = secp256k1::ecdsa::Signature::from_compact(&signature_bytes)
 ///     .map_err(|_| ProgramError::InvalidArgument)?;
 ///
-/// if signature.s.is_high() {
-///     return Err(ProgramError::InvalidArgument);
-/// }
+/// // Ensure the signature is in "low S" form
+/// signature.normalize_s();
 /// # Ok::<_, ProgramError>(())
 /// ```
 ///
@@ -298,17 +297,15 @@ solana_define_syscall::define_syscall!(fn sol_secp256k1_recover(hash: *const u8,
 ///         hasher.result()
 ///     };
 ///
-///     // Reject high-s value signatures to prevent malleability.
+///     // Ensure high-s value signatures to prevent malleability.
 ///     // Solana does not do this itself.
 ///     // This may or may not be necessary depending on use case.
 ///     {
-///         let signature = secp256k1::Signature::parse_standard_slice(&instruction.signature)
+///         let recovery_id = secp256k1::ecdsa::RecoveryId::try_from(instruction.recovery_id as i32)
 ///             .map_err(|_| ProgramError::InvalidArgument)?;
-///
-///         if signature.s.is_high() {
-///             msg!("signature with high-s value");
-///             return Err(ProgramError::InvalidArgument);
-///         }
+///         let mut signature = secp256k1::ecdsa::RecoverableSignature::from_compact(&instruction.signature, recovery_id)
+///             .map_err(|_| ProgramError::InvalidArgument)?;
+///         signature.normalize_s();
 ///     }
 ///
 ///     let recovered_pubkey = secp256k1_recover(
