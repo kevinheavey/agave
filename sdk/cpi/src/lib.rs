@@ -192,11 +192,11 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 ///
 /// ```
 /// use solana_cpi::invoke_signed;
+/// use solana_account_info::{next_account_info, AccountInfo};
+/// use solana_entrypoint::entrypoint;
+/// use solana_program_error::ProgramResult;
+/// use solana_pubkey::Pubkey;
 /// use solana_program::{
-///     account_info::{next_account_info, AccountInfo},
-///     entrypoint,
-///     entrypoint::ProgramResult,
-///     pubkey::Pubkey,
 ///     system_instruction,
 ///     system_program,
 /// };
