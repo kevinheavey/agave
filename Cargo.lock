@@ -6537,6 +6537,7 @@ dependencies = [
  "solana-program-error",
  "solana-pubkey",
  "solana-stable-layout",
+ "static_assertions",
 ]
 
 [[package]]

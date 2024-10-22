@@ -22,6 +22,7 @@ solana-stable-layout = { workspace = true }
 [dev-dependencies]
 solana-program-entrypoint = { workspace = true }
 solana-program = { path = "../program" }
+static_assertions = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
