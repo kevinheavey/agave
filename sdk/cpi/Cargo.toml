@@ -20,8 +20,8 @@ solana-define-syscall = { workspace = true }
 solana-stable-layout = { workspace = true }
 
 [dev-dependencies]
-solana-program-entrypoint = { workspace = true }
 solana-program = { path = "../program" }
+solana-program-entrypoint = { workspace = true }
 static_assertions = { workspace = true }
 
 [package.metadata.docs.rs]
