@@ -160,14 +160,11 @@
 //! ```
 
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_hash::Hash, solana_sdk_macro::CloneZeroed,
     solana_program_error::ProgramError
 };
-pub use {
-    solana_epoch_rewards::EpochRewards,
-    solana_reserved_account_keys::sysvar::epoch_rewards::{check_id, id, ID},
-};
+pub use solana_reserved_account_keys::sysvar::epoch_rewards::{check_id, id, ID};
 
 crate::impl_sysvar_id!(EpochRewards);
 

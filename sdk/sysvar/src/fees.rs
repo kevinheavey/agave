@@ -22,9 +22,8 @@
 
 pub use solana_reserved_account_keys::sysvar::fees::{check_id, id, ID};
 use {
-    crate::{
-        fee_calculator::FeeCalculator, impl_sysvar_get, sysvar::Sysvar,
-    },
+    crate::{impl_sysvar_get, Sysvar},
+    solana_fee_calculator::FeeCalculator,
     solana_program_error::ProgramError,
     solana_sdk_macro::CloneZeroed,
 };

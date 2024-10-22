@@ -8396,6 +8396,7 @@ dependencies = [
  "solana-clock",
  "solana-define-syscall",
  "solana-epoch-schedule",
+ "solana-fee-calculator",
  "solana-hash",
  "solana-instruction",
  "solana-program-entrypoint",
