@@ -100,7 +100,7 @@ pub mod syscalls;
 /// ```
 /// use solana_cpi::invoke;
 /// use solana_account_info::{next_account_info, AccountInfo};
-/// use solana_entrypoint::entrypoint;
+/// use solana_program_entrypoint::entrypoint;
 /// use solana_program_error::ProgramResult;
 /// use solana_pubkey::Pubkey;
 /// use solana_program::{
@@ -182,6 +182,7 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 /// the accounts in `account_info`, will consider that account "signed".
 ///
 /// [pda]: https://solana.com/docs/core/cpi#program-derived-addresses
+/// [`Pubkey::find_program_address`]: https://docs.rs/solana-pubkey/latest/solana_pubkey/struct.Pubkey.html#method.find_program_address
 ///
 /// See the documentation for [`Pubkey::find_program_address`] for more
 /// about program derived addresses.
@@ -193,7 +194,7 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 /// ```
 /// use solana_cpi::invoke_signed;
 /// use solana_account_info::{next_account_info, AccountInfo};
-/// use solana_entrypoint::entrypoint;
+/// use solana_program_entrypoint::entrypoint;
 /// use solana_program_error::ProgramResult;
 /// use solana_pubkey::Pubkey;
 /// use solana_program::{

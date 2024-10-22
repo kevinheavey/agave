@@ -6533,6 +6533,7 @@ dependencies = [
  "solana-define-syscall",
  "solana-instruction",
  "solana-program",
+ "solana-program-entrypoint",
  "solana-program-error",
  "solana-pubkey",
  "solana-stable-layout",
