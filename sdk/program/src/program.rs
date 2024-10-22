@@ -47,7 +47,7 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 /// Like [`solana_cpi::invoke_signed`], but with support
 /// for overwriting the `sol_invoke_signed` syscall stub.
 ///
-/// [`solana_cpi::invoke_signed_unchecked`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed_unchecked.html
+/// [`solana_cpi::invoke_signed`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed.html
 pub fn invoke_signed(
     instruction: &Instruction,
     account_infos: &[AccountInfo],
