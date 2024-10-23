@@ -785,15 +785,11 @@
 //! }
 //! ```
 
-#![cfg(feature = "full")]
-
-use {
-    digest::Digest,
-    serde_derive::{Deserialize, Serialize},
-    solana_feature_set::FeatureSet,
-    solana_instruction::Instruction,
-    solana_precompile_error::PrecompileError,
-};
+use digest::Digest;
+#[cfg(feature = "serde")]
+use serde_derive::{Deserialize, Serialize};
+#[cfg(feature = "bincode")]
+use {solana_instruction::Instruction, solana_precompile_error::PrecompileError};
 
 pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
 pub const SIGNATURE_SERIALIZED_SIZE: usize = 64;
@@ -805,7 +801,8 @@ pub const DATA_START: usize = SIGNATURE_OFFSETS_SERIALIZED_SIZE + 1;
 /// See the [module documentation][md] for a complete description.
 ///
 /// [md]: self
-#[derive(Default, Serialize, Deserialize, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Default, Debug, Eq, PartialEq)]
 pub struct SecpSignatureOffsets {
     /// Offset to 64-byte signature plus 1-byte recovery ID.
     pub signature_offset: u16,
@@ -839,6 +836,7 @@ pub struct SecpSignatureOffsets {
 /// `message_arr` is hashed with the [`keccak`] hash function prior to signing.
 ///
 /// [`keccak`]: crate::keccak
+#[cfg(feature = "bincode")]
 pub fn new_secp256k1_instruction(
     priv_key: &libsecp256k1::SecretKey,
     message_arr: &[u8],
@@ -922,10 +920,11 @@ pub fn construct_eth_pubkey(
 /// disable a few minor additional checks that were activated on chain
 /// subsequent to the addition of the secp256k1 native program. For many
 /// purposes passing `FeatureSet::all_enabled()` is reasonable.
+#[cfg(feature = "bincode")]
 pub fn verify(
     data: &[u8],
     instruction_datas: &[&[u8]],
-    _feature_set: &FeatureSet,
+    _feature_set: &solana_feature_set::FeatureSet,
 ) -> Result<(), PrecompileError> {
     if data.is_empty() {
         return Err(PrecompileError::InvalidInstructionDataSize);
@@ -1007,6 +1006,7 @@ pub fn verify(
     Ok(())
 }
 
+#[cfg(feature = "bincode")]
 fn get_data_slice<'a>(
     instruction_datas: &'a [&[u8]],
     instruction_index: u8,

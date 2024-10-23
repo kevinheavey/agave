@@ -7161,6 +7161,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk-ids",
  "solana-sdk-macro",
+ "solana-secp256k1-instruction",
  "solana-secp256k1-recover",
  "solana-secp256r1-program",
  "solana-seed-derivable",
@@ -7192,6 +7193,18 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.87",
+]
+
+[[package]]
+name = "solana-secp256k1-instruction"
+version = "2.2.0"
+dependencies = [
+ "digest 0.10.7",
+ "libsecp256k1 0.6.0",
+ "sha3",
+ "solana-feature-set",
+ "solana-instruction",
+ "solana-precompile-error",
 ]
 
 [[package]]
