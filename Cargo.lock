@@ -6749,6 +6749,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-fee-structure"
+version = "2.2.0"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "solana-native-token",
+ "solana-program",
+]
+
+[[package]]
 name = "solana-frozen-abi"
 version = "2.2.0"
 dependencies = [

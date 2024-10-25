@@ -1,0 +1,27 @@
+[package]
+name = "solana-fee-structure"
+description = "Solana fee structures."
+documentation = "https://docs.rs/solana-fee-structure"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+serde = { workspace = true, optional = true }
+serde_derive = { workspace = true, optional = true }
+solana-native-token = { workspace = true }
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[target.'cfg(not(target_os = "solana"))'.dependencies]
+solana-program = { workspace = true, default-features = false }
+
+[features]
+serde = ["dep:serde", "dep:serde_derive"]
+
+[lints]
+workspace = true

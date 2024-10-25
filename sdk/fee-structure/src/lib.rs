@@ -31,7 +31,11 @@ pub struct FeeStructure {
     pub compute_fee_bins: Vec<FeeBin>,
 }
 
-#[derive(Debug, Default, Clone, Copy, Eq, PartialEq, Deserialize, Serialize)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde_derive::Deserialize, serde_derive::Serialize)
+)]
+#[derive(Debug, Default, Clone, Copy, Eq, PartialEq)]
 pub struct FeeDetails {
     transaction_fee: u64,
     prioritization_fee: u64,
