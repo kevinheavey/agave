@@ -1,4 +1,5 @@
 //! Fee structures.
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
 #[cfg(not(target_os = "solana"))]
 use solana_program::message::SanitizedMessage;
