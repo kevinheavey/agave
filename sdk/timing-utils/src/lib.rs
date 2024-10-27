@@ -1,4 +1,4 @@
-//! The `timing` module provides std::time utility functions.
+//! `std::time`` utility functions.
 use std::{
     sync::atomic::{AtomicU64, Ordering},
     time::{Duration, SystemTime, UNIX_EPOCH},

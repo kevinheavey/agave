@@ -8055,6 +8055,7 @@ dependencies = [
  "solana-serde-varint",
  "solana-short-vec",
  "solana-signature",
+ "solana-timing-utils",
  "solana-transaction-error",
  "static_assertions",
  "thiserror",
@@ -8513,6 +8514,10 @@ dependencies = [
  "solana-rpc-client-api",
  "solana-sdk",
 ]
+
+[[package]]
+name = "solana-timing-utils"
+version = "2.1.0"
 
 [[package]]
 name = "solana-timings"
