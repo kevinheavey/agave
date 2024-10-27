@@ -8518,6 +8518,9 @@ dependencies = [
 [[package]]
 name = "solana-timing-utils"
 version = "2.1.0"
+dependencies = [
+ "solana-logger",
+]
 
 [[package]]
 name = "solana-timings"
