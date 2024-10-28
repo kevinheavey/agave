@@ -6806,7 +6806,7 @@ dependencies = [
  "solana-serde-varint",
  "solana-short-vec",
  "solana-signature",
- "solana-timing-utils",
+ "solana-time-utils",
  "solana-transaction-error",
  "thiserror",
  "wasm-bindgen",
@@ -7133,7 +7133,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-timing-utils"
+name = "solana-time-utils"
 version = "2.1.0"
 
 [[package]]
