@@ -1,3 +1,4 @@
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 //! Instructions for the [secp256k1 native program][np].
 //!
 //! [np]: https://docs.solanalabs.com/runtime/programs#secp256k1-program
@@ -20,15 +21,15 @@
 //! secp256k1 key recovery algorithm. Ethereum address can be created for
 //! secp256k1 public keys with the [`construct_eth_pubkey`] function.
 //!
-//! [`keccak`]: crate::keccak
+//! [`keccak`]: https://docs.rs/solana-sdk/latest/solana_sdk/keccak/index.html
 //!
 //! This instruction does not directly allow for key recovery as in Ethereum's
 //! [`ecrecover`] precompile. For that Solana provides the [`secp256k1_recover`]
 //! syscall.
 //!
 //! [secp256k1]: https://en.bitcoin.it/wiki/Secp256k1
-//! [`secp256k1_program`]: solana_program::secp256k1_program
-//! [`secp256k1_recover`]: solana_program::secp256k1_recover
+//! [`secp256k1_program`]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/index.html
+//! [`secp256k1_recover`]: https://docs.rs/solana-secp256k1-recover
 //! [`ecrecover`]: https://docs.soliditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
 //!
 //! Use cases for the secp256k1 instruction include:
@@ -58,8 +59,8 @@
 //! of one or more additional instructions, as long as those instructions are in
 //! the same transaction.
 //!
-//! [`load_instruction_at_checked`]: crate::sysvar::instructions::load_instruction_at_checked
-//! [`get_instruction_relative`]: crate::sysvar::instructions::get_instruction_relative
+//! [`load_instruction_at_checked`]: https://docs.rs/solana-program/latest/solana_program/sysvar/instructions/fn.load_instruction_at_checked.html
+//! [`get_instruction_relative`]: https://docs.rs/solana-program/latest/solana_program/sysvar/instructions/fn.get_instruction_relative.html
 //!
 //! Correct use of this program involves multiple steps, in client code and
 //! program code:
@@ -85,7 +86,7 @@
 //!   - Check that the public keys and messages are the expected values per
 //!     the program's requirements.
 //!
-//! [`secp256k1_program::ID`]: crate::secp256k1_program::ID
+//! [`secp256k1_program::ID`]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/constant.ID.html
 //!
 //! The signature, message, or Ethereum addresses may reside in the secp256k1
 //! instruction data itself as additional data, their bytes following the bytes
@@ -174,13 +175,13 @@
 //! [`get_instruction_relative`] functions. Both of these functions check their
 //! sysvar argument to ensure it is the known instruction sysvar.
 //!
-//! [is]: crate::sysvar::instructions
+//! [is]: https://docs.rs/solana-program/latest/solana_program/sysvar/instructions/index.html
 //!
 //! Programs should _always_ verify that the secp256k1 program ID loaded through
 //! the instructions sysvar has the same value as in the [`secp256k1_program`]
 //! module. Again this prevents imposter programs.
 //!
-//! [`secp256k1_program`]: crate::secp256k1_program
+//! [`secp256k1_program`]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/index.html
 //!
 //! # Errors
 //!
@@ -840,7 +841,7 @@ pub struct SecpSignatureOffsets {
 ///
 /// `message_arr` is hashed with the [`keccak`] hash function prior to signing.
 ///
-/// [`keccak`]: crate::keccak
+/// [`keccak`]: https://docs.rs/solana-sdk/latest/solana_sdk/keccak/index.html
 #[cfg(feature = "bincode")]
 pub fn new_secp256k1_instruction(
     priv_key: &libsecp256k1::SecretKey,
