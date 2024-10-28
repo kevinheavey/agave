@@ -135,7 +135,7 @@ solana-reward-info = { workspace = true, features = ["serde"] }
 solana-sanitize = { workspace = true }
 solana-sdk-ids = { workspace = true }
 solana-sdk-macro = { workspace = true }
-solana-secp256k1-instruction = { workspace = true, optional = true }
+solana-secp256k1-instruction = { workspace = true, optional = true, features = ["bincode"] }
 solana-secp256k1-recover = { workspace = true }
 solana-secp256r1-program = { workspace = true, default-features = false }
 solana-seed-derivable = { workspace = true, optional = true }
