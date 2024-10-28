@@ -6817,9 +6817,15 @@ dependencies = [
  "bytemuck",
  "bytemuck_derive",
  "ed25519-dalek",
+ "hex",
+ "rand 0.7.3",
  "solana-feature-set",
+ "solana-hash",
  "solana-instruction",
+ "solana-logger",
  "solana-precompile-error",
+ "solana-pubkey",
+ "solana-sdk",
 ]
 
 [[package]]
@@ -8340,6 +8346,7 @@ dependencies = [
  "solana-commitment-config",
  "solana-decode-error",
  "solana-derivation-path",
+ "solana-ed25519-instructions",
  "solana-feature-set",
  "solana-fee-structure",
  "solana-frozen-abi",
