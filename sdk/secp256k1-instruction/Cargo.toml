@@ -19,11 +19,21 @@ sha3 = { workspace = true }
 solana-feature-set = { workspace = true }
 solana-instruction = { workspace = true, features = ["std"] }
 solana-precompile-error = { workspace = true }
+solana-pubkey = { workspace = true, optional = true }
 
 [dev-dependencies]
+anyhow = { workspace = true }
+hex = { workspace = true }
+rand0-7 = { workspace = true }
+solana-hash = { workspace = true }
+solana-logger = { workspace = true }
+solana-program = { path = "../program" }
+solana-sdk = { path = ".." }
+solana-secp256k1-instruction = { path = ".", features = ["dev-context-only-utils"] }
 
 [features]
-bincode = ["dep:bincode", "serde"]
+bincode = ["dep:bincode", "dep:solana-pubkey", "serde"]
+dev-context-only-utils = ["bincode"]
 serde = ["dep:serde", "dep:serde_derive"]
 
 [package.metadata.docs.rs]

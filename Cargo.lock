@@ -8491,15 +8491,24 @@ dependencies = [
 name = "solana-secp256k1-instruction"
 version = "2.2.0"
 dependencies = [
+ "anyhow",
  "bincode",
  "digest 0.10.7",
+ "hex",
  "libsecp256k1",
+ "rand 0.7.3",
  "serde",
  "serde_derive",
  "sha3",
  "solana-feature-set",
+ "solana-hash",
  "solana-instruction",
+ "solana-logger",
  "solana-precompile-error",
+ "solana-program",
+ "solana-pubkey",
+ "solana-sdk",
+ "solana-secp256k1-instruction",
 ]
 
 [[package]]

@@ -796,6 +796,11 @@ pub const SIGNATURE_SERIALIZED_SIZE: usize = 64;
 pub const SIGNATURE_OFFSETS_SERIALIZED_SIZE: usize = 11;
 pub const DATA_START: usize = SIGNATURE_OFFSETS_SERIALIZED_SIZE + 1;
 
+// inline from solana_sdk::secp256k1_program to avoid solana_sdk dependency
+#[cfg(feature = "bincode")]
+const SECP256K1_PROGRAM_ID: solana_pubkey::Pubkey =
+    solana_pubkey::pubkey!("KeccakSecp256k11111111111111111111111111111");
+
 /// Offsets of signature data within a secp256k1 instruction.
 ///
 /// See the [module documentation][md] for a complete description.
@@ -891,7 +896,7 @@ pub fn new_secp256k1_instruction(
     bincode::serialize_into(writer, &offsets).unwrap();
 
     Instruction {
-        program_id: solana_sdk::secp256k1_program::id(),
+        program_id: SECP256K1_PROGRAM_ID,
         accounts: vec![],
         data: instruction_data,
     }
@@ -1031,16 +1036,14 @@ fn get_data_slice<'a>(
 pub mod test {
     use {
         super::*,
-        crate::{
-            hash::Hash,
+        rand0_7::{thread_rng, Rng},
+        solana_feature_set::FeatureSet,
+        solana_hash::Hash,
+        solana_sdk::{
             keccak,
-            secp256k1_instruction::{
-                new_secp256k1_instruction, SecpSignatureOffsets, SIGNATURE_OFFSETS_SERIALIZED_SIZE,
-            },
-            signature::{Keypair, Signer},
+            signer::{keypair::Keypair, Signer},
             transaction::Transaction,
         },
-        rand0_7::{thread_rng, Rng},
     };
 
     fn test_case(
@@ -1305,5 +1308,10 @@ pub mod test {
             &FeatureSet::all_enabled(),
         )
         .unwrap();
+    }
+
+    #[test]
+    fn test_inlined_program_id() {
+        assert_eq!(SECP256K1_PROGRAM_ID, solana_sdk::secp256k1_program::id());
     }
 }
