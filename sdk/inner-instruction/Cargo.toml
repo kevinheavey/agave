@@ -10,9 +10,9 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-solana-program = { workspace = true, default-features = false }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
+solana-program = { workspace = true, default-features = false }
 
 [features]
 serde = ["dep:serde", "dep:serde_derive"]
