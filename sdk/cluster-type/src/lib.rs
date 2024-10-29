@@ -1,8 +1,8 @@
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
-use {solana_hash::Hash, std::str::FromStr};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{AbiExample, AbiEnumVisitor};
+use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
+use {solana_hash::Hash, std::str::FromStr};
 
 // The order can't align with release lifecycle only to remain ABI-compatible...
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
