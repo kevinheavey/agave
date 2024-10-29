@@ -3,7 +3,6 @@
 use {
     crossbeam_channel::{Receiver, Sender},
     log::*,
-    solana_sdk::clock::Slot,
     std::fmt,
 };
 
@@ -36,9 +35,9 @@ impl fmt::Display for PohTimingPoint {
 #[derive(Clone, Debug)]
 pub struct SlotPohTimingInfo {
     /// current slot
-    pub slot: Slot,
+    pub slot: u64,
     /// root slot
-    pub root_slot: Option<Slot>,
+    pub root_slot: Option<u64>,
     /// timing event
     pub timing_point: PohTimingPoint,
 }
@@ -58,8 +57,8 @@ impl fmt::Display for SlotPohTimingInfo {
 impl SlotPohTimingInfo {
     /// create slot start poh timing point
     pub fn new_slot_start_poh_time_point(
-        slot: Slot,
-        root_slot: Option<Slot>,
+        slot: u64,
+        root_slot: Option<u64>,
         timestamp: u64,
     ) -> SlotPohTimingInfo {
         SlotPohTimingInfo {
@@ -71,8 +70,8 @@ impl SlotPohTimingInfo {
 
     /// create slot end poh timing point
     pub fn new_slot_end_poh_time_point(
-        slot: Slot,
-        root_slot: Option<Slot>,
+        slot: u64,
+        root_slot: Option<u64>,
         timestamp: u64,
     ) -> SlotPohTimingInfo {
         SlotPohTimingInfo {
@@ -84,8 +83,8 @@ impl SlotPohTimingInfo {
 
     /// create slot full poh timing point
     pub fn new_slot_full_poh_time_point(
-        slot: Slot,
-        root_slot: Option<Slot>,
+        slot: u64,
+        root_slot: Option<u64>,
         timestamp: u64,
     ) -> SlotPohTimingInfo {
         SlotPohTimingInfo {
