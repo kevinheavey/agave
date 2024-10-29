@@ -6754,6 +6754,7 @@ version = "2.2.0"
 dependencies = [
  "serde",
  "serde_derive",
+ "solana-frozen-abi",
  "solana-native-token",
  "solana-program",
 ]

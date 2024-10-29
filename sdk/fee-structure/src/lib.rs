@@ -1,5 +1,6 @@
 //! Fee structures.
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 
 #[cfg(not(target_os = "solana"))]
 use solana_program::message::SanitizedMessage;
