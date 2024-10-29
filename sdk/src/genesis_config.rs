@@ -47,7 +47,7 @@ pub const UNUSED_DEFAULT: u64 = 1024;
 #[cfg_attr(
     feature = "frozen-abi",
     derive(AbiExample),
-    frozen_abi(digest = "41wPwgEZLhp9AS4tjTQebW7cvHnkbSSTN19vaKwVett6")
+    frozen_abi(digest = "iDVgqt11gc2Fnu2mrkMsfsjfonDQ5mGX26vQwLivo7M")
 )]
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct GenesisConfig {
