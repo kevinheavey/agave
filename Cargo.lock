@@ -6811,7 +6811,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-ed25519-instruction"
+name = "solana-ed25519-instructions"
 version = "2.2.0"
 dependencies = [
  "bytemuck",
