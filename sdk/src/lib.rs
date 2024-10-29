@@ -174,7 +174,7 @@ pub use solana_secp256k1_recover as secp256k1_recover;
 pub use solana_serde_varint as serde_varint;
 #[deprecated(since = "2.1.0", note = "Use `solana-short-vec` crate instead")]
 pub use solana_short_vec as short_vec;
-#[deprecated(since = "2.1.0", note = "Use `solana-time-utils` crate instead")]
+#[deprecated(since = "2.2.0", note = "Use `solana-time-utils` crate instead")]
 pub use solana_time_utils as timing;
 
 /// Convenience macro for `AddAssign` with saturating arithmetic.
