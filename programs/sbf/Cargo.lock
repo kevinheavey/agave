@@ -7057,6 +7057,7 @@ dependencies = [
  "solana-program-runtime",
  "solana-runtime-transaction",
  "solana-sdk",
+ "solana-svm-message-processor",
  "solana-svm-rent-collector",
  "solana-svm-transaction",
  "solana-system-program",
@@ -7064,6 +7065,17 @@ dependencies = [
  "solana-type-overrides",
  "solana-vote",
  "thiserror",
+]
+
+[[package]]
+name = "solana-svm-message-processor"
+version = "2.2.0"
+dependencies = [
+ "solana-measure",
+ "solana-program-runtime",
+ "solana-sdk",
+ "solana-svm-transaction",
+ "solana-timings",
 ]
 
 [[package]]

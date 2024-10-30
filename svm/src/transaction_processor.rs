@@ -9,7 +9,6 @@ use {
             ValidatedTransactionDetails,
         },
         account_overrides::AccountOverrides,
-        message_processor::MessageProcessor,
         program_loader::{get_program_modification_slot, load_program_with_pubkey},
         rollback_accounts::RollbackAccounts,
         transaction_account_state_info::TransactionAccountStateInfo,
@@ -51,6 +50,7 @@ use {
         transaction::{self, TransactionError},
         transaction_context::{ExecutionRecord, TransactionContext},
     },
+    solana_svm_message_processor::process_message,
     solana_svm_rent_collector::svm_rent_collector::SVMRentCollector,
     solana_svm_transaction::{svm_message::SVMMessage, svm_transaction::SVMTransaction},
     solana_timings::{ExecuteTimingType, ExecuteTimings},
@@ -152,7 +152,7 @@ pub struct TransactionBatchProcessor<FG: ForkGraph> {
 
     /// SysvarCache is a collection of system variables that are
     /// accessible from on chain programs. It is passed to SVM from
-    /// client code (e.g. Bank) and forwarded to the MessageProcessor.
+    /// client code (e.g. Bank) and forwarded to process_message.
     sysvar_cache: RwLock<SysvarCache>,
 
     /// Programs required for transaction batch processing
@@ -819,7 +819,7 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
         );
 
         let mut process_message_time = Measure::start("process_message_time");
-        let process_result = MessageProcessor::process_message(
+        let process_result = process_message(
             tx,
             &loaded_transaction.program_indices,
             &mut invoke_context,

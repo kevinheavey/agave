@@ -8403,6 +8403,7 @@ dependencies = [
  "solana-sdk",
  "solana-svm",
  "solana-svm-conformance",
+ "solana-svm-message-processor",
  "solana-svm-rent-collector",
  "solana-svm-transaction",
  "solana-system-program",
@@ -8444,6 +8445,25 @@ dependencies = [
  "spl-associated-token-account",
  "spl-token",
  "termcolor",
+]
+
+[[package]]
+name = "solana-svm-message-processor"
+version = "2.2.0"
+dependencies = [
+ "bincode",
+ "libsecp256k1",
+ "rand 0.8.5",
+ "serde",
+ "serde_derive",
+ "solana-compute-budget",
+ "solana-feature-set",
+ "solana-measure",
+ "solana-program-runtime",
+ "solana-sdk",
+ "solana-svm-transaction",
+ "solana-timings",
+ "solana-type-overrides",
 ]
 
 [[package]]

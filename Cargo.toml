@@ -155,6 +155,7 @@ members = [
     "streamer",
     "svm",
     "svm-conformance",
+    "svm-message-processor",
     "svm-rent-collector",
     "svm-transaction",
     "svm/examples/paytube",
@@ -507,6 +508,7 @@ solana-streamer = { path = "streamer", version = "=2.2.0" }
 solana-svm = { path = "svm", version = "=2.2.0" }
 solana-svm-conformance = { path = "svm-conformance", version = "=2.2.0" }
 solana-svm-example-paytube = { path = "svm/examples/paytube", version = "=2.2.0" }
+solana-svm-message-processor = { path = "svm-message-processor", version = "=2.2.0" }
 solana-svm-rent-collector = { path = "svm-rent-collector", version = "=2.2.0" }
 solana-svm-transaction = { path = "svm-transaction", version = "=2.2.0" }
 solana-system-program = { path = "programs/system", version = "=2.2.0" }
