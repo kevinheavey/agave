@@ -111,7 +111,7 @@ pub use solana_account::state_traits as account_utils;
 #[deprecated(since = "2.1.0", note = "Use `solana-bn254` crate instead")]
 pub use solana_bn254 as alt_bn128;
 #[deprecated(
-    since = "2.1.0",
+    since = "2.2.0",
     note = "Use `solana-compute-budget-instruction` crate instead"
 )]
 #[cfg(feature = "full")]
