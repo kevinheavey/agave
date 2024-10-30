@@ -12,11 +12,10 @@ use {
     solana_ledger::blockstore_options::AccessType,
     solana_program_runtime::{
         invoke_context::InvokeContext,
-        loaded_programs::{
-            LoadProgramMetrics, ProgramCacheEntryType, DELAY_VISIBILITY_SLOT_OFFSET,
-        },
+        loaded_programs::{ProgramCacheEntryType, DELAY_VISIBILITY_SLOT_OFFSET},
         with_mock_invoke_context,
     },
+    solana_program_runtime_metrics::LoadProgramMetrics,
     solana_rbpf::{
         assembler::assemble, elf::Executable, static_analysis::Analysis,
         verifier::RequisiteVerifier,
