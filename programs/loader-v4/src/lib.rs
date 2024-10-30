@@ -5,10 +5,11 @@ use {
     solana_program_runtime::{
         invoke_context::InvokeContext,
         loaded_programs::{
-            LoadProgramMetrics, ProgramCacheEntry, ProgramCacheEntryOwner, ProgramCacheEntryType,
+            ProgramCacheEntry, ProgramCacheEntryOwner, ProgramCacheEntryType,
             DELAY_VISIBILITY_SLOT_OFFSET,
         },
     },
+    solana_program_runtime_metrics::{new_program_cache_entry, LoadProgramMetrics},
     solana_rbpf::{declare_builtin_function, memory_region::MemoryMapping},
     solana_sdk::{
         instruction::InstructionError,
@@ -278,7 +279,7 @@ pub fn process_instruction_deploy(
         program_id: buffer.get_key().to_string(),
         ..LoadProgramMetrics::default()
     };
-    let executor = ProgramCacheEntry::new(
+    let executor = new_program_cache_entry(
         &loader_v4::id(),
         environments.program_runtime_v1.clone(),
         deployment_slot,

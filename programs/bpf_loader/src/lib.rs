@@ -14,12 +14,15 @@ use {
     solana_program_runtime::{
         invoke_context::{BpfAllocator, InvokeContext, SerializedAccountMetadata, SyscallContext},
         loaded_programs::{
-            LoadProgramMetrics, ProgramCacheEntry, ProgramCacheEntryOwner, ProgramCacheEntryType,
+            ProgramCacheEntry, ProgramCacheEntryOwner, ProgramCacheEntryType,
             DELAY_VISIBILITY_SLOT_OFFSET,
         },
         mem_pool::VmMemoryPool,
         stable_log,
         sysvar_cache::get_sysvar_with_account_check,
+    },
+    solana_program_runtime_metrics::{
+        new_program_cache_entry, reload_program_cache_entry, LoadProgramMetrics,
     },
     solana_rbpf::{
         declare_builtin_function,
@@ -74,7 +77,7 @@ pub fn load_program_from_bytes(
     let loaded_program = if reloading {
         // Safety: this is safe because the program is being reloaded in the cache.
         unsafe {
-            ProgramCacheEntry::reload(
+            reload_program_cache_entry(
                 loader_key,
                 program_runtime_environment,
                 deployment_slot,
@@ -85,7 +88,7 @@ pub fn load_program_from_bytes(
             )
         }
     } else {
-        ProgramCacheEntry::new(
+        new_program_cache_entry(
             loader_key,
             program_runtime_environment,
             deployment_slot,

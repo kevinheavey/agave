@@ -8,15 +8,13 @@ use {
     solana_compute_budget::compute_budget::ComputeBudget,
     solana_program_runtime::{
         invoke_context::InvokeContext,
-        loaded_programs::{
-            BlockRelation, ForkGraph, LoadProgramMetrics, ProgramCacheEntry,
-            ProgramRuntimeEnvironments,
-        },
+        loaded_programs::{BlockRelation, ForkGraph, ProgramRuntimeEnvironments},
         solana_rbpf::{
             program::{BuiltinFunction, BuiltinProgram, FunctionRegistry},
             vm::Config,
         },
     },
+    solana_program_runtime_metrics::{new_program_cache_entry, LoadProgramMetrics},
     solana_sdk::{
         account::{AccountSharedData, ReadableAccount},
         clock::{Clock, Slot, UnixTimestamp},
@@ -233,7 +231,7 @@ pub fn create_executable_environment(
                 program_cache.assign_program(
                     *key,
                     Arc::new(
-                        ProgramCacheEntry::new(
+                        new_program_cache_entry(
                             &solana_sdk::bpf_loader_upgradeable::id(),
                             program_runtime_environment,
                             0,

@@ -1,8 +1,11 @@
 use {
     crate::transaction_processing_callback::TransactionProcessingCallback,
     solana_program_runtime::loaded_programs::{
-        LoadProgramMetrics, ProgramCacheEntry, ProgramCacheEntryOwner, ProgramCacheEntryType,
+        ProgramCacheEntry, ProgramCacheEntryOwner, ProgramCacheEntryType,
         ProgramRuntimeEnvironment, ProgramRuntimeEnvironments, DELAY_VISIBILITY_SLOT_OFFSET,
+    },
+    solana_program_runtime_metrics::{
+        new_program_cache_entry, reload_program_cache_entry, LoadProgramMetrics,
     },
     solana_sdk::{
         account::{AccountSharedData, ReadableAccount},
@@ -40,7 +43,7 @@ pub(crate) fn load_program_from_bytes(
     if reloading {
         // Safety: this is safe because the program is being reloaded in the cache.
         unsafe {
-            ProgramCacheEntry::reload(
+            reload_program_cache_entry(
                 loader_key,
                 program_runtime_environment.clone(),
                 deployment_slot,
@@ -51,7 +54,7 @@ pub(crate) fn load_program_from_bytes(
             )
         }
     } else {
-        ProgramCacheEntry::new(
+        new_program_cache_entry(
             loader_key,
             program_runtime_environment.clone(),
             deployment_slot,

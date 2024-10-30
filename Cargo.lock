@@ -6067,6 +6067,7 @@ dependencies = [
  "solana-poseidon",
  "solana-program-memory",
  "solana-program-runtime",
+ "solana-program-runtime-metrics",
  "solana-sdk",
  "solana-timings",
  "solana-type-overrides",
@@ -7100,6 +7101,7 @@ dependencies = [
  "solana-log-collector",
  "solana-measure",
  "solana-program-runtime",
+ "solana-program-runtime-metrics",
  "solana-sdk",
  "solana-type-overrides",
  "solana_rbpf",
@@ -7569,7 +7571,6 @@ dependencies = [
  "solana-log-collector",
  "solana-logger",
  "solana-measure",
- "solana-metrics",
  "solana-sdk",
  "solana-timings",
  "solana-type-overrides",
@@ -7577,6 +7578,21 @@ dependencies = [
  "solana_rbpf",
  "test-case",
  "thiserror",
+]
+
+[[package]]
+name = "solana-program-runtime-metrics"
+version = "2.2.0"
+dependencies = [
+ "log",
+ "solana-measure",
+ "solana-metrics",
+ "solana-program-runtime",
+ "solana-pubkey",
+ "solana-sdk",
+ "solana-timings",
+ "solana-type-overrides",
+ "solana_rbpf",
 ]
 
 [[package]]
@@ -8418,6 +8434,7 @@ dependencies = [
  "solana-perf",
  "solana-program",
  "solana-program-runtime",
+ "solana-program-runtime-metrics",
  "solana-rpc-client",
  "solana-rpc-client-api",
  "solana-runtime-transaction",

@@ -71,6 +71,7 @@ members = [
     "poh-bench",
     "poseidon",
     "program-runtime",
+    "program-runtime-metrics",
     "program-test",
     "programs/address-lookup-table",
     "programs/address-lookup-table-tests",
@@ -474,6 +475,7 @@ solana-program-memory = { path = "sdk/program-memory", version = "=2.2.0" }
 solana-program-option = { path = "sdk/program-option", version = "=2.2.0" }
 solana-program-pack = { path = "sdk/program-pack", version = "=2.2.0" }
 solana-program-runtime = { path = "program-runtime", version = "=2.2.0" }
+solana-program-runtime-metrics = { path = "program-runtime-metrics", version = "=2.2.0" }
 solana-program-test = { path = "program-test", version = "=2.2.0" }
 solana-pubkey = { path = "sdk/pubkey", version = "=2.2.0", default-features = false }
 solana-pubsub-client = { path = "pubsub-client", version = "=2.2.0" }
