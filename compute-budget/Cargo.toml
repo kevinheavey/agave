@@ -13,12 +13,13 @@ edition = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-sdk = { workspace = true }
+solana-fee-structure = { workspace = true }
+solana-program-entrypoint = { workspace = true }
 
 [features]
 frozen-abi = [
     "dep:solana-frozen-abi",
-    "solana-sdk/frozen-abi",
+    "solana-fee-structure/frozen-abi",
 ]
 
 [lints]
