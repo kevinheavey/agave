@@ -1,3 +1,4 @@
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 pub mod invoke_context;
 pub mod loaded_programs;
 pub mod stable_log;
