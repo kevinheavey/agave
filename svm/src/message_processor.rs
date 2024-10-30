@@ -28,7 +28,7 @@ impl MessageProcessor {
     /// This method calls each instruction in the message over the set of loaded accounts.
     /// For each instruction it calls the program entrypoint method and verifies that the result of
     /// the call does not violate the bank's accounting rules.
-    /// The accounts are committed back to the bank only if every instruction succeeds.
+    /// It returns a TransactionError if any instruction fails.
     pub fn process_message(
         message: &impl SVMMessage,
         program_indices: &[Vec<IndexOfAccount>],
