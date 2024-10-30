@@ -1,16 +1,26 @@
-//! The compute budget native program.
+//! Instructions for the compute budget native program.
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 
-#![cfg(feature = "full")]
-
-pub use solana_sdk_ids::compute_budget::{check_id, id, ID};
-use crate::instruction::Instruction;
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSerialize};
+use solana_instruction::Instruction;
+pub use solana_sdk_ids::compute_budget::{check_id, id, ID};
 
 /// Compute Budget Instructions
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
+#[cfg_attr(
+    feature = "frozen-abi",
+    derive(
+        solana_frozen_abi_macro::AbiExample,
+        solana_frozen_abi_macro::AbiEnumVisitor
+    )
+)]
 #[cfg_attr(feature = "borsh", derive(BorshSerialize, BorshDeserialize))]
-#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde_derive::Deserialize, serde_derive::Serialize)
+)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ComputeBudgetInstruction {
     Unused, // deprecated variant, reserved value.
     /// Request a specific transaction-wide program heap region size in bytes.
@@ -58,7 +68,7 @@ impl ComputeBudgetInstruction {
 
     /// Serialize Instruction using borsh, this is only used in runtime::cost_model::tests but compilation
     /// can't be restricted as it's used across packages
-    #[cfg(all(feature = "dev-context-only-utils", feature = "borsh"))]
+    #[cfg(feature = "dev-context-only-utils")]
     pub fn pack(self) -> Result<Vec<u8>, borsh::io::Error> {
         borsh::to_vec(&self)
     }
