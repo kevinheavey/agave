@@ -1,7 +1,7 @@
 [package]
-name = "solana-program-runtime"
-description = "Solana program runtime"
-documentation = "https://docs.rs/solana-program-runtime"
+name = "solana-invoke-context"
+description = "Solana invoke_context and related modules."
+documentation = "https://docs.rs/solana-invoke-context"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -29,7 +29,6 @@ solana-frozen-abi = { workspace = true, optional = true, features = [
 solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-invoke-context = { workspace = true }
 solana-log-collector = { workspace = true }
 solana-measure = { workspace = true }
 solana-metrics = { workspace = true }
@@ -46,13 +45,6 @@ solana-logger = { workspace = true }
 solana-sdk = { workspace = true, features = ["dev-context-only-utils"] }
 test-case = { workspace = true }
 
-[lib]
-crate-type = ["lib"]
-name = "solana_program_runtime"
-
-[package.metadata.docs.rs]
-targets = ["x86_64-unknown-linux-gnu"]
-
 [features]
 frozen-abi = [
     "dep:solana-frozen-abi",
@@ -61,6 +53,9 @@ frozen-abi = [
     "solana-sdk/frozen-abi",
 ]
 shuttle-test = ["solana-type-overrides/shuttle-test", "solana_rbpf/shuttle-test"]
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
 
 [lints]
 workspace = true

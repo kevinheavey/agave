@@ -5509,6 +5509,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-invoke-context"
+version = "2.2.0"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "enum-iterator",
+ "itertools 0.12.1",
+ "libc",
+ "log",
+ "num-derive",
+ "num-traits",
+ "percentage",
+ "rand 0.8.5",
+ "serde",
+ "solana-compute-budget",
+ "solana-feature-set",
+ "solana-log-collector",
+ "solana-measure",
+ "solana-metrics",
+ "solana-sdk",
+ "solana-timings",
+ "solana-type-overrides",
+ "solana-vote",
+ "solana_rbpf",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-last-restart-slot"
 version = "2.2.0"
 dependencies = [
@@ -5905,6 +5933,7 @@ dependencies = [
  "serde",
  "solana-compute-budget",
  "solana-feature-set",
+ "solana-invoke-context",
  "solana-log-collector",
  "solana-measure",
  "solana-metrics",

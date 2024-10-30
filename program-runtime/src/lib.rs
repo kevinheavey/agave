@@ -6,8 +6,6 @@
 extern crate solana_metrics;
 
 pub use solana_rbpf;
-pub mod invoke_context;
-pub mod loaded_programs;
 pub mod mem_pool;
-pub mod stable_log;
-pub mod sysvar_cache;
+#[deprecated(since = "2.2.0", note = "Use `solana-invoke-context` crate instead")]
+pub use solana_invoke_context::{invoke_context, loaded_programs, stable_log, sysvar_cache};

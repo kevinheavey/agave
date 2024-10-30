@@ -6952,6 +6952,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-invoke-context"
+version = "2.2.0"
+dependencies = [
+ "assert_matches",
+ "base64 0.22.1",
+ "bincode",
+ "enum-iterator",
+ "itertools 0.12.1",
+ "libc",
+ "log",
+ "num-derive",
+ "num-traits",
+ "percentage",
+ "rand 0.8.5",
+ "serde",
+ "solana-compute-budget",
+ "solana-feature-set",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
+ "solana-log-collector",
+ "solana-logger",
+ "solana-measure",
+ "solana-metrics",
+ "solana-sdk",
+ "solana-timings",
+ "solana-type-overrides",
+ "solana-vote",
+ "solana_rbpf",
+ "test-case",
+ "thiserror",
+]
+
+[[package]]
 name = "solana-keygen"
 version = "2.2.0"
 dependencies = [
@@ -7547,6 +7580,7 @@ dependencies = [
  "solana-feature-set",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
+ "solana-invoke-context",
  "solana-log-collector",
  "solana-logger",
  "solana-measure",
