@@ -27,7 +27,6 @@ solana-feature-set = { workspace = true }
 solana-sdk = { workspace = true, features = ["dev-context-only-utils"] }
 solana-type-overrides = { workspace = true }
 
-
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
