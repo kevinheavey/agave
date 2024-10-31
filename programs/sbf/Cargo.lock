@@ -4923,7 +4923,7 @@ dependencies = [
  "ark-ff",
  "ark-serialize",
  "bytemuck",
- "solana-program",
+ "solana-define-syscall",
  "thiserror",
 ]
 
