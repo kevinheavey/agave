@@ -60,9 +60,9 @@ impl From<solana_hash::Hash> for Hash {
     }
 }
 
-impl Into<solana_hash::Hash> for Hash {
-    fn into(self) -> solana_hash::Hash {
-        solana_hash::Hash::new_from_array(self.0)
+impl From<Hash> for solana_hash::Hash {
+    fn from(val: Hash) -> Self {
+        Self::new_from_array(val.0)
     }
 }
 
