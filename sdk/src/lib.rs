@@ -37,8 +37,6 @@ extern crate self as solana_sdk;
 
 #[cfg(feature = "full")]
 pub use solana_commitment_config as commitment_config;
-#[cfg(feature = "full")]
-pub use solana_signer::signers;
 #[cfg(not(target_os = "solana"))]
 pub use solana_program::program_stubs;
 // These solana_program imports could be *-imported, but that causes a bunch of
@@ -60,6 +58,8 @@ pub use solana_program::{
 };
 #[cfg(feature = "borsh")]
 pub use solana_program::{borsh, borsh0_10, borsh1};
+#[cfg(feature = "full")]
+pub use solana_signer::signers;
 pub mod client;
 pub mod compute_budget;
 pub mod deserialize_utils;
