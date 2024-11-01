@@ -1,9 +1,7 @@
 //! Functions for generating keypairs from seed phrases.
-use {
-    hmac::Hmac,
-    solana_signer::keypair::{keypair_from_seed, Keypair},
-    std::error,
-};
+use hmac::Hmac;
+#[cfg(feature = "keypair")]
+use solana_signer::keypair::{keypair_from_seed, Keypair};
 
 pub fn generate_seed_from_seed_phrase_and_passphrase(
     seed_phrase: &str,
@@ -28,7 +26,7 @@ pub fn generate_seed_from_seed_phrase_and_passphrase(
 pub fn keypair_from_seed_phrase_and_passphrase(
     seed_phrase: &str,
     passphrase: &str,
-) -> Result<Keypair, Box<dyn error::Error>> {
+) -> Result<Keypair, Box<dyn std::error::Error>> {
     keypair_from_seed(&generate_seed_from_seed_phrase_and_passphrase(
         seed_phrase,
         passphrase,
