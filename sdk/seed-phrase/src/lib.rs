@@ -24,6 +24,7 @@ pub fn generate_seed_from_seed_phrase_and_passphrase(
     seed
 }
 
+#[cfg(feature = "keypair")]
 pub fn keypair_from_seed_phrase_and_passphrase(
     seed_phrase: &str,
     passphrase: &str,
