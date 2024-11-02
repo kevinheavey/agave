@@ -45,6 +45,9 @@ x509-parser = { workspace = true }
 assert_matches = { workspace = true }
 solana-logger = { workspace = true }
 
+[features]
+dev-context-only-utils = []
+
 [lib]
 crate-type = ["lib"]
 name = "solana_streamer"
