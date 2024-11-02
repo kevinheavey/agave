@@ -146,7 +146,7 @@ solana-keypair = { workspace = true, optional = true, features = [
     "seed-derivable",
 ] }
 solana-native-token = { workspace = true }
-solana-offchain-message = { workspace = true, optional = true }
+solana-offchain-message = { workspace = true, optional = true, features = ["verify"] }
 solana-packet = { workspace = true, features = ["bincode", "serde"] }
 solana-poh-config = { workspace = true, features = ["serde"] }
 solana-precompile-error = { workspace = true, optional = true }

@@ -6059,6 +6059,7 @@ dependencies = [
  "num_enum",
  "solana-hash",
  "solana-packet",
+ "solana-pubkey",
  "solana-sanitize",
  "solana-sha256-hasher",
  "solana-signature",
