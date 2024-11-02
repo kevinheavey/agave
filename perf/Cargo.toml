@@ -27,9 +27,15 @@ solana-frozen-abi = { workspace = true, optional = true, features = [
 solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
+solana-hash = { workspace = true }
 solana-metrics = { workspace = true }
+solana-packet = { workspace = true }
+solana-program = { workspace = true, default-features = false }
+solana-pubkey = { workspace = true, default-features = false }
 solana-rayon-threadlimit = { workspace = true }
-solana-sdk = { workspace = true }
+solana-sdk = { workspace = true, optional = true }
+solana-signature = { workspace = true }
+solana-time-utils = { workspace = true }
 solana-short-vec = { workspace = true }
 solana-vote-program = { workspace = true, optional = true }
 
@@ -49,7 +55,7 @@ solana-perf = { path = ".", features = ["dev-context-only-utils"] }
 test-case = { workspace = true }
 
 [features]
-dev-context-only-utils = ["dep:solana-vote-program"]
+dev-context-only-utils = ["dep:solana-vote-program", "dep:solana-sdk"]
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
