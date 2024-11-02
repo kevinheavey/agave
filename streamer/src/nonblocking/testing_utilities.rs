@@ -16,11 +16,9 @@ use {
         TokioRuntime, TransportConfig,
     },
     solana_perf::packet::PacketBatch,
-    solana_sdk::{
-        net::DEFAULT_TPU_COALESCE,
-        quic::{QUIC_KEEP_ALIVE, QUIC_MAX_TIMEOUT},
-        signer::keypair::Keypair,
-    },
+    solana_quic_definitions::{QUIC_KEEP_ALIVE, QUIC_MAX_TIMEOUT},
+    solana_sdk::net::DEFAULT_TPU_COALESCE,
+    solana_signer::keypair::Keypair,
     std::{
         net::{SocketAddr, UdpSocket},
         sync::{atomic::AtomicBool, Arc, RwLock},
