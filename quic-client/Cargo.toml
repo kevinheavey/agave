@@ -20,11 +20,15 @@ quinn = { workspace = true }
 quinn-proto = { workspace = true }
 rustls = { workspace = true }
 solana-connection-cache = { workspace = true }
+solana-keypair = { workspace = true }
 solana-measure = { workspace = true }
 solana-metrics = { workspace = true }
 solana-net-utils = { workspace = true }
 solana-rpc-client-api = { workspace = true }
-solana-sdk = { workspace = true }
+solana-pubkey = { workspace = true, default-features = false }
+solana-signer = { workspace = true }
+solana-quic-definitions = { workspace = true }
+solana-transaction-error = { workspace = true }
 solana-streamer = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
@@ -33,3 +37,4 @@ tokio = { workspace = true, features = ["full"] }
 crossbeam-channel = { workspace = true }
 solana-logger = { workspace = true }
 solana-perf = { workspace = true }
+solana-sdk = { workspace = true }
