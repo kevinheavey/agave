@@ -5289,7 +5289,9 @@ dependencies = [
  "rayon",
  "solana-measure",
  "solana-metrics",
- "solana-sdk",
+ "solana-signer",
+ "solana-time-utils",
+ "solana-transaction-error",
  "thiserror",
  "tokio",
 ]

@@ -6578,7 +6578,9 @@ dependencies = [
  "solana-measure",
  "solana-metrics",
  "solana-net-utils",
- "solana-sdk",
+ "solana-signer",
+ "solana-time-utils",
+ "solana-transaction-error",
  "thiserror",
  "tokio",
 ]

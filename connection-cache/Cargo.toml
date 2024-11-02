@@ -21,7 +21,9 @@ rand = { workspace = true }
 rayon = { workspace = true }
 solana-measure = { workspace = true }
 solana-metrics = { workspace = true }
-solana-sdk = { workspace = true }
+solana-signer = { workspace = true, features = ["keypair"] }
+solana-time-utils = { workspace = true }
+solana-transaction-error = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
