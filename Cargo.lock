@@ -8326,6 +8326,7 @@ dependencies = [
  "solana-pubkey",
  "solana-rpc-client",
  "solana-rpc-client-api",
+ "solana-sdk",
  "solana-sha256-hasher",
  "thiserror 2.0.4",
  "tokio",

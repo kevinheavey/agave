@@ -148,12 +148,14 @@ pub fn state_from_account<T: ReadableAccount + StateMut<Versions>>(
 /// ```no_run
 /// use solana_rpc_client_nonce_utils::nonblocking;
 /// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-/// use solana_sdk::{
+/// use solana_program::{
 ///     message::Message,
-///     pubkey::Pubkey,
-///     signature::{Keypair, Signer},
-///     system_instruction,
-///     transaction::Transaction,
+///     system_instruction
+/// };
+/// use solana_pubkey::Pubkey;
+/// use solana_sdk::{
+///     signer::{keypair::Keypair, Signer},
+///     transaction::Transaction
 /// };
 /// use std::path::Path;
 /// use anyhow::Result;

@@ -28,6 +28,7 @@ solana-account-decoder = { workspace = true }
 solana-fee-calculator = { workspace = true }
 solana-program = { workspace = true, default-features = false }
 solana-rpc-client-api = { workspace = true }
+solana-sdk = { workspace = true }
 solana-sha256-hasher = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
