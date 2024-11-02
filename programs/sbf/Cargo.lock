@@ -7548,8 +7548,9 @@ dependencies = [
  "async-trait",
  "solana-connection-cache",
  "solana-net-utils",
- "solana-sdk",
+ "solana-signer",
  "solana-streamer",
+ "solana-transaction-error",
  "thiserror",
  "tokio",
 ]

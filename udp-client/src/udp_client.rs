@@ -4,7 +4,7 @@
 use {
     core::iter::repeat,
     solana_connection_cache::client_connection::ClientConnection,
-    solana_sdk::transport::Result as TransportResult,
+    solana_transaction_error::TransportResult,
     solana_streamer::sendmmsg::batch_send,
     std::{
         net::{SocketAddr, UdpSocket},

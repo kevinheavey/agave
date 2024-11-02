@@ -13,7 +13,11 @@ edition = { workspace = true }
 async-trait = { workspace = true }
 solana-connection-cache = { workspace = true }
 solana-net-utils = { workspace = true }
-solana-sdk = { workspace = true }
+solana-signer = { workspace = true, features = ["keypair"] }
 solana-streamer = { workspace = true }
+solana-transaction-error = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
+
+[dev-dependencies]
+solana-packet = { workspace = true }
