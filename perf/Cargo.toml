@@ -45,9 +45,11 @@ name = "solana_perf"
 assert_matches = { workspace = true }
 rand_chacha = { workspace = true }
 solana-logger = { workspace = true }
+solana-perf = { path = ".", features = ["dev-context-only-utils"] }
 test-case = { workspace = true }
 
 [features]
+dev-context-only-utils = []
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
