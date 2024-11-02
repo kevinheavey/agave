@@ -4,9 +4,8 @@
 use {
     async_trait::async_trait, core::iter::repeat,
     solana_connection_cache::nonblocking::client_connection::ClientConnection,
-    solana_transaction_error::TransportResult,
-    solana_streamer::nonblocking::sendmmsg::batch_send, std::net::SocketAddr,
-    tokio::net::UdpSocket,
+    solana_streamer::nonblocking::sendmmsg::batch_send, solana_transaction_error::TransportResult,
+    std::net::SocketAddr, tokio::net::UdpSocket,
 };
 
 pub struct UdpClientConnection {
