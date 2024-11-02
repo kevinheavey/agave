@@ -6580,8 +6580,12 @@ dependencies = [
 name = "solana-rpc-client-nonce-utils"
 version = "2.2.0"
 dependencies = [
+ "solana-account",
+ "solana-commitment-config",
+ "solana-hash",
+ "solana-nonce",
+ "solana-pubkey",
  "solana-rpc-client",
- "solana-sdk",
  "thiserror 2.0.4",
 ]
 
