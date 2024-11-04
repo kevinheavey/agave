@@ -1,6 +1,6 @@
 [package]
 name = "solana-presigner"
-description = "A Solana  `Signer` implementation representing an externally-constructed `Signature`."
+description = "A Solana `Signer` implementation representing an externally-constructed `Signature`."
 documentation = "https://docs.rs/solana-presigner"
 version = { workspace = true }
 authors = { workspace = true }
