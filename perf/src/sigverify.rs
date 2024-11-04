@@ -682,11 +682,15 @@ mod tests {
         bincode::{deserialize, serialize},
         curve25519_dalek::{edwards::CompressedEdwardsY, scalar::Scalar},
         rand::{thread_rng, Rng},
-        solana_instruction::CompiledInstruction,
-        solana_program::message::{Message, MessageHeader},
-        solana_sdk::transaction::Transaction,
+        solana_program::{
+            instruction::CompiledInstruction,
+            message::{Message, MessageHeader},
+        },
+        solana_sdk::{
+            signature::{Keypair, Signature, Signer},
+            transaction::Transaction,
+        },
         solana_signature::Signature,
-        solana_sdk::signature::{Keypair, Signature, Signer},
         std::{
             iter::repeat_with,
             sync::atomic::{AtomicU64, Ordering},
