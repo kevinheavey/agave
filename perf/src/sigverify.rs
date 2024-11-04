@@ -687,7 +687,7 @@ mod tests {
             message::{Message, MessageHeader},
         },
         solana_sdk::{
-            signature::{Keypair, Signature, Signer},
+            signature::{Keypair, Signer},
             transaction::Transaction,
         },
         solana_signature::Signature,
