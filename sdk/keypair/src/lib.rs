@@ -1,3 +1,5 @@
+//! Concrete implementation of a Solana `Signer` from raw bytes
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 use {

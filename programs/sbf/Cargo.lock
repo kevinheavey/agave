@@ -5549,7 +5549,6 @@ dependencies = [
  "solana-seed-phrase",
  "solana-signature",
  "solana-signer",
- "solana-transaction-error",
  "wasm-bindgen",
 ]
 
