@@ -686,7 +686,7 @@ mod tests {
         solana_program::message::{Message, MessageHeader},
         solana_sdk::transaction::Transaction,
         solana_signature::Signature,
-        solana_signer::{keypair::Keypair, Signer},
+        solana_sdk::signature::{Keypair, Signature, Signer},
         std::{
             iter::repeat_with,
             sync::atomic::{AtomicU64, Ordering},
