@@ -15,7 +15,7 @@ solana-signature = { workspace = true, features = ["verify"] }
 solana-signer = { workspace = true }
 
 [dev-dependencies]
-solana-signer = { workspace = true, features = ["keypair"] }
+solana-keypair = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

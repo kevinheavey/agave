@@ -2,8 +2,7 @@
 use {
     ed25519_dalek_bip32::Error as Bip32Error,
     solana_derivation_path::DerivationPath,
-    solana_seed_phrase::keypair_from_seed_phrase_and_passphrase,
-    solana_signer::keypair::{keypair_from_seed, Keypair},
+    solana_keypair::{keypair_from_seed, keypair_from_seed_phrase_and_passphrase, Keypair},
     std::error,
 };
 

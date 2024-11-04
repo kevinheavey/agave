@@ -1,11 +1,12 @@
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 use {
-    crate::{EncodableKey, EncodableKeypair, Signer, SignerError},
     ed25519_dalek::Signer as DalekSigner,
     rand0_7::{rngs::OsRng, CryptoRng, RngCore},
     solana_pubkey::Pubkey,
+    solana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
     solana_signature::Signature,
+    solana_signer::{EncodableKey, EncodableKeypair, Signer, SignerError},
     std::{
         error,
         io::{Read, Write},
@@ -271,10 +272,22 @@ pub fn keypair_from_seed(seed: &[u8]) -> Result<Keypair, Box<dyn error::Error>> 
     Ok(Keypair(dalek_keypair))
 }
 
+pub fn keypair_from_seed_phrase_and_passphrase(
+    seed_phrase: &str,
+    passphrase: &str,
+) -> Result<Keypair, Box<dyn std::error::Error>> {
+    keypair_from_seed(&generate_seed_from_seed_phrase_and_passphrase(
+        seed_phrase,
+        passphrase,
+    ))
+}
+
 #[cfg(test)]
 mod tests {
     use {
         super::*,
+        bip39::{Language, Mnemonic, MnemonicType, Seed},
+        solana_signer::unique_signers,
         std::{
             fs::{self, File},
             mem,
@@ -373,5 +386,67 @@ mod tests {
         // PartialEq
         let keypair2 = keypair_from_seed(&[0u8; 32]).unwrap();
         assert_eq!(keypair, keypair2);
+    }
+
+    fn pubkeys(signers: &[&dyn Signer]) -> Vec<Pubkey> {
+        signers.iter().map(|x| x.pubkey()).collect()
+    }
+
+    #[test]
+    fn test_unique_signers() {
+        let alice = Keypair::new();
+        let bob = Keypair::new();
+        assert_eq!(
+            pubkeys(&unique_signers(vec![&alice, &bob, &alice])),
+            pubkeys(&[&alice, &bob])
+        );
+    }
+
+    #[test]
+    fn test_containers() {
+        use std::{rc::Rc, sync::Arc};
+
+        struct Foo<S: Signer> {
+            #[allow(unused)]
+            signer: S,
+        }
+
+        fn foo(_s: impl Signer) {}
+
+        let _arc_signer = Foo {
+            signer: Arc::new(Keypair::new()),
+        };
+        foo(Arc::new(Keypair::new()));
+
+        let _rc_signer = Foo {
+            signer: Rc::new(Keypair::new()),
+        };
+        foo(Rc::new(Keypair::new()));
+
+        let _ref_signer = Foo {
+            signer: &Keypair::new(),
+        };
+        foo(Keypair::new());
+
+        let _box_signer = Foo {
+            signer: Box::new(Keypair::new()),
+        };
+        foo(Box::new(Keypair::new()));
+
+        let _signer = Foo {
+            signer: Keypair::new(),
+        };
+        foo(Keypair::new());
+    }
+
+    #[test]
+    fn test_keypair_from_seed_phrase_and_passphrase() {
+        let mnemonic = Mnemonic::new(MnemonicType::Words12, Language::English);
+        let passphrase = "42";
+        let seed = Seed::new(&mnemonic, passphrase);
+        let expected_keypair = keypair_from_seed(seed.as_bytes()).unwrap();
+        let keypair =
+            keypair_from_seed_phrase_and_passphrase(mnemonic.phrase(), passphrase).unwrap();
+        assert_eq!(keypair.pubkey(), expected_keypair.pubkey());
     }
 }

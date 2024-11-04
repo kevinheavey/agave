@@ -1,7 +1,5 @@
 //! Functions for generating keypairs from seed phrases.
 use hmac::Hmac;
-#[cfg(feature = "keypair")]
-use solana_signer::keypair::{keypair_from_seed, Keypair};
 
 pub fn generate_seed_from_seed_phrase_and_passphrase(
     seed_phrase: &str,
@@ -20,35 +18,4 @@ pub fn generate_seed_from_seed_phrase_and_passphrase(
         &mut seed,
     );
     seed
-}
-
-#[cfg(feature = "keypair")]
-pub fn keypair_from_seed_phrase_and_passphrase(
-    seed_phrase: &str,
-    passphrase: &str,
-) -> Result<Keypair, Box<dyn std::error::Error>> {
-    keypair_from_seed(&generate_seed_from_seed_phrase_and_passphrase(
-        seed_phrase,
-        passphrase,
-    ))
-}
-
-#[cfg(test)]
-mod tests {
-    use {
-        super::*,
-        bip39::{Language, Mnemonic, MnemonicType, Seed},
-        solana_signer::Signer,
-    };
-
-    #[test]
-    fn test_keypair_from_seed_phrase_and_passphrase() {
-        let mnemonic = Mnemonic::new(MnemonicType::Words12, Language::English);
-        let passphrase = "42";
-        let seed = Seed::new(&mnemonic, passphrase);
-        let expected_keypair = keypair_from_seed(seed.as_bytes()).unwrap();
-        let keypair =
-            keypair_from_seed_phrase_and_passphrase(mnemonic.phrase(), passphrase).unwrap();
-        assert_eq!(keypair.pubkey(), expected_keypair.pubkey());
-    }
 }

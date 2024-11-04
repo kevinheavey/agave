@@ -13,15 +13,6 @@ edition = { workspace = true }
 hmac = { workspace = true }
 pbkdf2 = { workspace = true }
 sha2 = { workspace = true }
-solana-signer = { workspace = true }
-
-[dev-dependencies]
-solana-seed-phrase = { path = ".", features = ["dev-context-only-utils"] }
-tiny-bip39 = { workspace = true }
-
-[features]
-dev-context-only-utils = ["keypair"]
-keypair = ["solana-signer/keypair"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

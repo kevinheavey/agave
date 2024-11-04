@@ -53,7 +53,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_signer::keypair::keypair_from_seed};
+    use {super::*, solana_keypair::keypair_from_seed};
 
     #[test]
     fn test_presigner() {

@@ -122,6 +122,7 @@ members = [
     "sdk/hash",
     "sdk/inflation",
     "sdk/instruction",
+    "sdk/keypair",
     "sdk/macro",
     "sdk/msg",
     "sdk/native-token",
@@ -452,6 +453,7 @@ solana-hash = { path = "sdk/hash", version = "=2.2.0", default-features = false 
 solana-inflation = { path = "sdk/inflation", version = "=2.2.0" }
 solana-inline-spl = { path = "inline-spl", version = "=2.2.0" }
 solana-instruction = { path = "sdk/instruction", version = "=2.2.0", default-features = false }
+solana-keypair = { path = "sdk/keypair", version = "=2.2.0" }
 solana-last-restart-slot = { path = "sdk/last-restart-slot", version = "=2.2.0" }
 solana-lattice-hash = { path = "lattice-hash", version = "=2.2.0" }
 solana-ledger = { path = "ledger", version = "=2.2.0" }

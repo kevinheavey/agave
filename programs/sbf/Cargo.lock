@@ -5539,6 +5539,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-keypair"
+version = "2.2.0"
+dependencies = [
+ "bs58",
+ "ed25519-dalek",
+ "rand 0.7.3",
+ "solana-pubkey",
+ "solana-seed-phrase",
+ "solana-signature",
+ "solana-signer",
+ "solana-transaction-error",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "solana-last-restart-slot"
 version = "2.2.0"
 dependencies = [
@@ -6846,6 +6861,7 @@ dependencies = [
  "solana-fee-structure",
  "solana-inflation",
  "solana-instruction",
+ "solana-keypair",
  "solana-native-token",
  "solana-packet",
  "solana-precompile-error",
@@ -6901,8 +6917,7 @@ dependencies = [
  "ed25519-dalek",
  "ed25519-dalek-bip32",
  "solana-derivation-path",
- "solana-seed-phrase",
- "solana-signer",
+ "solana-keypair",
 ]
 
 [[package]]
@@ -6912,7 +6927,6 @@ dependencies = [
  "hmac 0.12.1",
  "pbkdf2 0.11.0",
  "sha2 0.10.8",
- "solana-signer",
 ]
 
 [[package]]
@@ -6979,13 +6993,9 @@ dependencies = [
 name = "solana-signer"
 version = "2.2.0"
 dependencies = [
- "bs58",
- "ed25519-dalek",
- "rand 0.7.3",
  "solana-pubkey",
  "solana-signature",
  "solana-transaction-error",
- "wasm-bindgen",
 ]
 
 [[package]]
