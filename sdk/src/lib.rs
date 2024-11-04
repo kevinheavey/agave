@@ -59,6 +59,7 @@ pub use solana_program::{
 #[cfg(feature = "borsh")]
 pub use solana_program::{borsh, borsh0_10, borsh1};
 #[cfg(feature = "full")]
+#[deprecated(since = "2.2.0", note = "Use `solana-signer` crate instead")]
 pub use solana_signer::signers;
 pub mod client;
 pub mod compute_budget;
