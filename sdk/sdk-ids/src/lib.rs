@@ -48,9 +48,7 @@ pub mod stake {
     pub mod config {
         solana_pubkey::declare_deprecated_id!("StakeConfig11111111111111111111111111111111");
     }
-    pub mod program {
-        solana_pubkey::declare_id!("Stake11111111111111111111111111111111111111");
-    }
+    solana_pubkey::declare_id!("Stake11111111111111111111111111111111111111");
 }
 
 pub mod system_program {

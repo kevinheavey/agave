@@ -153,7 +153,7 @@ lazy_static! {
         ReservedAccount::new_pending(secp256k1_program::id(), feature_set::add_new_reserved_account_keys::id()),
         #[allow(deprecated)]
         ReservedAccount::new_active(stake::config::id()),
-        ReservedAccount::new_active(stake::program::id()),
+        ReservedAccount::new_active(stake::id()),
         ReservedAccount::new_active(system_program::id()),
         ReservedAccount::new_active(vote::id()),
         ReservedAccount::new_pending(zk_elgamal_proof_program::id(), feature_set::add_new_reserved_account_keys::id()),
