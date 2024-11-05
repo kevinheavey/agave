@@ -93,7 +93,9 @@ pub mod reward_info {
     pub use solana_reward_info::RewardInfo;
 }
 #[deprecated(since = "2.1.0", note = "Use `solana-reward-info` crate instead")]
-pub mod reward_type;
+pub mod reward_type {
+    pub use solana_reward_info::RewardType;
+}
 pub mod rpc_port;
 pub mod secp256k1_instruction;
 pub mod shred_version;
