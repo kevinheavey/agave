@@ -88,7 +88,6 @@ pub mod pubkey;
 pub mod quic;
 pub mod rent_collector;
 pub mod rent_debits;
-pub mod reserved_account_keys;
 #[deprecated(since = "2.2.0", note = "Use `solana-reward-info` crate instead")]
 pub mod reward_info {
     pub use solana_reward_info::RewardInfo;
