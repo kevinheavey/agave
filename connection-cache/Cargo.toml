@@ -19,9 +19,9 @@ indicatif = { workspace = true, optional = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
+solana-keypair = { workspace = true }
 solana-measure = { workspace = true }
 solana-metrics = { workspace = true }
-solana-signer = { workspace = true, features = ["keypair"] }
 solana-time-utils = { workspace = true }
 solana-transaction-error = { workspace = true }
 thiserror = { workspace = true }
