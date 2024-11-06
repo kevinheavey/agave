@@ -16,6 +16,9 @@ use {
     },
 };
 
+#[cfg(feature = "seed-derivable")]
+pub mod seed_derivable;
+
 /// A vanilla Ed25519 key pair
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 #[derive(Debug)]
