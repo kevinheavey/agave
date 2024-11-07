@@ -8506,8 +8506,8 @@ dependencies = [
  "solana-logger",
  "solana-precompile-error",
  "solana-program",
- "solana-pubkey",
  "solana-sdk",
+ "solana-sdk-ids",
  "solana-secp256k1-instruction",
 ]
 
