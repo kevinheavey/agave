@@ -9,7 +9,6 @@ use {
     solana_feature_set::{ed25519_precompile_verify_strict, FeatureSet},
     solana_instruction::Instruction,
     solana_precompile_error::PrecompileError,
-    solana_pubkey::{pubkey, Pubkey},
 };
 
 pub const PUBKEY_SERIALIZED_SIZE: usize = 32;
@@ -18,8 +17,6 @@ pub const SIGNATURE_OFFSETS_SERIALIZED_SIZE: usize = 14;
 // bytemuck requires structures to be aligned
 pub const SIGNATURE_OFFSETS_START: usize = 2;
 pub const DATA_START: usize = SIGNATURE_OFFSETS_SERIALIZED_SIZE + SIGNATURE_OFFSETS_START;
-// copied from solana_sdk::ed25519_program to avoid solana_sdk dependency
-const ED25519_PROGRAM_ID: Pubkey = pubkey!("Ed25519SigVerify111111111111111111111111111");
 
 #[derive(Default, Debug, Copy, Clone, Zeroable, Pod, Eq, PartialEq)]
 #[repr(C)]
@@ -80,7 +77,7 @@ pub fn new_ed25519_instruction(keypair: &ed25519_dalek::Keypair, message: &[u8])
     instruction_data.extend_from_slice(message);
 
     Instruction {
-        program_id: ED25519_PROGRAM_ID,
+        program_id: solana_sdk_ids::ed25519_program::id(),
         accounts: vec![],
         data: instruction_data,
     }
@@ -488,10 +485,5 @@ pub mod test {
 
         let feature_set = FeatureSet::all_enabled();
         assert!(tx.verify_precompiles(&feature_set).is_err()); // verify_strict does NOT pass
-    }
-
-    #[test]
-    fn test_inlined_program_id() {
-        assert_eq!(ED25519_PROGRAM_ID, solana_sdk::ed25519_program::id())
     }
 }

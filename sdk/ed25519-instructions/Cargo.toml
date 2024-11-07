@@ -16,7 +16,7 @@ ed25519-dalek = { workspace = true }
 solana-feature-set = { workspace = true }
 solana-instruction = { workspace = true, features = ["std"] }
 solana-precompile-error = { workspace = true }
-solana-pubkey = { workspace = true }
+solana-sdk-ids = { workspace = true }
 
 [dev-dependencies]
 hex = { workspace = true }
