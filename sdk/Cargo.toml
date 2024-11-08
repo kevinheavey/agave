@@ -143,8 +143,8 @@ solana-program = { workspace = true }
 solana-program-memory = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false, features = ["std"] }
 solana-quic-definitions = { workspace = true, optional = true }
-solana-reserved-account-keys = { workspace = true }
 solana-rent-debits = { workspace = true }
+solana-reserved-account-keys = { workspace = true }
 solana-reward-info = { workspace = true, features = ["serde"] }
 solana-sanitize = { workspace = true }
 solana-sdk-ids = { workspace = true }
