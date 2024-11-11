@@ -192,10 +192,9 @@ pub mod test {
         rand0_7::{thread_rng, Rng},
         solana_feature_set::FeatureSet,
         solana_hash::Hash,
-        solana_sdk::{
-            signer::{keypair::Keypair, Signer},
-            transaction::Transaction,
-        },
+        solana_keypair::Keypair,
+        solana_sdk::transaction::Transaction,
+        solana_signer::Signer,
     };
 
     pub fn new_ed25519_instruction_raw(

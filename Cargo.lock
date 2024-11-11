@@ -6822,10 +6822,12 @@ dependencies = [
  "solana-feature-set",
  "solana-hash",
  "solana-instruction",
+ "solana-keypair",
  "solana-logger",
  "solana-precompile-error",
  "solana-sdk",
  "solana-sdk-ids",
+ "solana-signer",
 ]
 
 [[package]]
