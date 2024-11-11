@@ -245,7 +245,7 @@ pub mod test {
         instruction_data.extend_from_slice(message);
 
         Instruction {
-            program_id: ED25519_PROGRAM_ID,
+            program_id: solana_sdk_ids::ed25519_program::id(),
             accounts: vec![],
             data: instruction_data,
         }
