@@ -1,6 +1,24 @@
 //! This module is only for syscall definitions that bring in no extra dependencies.
 use crate::define_syscall;
 
+define_syscall!(fn sol_secp256k1_recover(hash: *const u8, recovery_id: u64, signature: *const u8, result: *mut u8) -> u64);
+define_syscall!(fn sol_poseidon(parameters: u64, endianness: u64, vals: *const u8, val_len: u64, hash_result: *mut u8) -> u64);
+define_syscall!(fn sol_invoke_signed_c(instruction_addr: *const u8, account_infos_addr: *const u8, account_infos_len: u64, signers_seeds_addr: *const u8, signers_seeds_len: u64) -> u64);
+define_syscall!(fn sol_invoke_signed_rust(instruction_addr: *const u8, account_infos_addr: *const u8, account_infos_len: u64, signers_seeds_addr: *const u8, signers_seeds_len: u64) -> u64);
+define_syscall!(fn sol_set_return_data(data: *const u8, length: u64));
+define_syscall!(fn sol_get_stack_height() -> u64);
+define_syscall!(fn sol_log_(message: *const u8, len: u64));
+define_syscall!(fn sol_log_64_(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64));
+define_syscall!(fn sol_log_compute_units_());
+define_syscall!(fn sol_log_data(data: *const u8, data_len: u64));
+define_syscall!(fn sol_memcpy_(dst: *mut u8, src: *const u8, n: u64));
+define_syscall!(fn sol_memmove_(dst: *mut u8, src: *const u8, n: u64));
+define_syscall!(fn sol_memcmp_(s1: *const u8, s2: *const u8, n: u64, result: *mut i32));
+define_syscall!(fn sol_memset_(s: *mut u8, c: u8, n: u64));
+define_syscall!(fn sol_log_pubkey(pubkey_addr: *const u8));
+define_syscall!(fn sol_create_program_address(seeds_addr: *const u8, seeds_len: u64, program_id_addr: *const u8, address_bytes_addr: *const u8) -> u64);
+define_syscall!(fn sol_try_find_program_address(seeds_addr: *const u8, seeds_len: u64, program_id_addr: *const u8, address_bytes_addr: *const u8, bump_seed_addr: *const u8) -> u64);
+define_syscall!(fn sol_sha256(vals: *const u8, val_len: u64, hash_result: *mut u8) -> u64);
 define_syscall!(fn sol_keccak256(vals: *const u8, val_len: u64, hash_result: *mut u8) -> u64);
 define_syscall!(fn sol_blake3(vals: *const u8, val_len: u64, hash_result: *mut u8) -> u64);
 define_syscall!(fn sol_curve_validate_point(curve_id: u64, point_addr: *const u8, result: *mut u8) -> u64);
