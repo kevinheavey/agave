@@ -18,7 +18,7 @@ use {
     solana_perf::packet::PacketBatch,
     solana_quic_definitions::{QUIC_KEEP_ALIVE, QUIC_MAX_TIMEOUT},
     solana_sdk::net::DEFAULT_TPU_COALESCE,
-    solana_signer::keypair::Keypair,
+    solana_keypair::Keypair,
     std::{
         net::{SocketAddr, UdpSocket},
         sync::{atomic::AtomicBool, Arc, RwLock},
