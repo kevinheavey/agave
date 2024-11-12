@@ -31,15 +31,15 @@ pub const QUIC_CONNECTION_HANDSHAKE_TIMEOUT: Duration = Duration::from_secs(60);
 pub const QUIC_UNSTAKED_RECEIVE_WINDOW_RATIO: u64 = 128;
 
 /// The receive window for QUIC connection from minimum staked nodes is
-/// set to this ratio times [`solana_sdk::packet::PACKET_DATA_SIZE`]
+/// set to this ratio times [`solana_packet::PACKET_DATA_SIZE`]
 ///
-/// [`solana_sdk::packet::PACKET_DATA_SIZE`]: https://docs.rs/solana-sdk/latest/solana_sdk/packet/constant.PACKET_DATA_SIZE.html
+/// [`solana_packet::PACKET_DATA_SIZE`]: https://docs.rs/solana-packet/latest/solana_packet/constant.PACKET_DATA_SIZE.html
 pub const QUIC_MIN_STAKED_RECEIVE_WINDOW_RATIO: u64 = 128;
 
 /// The receive window for QUIC connection from maximum staked nodes is
-/// set to this ratio times [`solana_sdk::packet::PACKET_DATA_SIZE`]
+/// set to this ratio times [`solana_packet::PACKET_DATA_SIZE`]
 ///
-/// [`solana_sdk::packet::PACKET_DATA_SIZE`]: https://docs.rs/solana-sdk/latest/solana_sdk/packet/constant.PACKET_DATA_SIZE.html
+/// [`solana_packet::PACKET_DATA_SIZE`]: https://docs.rs/solana-packet/latest/solana_packet/constant.PACKET_DATA_SIZE.html
 pub const QUIC_MAX_STAKED_RECEIVE_WINDOW_RATIO: u64 = 512;
 
 pub trait NotifyKeyUpdate {
