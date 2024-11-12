@@ -23,6 +23,7 @@ use {
     quinn_proto::VarIntBoundsExceeded,
     rand::{thread_rng, Rng},
     smallvec::SmallVec,
+    solana_keypair::Keypair,
     solana_measure::measure::Measure,
     solana_packet::{Meta, PACKET_DATA_SIZE},
     solana_perf::packet::{PacketBatch, PACKETS_PER_BATCH},
@@ -34,7 +35,6 @@ use {
         QUIC_TOTAL_STAKED_CONCURRENT_STREAMS, QUIC_UNSTAKED_RECEIVE_WINDOW_RATIO,
     },
     solana_signature::Signature,
-    solana_keypair::Keypair,
     solana_time_utils as timing,
     solana_transaction_metrics_tracker::signature_if_should_track_packet,
     std::{
