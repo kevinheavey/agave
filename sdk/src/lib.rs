@@ -151,6 +151,8 @@ pub use solana_program_memory as program_memory;
 /// assert_eq!(ID, my_id);
 /// ```
 pub use solana_pubkey::pubkey;
+#[deprecated(since = "2.2.0", note = "Use `solana-rent-debits` crate instead")]
+pub use solana_rent_debits as rent_debits;
 #[cfg(feature = "full")]
 #[deprecated(since = "2.2.0", note = "Use `solana-quic-definitions` crate instead")]
 pub use solana_quic_definitions as quic;
@@ -160,8 +162,6 @@ pub use solana_quic_definitions as quic;
     note = "Use `solana-reserved-account-keys` crate instead"
 )]
 pub use solana_reserved_account_keys as reserved_account_keys;
-#[deprecated(since = "2.2.0", note = "Use `solana-rent-debits` crate instead")]
-pub use solana_rent_debits as rent_debits;
 #[deprecated(since = "2.1.0", note = "Use `solana-sanitize` crate instead")]
 pub use solana_sanitize as sanitize;
 /// Same as `declare_id` except report that this id has been deprecated.
