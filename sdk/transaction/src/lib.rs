@@ -170,7 +170,7 @@ pub enum TransactionVerificationMode {
 #[cfg_attr(
     feature = "frozen-abi",
     derive(solana_frozen_abi_macro::AbiExample),
-    solana_frozen_abi_macro::frozen_abi(digest = "686AAhRhjXpqKidmJEdHHcJCL9XxCxebu8Xmku9shp83")
+    solana_frozen_abi_macro::frozen_abi(digest = "GESn6AYYNhpNfzJXdQ6kGjqz4VjpMw3ye9rghqaEqks7")
 )]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(Debug, PartialEq, Default, Eq, Clone)]
