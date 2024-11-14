@@ -52,17 +52,16 @@ dev-context-only-utils = ["bincode", "precompiles", "serde", "verify"]
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
-    "dep:solana-logger",
+    "dep:solana-logger"
 ]
 precompiles = ["dep:solana-precompiles"]
 serde = [
     "dep:serde",
     "dep:serde_derive",
     "dep:solana-short-vec",
-    "solana-signature/serde",
+    "solana-signature/serde"
 ]
 verify = ["solana-signature/verify"]
-
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
