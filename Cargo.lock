@@ -7453,6 +7453,7 @@ dependencies = [
  "rand 0.8.5",
  "reqwest",
  "serial_test",
+ "solana-clock",
  "solana-cluster-type",
  "solana-sha256-hasher",
  "solana-time-utils",

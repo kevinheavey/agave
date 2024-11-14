@@ -5888,6 +5888,7 @@ dependencies = [
  "lazy_static",
  "log",
  "reqwest",
+ "solana-clock",
  "solana-cluster-type",
  "solana-sha256-hasher",
  "solana-time-utils",
