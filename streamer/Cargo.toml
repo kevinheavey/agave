@@ -38,7 +38,6 @@ solana-packet = { workspace = true }
 solana-perf = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-quic-definitions = { workspace = true }
-solana-sdk = { workspace = true, optional = true }
 solana-signature = { workspace = true }
 solana-signer = { workspace = true }
 solana-time-utils = { workspace = true }
@@ -52,10 +51,11 @@ x509-parser = { workspace = true }
 [dev-dependencies]
 assert_matches = { workspace = true }
 solana-logger = { workspace = true }
+solana-sdk = { workspace = true }
 solana-streamer = { path = ".", features = ["dev-context-only-utils"] }
 
 [features]
-dev-context-only-utils = ["dep:solana-sdk"]
+dev-context-only-utils = []
 
 [lib]
 crate-type = ["lib"]

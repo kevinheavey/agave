@@ -1521,19 +1521,21 @@ impl<'a> Future for EndpointAccept<'a> {
 pub mod test {
     use {
         super::*,
-        crate::nonblocking::{
-            quic::compute_max_allowed_uni_streams,
-            testing_utilities::{
-                get_client_config, make_client_endpoint, setup_quic_server, SpawnTestServerResult,
-                TestServerConfig,
+        crate::{
+            nonblocking::{
+                quic::compute_max_allowed_uni_streams,
+                testing_utilities::{
+                    get_client_config, make_client_endpoint, setup_quic_server,
+                    SpawnTestServerResult, TestServerConfig,
+                },
             },
+            DEFAULT_TPU_COALESCE,
         },
         assert_matches::assert_matches,
         async_channel::unbounded as async_unbounded,
         crossbeam_channel::{unbounded, Receiver},
         quinn::{ApplicationClose, ConnectionError},
         solana_keypair::Keypair,
-        solana_sdk::net::DEFAULT_TPU_COALESCE,
         solana_signer::Signer,
         std::collections::HashMap,
         tokio::time::sleep,
