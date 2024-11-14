@@ -16,9 +16,9 @@ solana-feature-set = { workspace = true }
 solana-precompile-error = { workspace = true }
 solana-program = { workspace = true, default-features = false }
 solana-pubkey = { workspace = true }
+solana-sdk-ids = { workspace = true }
 solana-secp256k1-program = { workspace = true, features = ["bincode"] }
 solana-secp256r1-program = { workspace = true, default-features = false }
-solana-sdk-ids = { workspace = true }
 
 [features]
 # Enables the "vendored" feature of openssl inside of secp256r1-program
