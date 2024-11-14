@@ -29,6 +29,7 @@ uriparse = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
+solana-pubkey = { workspace = true, features = ["rand"] }
 
 [features]
 default = ["linux-static-hidraw", "hidapi"]
