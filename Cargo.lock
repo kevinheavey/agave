@@ -9275,6 +9275,7 @@ dependencies = [
  "solana-hash",
  "solana-instruction",
  "solana-keypair",
+ "solana-logger",
  "solana-nonce",
  "solana-packet",
  "solana-precompiles",

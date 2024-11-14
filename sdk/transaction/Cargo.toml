@@ -18,6 +18,7 @@ solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
+solana-logger = { workspace = true, optional = true }
 solana-nonce = { workspace = true, optional = true }
 solana-packet = { workspace = true }
 solana-precompiles = { workspace = true, optional = true }
@@ -48,7 +49,11 @@ solana-transaction = { path = ".", features = ["dev-context-only-utils"] }
 [features]
 bincode = ["dep:solana-bincode", "dep:solana-nonce", "serde"]
 dev-context-only-utils = ["bincode", "precompiles", "serde", "verify"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = [
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "dep:solana-logger",
+]
 precompiles = ["dep:solana-precompiles"]
 serde = [
     "dep:serde",
