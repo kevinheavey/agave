@@ -1,0 +1,58 @@
+[package]
+name = "solana-transaction"
+description = "Solana transaction-types"
+documentation = "https://docs.rs/solana-transaction"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+serde = { workspace = true }
+serde_derive = { workspace = true }
+solana-bincode = { workspace = true }
+solana-feature-set = { workspace = true }
+solana-frozen-abi = { workspace = true, optional = true }
+solana-frozen-abi-macro = { workspace = true, optional = true }
+solana-hash = { workspace = true }
+solana-instruction = { workspace = true }
+solana-nonce = { workspace = true }
+solana-packet = { workspace = true }
+solana-precompiles = { workspace = true, optional = true }
+solana-program = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-reserved-account-keys = { workspace = true }
+solana-sanitize = { workspace = true }
+solana-sdk-ids = { workspace = true }
+solana-short-vec = { workspace = true }
+solana-signature = { workspace = true, features = ["serde"] }
+solana-signer = { workspace = true }
+solana-transaction-error = { workspace = true }
+
+[dev-dependencies]
+anyhow = { workspace = true }
+bincode = { workspace = true }
+borsh = { workspace = true }
+solana-hash = { workspace = true }
+solana-instruction = { workspace = true, features = ["borsh"] }
+solana-keypair = { workspace = true }
+solana-presigner = { workspace = true }
+solana-program = { workspace = true, default-features = false }
+solana-pubkey = { workspace = true, features = ["rand"] }
+solana-sdk = { workspace = true }
+solana-sha256-hasher = { workspace = true }
+solana-transaction = { path = ".", features = ["dev-context-only-utils"] }
+
+[features]
+dev-context-only-utils = ["precompiles", "verify"]
+frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+precompiles = ["dep:solana-precompiles"]
+verify = ["solana-signature/verify"]
+
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+all-features = true
+rustdoc-args = ["--cfg=docsrs"]

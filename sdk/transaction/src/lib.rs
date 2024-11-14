@@ -20,8 +20,8 @@
 //! signers including remote wallets, such as Ledger devices, as represented by
 //! the [`RemoteKeypair`] type in the [`solana-remote-wallet`] crate.
 //!
-//! [`Signer`]: crate::signer::Signer
-//! [`Keypair`]: crate::signer::keypair::Keypair
+//! [`Signer`]: https://docs.rs/solana-signer/latest/solana_signer/trait.Signer.html
+//! [`Keypair`]: https://docs.rs/solana-keypair/latest/solana_keypair/struct.Keypair.html
 //! [`solana-remote-wallet`]: https://docs.rs/solana-remote-wallet/latest/
 //! [`RemoteKeypair`]: https://docs.rs/solana-remote-wallet/latest/solana_remote_wallet/remote_keypair/struct.RemoteKeypair.html
 //!
@@ -56,14 +56,13 @@
 //! # use solana_sdk::example_mocks::solana_rpc_client;
 //! use anyhow::Result;
 //! use borsh::{BorshSerialize, BorshDeserialize};
+//! use solana_instruction::Instruction;
+//! use solana_keypair::Keypair;
+//! use solana_program::message::Message;
+//! use solana_pubkey::Pubkey;
 //! use solana_rpc_client::rpc_client::RpcClient;
-//! use solana_sdk::{
-//!      instruction::Instruction,
-//!      message::Message,
-//!      pubkey::Pubkey,
-//!      signature::{Keypair, Signer},
-//!      transaction::Transaction,
-//! };
+//! use solana_signer::Signer;
+//! use solana_transaction::Transaction;
 //!
 //! // A custom program instruction. This would typically be defined in
 //! // another crate so it can be shared between the on-chain program and
@@ -109,43 +108,31 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-#![cfg(feature = "full")]
-
 #[cfg(target_arch = "wasm32")]
 use crate::wasm_bindgen;
 use {
-    crate::{
-        hash::Hash,
-        instruction::{CompiledInstruction, Instruction},
-        message::Message,
-        nonce::NONCED_TX_MARKER_IX_INDEX,
-        precompiles::verify_if_precompile,
-        program_utils::limited_deserialize,
-        pubkey::Pubkey,
-        signature::{Signature, SignerError},
-        signers::Signers,
+    serde_derive::{Deserialize, Serialize},
+    solana_bincode::limited_deserialize,
+    solana_hash::Hash,
+    solana_instruction::Instruction,
+    solana_nonce::NONCED_TX_MARKER_IX_INDEX,
+    solana_program::{
+        instruction::CompiledInstruction, message::Message, system_instruction::SystemInstruction,
+        system_program,
     },
-    serde::Serialize,
-    solana_feature_set as feature_set,
-    solana_program::{system_instruction::SystemInstruction, system_program},
+    solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_short_vec as short_vec,
+    solana_signature::Signature,
+    solana_signer::{signers::Signers, SignerError},
+    solana_transaction_error::{TransactionError, TransactionResult as Result},
     std::result,
 };
 
-mod sanitized;
-mod versioned;
-
-#[deprecated(
-    since = "2.2.0",
-    note = "Use `solana_transaction_error::TransactionResult` instead"
-)]
-pub use solana_transaction_error::TransactionResult as Result;
-#[deprecated(since = "2.1.0", note = "Use solana_transaction_error crate instead")]
-pub use solana_transaction_error::{
-    AddressLoaderError, SanitizeMessageError, TransactionError, TransportError, TransportResult,
-};
-pub use {sanitized::*, versioned::*};
+pub mod sanitized;
+pub mod simple_vote_transaction_checker;
+pub mod versioned;
+mod wasm;
 
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 pub enum TransactionVerificationMode {
@@ -160,7 +147,7 @@ pub enum TransactionVerificationMode {
 /// they are submitted by clients in [`Transaction`]s containing one or
 /// more instructions, and signed by one or more [`Signer`]s.
 ///
-/// [`Signer`]: crate::signer::Signer
+/// [`Signer`]: https://docs.rs/solana-signer/latest/solana_signer/trait.Signer.html
 ///
 /// See the [module documentation] for more details about transactions.
 ///
@@ -177,8 +164,8 @@ pub enum TransactionVerificationMode {
 #[cfg(not(target_arch = "wasm32"))]
 #[cfg_attr(
     feature = "frozen-abi",
-    derive(AbiExample),
-    frozen_abi(digest = "76BDTr3Xm3VP7h4eSiw6pZHKc5yYewDufyia3Yedh6GG")
+    derive(solana_frozen_abi_macro::AbiExample),
+    solana_frozen_abi_macro::frozen_abi(digest = "686AAhRhjXpqKidmJEdHHcJCL9XxCxebu8Xmku9shp83")
 )]
 #[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize)]
 pub struct Transaction {
@@ -187,9 +174,9 @@ pub struct Transaction {
     /// is equal to [`num_required_signatures`] of the `Message`'s
     /// [`MessageHeader`].
     ///
-    /// [`account_keys`]: Message::account_keys
-    /// [`MessageHeader`]: crate::message::MessageHeader
-    /// [`num_required_signatures`]: crate::message::MessageHeader::num_required_signatures
+    /// [`account_keys`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#structfield.account_keys
+    /// [`MessageHeader`]: https://docs.rs/solana-program/latest/solana_program/message/struct.MessageHeader.html
+    /// [`num_required_signatures`]: https://docs.rs/solana-program/latest/solana_program/message/struct.MessageHeader.html#structfield.num_required_signatures
     // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
     #[serde(with = "short_vec")]
     pub signatures: Vec<Signature>,
@@ -244,14 +231,13 @@ impl Transaction {
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
+    /// use solana_instruction::Instruction;
+    /// use solana_keypair::Keypair;
+    /// use solana_program::message::Message;
+    /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_sdk::{
-    ///      instruction::Instruction,
-    ///      message::Message,
-    ///      pubkey::Pubkey,
-    ///      signature::{Keypair, Signer},
-    ///      transaction::Transaction,
-    /// };
+    /// use solana_signer::Signer;
+    /// use solana_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -323,14 +309,13 @@ impl Transaction {
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
+    /// use solana_instruction::Instruction;
+    /// use solana_keypair::Keypair;
+    /// use solana_program::message::Message;
+    /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_sdk::{
-    ///      instruction::Instruction,
-    ///      message::Message,
-    ///      pubkey::Pubkey,
-    ///      signature::{Keypair, Signer},
-    ///      transaction::Transaction,
-    /// };
+    /// use solana_signer::Signer;
+    /// use solana_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -402,14 +387,13 @@ impl Transaction {
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
+    /// use solana_instruction::Instruction;
+    /// use solana_keypair::Keypair;
+    /// use solana_program::message::Message;
+    /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_sdk::{
-    ///      instruction::Instruction,
-    ///      message::Message,
-    ///      pubkey::Pubkey,
-    ///      signature::{Keypair, Signer},
-    ///      transaction::Transaction,
-    /// };
+    /// use solana_signer::Signer;
+    /// use solana_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -478,14 +462,13 @@ impl Transaction {
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
+    /// use solana_instruction::Instruction;
+    /// use solana_keypair::Keypair;
+    /// use solana_program::message::Message;
+    /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_sdk::{
-    ///      instruction::Instruction,
-    ///      message::Message,
-    ///      pubkey::Pubkey,
-    ///      signature::{Keypair, Signer},
-    ///      transaction::Transaction,
-    /// };
+    /// use solana_signer::Signer;
+    /// use solana_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -686,14 +669,13 @@ impl Transaction {
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
+    /// use solana_instruction::Instruction;
+    /// use solana_keypair::Keypair;
+    /// use solana_program::message::Message;
+    /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_sdk::{
-    ///      instruction::Instruction,
-    ///      message::Message,
-    ///      pubkey::Pubkey,
-    ///      signature::{Keypair, Signer},
-    ///      transaction::Transaction,
-    /// };
+    /// use solana_signer::Signer;
+    /// use solana_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -824,14 +806,13 @@ impl Transaction {
     /// # use solana_sdk::example_mocks::solana_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
+    /// use solana_instruction::Instruction;
+    /// use solana_keypair::Keypair;
+    /// use solana_program::message::Message;
+    /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_sdk::{
-    ///      instruction::Instruction,
-    ///      message::Message,
-    ///      pubkey::Pubkey,
-    ///      signature::{Keypair, Signer},
-    ///      transaction::Transaction,
-    /// };
+    /// use solana_signer::Signer;
+    /// use solana_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -928,11 +909,11 @@ impl Transaction {
     /// See the documentation for the [`solana-remote-wallet`] crate for details
     /// on the operation of [`RemoteKeypair`] signers.
     ///
-    /// [`num_required_signatures`]: crate::message::MessageHeader::num_required_signatures
+    /// [`num_required_signatures`]: https://docs.rs/solana-program/latest/solana_program/message/struct.MessageHeader.html#structfield.num_required_signatures
     /// [`account_keys`]: Message::account_keys
-    /// [`Presigner`]: crate::signer::presigner::Presigner
-    /// [`PresignerError`]: crate::signer::presigner::PresignerError
-    /// [`PresignerError::VerificationFailure`]: crate::signer::presigner::PresignerError::VerificationFailure
+    /// [`Presigner`]: https://docs.rs/solana-presigner/latest/solana_presigner/struct.Presigner.html
+    /// [`PresignerError`]: https://docs.rs/solana-signer/latest/solana_signer/enum.PresignerError.html
+    /// [`PresignerError::VerificationFailure`]: https://docs.rs/solana-signer/latest/solana_signer/enum.PresignerError.html#variant.WrongSize
     /// [`solana-remote-wallet`]: https://docs.rs/solana-remote-wallet/latest/
     /// [`RemoteKeypair`]: https://docs.rs/solana-remote-wallet/latest/solana_remote_wallet/remote_keypair/struct.RemoteKeypair.html
     pub fn try_partial_sign<T: Signers + ?Sized>(
@@ -987,6 +968,7 @@ impl Transaction {
         Signature::default()
     }
 
+    #[cfg(feature = "verify")]
     /// Verifies that all signers have signed the message.
     ///
     /// # Errors
@@ -1005,6 +987,7 @@ impl Transaction {
         }
     }
 
+    #[cfg(feature = "verify")]
     /// Verify the transaction and hash its message.
     ///
     /// # Errors
@@ -1023,6 +1006,7 @@ impl Transaction {
         }
     }
 
+    #[cfg(feature = "verify")]
     /// Verifies that all signers have signed the message.
     ///
     /// Returns a vector with the length of required signatures, where each
@@ -1031,6 +1015,7 @@ impl Transaction {
         self._verify_with_results(&self.message_data())
     }
 
+    #[cfg(feature = "verify")]
     pub(crate) fn _verify_with_results(&self, message_bytes: &[u8]) -> Vec<bool> {
         self.signatures
             .iter()
@@ -1039,8 +1024,9 @@ impl Transaction {
             .collect()
     }
 
+    #[cfg(feature = "precompiles")]
     /// Verify the precompiled programs in this transaction.
-    pub fn verify_precompiles(&self, feature_set: &feature_set::FeatureSet) -> Result<()> {
+    pub fn verify_precompiles(&self, feature_set: &solana_feature_set::FeatureSet) -> Result<()> {
         for instruction in &self.message().instructions {
             // The Transaction may not be sanitized at this point
             if instruction.program_id_index as usize >= self.message().account_keys.len() {
@@ -1048,7 +1034,7 @@ impl Transaction {
             }
             let program_id = &self.message().account_keys[instruction.program_id_index as usize];
 
-            verify_if_precompile(
+            solana_precompiles::verify_if_precompile(
                 program_id,
                 instruction,
                 &self.message().instructions,
@@ -1075,6 +1061,7 @@ impl Transaction {
             .collect())
     }
 
+    #[cfg(feature = "verify")]
     /// Replace all the signatures and pubkeys.
     pub fn replace_signatures(&mut self, signers: &[(Pubkey, Signature)]) -> Result<()> {
         let num_required_signatures = self.message.header.num_required_signatures as usize;
@@ -1125,7 +1112,7 @@ pub fn uses_durable_nonce(tx: &Transaction) -> Option<&CompiledInstruction> {
             )
             // Is a nonce advance instruction
             && matches!(
-                limited_deserialize(&instruction.data),
+                limited_deserialize(&instruction.data, solana_packet::PACKET_DATA_SIZE as u64),
                 Ok(SystemInstruction::AdvanceNonceAccount)
             )
         })
@@ -1137,13 +1124,13 @@ mod tests {
 
     use {
         super::*,
-        crate::{
-            hash::hash,
-            instruction::AccountMeta,
-            signature::{Keypair, Presigner, Signer},
-            system_instruction,
-        },
         bincode::{deserialize, serialize, serialized_size},
+        solana_instruction::AccountMeta,
+        solana_keypair::Keypair,
+        solana_presigner::Presigner,
+        solana_program::system_instruction,
+        solana_sha256_hasher::hash,
+        solana_signer::Signer,
         std::mem::size_of,
     };
 
@@ -1156,10 +1143,10 @@ mod tests {
     #[test]
     fn test_refs() {
         let key = Keypair::new();
-        let key1 = solana_sdk::pubkey::new_rand();
-        let key2 = solana_sdk::pubkey::new_rand();
-        let prog1 = solana_sdk::pubkey::new_rand();
-        let prog2 = solana_sdk::pubkey::new_rand();
+        let key1 = solana_pubkey::new_rand();
+        let key2 = solana_pubkey::new_rand();
+        let prog1 = solana_pubkey::new_rand();
+        let prog2 = solana_pubkey::new_rand();
         let instructions = vec![
             CompiledInstruction::new(3, &(), vec![0, 1]),
             CompiledInstruction::new(4, &(), vec![0, 2]),
@@ -1227,7 +1214,7 @@ mod tests {
     fn test_sanitize_txs() {
         let key = Keypair::new();
         let id0 = Pubkey::default();
-        let program_id = solana_sdk::pubkey::new_rand();
+        let program_id = solana_pubkey::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,
@@ -1326,7 +1313,7 @@ mod tests {
     fn test_transaction_minimum_serialized_size() {
         let alice_keypair = Keypair::new();
         let alice_pubkey = alice_keypair.pubkey();
-        let bob_pubkey = solana_sdk::pubkey::new_rand();
+        let bob_pubkey = solana_pubkey::new_rand();
         let ix = system_instruction::transfer(&alice_pubkey, &bob_pubkey, 42);
 
         let expected_data_size = size_of::<u32>() + size_of::<u64>();
@@ -1404,7 +1391,7 @@ mod tests {
     #[should_panic]
     fn test_partial_sign_mismatched_key() {
         let keypair = Keypair::new();
-        let fee_payer = solana_sdk::pubkey::new_rand();
+        let fee_payer = solana_pubkey::new_rand();
         let ix = Instruction::new_with_bincode(
             Pubkey::default(),
             &0,
@@ -1487,7 +1474,7 @@ mod tests {
         let program_id = Pubkey::default();
         let keypair0 = Keypair::new();
         let id0 = keypair0.pubkey();
-        let id1 = solana_sdk::pubkey::new_rand();
+        let id1 = solana_pubkey::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,
@@ -1538,7 +1525,7 @@ mod tests {
         assert_eq!(tx.signatures[1], presigner_sig);
 
         // Wrong key should error, not panic
-        let another_pubkey = solana_sdk::pubkey::new_rand();
+        let another_pubkey = solana_pubkey::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,

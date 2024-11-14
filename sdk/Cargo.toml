@@ -47,6 +47,7 @@ full = [
     "dep:solana-seed-derivable",
     "dep:solana-seed-phrase",
     "dep:solana-signer",
+    "dep:solana-transaction",
     "dep:solana-transaction-error",
 ]
 borsh = [
@@ -173,6 +174,10 @@ solana-signature = { workspace = true, features = [
 ], optional = true }
 solana-signer = { workspace = true, optional = true }
 solana-time-utils = { workspace = true }
+solana-transaction = { workspace = true, features = [
+    "precompiles",
+    "verify"
+], optional = true }
 solana-transaction-context = { workspace = true, features = ["bincode"] }
 solana-transaction-error = { workspace = true, features = [
     "serde",

@@ -1,26 +1,21 @@
-#![cfg(feature = "full")]
-
-pub use crate::message::{AddressLoader, SimpleAddressLoader};
 use {
-    super::SanitizedVersionedTransaction,
     crate::{
-        hash::Hash,
-        message::{
-            legacy,
-            v0::{self, LoadedAddresses},
-            LegacyMessage, SanitizedMessage, VersionedMessage,
-        },
-        precompiles::verify_if_precompile,
-        pubkey::Pubkey,
-        reserved_account_keys::ReservedAccountKeys,
-        signature::Signature,
         simple_vote_transaction_checker::is_simple_vote_transaction,
-        transaction::{Result, Transaction, VersionedTransaction},
+        versioned::{sanitized::SanitizedVersionedTransaction, VersionedTransaction},
+        Transaction,
     },
-    solana_feature_set as feature_set,
-    solana_program::{instruction::InstructionError, message::SanitizedVersionedMessage},
+    solana_hash::Hash,
+    solana_program::message::{
+        legacy,
+        v0::{self, LoadedAddresses},
+        AddressLoader, LegacyMessage, SanitizedMessage, SanitizedVersionedMessage,
+        VersionedMessage,
+    },
+    solana_pubkey::Pubkey,
+    solana_reserved_account_keys::ReservedAccountKeys,
     solana_sanitize::Sanitize,
-    solana_transaction_error::TransactionError,
+    solana_signature::Signature,
+    solana_transaction_error::{TransactionError, TransactionResult as Result},
     std::collections::HashSet,
 };
 
@@ -259,6 +254,7 @@ impl SanitizedTransaction {
         self.message.get_durable_nonce()
     }
 
+    #[cfg(feature = "verify")]
     /// Return the serialized message data to sign.
     fn message_data(&self) -> Vec<u8> {
         match &self.message {
@@ -267,6 +263,7 @@ impl SanitizedTransaction {
         }
     }
 
+    #[cfg(feature = "verify")]
     /// Verify the transaction signatures
     pub fn verify(&self) -> Result<()> {
         let message_bytes = self.message_data();
@@ -283,12 +280,13 @@ impl SanitizedTransaction {
         }
     }
 
+    #[cfg(feature = "precompiles")]
     /// Verify the precompiled programs in this transaction
-    pub fn verify_precompiles(&self, feature_set: &feature_set::FeatureSet) -> Result<()> {
+    pub fn verify_precompiles(&self, feature_set: &solana_feature_set::FeatureSet) -> Result<()> {
         for (index, (program_id, instruction)) in
             self.message.program_instructions_iter().enumerate()
         {
-            verify_if_precompile(
+            solana_precompiles::verify_if_precompile(
                 program_id,
                 instruction,
                 self.message().instructions(),
@@ -297,7 +295,7 @@ impl SanitizedTransaction {
             .map_err(|err| {
                 TransactionError::InstructionError(
                     index as u8,
-                    InstructionError::Custom(err as u32),
+                    solana_instruction::error::InstructionError::Custom(err as u32),
                 )
             })?;
         }
@@ -338,14 +336,13 @@ impl SanitizedTransaction {
 mod tests {
     use {
         super::*,
-        crate::{
-            reserved_account_keys::ReservedAccountKeys,
-            signer::{keypair::Keypair, Signer},
-        },
+        solana_keypair::Keypair,
         solana_program::{
-            message::MessageHeader,
+            message::{MessageHeader, SimpleAddressLoader},
             vote::{self, state::Vote},
         },
+        solana_reserved_account_keys::ReservedAccountKeys,
+        solana_signer::Signer,
     };
 
     #[test]

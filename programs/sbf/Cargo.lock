@@ -7253,6 +7253,7 @@ dependencies = [
  "solana-signature",
  "solana-signer",
  "solana-time-utils",
+ "solana-transaction",
  "solana-transaction-context",
  "solana-transaction-error",
  "thiserror 2.0.3",
@@ -7767,6 +7768,30 @@ dependencies = [
  "thiserror 2.0.3",
  "tokio",
  "tokio-util 0.7.1",
+]
+
+[[package]]
+name = "solana-transaction"
+version = "2.2.0"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "solana-bincode",
+ "solana-feature-set",
+ "solana-hash",
+ "solana-instruction",
+ "solana-nonce",
+ "solana-packet",
+ "solana-precompiles",
+ "solana-program",
+ "solana-pubkey",
+ "solana-reserved-account-keys",
+ "solana-sanitize",
+ "solana-sdk-ids",
+ "solana-short-vec",
+ "solana-signature",
+ "solana-signer",
+ "solana-transaction-error",
 ]
 
 [[package]]
