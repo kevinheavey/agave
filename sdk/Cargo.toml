@@ -175,7 +175,9 @@ solana-signature = { workspace = true, features = [
 solana-signer = { workspace = true, optional = true }
 solana-time-utils = { workspace = true }
 solana-transaction = { workspace = true, features = [
+    "bincode",
     "precompiles",
+    "serde",
     "verify"
 ], optional = true }
 solana-transaction-context = { workspace = true, features = ["bincode"] }

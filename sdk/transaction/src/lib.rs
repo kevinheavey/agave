@@ -110,19 +110,23 @@
 
 #[cfg(target_arch = "wasm32")]
 use crate::wasm_bindgen;
+#[cfg(feature = "serde")]
 use {
     serde_derive::{Deserialize, Serialize},
+    solana_short_vec as short_vec,
+};
+#[cfg(feature = "bincode")]
+use {
     solana_bincode::limited_deserialize,
+    solana_nonce::NONCED_TX_MARKER_IX_INDEX,
+    solana_program::{system_instruction::SystemInstruction, system_program},
+};
+use {
     solana_hash::Hash,
     solana_instruction::Instruction,
-    solana_nonce::NONCED_TX_MARKER_IX_INDEX,
-    solana_program::{
-        instruction::CompiledInstruction, message::Message, system_instruction::SystemInstruction,
-        system_program,
-    },
+    solana_program::{instruction::CompiledInstruction, message::Message},
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
-    solana_short_vec as short_vec,
     solana_signature::Signature,
     solana_signer::{signers::Signers, SignerError},
     solana_transaction_error::{TransactionError, TransactionResult as Result},
@@ -167,7 +171,8 @@ pub enum TransactionVerificationMode {
     derive(solana_frozen_abi_macro::AbiExample),
     solana_frozen_abi_macro::frozen_abi(digest = "686AAhRhjXpqKidmJEdHHcJCL9XxCxebu8Xmku9shp83")
 )]
-#[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Debug, PartialEq, Default, Eq, Clone)]
 pub struct Transaction {
     /// A set of signatures of a serialized [`Message`], signed by the first
     /// keys of the `Message`'s [`account_keys`], where the number of signatures
@@ -178,7 +183,7 @@ pub struct Transaction {
     /// [`MessageHeader`]: https://docs.rs/solana-program/latest/solana_program/message/struct.MessageHeader.html
     /// [`num_required_signatures`]: https://docs.rs/solana-program/latest/solana_program/message/struct.MessageHeader.html#structfield.num_required_signatures
     // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub signatures: Vec<Signature>,
 
     /// The message to sign.
@@ -195,10 +200,11 @@ pub struct Transaction {
     derive(AbiExample),
     frozen_abi(digest = "H7xQFcd1MtMv9QKZWGatBAXwhg28tpeX59P3s8ZZLAY4")
 )]
-#[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Debug, PartialEq, Default, Eq, Clone)]
 pub struct Transaction {
     #[wasm_bindgen(skip)]
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub signatures: Vec<Signature>,
 
     #[wasm_bindgen(skip)]
@@ -1098,6 +1104,7 @@ impl Transaction {
     }
 }
 
+#[cfg(feature = "bincode")]
 /// Returns true if transaction begins with an advance nonce instruction.
 pub fn uses_durable_nonce(tx: &Transaction) -> Option<&CompiledInstruction> {
     let message = tx.message();

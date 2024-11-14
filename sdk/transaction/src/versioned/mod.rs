@@ -2,30 +2,43 @@
 
 use {
     crate::Transaction,
-    serde_derive::{Deserialize, Serialize},
-    solana_bincode::limited_deserialize,
-    solana_program::{
-        message::VersionedMessage, nonce::NONCED_TX_MARKER_IX_INDEX,
-        system_instruction::SystemInstruction, system_program,
-    },
+    solana_program::message::VersionedMessage,
     solana_sanitize::SanitizeError,
-    solana_short_vec as short_vec,
     solana_signature::Signature,
     solana_signer::{signers::Signers, SignerError},
     std::cmp::Ordering,
+};
+#[cfg(feature = "serde")]
+use {
+    serde_derive::{Deserialize, Serialize},
+    solana_short_vec as short_vec,
+};
+#[cfg(feature = "bincode")]
+use {
+    solana_bincode::limited_deserialize,
+    solana_nonce::NONCED_TX_MARKER_IX_INDEX,
+    solana_program::{system_instruction::SystemInstruction, system_program},
 };
 
 pub mod sanitized;
 
 /// Type that serializes to the string "legacy"
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize),
+    serde(rename_all = "camelCase")
+)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Legacy {
     Legacy,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase", untagged)]
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize),
+    serde(rename_all = "camelCase", untagged)
+)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum TransactionVersion {
     Legacy(Legacy),
     Number(u8),
@@ -38,10 +51,11 @@ impl TransactionVersion {
 // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
 /// An atomic transaction
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
-#[derive(Debug, PartialEq, Default, Eq, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Debug, PartialEq, Default, Eq, Clone)]
 pub struct VersionedTransaction {
     /// List of signatures
-    #[serde(with = "short_vec")]
+    #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub signatures: Vec<Signature>,
     /// Message to sign.
     pub message: VersionedMessage,
@@ -192,6 +206,7 @@ impl VersionedTransaction {
             .collect()
     }
 
+    #[cfg(feature = "bincode")]
     /// Returns true if transaction begins with an advance nonce instruction.
     pub fn uses_durable_nonce(&self) -> bool {
         let message = &self.message;

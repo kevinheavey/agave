@@ -10,15 +10,15 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-serde = { workspace = true }
-serde_derive = { workspace = true }
-solana-bincode = { workspace = true }
+serde = { workspace = true, optional = true }
+serde_derive = { workspace = true, optional = true }
+solana-bincode = { workspace = true, optional = true }
 solana-feature-set = { workspace = true }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
-solana-nonce = { workspace = true }
+solana-nonce = { workspace = true, optional = true }
 solana-packet = { workspace = true }
 solana-precompiles = { workspace = true, optional = true }
 solana-program = { workspace = true }
@@ -26,8 +26,8 @@ solana-pubkey = { workspace = true }
 solana-reserved-account-keys = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-sdk-ids = { workspace = true }
-solana-short-vec = { workspace = true }
-solana-signature = { workspace = true, features = ["serde"] }
+solana-short-vec = { workspace = true, optional = true }
+solana-signature = { workspace = true }
 solana-signer = { workspace = true }
 solana-transaction-error = { workspace = true }
 
@@ -46,9 +46,16 @@ solana-sha256-hasher = { workspace = true }
 solana-transaction = { path = ".", features = ["dev-context-only-utils"] }
 
 [features]
-dev-context-only-utils = ["precompiles", "verify"]
+bincode = ["dep:solana-bincode", "dep:solana-nonce", "serde"]
+dev-context-only-utils = ["bincode", "precompiles", "serde", "verify"]
 frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 precompiles = ["dep:solana-precompiles"]
+serde = [
+    "dep:serde",
+    "dep:serde_derive",
+    "dep:solana-short-vec",
+    "solana-signature/serde",
+]
 verify = ["solana-signature/verify"]
 
 
