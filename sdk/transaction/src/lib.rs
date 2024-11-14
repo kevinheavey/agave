@@ -1,3 +1,4 @@
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 //! Atomically-committed sequences of instructions.
 //!
 //! While [`Instruction`]s are the basic unit of computation in Solana, they are
