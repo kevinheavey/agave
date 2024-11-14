@@ -1529,7 +1529,7 @@ pub mod test {
                     SpawnTestServerResult, TestServerConfig,
                 },
             },
-            DEFAULT_TPU_COALESCE,
+            quic::DEFAULT_TPU_COALESCE,
         },
         assert_matches::assert_matches,
         async_channel::unbounded as async_unbounded,
