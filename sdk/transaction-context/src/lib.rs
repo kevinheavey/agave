@@ -4,7 +4,7 @@
 
 #[cfg(all(
     not(target_os = "solana"),
-    feature = "debug_assertions",
+    feature = "debug_signature",
     debug_assertions
 ))]
 use solana_signature::Signature;
@@ -170,7 +170,7 @@ pub struct TransactionContext {
     /// Useful for debugging to filter by or to look it up on the explorer
     #[cfg(all(
         not(target_os = "solana"),
-        feature = "debug_assertions",
+        feature = "debug_signature",
         debug_assertions
     ))]
     signature: Signature,
@@ -202,7 +202,7 @@ impl TransactionContext {
             rent,
             #[cfg(all(
                 not(target_os = "solana"),
-                feature = "debug_assertions",
+                feature = "debug_signature",
                 debug_assertions
             ))]
             signature: Signature::default(),
@@ -234,7 +234,7 @@ impl TransactionContext {
     /// Stores the signature of the current transaction
     #[cfg(all(
         not(target_os = "solana"),
-        feature = "debug_assertions",
+        feature = "debug_signature",
         debug_assertions
     ))]
     pub fn set_signature(&mut self, signature: &Signature) {
@@ -244,7 +244,7 @@ impl TransactionContext {
     /// Returns the signature of the current transaction
     #[cfg(all(
         not(target_os = "solana"),
-        feature = "debug_assertions",
+        feature = "debug_signature",
         debug_assertions
     ))]
     pub fn get_signature(&self) -> &Signature {
