@@ -28,7 +28,7 @@ full = [
     "rand0-7",
     "serde_json",
     "solana-signature",
-    "solana-transaction-context/debug_signature",
+    "solana-transaction-context/debug-signature",
     "ed25519-dalek",
     "libsecp256k1",
     "sha3",
