@@ -22,6 +22,8 @@ solana-clock = { workspace = true, features = ["serde", "sysvar"] }
 solana-epoch-rewards = { workspace = true, features = ["serde", "sysvar"] }
 solana-epoch-schedule = { workspace = true, features = ["serde", "sysvar"] }
 solana-fee-calculator = { workspace = true, features = ["serde"] }
+solana-frozen-abi = { workspace = true, optional = true }
+solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-hash = { workspace = true, features = ["bytemuck"] }
 solana-instruction = { workspace = true }
 solana-last-restart-slot = { workspace = true, features = ["serde", "sysvar"] }
@@ -54,6 +56,7 @@ test-case = { workspace = true }
 
 [features]
 dev-context-only-utils = ["dep:qualifier_attr"]
+frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

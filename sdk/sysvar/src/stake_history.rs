@@ -58,7 +58,7 @@ use {
 pub const MAX_ENTRIES: usize = 512; // it should never take as many as 512 epochs to warm up or cool down
 
 #[repr(C)]
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone)]
 pub struct StakeHistoryEntry {
     pub effective: u64,    // effective stake at this epoch
@@ -106,7 +106,7 @@ impl std::ops::Add for StakeHistoryEntry {
 ///
 /// [sv]: https://docs.solanalabs.com/runtime/sysvars#stakehistory
 #[repr(C)]
-#[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone)]
 pub struct StakeHistory(Vec<(Epoch, StakeHistoryEntry)>);
 
