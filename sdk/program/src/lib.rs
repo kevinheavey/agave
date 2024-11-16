@@ -539,6 +539,8 @@ pub use solana_serialize_utils as serialize_utils;
 pub use solana_short_vec as short_vec;
 #[deprecated(since = "2.1.0", note = "Use `solana-stable-layout` crate instead")]
 pub use solana_stable_layout as stable_layout;
+#[cfg(not(target_os = "solana"))]
+pub use solana_sysvar::program_stubs;
 #[cfg(target_arch = "wasm32")]
 pub use wasm_bindgen::prelude::wasm_bindgen;
 pub use {
@@ -553,8 +555,6 @@ pub use {
     solana_program_option as program_option, solana_pubkey as pubkey, solana_rent as rent,
     solana_sysvar::impl_sysvar_get,
 };
-#[cfg(not(target_os = "solana"))]
-pub use solana_sysvar::program_stubs;
 /// The [config native program][np].
 ///
 /// [np]: https://docs.solanalabs.com/runtime/programs#config-program
