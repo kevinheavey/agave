@@ -554,7 +554,7 @@ pub use {
     solana_sysvar::impl_sysvar_get,
 };
 #[cfg(not(target_os = "solana"))]
-pub use solana_sysvar::program_stubs
+pub use solana_sysvar::program_stubs;
 /// The [config native program][np].
 ///
 /// [np]: https://docs.solanalabs.com/runtime/programs#config-program
