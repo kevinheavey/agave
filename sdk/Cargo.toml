@@ -59,6 +59,7 @@ frozen-abi = [
     "solana-reward-info/frozen-abi",
     "solana-short-vec/frozen-abi",
     "solana-signature/frozen-abi",
+    "solana-sysvar/frozen-abi",
     "solana-transaction-error/frozen-abi"
 ]
 # Enables the "vendored" feature of openssl inside of secp256r1-program
@@ -163,6 +164,7 @@ hex = { workspace = true }
 solana-logger = { workspace = true }
 solana-program = { workspace = true, features = ["dev-context-only-utils"] }
 solana-sdk = { path = ".", features = ["dev-context-only-utils"] }
+solana-sysvar = { workspace = true, features = ["dev-context-only-utils"] }
 static_assertions = { workspace = true }
 tiny-bip39 = { workspace = true }
 

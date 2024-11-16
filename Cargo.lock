@@ -8409,6 +8409,7 @@ dependencies = [
  "solana-short-vec",
  "solana-signature",
  "solana-signer",
+ "solana-sysvar",
  "solana-time-utils",
  "solana-transaction-error",
  "static_assertions",
