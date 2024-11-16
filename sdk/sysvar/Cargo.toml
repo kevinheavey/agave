@@ -47,7 +47,6 @@ solana-program-memory = { workspace = true }
 [dev-dependencies]
 anyhow = { workspace = true }
 serial_test = { workspace = true }
-solana-account = { workspace = true }
 solana-msg = { workspace = true }
 solana-program = { path = "../program" }
 solana-sdk = { path = ".." }

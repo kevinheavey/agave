@@ -8859,7 +8859,6 @@ dependencies = [
  "serde",
  "serde_derive",
  "serial_test",
- "solana-account",
  "solana-account-info",
  "solana-clock",
  "solana-epoch-rewards",
