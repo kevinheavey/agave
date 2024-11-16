@@ -551,8 +551,10 @@ pub use {
         entrypoint_no_alloc,
     },
     solana_program_option as program_option, solana_pubkey as pubkey, solana_rent as rent,
-    solana_sysvar::{impl_sysvar_get, program_stubs},
+    solana_sysvar::impl_sysvar_get,
 };
+#[cfg(not(target_os = "solana"))]
+pub use solana_sysvar::program_stubs
 /// The [config native program][np].
 ///
 /// [np]: https://docs.solanalabs.com/runtime/programs#config-program
