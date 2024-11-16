@@ -8861,6 +8861,7 @@ dependencies = [
  "serial_test",
  "solana-account-info",
  "solana-clock",
+ "solana-define-syscall",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
  "solana-fee-calculator",

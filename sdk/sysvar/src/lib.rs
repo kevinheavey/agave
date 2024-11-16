@@ -77,6 +77,9 @@
 //!
 //! [sysvardoc]: https://docs.solanalabs.com/runtime/sysvars
 
+// hidden re-export to make macros work
+#[cfg(target_os = "solana")]
+pub use solana_define_syscall::definitions as __definitions;
 #[allow(deprecated)]
 pub use sysvar_ids::ALL_IDS;
 use {
@@ -186,7 +189,7 @@ macro_rules! impl_sysvar_get {
             let var_addr = &mut var as *mut _ as *mut u8;
 
             #[cfg(target_os = "solana")]
-            let result = unsafe { ::solana_define_syscall::definitions::$syscall_name(var_addr) };
+            let result = unsafe { $crate::__definitions::$syscall_name(var_addr) };
 
             #[cfg(not(target_os = "solana"))]
             let result = $crate::program_stubs::$syscall_name(var_addr);
@@ -218,7 +221,7 @@ fn get_sysvar(
 
     #[cfg(target_os = "solana")]
     let result = unsafe {
-        ::solana_define_syscall::definitions::sol_get_sysvar(sysvar_id, var_addr, offset, length)
+        solana_define_syscall::definitions::sol_get_sysvar(sysvar_id, var_addr, offset, length)
     };
 
     #[cfg(not(target_os = "solana"))]
