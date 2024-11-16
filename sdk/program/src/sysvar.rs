@@ -5,6 +5,7 @@ pub use {
     solana_sdk_ids::sysvar::{check_id, id, ID},
     solana_sysvar::{
         clock, epoch_rewards, epoch_schedule, fees, instructions, is_sysvar_id, last_restart_slot,
-        recent_blockhashes, rent, slot_hashes, slot_history, stake_history, Sysvar, ALL_IDS,
+        recent_blockhashes, rent, rewards, slot_hashes, slot_history, stake_history, Sysvar,
+        ALL_IDS,
     },
 };
