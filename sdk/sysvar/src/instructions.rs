@@ -6,7 +6,7 @@
 //! native programs like the [secp256k1] and [ed25519] programs.
 //!
 //! [in]: https://docs.solanalabs.com/implemented-proposals/instruction_introspection
-//! [secp256k1]: https://docs.rs/solana-secp256k1-program/latest/solana_secp256k1_program/  
+//! [secp256k1]: https://docs.rs/solana-secp256k1-program/latest/solana_secp256k1_program/
 //! [ed25519]: https://docs.rs/solana-ed25519-program/latest/solana_ed25519_program/
 //!
 //! Unlike other sysvars, the data in the instructions sysvar is not accessed
