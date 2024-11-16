@@ -22,9 +22,9 @@
 
 pub use solana_sdk_ids::sysvar::fees::{check_id, id, ID};
 use {
-    crate::{
-        fee_calculator::FeeCalculator, impl_sysvar_get, program_error::ProgramError, sysvar::Sysvar,
-    },
+    crate::{impl_sysvar_get, sysvar::Sysvar},
+    solana_fee_calculator::FeeCalculator,
+    solana_program_error::ProgramError,
     solana_sdk_macro::CloneZeroed,
     solana_sysvar_id::impl_deprecated_sysvar_id,
 };

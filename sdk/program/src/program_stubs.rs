@@ -3,13 +3,12 @@
 #![cfg(not(target_os = "solana"))]
 
 use {
-    crate::{
-        account_info::AccountInfo, entrypoint::ProgramResult, program_error::UNSUPPORTED_SYSVAR,
-        pubkey::Pubkey,
-    },
     base64::{prelude::BASE64_STANDARD, Engine},
-    solana_instruction::Instruction,
+    solana_account_info::AccountInfo,
+    solana_instruction::{error::UNSUPPORTED_SYSVAR, Instruction},
+    solana_program_error::ProgramResult,
     solana_program_memory::stubs,
+    solana_pubkey::Pubkey,
     std::sync::{Arc, RwLock},
 };
 

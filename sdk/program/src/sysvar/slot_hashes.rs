@@ -46,15 +46,13 @@
 //! ```
 
 use {
-    crate::{
-        account_info::AccountInfo,
-        hash::Hash,
-        program_error::ProgramError,
-        slot_hashes::MAX_ENTRIES,
-        sysvar::{get_sysvar, Sysvar},
-    },
+    crate::sysvar::{get_sysvar, Sysvar},
     bytemuck_derive::{Pod, Zeroable},
+    solana_account_info::AccountInfo,
     solana_clock::Slot,
+    solana_hash::Hash,
+    solana_program_error::ProgramError,
+    solana_slot_hashes::MAX_ENTRIES,
 };
 
 const U64_SIZE: usize = std::mem::size_of::<u64>();
@@ -219,13 +217,8 @@ fn get_pod_slot_hashes() -> Result<Vec<PodSlotHash>, ProgramError> {
 #[cfg(test)]
 mod tests {
     use {
-        super::*,
-        crate::{
-            hash::{hash, Hash},
-            slot_hashes::MAX_ENTRIES,
-            sysvar::tests::mock_get_sysvar_syscall,
-        },
-        serial_test::serial,
+        super::*, crate::sysvar::tests::mock_get_sysvar_syscall, serial_test::serial,
+        solana_hash::Hash, solana_sha256_hasher::hash, solana_slot_hashes::MAX_ENTRIES,
         test_case::test_case,
     };
 

@@ -6,8 +6,8 @@
 //! native programs like the [secp256k1] and [ed25519] programs.
 //!
 //! [in]: https://docs.solanalabs.com/implemented-proposals/instruction_introspection
-//! [secp256k1]: crate::secp256k1_program
-//! [ed25519]: crate::ed25519_program
+//! [secp256k1]: https://docs.rs/solana-secp256k1-program/latest/solana_secp256k1_program/  
+//! [ed25519]: https://docs.rs/solana-ed25519-program/latest/solana_ed25519_program/
 //!
 //! Unlike other sysvars, the data in the instructions sysvar is not accessed
 //! through a type that implements the [`Sysvar`] trait. Instead, the
@@ -36,17 +36,15 @@ pub use solana_instruction::{BorrowedAccountMeta, BorrowedInstruction};
 pub use solana_sdk_ids::sysvar::instructions::{check_id, id, ID};
 #[cfg(not(target_os = "solana"))]
 use {
-    crate::serialize_utils::{append_slice, append_u16, append_u8},
     bitflags::bitflags,
+    solana_serialize_utils::{append_slice, append_u16, append_u8},
 };
 use {
-    crate::{
-        account_info::AccountInfo,
-        instruction::{AccountMeta, Instruction},
-        program_error::ProgramError,
-        serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
-    },
+    solana_account_info::AccountInfo,
+    solana_instruction::{AccountMeta, Instruction},
+    solana_program_error::ProgramError,
     solana_sanitize::SanitizeError,
+    solana_serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
 };
 
 /// Instructions sysvar, dummy type.
@@ -55,7 +53,7 @@ use {
 /// type that does not contain sysvar data. It implements the [`SysvarId`] trait
 /// but does not implement the [`Sysvar`] trait.
 ///
-/// [`SysvarId`]: crate::sysvar::SysvarId
+/// [`SysvarId`]: https://docs.rs/solana-sysvar-id/latest/solana_sysvar_id/trait.SysvarId.html
 /// [`Sysvar`]: crate::sysvar::Sysvar
 ///
 /// Use the free functions in this module to access the instructions sysvar.
@@ -278,11 +276,9 @@ pub fn get_instruction_relative(
 mod tests {
     use {
         super::*,
-        crate::{
-            instruction::AccountMeta,
-            message::{Message as LegacyMessage, SanitizedMessage},
-            pubkey::Pubkey,
-        },
+        solana_instruction::AccountMeta,
+        solana_program::message::{Message as LegacyMessage, SanitizedMessage},
+        solana_pubkey::Pubkey,
         std::collections::HashSet,
     };
 
@@ -321,7 +317,7 @@ mod tests {
         let key = id();
         let mut lamports = 0;
         let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
-        let owner = crate::sysvar::id();
+        let owner = solana_sdk_ids::sysvar::id();
         let mut account_info = AccountInfo::new(
             &key,
             false,
@@ -374,7 +370,7 @@ mod tests {
         let mut lamports = 0;
         let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
         store_current_index(&mut data, 1);
-        let owner = crate::sysvar::id();
+        let owner = solana_sdk_ids::sysvar::id();
         let mut account_info = AccountInfo::new(
             &key,
             false,
@@ -432,7 +428,7 @@ mod tests {
         let mut lamports = 0;
         let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
         store_current_index(&mut data, 1);
-        let owner = crate::sysvar::id();
+        let owner = solana_sdk_ids::sysvar::id();
         let mut account_info = AccountInfo::new(
             &key,
             false,
