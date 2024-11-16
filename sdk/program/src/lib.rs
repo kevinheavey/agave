@@ -495,7 +495,6 @@ pub mod message;
 pub mod nonce;
 pub mod program;
 pub mod program_error;
-pub mod program_stubs;
 pub mod program_utils;
 pub mod secp256k1_program;
 pub mod slot_hashes;
@@ -552,6 +551,7 @@ pub use {
         entrypoint_no_alloc,
     },
     solana_program_option as program_option, solana_pubkey as pubkey, solana_rent as rent,
+    solana_sysvar::{impl_sysvar_get, program_stubs},
 };
 /// The [config native program][np].
 ///

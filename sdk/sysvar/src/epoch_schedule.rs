@@ -22,7 +22,7 @@
 //! # use solana_program_error::{ProgramError, ProgramResult};
 //! # use solana_pubkey::Pubkey;
 //! # use solana_sdk_ids::sysvar::epoch_schedule;
-//! # use solana_program::sysvar::Sysvar;
+//! # use solana_sysvar::Sysvar;
 //! fn process_instruction(
 //!     program_id: &Pubkey,
 //!     accounts: &[AccountInfo],
@@ -58,7 +58,7 @@
 //! # use solana_program_error::{ProgramError, ProgramResult};
 //! # use solana_pubkey::Pubkey;
 //! # use solana_sdk_ids::sysvar::epoch_schedule;
-//! # use solana_program::sysvar::Sysvar;
+//! # use solana_sysvar::Sysvar;
 //! fn process_instruction(
 //!     program_id: &Pubkey,
 //!     accounts: &[AccountInfo],
@@ -121,7 +121,7 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_program_error::ProgramError,
 };
 pub use {

@@ -1,3 +1,4 @@
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 //! Access to special accounts with dynamically-updated data.
 //!
 //! Sysvars are special accounts that contain dynamically-updated data about the
@@ -12,7 +13,7 @@
 //! ```
 //! use solana_account_info::AccountInfo;
 //! use solana_msg::msg;
-//! use solana_program::sysvar::Sysvar;
+//! use solana_sysvar::Sysvar;
 //! use solana_program_error::ProgramResult;
 //! use solana_pubkey::Pubkey;
 //!
@@ -35,7 +36,7 @@
 //! ```
 //! use solana_account_info::{AccountInfo, next_account_info};
 //! use solana_msg::msg;
-//! use solana_program::sysvar::Sysvar;
+//! use solana_sysvar::Sysvar;
 //! use solana_program_error::ProgramResult;
 //! use solana_pubkey::Pubkey;
 //!
@@ -75,13 +76,11 @@
 //!
 //! [sysvardoc]: https://docs.solanalabs.com/runtime/sysvars
 
-#[deprecated(since = "2.1.0", note = "Use `solana-sysvar-id` crate instead")]
-pub use solana_sysvar_id::{declare_deprecated_sysvar_id, declare_sysvar_id, SysvarId};
-use {solana_account_info::AccountInfo, solana_program_error::ProgramError, solana_pubkey::Pubkey};
 #[allow(deprecated)]
-pub use {
-    solana_sdk_ids::sysvar::{check_id, id, ID},
-    sysvar_ids::ALL_IDS,
+pub use sysvar_ids::ALL_IDS;
+use {
+    solana_account_info::AccountInfo, solana_program_error::ProgramError, solana_pubkey::Pubkey,
+    solana_sysvar_id::SysvarId,
 };
 
 pub mod clock;
@@ -90,6 +89,7 @@ pub mod epoch_schedule;
 pub mod fees;
 pub mod instructions;
 pub mod last_restart_slot;
+pub mod program_stubs;
 pub mod recent_blockhashes;
 pub mod rent;
 pub mod rewards;
@@ -234,6 +234,7 @@ mod tests {
     use {
         super::*,
         crate::program_stubs::{set_syscall_stubs, SyscallStubs},
+        serde_derive::{Deserialize, Serialize},
         solana_clock::Epoch,
         solana_program_entrypoint::SUCCESS,
         solana_program_error::ProgramError,

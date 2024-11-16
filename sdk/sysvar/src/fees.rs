@@ -22,7 +22,8 @@
 
 pub use solana_sdk_ids::sysvar::fees::{check_id, id, ID};
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
+    serde_derive::{Deserialize, Serialize},
     solana_fee_calculator::FeeCalculator,
     solana_program_error::ProgramError,
     solana_sdk_macro::CloneZeroed,

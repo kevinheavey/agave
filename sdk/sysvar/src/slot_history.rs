@@ -48,7 +48,7 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use crate::sysvar::Sysvar;
+use crate::Sysvar;
 pub use {
     solana_account_info::AccountInfo,
     solana_program_error::ProgramError,

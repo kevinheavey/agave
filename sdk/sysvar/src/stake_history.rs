@@ -48,9 +48,10 @@
 
 pub use solana_sdk_ids::sysvar::stake_history::{check_id, id, ID};
 use {
-    crate::sysvar::{get_sysvar, Sysvar, SysvarId},
+    crate::{get_sysvar, Sysvar},
+    serde_derive::{Deserialize, Serialize},
     solana_clock::Epoch,
-    solana_sysvar_id::impl_sysvar_id,
+    solana_sysvar_id::{impl_sysvar_id, SysvarId},
     std::ops::Deref,
 };
 
@@ -208,11 +209,7 @@ impl StakeHistoryGetEntry for StakeHistorySysvar {
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        crate::sysvar::tests::mock_get_sysvar_syscall,
-        serial_test::serial,
-    };
+    use {super::*, crate::tests::mock_get_sysvar_syscall, serial_test::serial};
 
     #[test]
     fn test_stake_history() {

@@ -20,7 +20,8 @@
 #![allow(clippy::arithmetic_side_effects)]
 pub use solana_sdk_ids::sysvar::recent_blockhashes::{check_id, id, ID};
 use {
-    crate::sysvar::Sysvar,
+    crate::Sysvar,
+    serde_derive::{Deserialize, Serialize},
     solana_fee_calculator::FeeCalculator,
     solana_hash::Hash,
     solana_sysvar_id::impl_sysvar_id,

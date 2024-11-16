@@ -18,7 +18,7 @@
 //! ```no_run
 //! # use solana_account_info::AccountInfo;
 //! # use solana_msg::msg;
-//! # use solana_program::sysvar::Sysvar;
+//! # use solana_sysvar::Sysvar;
 //! # use solana_program_error::ProgramResult;
 //! # use solana_pubkey::Pubkey;
 //! # use solana_last_restart_slot::LastRestartSlot;
@@ -38,7 +38,7 @@
 //!
 
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_program_error::ProgramError,
 };
 pub use {

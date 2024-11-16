@@ -21,7 +21,7 @@
 //! # use solana_msg::msg;
 //! # use solana_program_error::{ProgramError, ProgramResult};
 //! # use solana_pubkey::Pubkey;
-//! # use solana_program::sysvar::Sysvar;
+//! # use solana_sysvar::Sysvar;
 //! #
 //! fn process_instruction(
 //!     program_id: &Pubkey,
@@ -57,7 +57,7 @@
 //! # use solana_msg::msg;
 //! # use solana_program_error::{ProgramError, ProgramResult};
 //! # use solana_pubkey::Pubkey;
-//! # use solana_program::sysvar::Sysvar;
+//! # use solana_sysvar::Sysvar;
 //! # use solana_sdk_ids::sysvar::clock;
 //! #
 //! fn process_instruction(
@@ -123,7 +123,7 @@
 //! ```
 
 use {
-    crate::{impl_sysvar_get, sysvar::Sysvar},
+    crate::{impl_sysvar_get, Sysvar},
     solana_program_error::ProgramError,
 };
 pub use {
