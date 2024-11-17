@@ -81,6 +81,7 @@
 #[cfg(target_os = "solana")]
 pub use solana_define_syscall::definitions as __definitions;
 #[allow(deprecated)]
+#[doc(inline)]
 pub use sysvar_ids::ALL_IDS;
 use {
     solana_account_info::AccountInfo, solana_program_error::ProgramError, solana_pubkey::Pubkey,
