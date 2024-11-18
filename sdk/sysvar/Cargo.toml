@@ -11,8 +11,8 @@ edition = { workspace = true }
 
 [dependencies]
 bincode = { workspace = true, optional = true }
-bytemuck = { workspace = true }
-bytemuck_derive = { workspace = true }
+bytemuck = { workspace = true, optional = true }
+bytemuck_derive = { workspace = true, optional = true }
 lazy_static = { workspace = true }
 qualifier_attr = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
@@ -59,7 +59,8 @@ test-case = { workspace = true }
 
 [features]
 bincode = ["dep:bincode", "serde"]
-dev-context-only-utils = ["dep:qualifier_attr", "bincode"]
+bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
+dev-context-only-utils = ["dep:qualifier_attr", "bincode", "bytemuck"]
 frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 serde = [
     "dep:serde",

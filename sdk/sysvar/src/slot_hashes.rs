@@ -3,7 +3,7 @@
 //! The _slot hashes sysvar_ provides access to the [`SlotHashes`] type.
 //!
 //! The [`Sysvar::from_account_info`] and [`Sysvar::get`] methods always return
-//! [`ProgramError::UnsupportedSysvar`] because this sysvar account is too large
+//! [`solana_program_error::ProgramError::UnsupportedSysvar`] because this sysvar account is too large
 //! to process on-chain. Thus this sysvar cannot be accessed on chain, though
 //! one can still use the [`SysvarId::id`], [`SysvarId::check_id`] and
 //! [`Sysvar::size_of`] methods in an on-chain program, and it can be accessed
@@ -46,20 +46,13 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
+#[cfg(feature = "bytemuck")]
+use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "bincode")]
-use {
-    crate::{get_sysvar, Sysvar},
-    solana_account_info::AccountInfo,
-    solana_slot_hashes::MAX_ENTRIES,
-};
-use {
-    bytemuck_derive::{Pod, Zeroable},
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_program_error::ProgramError,
-};
+use {crate::Sysvar, solana_account_info::AccountInfo};
+use {solana_clock::Slot, solana_hash::Hash};
 
-#[cfg(feature = "bincode")]
+#[cfg(all(feature = "bincode", feature = "bytemuck"))]
 const U64_SIZE: usize = std::mem::size_of::<u64>();
 
 pub use {
@@ -75,20 +68,24 @@ impl Sysvar for SlotHashes {
         // hard-coded so that we don't have to construct an empty
         20_488 // golden, update if MAX_ENTRIES changes
     }
-    fn from_account_info(_account_info: &AccountInfo) -> Result<Self, ProgramError> {
+    fn from_account_info(
+        _account_info: &AccountInfo,
+    ) -> Result<Self, solana_program_error::ProgramError> {
         // This sysvar is too large to bincode::deserialize in-program
-        Err(ProgramError::UnsupportedSysvar)
+        Err(solana_program_error::ProgramError::UnsupportedSysvar)
     }
 }
 
 /// A bytemuck-compatible (plain old data) version of `SlotHash`.
-#[derive(Copy, Clone, Default, Pod, Zeroable)]
+#[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
+#[derive(Copy, Clone, Default)]
 #[repr(C)]
 pub struct PodSlotHash {
     pub slot: Slot,
     pub hash: Hash,
 }
 
+#[cfg(feature = "bytemuck")]
 /// API for querying of the `SlotHashes` sysvar by on-chain programs.
 ///
 /// Hangs onto the allocated raw buffer from the account data, which can be
@@ -100,22 +97,23 @@ pub struct PodSlotHashes {
     slot_hashes_end: usize,
 }
 
+#[cfg(feature = "bytemuck")]
 impl PodSlotHashes {
     #[cfg(feature = "bincode")]
     /// Fetch all of the raw sysvar data using the `sol_get_sysvar` syscall.
-    pub fn fetch() -> Result<Self, ProgramError> {
+    pub fn fetch() -> Result<Self, solana_program_error::ProgramError> {
         // Allocate an uninitialized buffer for the raw sysvar data.
         let sysvar_len = SlotHashes::size_of();
         let mut data = vec![0; sysvar_len];
 
         // Ensure the created buffer is aligned to 8.
         if data.as_ptr().align_offset(8) != 0 {
-            return Err(ProgramError::InvalidAccountData);
+            return Err(solana_program_error::ProgramError::InvalidAccountData);
         }
 
         // Populate the buffer by fetching all sysvar data using the
         // `sol_get_sysvar` syscall.
-        get_sysvar(
+        crate::get_sysvar(
             &mut data,
             &SlotHashes::id(),
             /* offset */ 0,
@@ -132,7 +130,7 @@ impl PodSlotHashes {
             .and_then(|bytes| bytes.try_into().ok())
             .map(u64::from_le_bytes)
             .and_then(|length| length.checked_mul(std::mem::size_of::<PodSlotHash>() as u64))
-            .ok_or(ProgramError::InvalidAccountData)?;
+            .ok_or(solana_program_error::ProgramError::InvalidAccountData)?;
 
         let slot_hashes_start = U64_SIZE;
         let slot_hashes_end = slot_hashes_start.saturating_add(length as usize);
@@ -144,18 +142,20 @@ impl PodSlotHashes {
         })
     }
 
+    #[cfg(feature = "bytemuck")]
     /// Return the `SlotHashes` sysvar data as a slice of `PodSlotHash`.
     /// Returns a slice of only the initialized sysvar data.
-    pub fn as_slice(&self) -> Result<&[PodSlotHash], ProgramError> {
+    pub fn as_slice(&self) -> Result<&[PodSlotHash], solana_program_error::ProgramError> {
         self.data
             .get(self.slot_hashes_start..self.slot_hashes_end)
             .and_then(|data| bytemuck::try_cast_slice(data).ok())
-            .ok_or(ProgramError::InvalidAccountData)
+            .ok_or(solana_program_error::ProgramError::InvalidAccountData)
     }
 
+    #[cfg(feature = "bytemuck")]
     /// Given a slot, get its corresponding hash in the `SlotHashes` sysvar
     /// data. Returns `None` if the slot is not found.
-    pub fn get(&self, slot: &Slot) -> Result<Option<Hash>, ProgramError> {
+    pub fn get(&self, slot: &Slot) -> Result<Option<Hash>, solana_program_error::ProgramError> {
         self.as_slice().map(|pod_hashes| {
             pod_hashes
                 .binary_search_by(|PodSlotHash { slot: this, .. }| slot.cmp(this))
@@ -164,9 +164,13 @@ impl PodSlotHashes {
         })
     }
 
+    #[cfg(feature = "bytemuck")]
     /// Given a slot, get its position in the `SlotHashes` sysvar data. Returns
     /// `None` if the slot is not found.
-    pub fn position(&self, slot: &Slot) -> Result<Option<usize>, ProgramError> {
+    pub fn position(
+        &self,
+        slot: &Slot,
+    ) -> Result<Option<usize>, solana_program_error::ProgramError> {
         self.as_slice().map(|pod_hashes| {
             pod_hashes
                 .binary_search_by(|PodSlotHash { slot: this, .. }| slot.cmp(this))
@@ -182,9 +186,10 @@ pub struct SlotHashesSysvar;
 #[cfg(feature = "bincode")]
 #[allow(deprecated)]
 impl SlotHashesSysvar {
+    #[cfg(feature = "bytemuck")]
     /// Get a value from the sysvar entries by its key.
     /// Returns `None` if the key is not found.
-    pub fn get(slot: &Slot) -> Result<Option<Hash>, ProgramError> {
+    pub fn get(slot: &Slot) -> Result<Option<Hash>, solana_program_error::ProgramError> {
         get_pod_slot_hashes().map(|pod_hashes| {
             pod_hashes
                 .binary_search_by(|PodSlotHash { slot: this, .. }| slot.cmp(this))
@@ -193,9 +198,10 @@ impl SlotHashesSysvar {
         })
     }
 
+    #[cfg(feature = "bytemuck")]
     /// Get the position of an entry in the sysvar by its key.
     /// Returns `None` if the key is not found.
-    pub fn position(slot: &Slot) -> Result<Option<usize>, ProgramError> {
+    pub fn position(slot: &Slot) -> Result<Option<usize>, solana_program_error::ProgramError> {
         get_pod_slot_hashes().map(|pod_hashes| {
             pod_hashes
                 .binary_search_by(|PodSlotHash { slot: this, .. }| slot.cmp(this))
@@ -204,21 +210,21 @@ impl SlotHashesSysvar {
     }
 }
 
-#[cfg(feature = "bincode")]
-fn get_pod_slot_hashes() -> Result<Vec<PodSlotHash>, ProgramError> {
-    let mut pod_hashes = vec![PodSlotHash::default(); MAX_ENTRIES];
+#[cfg(all(feature = "bincode", feature = "bytemuck"))]
+fn get_pod_slot_hashes() -> Result<Vec<PodSlotHash>, solana_program_error::ProgramError> {
+    let mut pod_hashes = vec![PodSlotHash::default(); solana_slot_hashes::MAX_ENTRIES];
     {
         let data = bytemuck::try_cast_slice_mut::<PodSlotHash, u8>(&mut pod_hashes)
-            .map_err(|_| ProgramError::InvalidAccountData)?;
+            .map_err(|_| solana_program_error::ProgramError::InvalidAccountData)?;
 
         // Ensure the created buffer is aligned to 8.
         if data.as_ptr().align_offset(8) != 0 {
-            return Err(ProgramError::InvalidAccountData);
+            return Err(solana_program_error::ProgramError::InvalidAccountData);
         }
 
         let offset = 8; // Vector length as `u64`.
         let length = (SlotHashes::size_of() as u64).saturating_sub(offset);
-        get_sysvar(data, &SlotHashes::id(), offset, length)?;
+        crate::get_sysvar(data, &SlotHashes::id(), offset, length)?;
     }
     Ok(pod_hashes)
 }

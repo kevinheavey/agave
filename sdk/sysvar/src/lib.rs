@@ -217,11 +217,11 @@ fn get_sysvar(
     sysvar_id: &Pubkey,
     offset: u64,
     length: u64,
-) -> Result<(), ProgramError> {
+) -> Result<(), solana_program_error::ProgramError> {
     // Check that the provided destination buffer is large enough to hold the
     // requested data.
     if dst.len() < length as usize {
-        return Err(ProgramError::InvalidArgument);
+        return Err(solana_program_error::ProgramError::InvalidArgument);
     }
 
     let sysvar_id = sysvar_id as *const _ as *const u8;
