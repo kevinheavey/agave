@@ -299,7 +299,7 @@ pub struct ProcessedSiblingInstruction {
 
 /// Borrowed version of `AccountMeta`.
 ///
-/// This struct is used by the runtime when constructing the sysvar. It is not
+/// This struct is used by the runtime when constructing the instructions sysvar. It is not
 /// useful to Solana programs.
 pub struct BorrowedAccountMeta<'a> {
     pub pubkey: &'a Pubkey,
@@ -309,7 +309,7 @@ pub struct BorrowedAccountMeta<'a> {
 
 /// Borrowed version of `Instruction`.
 ///
-/// This struct is used by the runtime when constructing the sysvar. It is not
+/// This struct is used by the runtime when constructing the instructions sysvar. It is not
 /// useful to Solana programs.
 pub struct BorrowedInstruction<'a> {
     pub program_id: &'a Pubkey,
