@@ -1,6 +1,6 @@
 [package]
 name = "solana-epoch-info"
-description = "Information about the current Solana epoch."
+description = "Information about a Solana epoch."
 documentation = "https://docs.rs/solana-epoch-info"
 version = { workspace = true }
 authors = { workspace = true }
