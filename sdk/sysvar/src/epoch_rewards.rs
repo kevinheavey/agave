@@ -155,15 +155,14 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use {
-    crate::{impl_sysvar_get, Sysvar},
-    solana_program_error::ProgramError,
-};
+#[cfg(feature = "bincode")]
+use crate::{impl_sysvar_get, Sysvar};
 pub use {
     solana_epoch_rewards::EpochRewards,
     solana_sdk_ids::sysvar::epoch_rewards::{check_id, id, ID},
 };
 
+#[cfg(feature = "bincode")]
 impl Sysvar for EpochRewards {
     impl_sysvar_get!(sol_get_epoch_rewards_sysvar);
 }

@@ -36,16 +36,14 @@
 //! }
 //! ```
 //!
-
-use {
-    crate::{impl_sysvar_get, Sysvar},
-    solana_program_error::ProgramError,
-};
+#[cfg(feature = "bincode")]
+use crate::{impl_sysvar_get, Sysvar};
 pub use {
     solana_last_restart_slot::LastRestartSlot,
     solana_sdk_ids::sysvar::last_restart_slot::{check_id, id, ID},
 };
 
+#[cfg(feature = "bincode")]
 impl Sysvar for LastRestartSlot {
     impl_sysvar_get!(sol_get_last_restart_slot);
 }

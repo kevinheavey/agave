@@ -48,6 +48,7 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
+#[cfg(feature = "bincode")]
 use crate::Sysvar;
 pub use {
     solana_account_info::AccountInfo,
@@ -56,6 +57,7 @@ pub use {
     solana_slot_history::SlotHistory,
 };
 
+#[cfg(feature = "bincode")]
 impl Sysvar for SlotHistory {
     // override
     fn size_of() -> usize {

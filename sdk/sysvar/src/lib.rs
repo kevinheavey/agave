@@ -77,14 +77,19 @@
 //!
 //! [sysvardoc]: https://docs.solanalabs.com/runtime/sysvars
 
-// hidden re-export to make macros work
-#[cfg(target_os = "solana")]
-pub use solana_define_syscall::definitions as __definitions;
+// hidden re-exports to make macros work
+pub mod __private {
+    #[cfg(target_os = "solana")]
+    pub use solana_define_syscall::definitions;
+    pub use {solana_program_entrypoint::SUCCESS, solana_program_error::ProgramError};
+}
+use solana_pubkey::Pubkey;
 #[allow(deprecated)]
 #[doc(inline)]
 pub use sysvar_ids::ALL_IDS;
+#[cfg(feature = "bincode")]
 use {
-    solana_account_info::AccountInfo, solana_program_error::ProgramError, solana_pubkey::Pubkey,
+    solana_account_info::AccountInfo, solana_program_error::ProgramError,
     solana_sysvar_id::SysvarId,
 };
 
@@ -137,6 +142,7 @@ pub fn is_sysvar_id(id: &Pubkey) -> bool {
     ALL_IDS.iter().any(|key| key == id)
 }
 
+#[cfg(feature = "bincode")]
 /// A type that holds sysvar data.
 pub trait Sysvar:
     SysvarId + Default + Sized + serde::Serialize + serde::de::DeserializeOwned
@@ -185,24 +191,25 @@ pub trait Sysvar:
 #[macro_export]
 macro_rules! impl_sysvar_get {
     ($syscall_name:ident) => {
-        fn get() -> Result<Self, ProgramError> {
+        fn get() -> Result<Self, $crate::__private::ProgramError> {
             let mut var = Self::default();
             let var_addr = &mut var as *mut _ as *mut u8;
 
             #[cfg(target_os = "solana")]
-            let result = unsafe { $crate::__definitions::$syscall_name(var_addr) };
+            let result = unsafe { $crate::__private::definitions::$syscall_name(var_addr) };
 
             #[cfg(not(target_os = "solana"))]
             let result = $crate::program_stubs::$syscall_name(var_addr);
 
             match result {
-                ::solana_program_entrypoint::SUCCESS => Ok(var),
+                $crate::__private::SUCCESS => Ok(var),
                 e => Err(e.into()),
             }
         }
     };
 }
 
+#[cfg(feature = "bincode")]
 /// Handler for retrieving a slice of sysvar data from the `sol_get_sysvar`
 /// syscall.
 fn get_sysvar(

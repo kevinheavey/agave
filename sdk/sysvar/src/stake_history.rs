@@ -46,20 +46,22 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
+#[cfg(feature = "serde")]
+use serde_derive::{Deserialize, Serialize};
 pub use solana_sdk_ids::sysvar::stake_history::{check_id, id, ID};
+#[cfg(feature = "bincode")]
 use {
     crate::{get_sysvar, Sysvar},
-    serde_derive::{Deserialize, Serialize},
-    solana_clock::Epoch,
-    solana_sysvar_id::{impl_sysvar_id, SysvarId},
-    std::ops::Deref,
+    solana_sysvar_id::SysvarId,
 };
+use {solana_clock::Epoch, solana_sysvar_id::impl_sysvar_id, std::ops::Deref};
 
 pub const MAX_ENTRIES: usize = 512; // it should never take as many as 512 epochs to warm up or cool down
 
 #[repr(C)]
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Debug, PartialEq, Eq, Default, Clone)]
 pub struct StakeHistoryEntry {
     pub effective: u64,    // effective stake at this epoch
     pub activating: u64,   // sum of portion of stakes not fully warmed up
@@ -107,7 +109,8 @@ impl std::ops::Add for StakeHistoryEntry {
 /// [sv]: https://docs.solanalabs.com/runtime/sysvars#stakehistory
 #[repr(C)]
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Default, Clone)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Debug, PartialEq, Eq, Default, Clone)]
 pub struct StakeHistory(Vec<(Epoch, StakeHistoryEntry)>);
 
 impl StakeHistory {
@@ -147,6 +150,7 @@ impl StakeHistoryGetEntry for StakeHistory {
 
 impl_sysvar_id!(StakeHistory);
 
+#[cfg(feature = "bincode")]
 impl Sysvar for StakeHistory {
     // override
     fn size_of() -> usize {
@@ -160,8 +164,10 @@ impl Sysvar for StakeHistory {
 pub struct StakeHistorySysvar(pub Epoch);
 
 // precompute so we can statically allocate buffer
+#[cfg(feature = "bincode")]
 const EPOCH_AND_ENTRY_SERIALIZED_SIZE: u64 = 32;
 
+#[cfg(feature = "bincode")]
 impl StakeHistoryGetEntry for StakeHistorySysvar {
     fn get_entry(&self, target_epoch: Epoch) -> Option<StakeHistoryEntry> {
         let current_epoch = self.0;

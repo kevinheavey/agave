@@ -122,15 +122,14 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
-use {
-    crate::{impl_sysvar_get, Sysvar},
-    solana_program_error::ProgramError,
-};
+#[cfg(feature = "bincode")]
+use crate::{impl_sysvar_get, Sysvar};
 pub use {
     solana_clock::Clock,
     solana_sdk_ids::sysvar::clock::{check_id, id, ID},
 };
 
+#[cfg(feature = "bincode")]
 impl Sysvar for Clock {
     impl_sysvar_get!(sol_get_clock_sysvar);
 }

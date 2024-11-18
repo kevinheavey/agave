@@ -20,13 +20,13 @@
 
 #![allow(deprecated)]
 
+#[cfg(feature = "bincode")]
+use crate::{impl_sysvar_get, Sysvar};
+#[cfg(feature = "serde")]
+use serde_derive::{Deserialize, Serialize};
 pub use solana_sdk_ids::sysvar::fees::{check_id, id, ID};
 use {
-    crate::{impl_sysvar_get, Sysvar},
-    serde_derive::{Deserialize, Serialize},
-    solana_fee_calculator::FeeCalculator,
-    solana_program_error::ProgramError,
-    solana_sdk_macro::CloneZeroed,
+    solana_fee_calculator::FeeCalculator, solana_sdk_macro::CloneZeroed,
     solana_sysvar_id::impl_deprecated_sysvar_id,
 };
 
@@ -38,7 +38,8 @@ impl_deprecated_sysvar_id!(Fees);
     note = "Please do not use, will no longer be available in the future"
 )]
 #[repr(C)]
-#[derive(Serialize, Deserialize, Debug, CloneZeroed, Default, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Debug, CloneZeroed, Default, PartialEq, Eq)]
 pub struct Fees {
     pub fee_calculator: FeeCalculator,
 }
@@ -52,6 +53,7 @@ impl Fees {
     }
 }
 
+#[cfg(feature = "bincode")]
 impl Sysvar for Fees {
     impl_sysvar_get!(sol_get_fees_sysvar);
 }

@@ -46,16 +46,20 @@
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
+#[cfg(feature = "bincode")]
 use {
     crate::{get_sysvar, Sysvar},
-    bytemuck_derive::{Pod, Zeroable},
     solana_account_info::AccountInfo,
+    solana_slot_hashes::MAX_ENTRIES,
+};
+use {
+    bytemuck_derive::{Pod, Zeroable},
     solana_clock::Slot,
     solana_hash::Hash,
     solana_program_error::ProgramError,
-    solana_slot_hashes::MAX_ENTRIES,
 };
 
+#[cfg(feature = "bincode")]
 const U64_SIZE: usize = std::mem::size_of::<u64>();
 
 pub use {
@@ -64,6 +68,7 @@ pub use {
     solana_sysvar_id::SysvarId,
 };
 
+#[cfg(feature = "bincode")]
 impl Sysvar for SlotHashes {
     // override
     fn size_of() -> usize {
@@ -96,6 +101,7 @@ pub struct PodSlotHashes {
 }
 
 impl PodSlotHashes {
+    #[cfg(feature = "bincode")]
     /// Fetch all of the raw sysvar data using the `sol_get_sysvar` syscall.
     pub fn fetch() -> Result<Self, ProgramError> {
         // Allocate an uninitialized buffer for the raw sysvar data.
@@ -173,6 +179,7 @@ impl PodSlotHashes {
 #[deprecated(since = "2.1.0", note = "Please use `PodSlotHashes` instead")]
 pub struct SlotHashesSysvar;
 
+#[cfg(feature = "bincode")]
 #[allow(deprecated)]
 impl SlotHashesSysvar {
     /// Get a value from the sysvar entries by its key.
@@ -197,6 +204,7 @@ impl SlotHashesSysvar {
     }
 }
 
+#[cfg(feature = "bincode")]
 fn get_pod_slot_hashes() -> Result<Vec<PodSlotHash>, ProgramError> {
     let mut pod_hashes = vec![PodSlotHash::default(); MAX_ENTRIES];
     {
