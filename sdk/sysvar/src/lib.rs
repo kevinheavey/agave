@@ -236,7 +236,7 @@ fn get_sysvar(
     let result = crate::program_stubs::sol_get_sysvar(sysvar_id, var_addr, offset, length);
 
     match result {
-        ::solana_program_entrypoint::SUCCESS => Ok(()),
+        solana_program_entrypoint::SUCCESS => Ok(()),
         e => Err(e.into()),
     }
 }
