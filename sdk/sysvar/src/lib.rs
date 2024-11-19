@@ -86,6 +86,10 @@ pub mod __private {
 use solana_pubkey::Pubkey;
 #[allow(deprecated)]
 #[doc(inline)]
+#[deprecated(
+    since = "2.0.0",
+    note = "please use `solana_sdk::reserved_account_keys::ReservedAccountKeys` instead"
+)]
 pub use sysvar_ids::ALL_IDS;
 #[cfg(feature = "bincode")]
 use {
