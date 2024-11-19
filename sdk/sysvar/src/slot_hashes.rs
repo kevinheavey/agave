@@ -142,7 +142,6 @@ impl PodSlotHashes {
         })
     }
 
-    #[cfg(feature = "bytemuck")]
     /// Return the `SlotHashes` sysvar data as a slice of `PodSlotHash`.
     /// Returns a slice of only the initialized sysvar data.
     pub fn as_slice(&self) -> Result<&[PodSlotHash], solana_program_error::ProgramError> {
@@ -152,7 +151,6 @@ impl PodSlotHashes {
             .ok_or(solana_program_error::ProgramError::InvalidAccountData)
     }
 
-    #[cfg(feature = "bytemuck")]
     /// Given a slot, get its corresponding hash in the `SlotHashes` sysvar
     /// data. Returns `None` if the slot is not found.
     pub fn get(&self, slot: &Slot) -> Result<Option<Hash>, solana_program_error::ProgramError> {
@@ -164,7 +162,6 @@ impl PodSlotHashes {
         })
     }
 
-    #[cfg(feature = "bytemuck")]
     /// Given a slot, get its position in the `SlotHashes` sysvar data. Returns
     /// `None` if the slot is not found.
     pub fn position(
