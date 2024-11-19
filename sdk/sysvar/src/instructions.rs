@@ -309,7 +309,7 @@ mod tests {
         is_writable: bool,
     }
 
-    fn make_borrowed_instruction<'a>(params: &'a MakeInstructionParams) -> BorrowedInstruction<'a> {
+    fn make_borrowed_instruction(params: &MakeInstructionParams) -> BorrowedInstruction {
         let MakeInstructionParams {
             program_id,
             account_key,
