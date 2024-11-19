@@ -23,13 +23,18 @@ solana-instruction = { workspace = true }
 solana-logger = { workspace = true, optional = true }
 solana-pubkey = { workspace = true }
 solana-sdk-ids = { workspace = true }
-solana-sysvar = { workspace = true }
+solana-sysvar = { workspace = true, features = ["bincode"], optional = true }
 
 [dev-dependencies]
 solana-account = { path = ".", features = ["dev-context-only-utils"] }
 
 [features]
-bincode = ["dep:bincode", "solana-instruction/serde", "serde"]
+bincode = [
+    "dep:bincode",
+    "dep:solana-sysvar",
+    "solana-instruction/serde",
+    "serde",
+]
 dev-context-only-utils = ["bincode", "dep:qualifier_attr"]
 frozen-abi = [
     "dep:solana-frozen-abi",
