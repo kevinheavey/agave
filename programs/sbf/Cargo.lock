@@ -5948,13 +5948,19 @@ dependencies = [
 name = "solana-message"
 version = "2.2.0"
 dependencies = [
+ "bincode",
  "blake3",
  "lazy_static",
+ "serde",
+ "serde_derive",
+ "solana-bincode",
  "solana-hash",
  "solana-instruction",
  "solana-pubkey",
  "solana-sanitize",
  "solana-sdk-ids",
+ "solana-short-vec",
+ "solana-system-interface",
  "solana-transaction-error",
 ]
 
@@ -7555,6 +7561,21 @@ name = "solana-svm-transaction"
 version = "2.2.0"
 dependencies = [
  "solana-sdk",
+]
+
+[[package]]
+name = "solana-system-interface"
+version = "0.0.1"
+source = "git+https://github.com/solana-program/system.git#1cab018c8da4dbf7bcbe0a65f1d2f4bef135638b"
+dependencies = [
+ "js-sys",
+ "num-traits",
+ "serde",
+ "serde_derive",
+ "solana-decode-error",
+ "solana-instruction",
+ "solana-pubkey",
+ "wasm-bindgen",
 ]
 
 [[package]]
