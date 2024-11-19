@@ -5952,11 +5952,9 @@ dependencies = [
  "lazy_static",
  "solana-hash",
  "solana-instruction",
- "solana-nonce",
  "solana-pubkey",
  "solana-sanitize",
  "solana-sdk-ids",
- "solana-system-interface",
  "solana-transaction-error",
  "thiserror 2.0.3",
 ]
@@ -7558,21 +7556,6 @@ name = "solana-svm-transaction"
 version = "2.2.0"
 dependencies = [
  "solana-sdk",
-]
-
-[[package]]
-name = "solana-system-interface"
-version = "0.0.1"
-source = "git+https://github.com/solana-program/system.git#1cab018c8da4dbf7bcbe0a65f1d2f4bef135638b"
-dependencies = [
- "js-sys",
- "num-traits",
- "serde",
- "serde_derive",
- "solana-decode-error",
- "solana-instruction",
- "solana-pubkey",
- "wasm-bindgen",
 ]
 
 [[package]]
