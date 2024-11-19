@@ -7537,6 +7537,7 @@ dependencies = [
  "solana-frozen-abi-macro",
  "solana-hash",
  "solana-instruction",
+ "solana-logger",
  "solana-message",
  "solana-nonce",
  "solana-program",
