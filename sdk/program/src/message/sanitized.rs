@@ -453,9 +453,9 @@ impl TransactionSignatureDetails {
 mod tests {
     use {
         super::*,
-        crate::message::{v0, Message as LegacyMessage},
+        crate::message::v0,
         solana_account_info::AccountInfo,
-        solana_instruction::{AccountMeta, Instruction},
+        solana_instruction::{AccountMeta, BorrowedAccountMeta, BorrowedInstruction, Instruction},
         solana_program_error::ProgramError,
         solana_sanitize::SanitizeError,
         solana_sdk_ids::sysvar::instructions::id,
@@ -466,10 +466,6 @@ mod tests {
         },
         std::collections::HashSet,
     };
-
-    fn new_sanitized_message(message: LegacyMessage) -> SanitizedMessage {
-        SanitizedMessage::try_from_legacy_message(message, &HashSet::default()).unwrap()
-    }
 
     #[test]
     fn test_try_from_legacy_message() {
@@ -722,27 +718,75 @@ mod tests {
         assert_eq!(5, signature_details.num_ed25519_instruction_signatures);
     }
 
+    #[derive(Copy, Clone)]
+    struct MakeInstructionParams {
+        program_id: Pubkey,
+        account_key: Pubkey,
+        is_signer: bool,
+        is_writable: bool,
+    }
+
+    fn make_borrowed_instruction<'a>(params: &'a MakeInstructionParams) -> BorrowedInstruction<'a> {
+        let MakeInstructionParams {
+            program_id,
+            account_key,
+            is_signer,
+            is_writable,
+        } = params;
+        BorrowedInstruction {
+            program_id,
+            accounts: vec![BorrowedAccountMeta {
+                pubkey: account_key,
+                is_signer: *is_signer,
+                is_writable: *is_writable,
+            }],
+            data: &[0],
+        }
+    }
+
+    fn make_instruction(params: MakeInstructionParams) -> Instruction {
+        let MakeInstructionParams {
+            program_id,
+            account_key,
+            is_signer,
+            is_writable,
+        } = params;
+        Instruction {
+            program_id,
+            accounts: vec![AccountMeta {
+                pubkey: account_key,
+                is_signer,
+                is_writable,
+            }],
+            data: vec![0],
+        }
+    }
+
     #[test]
     fn test_load_instruction_at_checked() {
-        let instruction0 = Instruction::new_with_bincode(
-            Pubkey::new_unique(),
-            &0,
-            vec![AccountMeta::new(Pubkey::new_unique(), false)],
-        );
-        let instruction1 = Instruction::new_with_bincode(
-            Pubkey::new_unique(),
-            &0,
-            vec![AccountMeta::new(Pubkey::new_unique(), false)],
-        );
-        let message = LegacyMessage::new(
-            &[instruction0.clone(), instruction1.clone()],
-            Some(&Pubkey::new_unique()),
-        );
-        let sanitized_message = new_sanitized_message(message);
-
+        let program_id0 = Pubkey::new_unique();
+        let program_id1 = Pubkey::new_unique();
+        let account_key0 = Pubkey::new_unique();
+        let account_key1 = Pubkey::new_unique();
+        let params0 = MakeInstructionParams {
+            program_id: program_id0,
+            account_key: account_key0,
+            is_signer: false,
+            is_writable: false,
+        };
+        let params1 = MakeInstructionParams {
+            program_id: program_id1,
+            account_key: account_key1,
+            is_signer: false,
+            is_writable: false,
+        };
+        let instruction0 = make_instruction(params0);
+        let instruction1 = make_instruction(params1);
+        let borrowed_instruction0 = make_borrowed_instruction(&params0);
+        let borrowed_instruction1 = make_borrowed_instruction(&params1);
         let key = id();
         let mut lamports = 0;
-        let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
+        let mut data = construct_instructions_data(&[borrowed_instruction0, borrowed_instruction1]);
         let owner = solana_sdk_ids::sysvar::id();
         let mut account_info = AccountInfo::new(
             &key,
@@ -778,23 +822,28 @@ mod tests {
 
     #[test]
     fn test_load_current_index_checked() {
-        let instruction0 = Instruction::new_with_bincode(
-            Pubkey::new_unique(),
-            &0,
-            vec![AccountMeta::new(Pubkey::new_unique(), false)],
-        );
-        let instruction1 = Instruction::new_with_bincode(
-            Pubkey::new_unique(),
-            &0,
-            vec![AccountMeta::new(Pubkey::new_unique(), false)],
-        );
-        let message =
-            LegacyMessage::new(&[instruction0, instruction1], Some(&Pubkey::new_unique()));
-        let sanitized_message = new_sanitized_message(message);
+        let program_id0 = Pubkey::new_unique();
+        let program_id1 = Pubkey::new_unique();
+        let account_key0 = Pubkey::new_unique();
+        let account_key1 = Pubkey::new_unique();
+        let params0 = MakeInstructionParams {
+            program_id: program_id0,
+            account_key: account_key0,
+            is_signer: false,
+            is_writable: false,
+        };
+        let params1 = MakeInstructionParams {
+            program_id: program_id1,
+            account_key: account_key1,
+            is_signer: false,
+            is_writable: false,
+        };
+        let borrowed_instruction0 = make_borrowed_instruction(&params0);
+        let borrowed_instruction1 = make_borrowed_instruction(&params1);
 
         let key = id();
         let mut lamports = 0;
-        let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
+        let mut data = construct_instructions_data(&[borrowed_instruction0, borrowed_instruction1]);
         store_current_index(&mut data, 1);
         let owner = solana_sdk_ids::sysvar::id();
         let mut account_info = AccountInfo::new(
@@ -825,34 +874,44 @@ mod tests {
 
     #[test]
     fn test_get_instruction_relative() {
-        let instruction0 = Instruction::new_with_bincode(
-            Pubkey::new_unique(),
-            &0,
-            vec![AccountMeta::new(Pubkey::new_unique(), false)],
-        );
-        let instruction1 = Instruction::new_with_bincode(
-            Pubkey::new_unique(),
-            &0,
-            vec![AccountMeta::new(Pubkey::new_unique(), false)],
-        );
-        let instruction2 = Instruction::new_with_bincode(
-            Pubkey::new_unique(),
-            &0,
-            vec![AccountMeta::new(Pubkey::new_unique(), false)],
-        );
-        let message = LegacyMessage::new(
-            &[
-                instruction0.clone(),
-                instruction1.clone(),
-                instruction2.clone(),
-            ],
-            Some(&Pubkey::new_unique()),
-        );
-        let sanitized_message = new_sanitized_message(message);
+        let program_id0 = Pubkey::new_unique();
+        let program_id1 = Pubkey::new_unique();
+        let program_id2 = Pubkey::new_unique();
+        let account_key0 = Pubkey::new_unique();
+        let account_key1 = Pubkey::new_unique();
+        let account_key2 = Pubkey::new_unique();
+        let params0 = MakeInstructionParams {
+            program_id: program_id0,
+            account_key: account_key0,
+            is_signer: false,
+            is_writable: false,
+        };
+        let params1 = MakeInstructionParams {
+            program_id: program_id1,
+            account_key: account_key1,
+            is_signer: false,
+            is_writable: false,
+        };
+        let params2 = MakeInstructionParams {
+            program_id: program_id2,
+            account_key: account_key2,
+            is_signer: false,
+            is_writable: false,
+        };
+        let instruction0 = make_instruction(params0);
+        let instruction1 = make_instruction(params1);
+        let instruction2 = make_instruction(params2);
+        let borrowed_instruction0 = make_borrowed_instruction(&params0);
+        let borrowed_instruction1 = make_borrowed_instruction(&params1);
+        let borrowed_instruction2 = make_borrowed_instruction(&params2);
 
         let key = id();
         let mut lamports = 0;
-        let mut data = construct_instructions_data(&sanitized_message.decompile_instructions());
+        let mut data = construct_instructions_data(&[
+            borrowed_instruction0,
+            borrowed_instruction1,
+            borrowed_instruction2,
+        ]);
         store_current_index(&mut data, 1);
         let owner = solana_sdk_ids::sysvar::id();
         let mut account_info = AccountInfo::new(
@@ -927,24 +986,38 @@ mod tests {
         let id1 = Pubkey::new_unique();
         let id2 = Pubkey::new_unique();
         let id3 = Pubkey::new_unique();
-        let instructions = vec![
-            Instruction::new_with_bincode(program_id0, &0, vec![AccountMeta::new(id0, false)]),
-            Instruction::new_with_bincode(program_id0, &0, vec![AccountMeta::new(id1, true)]),
-            Instruction::new_with_bincode(
-                program_id1,
-                &0,
-                vec![AccountMeta::new_readonly(id2, false)],
-            ),
-            Instruction::new_with_bincode(
-                program_id1,
-                &0,
-                vec![AccountMeta::new_readonly(id3, true)],
-            ),
+        let params = vec![
+            MakeInstructionParams {
+                program_id: program_id0,
+                account_key: id0,
+                is_signer: false,
+                is_writable: true,
+            },
+            MakeInstructionParams {
+                program_id: program_id0,
+                account_key: id1,
+                is_signer: true,
+                is_writable: true,
+            },
+            MakeInstructionParams {
+                program_id: program_id1,
+                account_key: id2,
+                is_signer: false,
+                is_writable: false,
+            },
+            MakeInstructionParams {
+                program_id: program_id1,
+                account_key: id3,
+                is_signer: true,
+                is_writable: false,
+            },
         ];
+        let instructions: Vec<Instruction> =
+            params.clone().into_iter().map(make_instruction).collect();
+        let borrowed_instructions: Vec<BorrowedInstruction> =
+            params.iter().map(make_borrowed_instruction).collect();
 
-        let message = LegacyMessage::new(&instructions, Some(&id1));
-        let sanitized_message = new_sanitized_message(message);
-        let serialized = serialize_instructions(&sanitized_message.decompile_instructions());
+        let serialized = serialize_instructions(&borrowed_instructions);
 
         // assert that deserialize_instruction is compatible with SanitizedMessage::serialize_instructions
         for (i, instruction) in instructions.iter().enumerate() {
@@ -960,14 +1033,26 @@ mod tests {
         let program_id0 = Pubkey::new_unique();
         let id0 = Pubkey::new_unique();
         let id1 = Pubkey::new_unique();
-        let instructions = vec![
-            Instruction::new_with_bincode(program_id0, &0, vec![AccountMeta::new(id0, false)]),
-            Instruction::new_with_bincode(program_id0, &0, vec![AccountMeta::new(id1, true)]),
+        let params = vec![
+            MakeInstructionParams {
+                program_id: program_id0,
+                account_key: id0,
+                is_signer: false,
+                is_writable: true,
+            },
+            MakeInstructionParams {
+                program_id: program_id0,
+                account_key: id1,
+                is_signer: true,
+                is_writable: true,
+            },
         ];
+        let instructions: Vec<Instruction> =
+            params.clone().into_iter().map(make_instruction).collect();
+        let borrowed_instructions: Vec<BorrowedInstruction> =
+            params.iter().map(make_borrowed_instruction).collect();
 
-        let message = LegacyMessage::new(&instructions, Some(&id1));
-        let sanitized_message = new_sanitized_message(message);
-        let serialized = serialize_instructions(&sanitized_message.decompile_instructions());
+        let serialized = serialize_instructions(&borrowed_instructions);
         assert_eq!(
             deserialize_instruction(instructions.len(), &serialized).unwrap_err(),
             SanitizeError::IndexOutOfBounds,
