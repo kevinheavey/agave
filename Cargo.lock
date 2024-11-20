@@ -7957,6 +7957,7 @@ dependencies = [
  "serde_json",
  "solana-account-decoder-client-types",
  "solana-clock",
+ "solana-commitment-config",
  "solana-pubkey",
  "solana-rpc-client-api",
  "solana-signature",
