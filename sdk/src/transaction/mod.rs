@@ -144,7 +144,7 @@ pub use solana_transaction_error::{
     since = "2.2.0",
     note = "Use `solana_transaction_error::TransactionResult` instead"
 )]
-pub type Result<T> = solana_transaction_error::TransactionResult<T>;
+pub use solana_transaction_error::TransactionResult as Result;
 pub use {sanitized::*, versioned::*};
 
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
