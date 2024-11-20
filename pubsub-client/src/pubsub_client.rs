@@ -97,6 +97,8 @@ use {
         Map, Value,
     },
     solana_account_decoder::UiAccount,
+    solana_clock::Slot,
+    solana_pubkey::Pubkey,
     solana_rpc_client_api::{
         config::{
             RpcAccountInfoConfig, RpcBlockSubscribeConfig, RpcBlockSubscribeFilter,
@@ -108,7 +110,7 @@ use {
             RpcSignatureResult, RpcVote, SlotInfo, SlotUpdate,
         },
     },
-    solana_sdk::{clock::Slot, pubkey::Pubkey, signature::Signature},
+    solana_signature::Signature,
     std::{
         marker::PhantomData,
         net::TcpStream,

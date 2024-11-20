@@ -6096,8 +6096,10 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "solana-account-decoder",
+ "solana-clock",
+ "solana-pubkey",
  "solana-rpc-client-api",
- "solana-sdk",
+ "solana-signature",
  "thiserror 2.0.3",
  "tokio",
  "tokio-stream",
@@ -6770,6 +6772,7 @@ dependencies = [
 name = "solana-svm"
 version = "2.2.0"
 dependencies = [
+ "ahash 0.8.11",
  "itertools 0.12.1",
  "log",
  "percentage",
