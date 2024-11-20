@@ -96,7 +96,7 @@ use {
         value::Value::{Number, Object},
         Map, Value,
     },
-    solana_account_decoder::UiAccount,
+    solana_account_decoder_client_types::UiAccount,
     solana_clock::Slot,
     solana_pubkey::Pubkey,
     solana_rpc_client_api::{
