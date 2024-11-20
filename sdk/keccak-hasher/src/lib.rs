@@ -3,15 +3,21 @@
 //! [keccak]: https://keccak.team/keccak.html
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
+#![no_std]
+#[cfg(feature = "std")]
+extern crate std;
 
-#[cfg(feature = "borsh")]
-use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
 #[cfg(any(feature = "sha3", not(target_os = "solana")))]
 use sha3::{Digest, Keccak256};
 pub use solana_hash::{ParseHashError, HASH_BYTES, MAX_BASE58_LEN};
+#[cfg(feature = "borsh")]
 use {
+    borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
+    std::string::ToString,
+};
+use {
+    core::{fmt, str::FromStr},
     solana_sanitize::Sanitize,
-    std::{fmt, str::FromStr},
 };
 
 // TODO: replace this with `solana_hash::Hash` in the
@@ -148,6 +154,7 @@ pub fn hash(val: &[u8]) -> Hash {
     hashv(&[val])
 }
 
+#[cfg(feature = "std")]
 /// Return the hash of the given hash extended with the given value.
 pub fn extend_and_hash(id: &Hash, val: &[u8]) -> Hash {
     let mut hash_data = id.as_ref().to_vec();
