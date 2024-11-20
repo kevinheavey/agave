@@ -208,7 +208,7 @@
 //!
 //! ```no_run
 //! mod secp256k1_defs {
-//!     use solana_program::program_error::ProgramError;
+//!     use solana_program_error::ProgramError;
 //!     use std::iter::Iterator;
 //!
 //!     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -274,7 +274,7 @@
 //!
 //! ```no_run
 //! # mod secp256k1_defs {
-//! #     use solana_program::program_error::ProgramError;
+//! #     use solana_program_error::ProgramError;
 //! #     use std::iter::Iterator;
 //! #
 //! #     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -322,14 +322,11 @@
 //! #             }))
 //! #     }
 //! # }
-//! use solana_program::{
-//!     account_info::{next_account_info, AccountInfo},
-//!     entrypoint::ProgramResult,
-//!     msg,
-//!     program_error::ProgramError,
-//!     secp256k1_program,
-//!     sysvar,
-//! };
+//! use solana_account_info::{next_account_info, AccountInfo};
+//! use solana_msg::msg;
+//! use solana_program_error::{ProgramError, ProgramResult};
+//! use solana_sdk_ids::secp256k1_program;
+//! use solana_sysvar::instructions;
 //!
 //! /// An Ethereum address corresponding to a secp256k1 secret key that is
 //! /// authorized to sign our messages.
@@ -350,14 +347,14 @@
 //!
 //!     // The instructions sysvar gives access to the instructions in the transaction.
 //!     let instructions_sysvar_account = next_account_info(account_info_iter)?;
-//!     assert!(sysvar::instructions::check_id(
+//!     assert!(solana_sdk_ids::sysvar::instructions::check_id(
 //!         instructions_sysvar_account.key
 //!     ));
 //!
 //!     // Load the secp256k1 instruction.
 //!     // `new_secp256k1_instruction` generates an instruction that must be at index 0.
 //!     let secp256k1_instr =
-//!         sysvar::instructions::load_instruction_at_checked(0, instructions_sysvar_account)?;
+//!         instructions::load_instruction_at_checked(0, instructions_sysvar_account)?;
 //!
 //!     // Verify it is a secp256k1 instruction.
 //!     // This is security-critical - what if the transaction uses an imposter secp256k1 program?
@@ -420,14 +417,11 @@
 //! ```no_run
 //! # use solana_sdk::example_mocks::solana_rpc_client;
 //! use anyhow::Result;
+//! use solana_instruction::{AccountMeta, Instruction};
+//! use solana_keypair::Keypair;
 //! use solana_rpc_client::rpc_client::RpcClient;
-//! use solana_sdk::{
-//!     instruction::{AccountMeta, Instruction},
-//!     secp256k1_instruction,
-//!     signature::{Keypair, Signer},
-//!     sysvar,
-//!     transaction::Transaction,
-//! };
+//! use solana_signer::Signer;
+//! use solana_sdk::transaction::Transaction;
 //!
 //! fn demo_secp256k1_verify_basic(
 //!     payer_keypair: &Keypair,
@@ -439,13 +433,13 @@
 //!     // `secp256k_instruction::verify` (the secp256k1 program), this message is
 //!     // keccak-hashed before signing.
 //!     let msg = b"hello world";
-//!     let secp256k1_instr = secp256k1_instruction::new_secp256k1_instruction(&secp256k1_secret_key, msg);
+//!     let secp256k1_instr = solana_secp256k1_program::new_secp256k1_instruction(&secp256k1_secret_key, msg);
 //!
 //!     let program_instr = Instruction::new_with_bytes(
 //!         program_keypair.pubkey(),
 //!         &[],
 //!         vec![
-//!             AccountMeta::new_readonly(sysvar::instructions::ID, false)
+//!             AccountMeta::new_readonly(solana_sdk_ids::sysvar::instructions::ID, false)
 //!         ],
 //!     );
 //!
@@ -487,7 +481,7 @@
 //!
 //! ```no_run
 //! # mod secp256k1_defs {
-//! #     use solana_program::program_error::ProgramError;
+//! #     use solana_program_error::ProgramError;
 //! #     use std::iter::Iterator;
 //! #
 //! #     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -535,14 +529,11 @@
 //! #             }))
 //! #     }
 //! # }
-//! use solana_program::{
-//!     account_info::{next_account_info, AccountInfo},
-//!     entrypoint::ProgramResult,
-//!     msg,
-//!     program_error::ProgramError,
-//!     secp256k1_program,
-//!     sysvar,
-//! };
+//! use solana_account_info::{next_account_info, AccountInfo};
+//! use solana_program_error::{ProgramError, ProgramResult};
+//! use solana_msg::msg;
+//! use solana_sdk_ids::secp256k1_program;
+//! use solana_sysvar::instructions;
 //!
 //! /// A struct to hold the values specified in the `SecpSignatureOffsets` struct.
 //! struct SecpSignature {
@@ -562,15 +553,15 @@
 //! ) -> Result<Vec<SecpSignature>, ProgramError> {
 //!     let mut sigs = vec![];
 //!     for offsets in secp256k1_defs::iter_signature_offsets(secp256k1_instr_data)? {
-//!         let signature_instr = sysvar::instructions::load_instruction_at_checked(
+//!         let signature_instr = instructions::load_instruction_at_checked(
 //!             offsets.signature_instruction_index as usize,
 //!             instructions_sysvar_account,
 //!         )?;
-//!         let eth_address_instr = sysvar::instructions::load_instruction_at_checked(
+//!         let eth_address_instr = instructions::load_instruction_at_checked(
 //!             offsets.eth_address_instruction_index as usize,
 //!             instructions_sysvar_account,
 //!         )?;
-//!         let message_instr = sysvar::instructions::load_instruction_at_checked(
+//!         let message_instr = instructions::load_instruction_at_checked(
 //!             offsets.message_instruction_index as usize,
 //!             instructions_sysvar_account,
 //!         )?;
@@ -607,12 +598,12 @@
 //!     let account_info_iter = &mut accounts.iter();
 //!
 //!     let instructions_sysvar_account = next_account_info(account_info_iter)?;
-//!     assert!(sysvar::instructions::check_id(
+//!     assert!(solana_sdk_ids::sysvar::instructions::check_id(
 //!         instructions_sysvar_account.key
 //!     ));
 //!
 //!     let secp256k1_instr =
-//!         sysvar::instructions::get_instruction_relative(-1, instructions_sysvar_account)?;
+//!         instructions::get_instruction_relative(-1, instructions_sysvar_account)?;
 //!
 //!     assert!(secp256k1_program::check_id(&secp256k1_instr.program_id));
 //!
@@ -636,18 +627,16 @@
 //! ```no_run
 //! # use solana_sdk::example_mocks::solana_rpc_client;
 //! use anyhow::Result;
+//! use solana_instruction::{AccountMeta, Instruction};
 //! use solana_rpc_client::rpc_client::RpcClient;
-//! use solana_sdk::{
-//!     instruction::{AccountMeta, Instruction},
-//!     keccak,
-//!     secp256k1_instruction::{
-//!         self, SecpSignatureOffsets, HASHED_PUBKEY_SERIALIZED_SIZE,
-//!         SIGNATURE_OFFSETS_SERIALIZED_SIZE, SIGNATURE_SERIALIZED_SIZE,
-//!     },
-//!     signature::{Keypair, Signer},
-//!     sysvar,
-//!     transaction::Transaction,
+//! use solana_secp256k1_program::{
+//!     construct_eth_pubkey, SecpSignatureOffsets, HASHED_PUBKEY_SERIALIZED_SIZE,
+//!     SIGNATURE_OFFSETS_SERIALIZED_SIZE, SIGNATURE_SERIALIZED_SIZE,
 //! };
+//! use solana_signer::Signer;
+//! use solana_keypair::Keypair;
+//! use solana_sysvar::instructions;
+//! use solana_sdk::transaction::Transaction;
 //!
 //! /// A struct to hold the values specified in the `SecpSignatureOffsets` struct.
 //! struct SecpSignature {
@@ -737,7 +726,7 @@
 //!         let secret_key = libsecp256k1::SecretKey::random(&mut rand0_7::thread_rng());
 //!         let message = format!("hello world {}", idx).into_bytes();
 //!         let message_hash = {
-//!             let mut hasher = keccak::Hasher::default();
+//!             let mut hasher = solana_keccak_hasher::Hasher::default();
 //!             hasher.hash(&message);
 //!             hasher.result()
 //!         };
@@ -747,7 +736,7 @@
 //!         let recovery_id = recovery_id.serialize();
 //!
 //!         let public_key = libsecp256k1::PublicKey::from_secret_key(&secret_key);
-//!         let eth_address = secp256k1_instruction::construct_eth_pubkey(&public_key);
+//!         let eth_address = construct_eth_pubkey(&public_key);
 //!
 //!         signatures.push(SecpSignature {
 //!             signature,
@@ -759,7 +748,7 @@
 //!
 //!     let secp256k1_instr_data = make_secp256k1_instruction_data(&signatures, 0)?;
 //!     let secp256k1_instr = Instruction::new_with_bytes(
-//!         solana_sdk::secp256k1_program::ID,
+//!         solana_sdk_ids::secp256k1_program::ID,
 //!         &secp256k1_instr_data,
 //!         vec![],
 //!     );
@@ -768,7 +757,7 @@
 //!         program_keypair.pubkey(),
 //!         &[],
 //!         vec![
-//!             AccountMeta::new_readonly(sysvar::instructions::ID, false)
+//!             AccountMeta::new_readonly(solana_sdk_ids::sysvar::instructions::ID, false)
 //!         ],
 //!     );
 //!
@@ -1035,11 +1024,10 @@ pub mod test {
         rand0_7::{thread_rng, Rng},
         solana_feature_set::FeatureSet,
         solana_hash::Hash,
-        solana_sdk::{
-            keccak,
-            signer::{keypair::Keypair, Signer},
-            transaction::Transaction,
-        },
+        solana_keccak_hasher as keccak,
+        solana_keypair::Keypair,
+        solana_sdk::transaction::Transaction,
+        solana_signer::Signer,
     };
 
     fn test_case(

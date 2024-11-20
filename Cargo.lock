@@ -8500,15 +8500,21 @@ dependencies = [
  "serde",
  "serde_derive",
  "sha3",
+ "solana-account-info",
  "solana-feature-set",
  "solana-hash",
  "solana-instruction",
+ "solana-keccak-hasher",
+ "solana-keypair",
  "solana-logger",
+ "solana-msg",
  "solana-precompile-error",
- "solana-program",
+ "solana-program-error",
  "solana-sdk",
  "solana-sdk-ids",
  "solana-secp256k1-program",
+ "solana-signer",
+ "solana-sysvar",
 ]
 
 [[package]]
