@@ -5753,9 +5753,7 @@ dependencies = [
 name = "solana-keccak-hasher"
 version = "2.2.0"
 dependencies = [
- "bs58",
  "sha3",
- "solana-atomic-u64",
  "solana-define-syscall",
  "solana-hash",
  "solana-sanitize",
