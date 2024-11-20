@@ -7607,7 +7607,7 @@ dependencies = [
  "log",
  "reqwest",
  "serde_json",
- "solana-sdk",
+ "solana-hash",
 ]
 
 [[package]]
