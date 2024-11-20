@@ -5075,7 +5075,6 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "serde_derive",
- "solana-hash",
  "solana-sanitize",
  "solana-time-utils",
 ]

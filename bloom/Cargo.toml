@@ -22,12 +22,12 @@ solana-frozen-abi = { workspace = true, optional = true, features = [
 solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-hash = { workspace = true }
 solana-sanitize = { workspace = true }
 solana-time-utils = { workspace = true }
 
 [dev-dependencies]
 rayon = { workspace = true }
+solana-hash = { workspace = true }
 solana-sha256-hasher = { workspace = true }
 solana-signature = { workspace = true, features = ["std"] }
 
