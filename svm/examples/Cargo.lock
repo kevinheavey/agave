@@ -6770,6 +6770,7 @@ dependencies = [
 name = "solana-svm"
 version = "2.2.0"
 dependencies = [
+ "ahash 0.8.11",
  "itertools 0.12.1",
  "log",
  "percentage",
@@ -7204,9 +7205,10 @@ dependencies = [
  "bytemuck",
  "num-derive",
  "num-traits",
+ "solana-instruction",
  "solana-log-collector",
  "solana-program-runtime",
- "solana-sdk",
+ "solana-sdk-ids",
  "solana-zk-sdk",
 ]
 
