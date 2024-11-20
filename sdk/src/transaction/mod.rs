@@ -138,9 +138,13 @@ mod versioned;
 
 #[deprecated(since = "2.1.0", note = "Use solana_transaction_error crate instead")]
 pub use solana_transaction_error::{
-    AddressLoaderError, SanitizeMessageError, TransactionError, TransactionResult as Result,
-    TransportError, TransportResult,
+    AddressLoaderError, SanitizeMessageError, TransactionError, TransportError, TransportResult,
 };
+#[deprecated(
+    since = "2.2.0",
+    note = "Use `solana_transaction_error::TransactionResult` instead"
+)]
+pub type Result<T> = solana_transaction_error::TransactionResult<T>;
 pub use {sanitized::*, versioned::*};
 
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
