@@ -1,3 +1,4 @@
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 use {
     solana_pubkey::Pubkey,
     solana_reward_info::{RewardInfo, RewardType},
