@@ -61,10 +61,10 @@ pub enum ExecuteTimingType {
     FilterExecutableUs,
 }
 
-pub struct Metrics([u64; ExecuteTimingType::CARDINALITY]);
+pub struct Metrics([Saturating<u64>; ExecuteTimingType::CARDINALITY]);
 
 impl Index<ExecuteTimingType> for Metrics {
-    type Output = u64;
+    type Output = Saturating<u64>;
     fn index(&self, index: ExecuteTimingType) -> &Self::Output {
         self.0.index(index as usize)
     }
@@ -78,7 +78,7 @@ impl IndexMut<ExecuteTimingType> for Metrics {
 
 impl Default for Metrics {
     fn default() -> Self {
-        Metrics([0; ExecuteTimingType::CARDINALITY])
+        Metrics([Saturating(0); ExecuteTimingType::CARDINALITY])
     }
 }
 
@@ -329,7 +329,7 @@ impl ExecuteTimings {
     pub fn saturating_add_in_place(&mut self, timing_type: ExecuteTimingType, value_to_add: u64) {
         let idx = timing_type as usize;
         match self.metrics.0.get_mut(idx) {
-            Some(elem) => *elem = elem.saturating_add(value_to_add),
+            Some(elem) => *elem += value_to_add,
             None => debug_assert!(idx < ExecuteTimingType::CARDINALITY, "Index out of bounds"),
         }
     }
@@ -337,10 +337,10 @@ impl ExecuteTimings {
 
 #[derive(Default, Debug)]
 pub struct ExecuteProcessInstructionTimings {
-    pub total_us: u64,
-    pub verify_caller_us: u64,
-    pub process_executable_chain_us: u64,
-    pub verify_callee_us: u64,
+    pub total_us: Saturating<u64>,
+    pub verify_caller_us: Saturating<u64>,
+    pub process_executable_chain_us: Saturating<u64>,
+    pub verify_callee_us: Saturating<u64>,
 }
 
 impl ExecuteProcessInstructionTimings {
@@ -354,9 +354,9 @@ impl ExecuteProcessInstructionTimings {
 
 #[derive(Default, Debug)]
 pub struct ExecuteAccessoryTimings {
-    pub feature_set_clone_us: u64,
-    pub get_executors_us: u64,
-    pub process_message_us: u64,
+    pub feature_set_clone_us: Saturating<u64>,
+    pub get_executors_us: Saturating<u64>,
+    pub process_message_us: Saturating<u64>,
     pub process_instructions: ExecuteProcessInstructionTimings,
 }
 
@@ -372,17 +372,17 @@ impl ExecuteAccessoryTimings {
 
 #[derive(Default, Debug, PartialEq, Eq)]
 pub struct ExecuteDetailsTimings {
-    pub serialize_us: u64,
-    pub create_vm_us: u64,
-    pub execute_us: u64,
-    pub deserialize_us: u64,
-    pub get_or_create_executor_us: u64,
-    pub changed_account_count: u64,
-    pub total_account_count: u64,
-    pub create_executor_register_syscalls_us: u64,
-    pub create_executor_load_elf_us: u64,
-    pub create_executor_verify_code_us: u64,
-    pub create_executor_jit_compile_us: u64,
+    pub serialize_us: Saturating<u64>,
+    pub create_vm_us: Saturating<u64>,
+    pub execute_us: Saturating<u64>,
+    pub deserialize_us: Saturating<u64>,
+    pub get_or_create_executor_us: Saturating<u64>,
+    pub changed_account_count: Saturating<u64>,
+    pub total_account_count: Saturating<u64>,
+    pub create_executor_register_syscalls_us: Saturating<u64>,
+    pub create_executor_load_elf_us: Saturating<u64>,
+    pub create_executor_verify_code_us: Saturating<u64>,
+    pub create_executor_jit_compile_us: Saturating<u64>,
     pub per_program_timings: HashMap<Pubkey, ProgramTiming>,
 }
 
