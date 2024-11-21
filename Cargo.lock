@@ -5330,12 +5330,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "saturating_add_assign"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d3c68b8e0f71b18a2544d210b8562170c611b89394b434bcf4a986a3159d69a"
-
-[[package]]
 name = "schannel"
 version = "0.1.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -9101,7 +9095,6 @@ version = "2.2.0"
 dependencies = [
  "eager",
  "enum-iterator",
- "saturating_add_assign",
  "solana-pubkey",
 ]
 
