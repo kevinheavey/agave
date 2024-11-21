@@ -112,10 +112,10 @@ pub use solana_account::state_traits as account_utils;
 pub use solana_bn254 as alt_bn128;
 #[deprecated(
     since = "2.2.0",
-    note = "Use `solana-compute-budget-instruction` crate instead"
+    note = "Use `solana-compute-budget-interface` crate instead"
 )]
 #[cfg(feature = "full")]
-pub use solana_compute_budget_instruction as compute_budget;
+pub use solana_compute_budget_interface as compute_budget;
 #[deprecated(since = "2.1.0", note = "Use `solana-decode-error` crate instead")]
 pub use solana_decode_error as decode_error;
 #[deprecated(since = "2.1.0", note = "Use `solana-derivation-path` crate instead")]
