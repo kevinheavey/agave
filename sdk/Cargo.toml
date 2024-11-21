@@ -48,7 +48,12 @@ full = [
     "dep:solana-signer",
     "dep:solana-transaction-error"
 ]
-borsh = ["dep:borsh", "solana-program/borsh", "solana-secp256k1-recover/borsh"]
+borsh = [
+    "dep:borsh",
+    "solana-compute-budget-interface/borsh",
+    "solana-program/borsh",
+    "solana-secp256k1-recover/borsh"
+]
 dev-context-only-utils = [
     "qualifier_attr",
     "solana-account/dev-context-only-utils",
@@ -110,7 +115,6 @@ solana-cluster-type = { workspace = true, features = [
 ], optional = true }
 solana-commitment-config = { workspace = true, optional = true, features = ["serde"] }
 solana-compute-budget-interface = { workspace = true, optional = true, features = [
-    "borsh",
     "serde",
 ] }
 solana-decode-error = { workspace = true }
