@@ -12,7 +12,8 @@ edition = { workspace = true }
 [dependencies]
 eager = { workspace = true }
 enum-iterator = { workspace = true }
-solana-sdk = { workspace = true }
+saturating_add_assign = { workspace = true }
+solana-pubkey = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

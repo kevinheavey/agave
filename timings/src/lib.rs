@@ -3,7 +3,8 @@ extern crate eager;
 use {
     core::fmt,
     enum_iterator::Sequence,
-    solana_sdk::{pubkey::Pubkey, saturating_add_assign},
+    saturating_add_assign::saturating_add_assign,
+    solana_pubkey::Pubkey,
     std::{
         collections::HashMap,
         ops::{Index, IndexMut},
