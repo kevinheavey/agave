@@ -97,72 +97,72 @@ eager_macro_rules! { $eager_1
         ($self: expr, $is_unified_scheduler_enabled: expr) => {
             (
                 "validate_transactions_us",
-                *$self
+                $self
                     .metrics
-                    .index(ExecuteTimingType::CheckUs),
+                    .index(ExecuteTimingType::CheckUs).0,
                 i64
             ),
             (
                 "validate_fees_us",
-                *$self
+                $self
                     .metrics
-                    .index(ExecuteTimingType::ValidateFeesUs),
+                    .index(ExecuteTimingType::ValidateFeesUs).0,
                 i64
             ),
             (
                 "filter_executable_us",
-                *$self
+                $self
                     .metrics
-                    .index(ExecuteTimingType::FilterExecutableUs),
+                    .index(ExecuteTimingType::FilterExecutableUs).0,
                 i64
             ),
             (
                 "program_cache_us",
-                *$self
+                $self
                     .metrics
-                    .index(ExecuteTimingType::ProgramCacheUs),
+                    .index(ExecuteTimingType::ProgramCacheUs).0,
                 i64
             ),
             (
                 "load_us",
-                *$self
+                $self
                     .metrics
-                    .index(ExecuteTimingType::LoadUs),
+                    .index(ExecuteTimingType::LoadUs).0,
                 i64
             ),
             (
                 "execute_us",
-                *$self
+                $self
                     .metrics
-                    .index(ExecuteTimingType::ExecuteUs),
+                    .index(ExecuteTimingType::ExecuteUs).0,
                 i64
             ),
             (
                 "collect_logs_us",
-                *$self
+                $self
                     .metrics
-                    .index(ExecuteTimingType::CollectLogsUs),
+                    .index(ExecuteTimingType::CollectLogsUs).0,
                 i64
             ),
             (
                 "store_us",
-                *$self
+                $self
 
                     .metrics
-                    .index(ExecuteTimingType::StoreUs),
+                    .index(ExecuteTimingType::StoreUs).0,
                 i64
             ),
             (
                 "update_stakes_cache_us",
-                *$self
+                $self
 
                     .metrics
-                    .index(ExecuteTimingType::UpdateStakesCacheUs),
+                    .index(ExecuteTimingType::UpdateStakesCacheUs).0,
                 i64
             ),
             (
                 "execute_accessories_update_executors_us",
-                *$self.metrics.index(ExecuteTimingType::UpdateExecutorsUs),
+                $self.metrics.index(ExecuteTimingType::UpdateExecutorsUs).0,
                 i64
             ),
             (
@@ -170,9 +170,9 @@ eager_macro_rules! { $eager_1
                 (if $is_unified_scheduler_enabled {
                     None
                 } else {
-                    Some(*$self
+                    Some($self
                         .metrics
-                        .index(ExecuteTimingType::TotalBatchesLen))
+                        .index(ExecuteTimingType::TotalBatchesLen).0)
                 }),
                 Option<i64>
             ),
@@ -181,96 +181,96 @@ eager_macro_rules! { $eager_1
                 (if $is_unified_scheduler_enabled {
                     None
                 } else {
-                    Some(*$self
+                    Some($self
                         .metrics
-                        .index(ExecuteTimingType::NumExecuteBatches))
+                        .index(ExecuteTimingType::NumExecuteBatches).0)
                 }),
                 Option<i64>
             ),
             (
                 "update_transaction_statuses",
-                *$self
+                $self
                     .metrics
-                    .index(ExecuteTimingType::UpdateTransactionStatuses),
+                    .index(ExecuteTimingType::UpdateTransactionStatuses).0,
                 i64
             ),
             (
                 "check_block_limits_us",
-                *$self.metrics.index(ExecuteTimingType::CheckBlockLimitsUs),
+                $self.metrics.index(ExecuteTimingType::CheckBlockLimitsUs).0,
                 i64
             ),
             (
                 "execute_details_serialize_us",
-                $self.details.serialize_us,
+                $self.details.serialize_us.0,
                 i64
             ),
             (
                 "execute_details_create_vm_us",
-                $self.details.create_vm_us,
+                $self.details.create_vm_us.0,
                 i64
             ),
             (
                 "execute_details_execute_inner_us",
-                $self.details.execute_us,
+                $self.details.execute_us.0,
                 i64
             ),
             (
                 "execute_details_deserialize_us",
-                $self.details.deserialize_us,
+                $self.details.deserialize_us.0,
                 i64
             ),
             (
                 "execute_details_get_or_create_executor_us",
-                $self.details.get_or_create_executor_us,
+                $self.details.get_or_create_executor_us.0,
                 i64
             ),
             (
                 "execute_details_changed_account_count",
-                $self.details.changed_account_count,
+                $self.details.changed_account_count.0,
                 i64
             ),
             (
                 "execute_details_total_account_count",
-                $self.details.total_account_count,
+                $self.details.total_account_count.0,
                 i64
             ),
             (
                 "execute_details_create_executor_register_syscalls_us",
                 $self
                     .details
-                    .create_executor_register_syscalls_us,
+                    .create_executor_register_syscalls_us.0,
                 i64
             ),
             (
                 "execute_details_create_executor_load_elf_us",
-                $self.details.create_executor_load_elf_us,
+                $self.details.create_executor_load_elf_us.0,
                 i64
             ),
             (
                 "execute_details_create_executor_verify_code_us",
-                $self.details.create_executor_verify_code_us,
+                $self.details.create_executor_verify_code_us.0,
                 i64
             ),
             (
                 "execute_details_create_executor_jit_compile_us",
-                $self.details.create_executor_jit_compile_us,
+                $self.details.create_executor_jit_compile_us.0,
                 i64
             ),
             (
                 "execute_accessories_feature_set_clone_us",
                 $self
                     .execute_accessories
-                    .feature_set_clone_us,
+                    .feature_set_clone_us.0,
                 i64
             ),
             (
                 "execute_accessories_get_executors_us",
-                $self.execute_accessories.get_executors_us,
+                $self.execute_accessories.get_executors_us.0,
                 i64
             ),
             (
                 "execute_accessories_process_message_us",
-                $self.execute_accessories.process_message_us,
+                $self.execute_accessories.process_message_us.0,
                 i64
             ),
             (
@@ -278,7 +278,7 @@ eager_macro_rules! { $eager_1
                 $self
                     .execute_accessories
                     .process_instructions
-                    .total_us,
+                    .total_us.0,
                 i64
             ),
             (
@@ -286,7 +286,7 @@ eager_macro_rules! { $eager_1
                 $self
                     .execute_accessories
                     .process_instructions
-                    .verify_caller_us,
+                    .verify_caller_us.0,
                 i64
             ),
             (
@@ -294,7 +294,7 @@ eager_macro_rules! { $eager_1
                 $self
                     .execute_accessories
                     .process_instructions
-                    .process_executable_chain_us,
+                    .process_executable_chain_us.0,
                 i64
             ),
             (
@@ -302,7 +302,7 @@ eager_macro_rules! { $eager_1
                 $self
                     .execute_accessories
                     .process_instructions
-                    .verify_callee_us,
+                    .verify_callee_us.0,
                 i64
             ),
         }
