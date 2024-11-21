@@ -5311,9 +5311,7 @@ dependencies = [
  "borsh 1.5.3",
  "serde",
  "serde_derive",
- "solana-define-syscall",
  "solana-instruction",
- "solana-pubkey",
  "solana-sdk-ids",
 ]
 

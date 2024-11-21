@@ -20,7 +20,6 @@ solana-frozen-abi-macro = { workspace = true, features = [
     "frozen-abi",
 ], optional = true }
 solana-instruction = { workspace = true, features = ["std"] }
-solana-pubkey = { workspace = true }
 solana-sdk-ids = { workspace = true }
 
 [features]
@@ -33,9 +32,6 @@ serde = ["dep:serde", "dep:serde_derive"]
 targets = ["x86_64-unknown-linux-gnu"]
 all-features = true
 rustdoc-args = ["--cfg=docsrs"]
-
-[target.'cfg(target_os = "solana")'.dependencies]
-solana-define-syscall = { workspace = true }
 
 [lints]
 workspace = true
