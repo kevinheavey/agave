@@ -497,12 +497,12 @@ mod tests {
         let mut other_execute_details_timings =
             construct_execute_timings_with_program(&program_id, us, compute_units_consumed);
         let account_count = 1;
-        other_execute_details_timings.serialize_us = us;
-        other_execute_details_timings.create_vm_us = us;
-        other_execute_details_timings.execute_us = us;
-        other_execute_details_timings.deserialize_us = us;
-        other_execute_details_timings.changed_account_count = account_count;
-        other_execute_details_timings.total_account_count = account_count;
+        other_execute_details_timings.serialize_us.0 = us;
+        other_execute_details_timings.create_vm_us.0 = us;
+        other_execute_details_timings.execute_us.0 = us;
+        other_execute_details_timings.deserialize_us.0 = us;
+        other_execute_details_timings.changed_account_count.0 = account_count;
+        other_execute_details_timings.total_account_count.0 = account_count;
 
         // Accumulate the other instance into the current instance
         execute_details_timings.accumulate(&other_execute_details_timings);
@@ -516,10 +516,10 @@ mod tests {
         let mut timings = ExecuteTimings::default();
         timings.saturating_add_in_place(ExecuteTimingType::CheckUs, 1);
         let check_us = timings.metrics.index(ExecuteTimingType::CheckUs);
-        assert_eq!(1, *check_us);
+        assert_eq!(1, check_us.0);
 
         timings.saturating_add_in_place(ExecuteTimingType::CheckUs, 2);
         let check_us = timings.metrics.index(ExecuteTimingType::CheckUs);
-        assert_eq!(3, *check_us);
+        assert_eq!(3, check_us.0);
     }
 }
