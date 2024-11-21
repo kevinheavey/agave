@@ -461,14 +461,17 @@ mod tests {
             .unwrap();
 
         // Both error and success transactions count towards `accumulated_us`
-        assert_eq!(program_timings.accumulated_us, us.saturating_mul(2));
-        assert_eq!(program_timings.accumulated_units, compute_units_consumed);
-        assert_eq!(program_timings.count, 1,);
+        assert_eq!(program_timings.accumulated_us.0, us.saturating_mul(2));
+        assert_eq!(program_timings.accumulated_units.0, compute_units_consumed);
+        assert_eq!(program_timings.count.0, 1,);
         assert_eq!(
             program_timings.errored_txs_compute_consumed,
             vec![compute_units_consumed]
         );
-        assert_eq!(program_timings.total_errored_units, compute_units_consumed,);
+        assert_eq!(
+            program_timings.total_errored_units.0,
+            compute_units_consumed,
+        );
 
         execute_details_timings
     }
