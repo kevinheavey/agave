@@ -8981,7 +8981,7 @@ dependencies = [
 [[package]]
 name = "solana-system-interface"
 version = "0.0.1"
-source = "git+https://github.com/solana-program/system.git#1cab018c8da4dbf7bcbe0a65f1d2f4bef135638b"
+source = "git+https://github.com/solana-program/system.git?rev=1d1f1c4#1d1f1c4ebde24302c16f2c09e5f350ab51c1a91e"
 dependencies = [
  "js-sys",
  "num-traits",
