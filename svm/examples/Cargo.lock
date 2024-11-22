@@ -5474,8 +5474,8 @@ version = "2.2.0"
 dependencies = [
  "serde",
  "serde_derive",
+ "solana-message",
  "solana-native-token",
- "solana-program",
 ]
 
 [[package]]
@@ -5928,8 +5928,8 @@ dependencies = [
  "lazy_static",
  "solana-ed25519-program",
  "solana-feature-set",
+ "solana-message",
  "solana-precompile-error",
- "solana-program",
  "solana-pubkey",
  "solana-sdk-ids",
  "solana-secp256k1-program",

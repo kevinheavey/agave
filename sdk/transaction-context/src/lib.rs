@@ -28,7 +28,7 @@ const MAX_PERMITTED_DATA_LENGTH: u64 = 10 * 1024 * 1024;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     MAX_PERMITTED_DATA_LENGTH,
-    solana_program::system_instruction::MAX_PERMITTED_DATA_LENGTH
+    solana_system_interface::MAX_PERMITTED_DATA_LENGTH
 );
 
 // Inlined to avoid solana_program dep
@@ -38,7 +38,7 @@ const MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION: i64 =
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION,
-    solana_program::system_instruction::MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION
+    solana_system_interface::MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION
 );
 
 // Inlined to avoid solana_account_info dep

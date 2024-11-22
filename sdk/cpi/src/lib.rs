@@ -103,10 +103,8 @@ pub mod syscalls;
 /// use solana_program_entrypoint::entrypoint;
 /// use solana_program_error::ProgramResult;
 /// use solana_pubkey::Pubkey;
-/// use solana_program::{
-///     system_instruction,
-///     system_program,
-/// };
+/// use solana_sdk_ids::system_program;
+/// use solana_system_interface::instruction::transfer;
 ///
 /// entrypoint!(process_instruction);
 ///
@@ -131,7 +129,7 @@ pub mod syscalls;
 ///     let lamports = 1000000;
 ///
 ///     invoke(
-///         &system_instruction::transfer(payer.key, recipient.key, lamports),
+///         &transfer(payer.key, recipient.key, lamports),
 ///         &[payer.clone(), recipient.clone(), system_program_account.clone()],
 ///     )
 /// }
@@ -197,10 +195,8 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 /// use solana_program_entrypoint::entrypoint;
 /// use solana_program_error::ProgramResult;
 /// use solana_pubkey::Pubkey;
-/// use solana_program::{
-///     system_instruction,
-///     system_program,
-/// };
+/// use solana_sdk_ids::system_program;
+/// use solana_system_interface::instruction::create_account;
 ///
 /// entrypoint!(process_instruction);
 ///
@@ -230,7 +226,7 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 ///     let vault_size = 16;
 ///
 ///     invoke_signed(
-///         &system_instruction::create_account(
+///         &create_account(
 ///             &payer.key,
 ///             &vault_pda.key,
 ///             lamports,

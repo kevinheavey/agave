@@ -134,7 +134,7 @@ impl<'a> AccountInfo<'a> {
     /// memory.
     ///
     /// Note:  Account data can be increased within a single call by up to
-    /// `solana_program::entrypoint::MAX_PERMITTED_DATA_INCREASE` bytes.
+    /// `solana_program_entrypoint::MAX_PERMITTED_DATA_INCREASE` bytes.
     ///
     /// Note: Memory used to grow is already zero-initialized upon program
     /// entrypoint and re-zeroing it wastes compute units.  If within the same
