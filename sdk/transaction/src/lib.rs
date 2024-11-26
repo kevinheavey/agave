@@ -120,7 +120,6 @@ use {
 #[cfg(feature = "bincode")]
 use {
     solana_bincode::limited_deserialize,
-    solana_nonce::NONCED_TX_MARKER_IX_INDEX,
     solana_program::{system_instruction::SystemInstruction, system_program},
 };
 use {
@@ -146,6 +145,20 @@ pub enum TransactionVerificationMode {
     HashAndVerifyPrecompiles,
     FullVerification,
 }
+
+// inlined to avoid solana-nonce dep
+#[cfg(test)]
+static_assertions::const_assert_eq!(
+    NONCED_TX_MARKER_IX_INDEX,
+    solana_nonce::NONCED_TX_MARKER_IX_INDEX
+);
+#[cfg(feature = "bincode")]
+const NONCED_TX_MARKER_IX_INDEX: u8 = 0;
+// inlined to avoid solana-packet dep
+#[cfg(test)]
+static_assertions::const_assert_eq!(PACKET_DATA_SIZE, solana_packet::PACKET_DATA_SIZE);
+#[cfg(feature = "bincode")]
+const PACKET_DATA_SIZE: usize = 1280 - 40 - 8;
 
 /// An atomically-committed sequence of instructions.
 ///
@@ -1121,7 +1134,7 @@ pub fn uses_durable_nonce(tx: &Transaction) -> Option<&CompiledInstruction> {
             )
             // Is a nonce advance instruction
             && matches!(
-                limited_deserialize(&instruction.data, solana_packet::PACKET_DATA_SIZE as u64),
+                limited_deserialize(&instruction.data, PACKET_DATA_SIZE as u64),
                 Ok(SystemInstruction::AdvanceNonceAccount)
             )
         })

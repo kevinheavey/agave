@@ -7125,8 +7125,6 @@ dependencies = [
  "solana-feature-set",
  "solana-hash",
  "solana-instruction",
- "solana-nonce",
- "solana-packet",
  "solana-precompiles",
  "solana-program",
  "solana-pubkey",

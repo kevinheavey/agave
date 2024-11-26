@@ -16,7 +16,6 @@ use {
 #[cfg(feature = "bincode")]
 use {
     solana_bincode::limited_deserialize,
-    solana_nonce::NONCED_TX_MARKER_IX_INDEX,
     solana_program::{system_instruction::SystemInstruction, system_program},
 };
 
@@ -212,7 +211,7 @@ impl VersionedTransaction {
         let message = &self.message;
         message
             .instructions()
-            .get(NONCED_TX_MARKER_IX_INDEX as usize)
+            .get(crate::NONCED_TX_MARKER_IX_INDEX as usize)
             .filter(|instruction| {
                 // Is system program
                 matches!(
@@ -221,7 +220,7 @@ impl VersionedTransaction {
                 )
                 // Is a nonce advance instruction
                 && matches!(
-                    limited_deserialize(&instruction.data, solana_packet::PACKET_DATA_SIZE as u64,),
+                    limited_deserialize(&instruction.data, crate::PACKET_DATA_SIZE as u64,),
                     Ok(SystemInstruction::AdvanceNonceAccount)
                 )
             })

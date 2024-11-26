@@ -19,8 +19,6 @@ solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
 solana-logger = { workspace = true, optional = true }
-solana-nonce = { workspace = true, optional = true }
-solana-packet = { workspace = true }
 solana-precompiles = { workspace = true, optional = true }
 solana-program = { workspace = true }
 solana-pubkey = { workspace = true }
@@ -39,15 +37,18 @@ borsh = { workspace = true }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true, features = ["borsh"] }
 solana-keypair = { workspace = true }
+solana-nonce = { workspace = true }
+solana-packet = { workspace = true }
 solana-presigner = { workspace = true }
 solana-program = { workspace = true, default-features = false }
 solana-pubkey = { workspace = true, features = ["rand"] }
 solana-sdk = { path = ".." }
 solana-sha256-hasher = { workspace = true }
 solana-transaction = { path = ".", features = ["dev-context-only-utils"] }
+static_assertions = { workspace = true }
 
 [features]
-bincode = ["dep:solana-bincode", "dep:solana-nonce", "serde"]
+bincode = ["dep:solana-bincode", "serde"]
 dev-context-only-utils = ["bincode", "precompiles", "serde", "verify"]
 frozen-abi = [
     "dep:solana-frozen-abi",

@@ -9292,6 +9292,7 @@ dependencies = [
  "solana-signer",
  "solana-transaction",
  "solana-transaction-error",
+ "static_assertions",
 ]
 
 [[package]]
