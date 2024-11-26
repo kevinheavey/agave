@@ -2,11 +2,11 @@
 #![cfg(target_arch = "wasm32")]
 #![allow(non_snake_case)]
 use {
-    crate::{hash::Hash, message::Message, signer::keypair::Keypair, transaction::Transaction},
-    solana_program::{
-        pubkey::Pubkey,
-        wasm::{display_to_jsvalue, instructions::Instructions},
-    },
+    crate::Transaction,
+    solana_hash::Hash,
+    solana_keypair::Keypair,
+    solana_program::{message::Message, wasm::instructions::Instructions},
+    solana_pubkey::Pubkey,
     wasm_bindgen::prelude::*,
 };
 
@@ -30,10 +30,12 @@ impl Transaction {
         self.message_data().into()
     }
 
+    #[cfg(feature = "verify")]
     /// Verify the transaction
     #[wasm_bindgen(js_name = verify)]
     pub fn js_verify(&self) -> Result<(), JsValue> {
-        self.verify().map_err(display_to_jsvalue)
+        self.verify()
+            .map_err(|x| std::string::ToString::to_string(&x).into())
     }
 
     pub fn partialSign(&mut self, keypair: &Keypair, recent_blockhash: &Hash) {
@@ -44,11 +46,13 @@ impl Transaction {
         self.is_signed()
     }
 
+    #[cfg(feature = "bincode")]
     pub fn toBytes(&self) -> Box<[u8]> {
         bincode::serialize(self).unwrap().into()
     }
 
+    #[cfg(feature = "bincode")]
     pub fn fromBytes(bytes: &[u8]) -> Result<Transaction, JsValue> {
-        bincode::deserialize(bytes).map_err(display_to_jsvalue)
+        bincode::deserialize(bytes).map_err(|x| std::string::ToString::to_string(&x).into())
     }
 }

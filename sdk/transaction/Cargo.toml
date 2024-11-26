@@ -10,6 +10,7 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
+bincode = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
 solana-bincode = { workspace = true, optional = true }
@@ -30,6 +31,10 @@ solana-signature = { workspace = true }
 solana-signer = { workspace = true }
 solana-transaction-error = { workspace = true }
 
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+solana-keypair = { workspace = true }
+wasm-bindgen = { workspace = true }
+
 [dev-dependencies]
 anyhow = { workspace = true }
 bincode = { workspace = true }
@@ -48,19 +53,19 @@ solana-transaction = { path = ".", features = ["dev-context-only-utils"] }
 static_assertions = { workspace = true }
 
 [features]
-bincode = ["dep:solana-bincode", "serde"]
+bincode = ["dep:bincode", "dep:solana-bincode", "serde"]
 dev-context-only-utils = ["bincode", "precompiles", "serde", "verify"]
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
-    "dep:solana-logger"
+    "dep:solana-logger",
 ]
 precompiles = ["dep:solana-feature-set", "dep:solana-precompiles"]
 serde = [
     "dep:serde",
     "dep:serde_derive",
     "dep:solana-short-vec",
-    "solana-signature/serde"
+    "solana-signature/serde",
 ]
 verify = ["solana-signature/verify"]
 

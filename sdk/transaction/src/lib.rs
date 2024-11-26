@@ -111,7 +111,7 @@
 //! ```
 
 #[cfg(target_arch = "wasm32")]
-use crate::wasm_bindgen;
+use wasm_bindgen::prelude::wasm_bindgen;
 #[cfg(feature = "serde")]
 use {
     serde_derive::{Deserialize, Serialize},
