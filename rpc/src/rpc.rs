@@ -8553,7 +8553,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx58, TransactionBinaryEncoding::Base58)
                 .unwrap_err(),
             Error::invalid_params(format!(
-                "decoded solana_sdk::transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
+                "decoded solana_transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
             ))
         );
 
@@ -8562,7 +8562,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx64, TransactionBinaryEncoding::Base64)
                 .unwrap_err(),
             Error::invalid_params(format!(
-                "decoded solana_sdk::transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
+                "decoded solana_transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
             ))
         );
 
@@ -8572,7 +8572,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx64.clone(), TransactionBinaryEncoding::Base64)
                 .unwrap_err(),
             Error::invalid_params(
-                "failed to deserialize solana_sdk::transaction::Transaction: invalid value: \
+                "failed to deserialize solana_transaction::Transaction: invalid value: \
                 continue signal on byte-three, expected a terminal signal on or before byte-three"
                     .to_string()
             )
@@ -8590,7 +8590,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx58.clone(), TransactionBinaryEncoding::Base58)
                 .unwrap_err(),
             Error::invalid_params(
-                "failed to deserialize solana_sdk::transaction::Transaction: invalid value: \
+                "failed to deserialize solana_transaction::Transaction: invalid value: \
                 continue signal on byte-three, expected a terminal signal on or before byte-three"
                     .to_string()
             )
