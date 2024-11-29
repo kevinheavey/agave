@@ -31,7 +31,7 @@ solana-quic-definitions = { workspace = true }
 solana-rpc-client = { workspace = true }
 solana-rpc-client-api = { workspace = true }
 solana-signature = { workspace = true }
-solana-signer = { workspace = true, optional = true }
+solana-signer = { workspace = true }
 solana-transaction = { workspace = true }
 solana-transaction-error = { workspace = true }
 thiserror = { workspace = true }
@@ -44,7 +44,6 @@ default = ["spinner"]
 spinner = [
     "dep:indicatif",
     "dep:solana-program",
-    "dep:solana-signer",
     "solana-rpc-client/spinner",
 ]
 
