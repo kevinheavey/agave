@@ -6091,6 +6091,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-poh-config"
+version = "2.2.0"
+dependencies = [
+ "serde",
+ "serde_derive",
+]
+
+[[package]]
 name = "solana-poseidon"
 version = "2.2.0"
 dependencies = [
@@ -7233,6 +7241,7 @@ dependencies = [
  "solana-keypair",
  "solana-native-token",
  "solana-packet",
+ "solana-poh-config",
  "solana-precompile-error",
  "solana-precompiles",
  "solana-presigner",
