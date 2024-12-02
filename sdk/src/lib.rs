@@ -69,7 +69,6 @@ pub mod example_mocks;
 pub mod exit;
 pub mod feature;
 pub mod genesis_config;
-pub mod hard_forks;
 pub mod hash;
 pub mod inner_instruction;
 pub mod log;
@@ -90,7 +89,6 @@ pub mod reward_type {
     pub use solana_reward_info::RewardType;
 }
 pub mod rpc_port;
-pub mod shred_version;
 pub mod signature;
 pub mod signer;
 pub mod transaction;
@@ -128,6 +126,9 @@ pub use solana_epoch_info as epoch_info;
 pub use solana_feature_set as feature_set;
 #[deprecated(since = "2.2.0", note = "Use `solana-fee-structure` crate instead")]
 pub use solana_fee_structure as fee;
+#[cfg(feature = "full")]
+#[deprecated(since = "2.2.0", note = "Use `solana-genesis-config` crate instead")]
+pub use solana_genesis_config::{hard_forks, shred_version};
 #[deprecated(since = "2.1.0", note = "Use `solana-inflation` crate instead")]
 pub use solana_inflation as inflation;
 #[deprecated(since = "2.1.0", note = "Use `solana-packet` crate instead")]
