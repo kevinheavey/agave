@@ -184,7 +184,7 @@ const PACKET_DATA_SIZE: usize = 1280 - 40 - 8;
 #[cfg_attr(
     feature = "frozen-abi",
     derive(solana_frozen_abi_macro::AbiExample),
-    solana_frozen_abi_macro::frozen_abi(digest = "GESn6AYYNhpNfzJXdQ6kGjqz4VjpMw3ye9rghqaEqks7")
+    solana_frozen_abi_macro::frozen_abi(digest = "76BDTr3Xm3VP7h4eSiw6pZHKc5yYewDufyia3Yedh6GG")
 )]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(Debug, PartialEq, Default, Eq, Clone)]
