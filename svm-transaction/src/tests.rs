@@ -1,8 +1,8 @@
 #![cfg(test)]
 use {
     crate::svm_message::SVMMessage,
-    solana_sdk::{
-        hash::Hash,
+    solana_hash::Hash,
+    solana_program::{
         instruction::CompiledInstruction,
         message::{
             legacy,
@@ -10,10 +10,10 @@ use {
             MessageHeader, SanitizedMessage, SanitizedVersionedMessage, SimpleAddressLoader,
             VersionedMessage,
         },
-        pubkey::Pubkey,
         system_instruction::SystemInstruction,
-        system_program,
     },
+    solana_pubkey::Pubkey,
+    solana_sdk_ids::system_program,
     std::collections::HashSet,
 };
 

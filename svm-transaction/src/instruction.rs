@@ -1,4 +1,4 @@
-use solana_sdk::instruction::CompiledInstruction;
+use solana_program::instruction::CompiledInstruction;
 
 /// A non-owning version of [`CompiledInstruction`] that references
 /// slices of account indexes and data.

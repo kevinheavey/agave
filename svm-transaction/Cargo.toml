@@ -10,4 +10,13 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-solana-sdk = { workspace = true }
+solana-hash = { workspace = true }
+solana-program = { workspace = true, default-features = false }
+solana-pubkey = { workspace = true }
+solana-sdk-ids = { workspace = true }
+solana-signature = { workspace = true }
+solana-transaction = { workspace = true }
+
+[dev-dependencies]
+solana-nonce = { workspace = true }
+static_assertions = { workspace = true }
