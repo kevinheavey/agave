@@ -2,7 +2,8 @@
 #![cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
-pub mod instructions;
+#[deprecated(since = "2.2.0", note = "Use solana_instruction::wasm instead.")]
+pub use solana_instruction::wasm as instructions;
 // This module is intentionally left empty. The wasm system instruction impl can be
 // found in the `solana-system-interface` crate.
 pub mod system_instruction {}

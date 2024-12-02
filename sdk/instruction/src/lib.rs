@@ -26,6 +26,8 @@ pub use account_meta::AccountMeta;
 pub mod error;
 #[cfg(target_os = "solana")]
 pub mod syscalls;
+#[cfg(feature = "std")]
+pub mod wasm;
 
 /// A directive for a single invocation of a Solana program.
 ///
