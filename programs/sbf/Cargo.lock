@@ -6583,9 +6583,11 @@ dependencies = [
  "solana-account",
  "solana-commitment-config",
  "solana-hash",
+ "solana-message",
  "solana-nonce",
  "solana-pubkey",
  "solana-rpc-client",
+ "solana-sdk-ids",
  "thiserror 2.0.4",
 ]
 

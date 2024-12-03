@@ -353,7 +353,7 @@ mod tests {
             42,
             &nonce::versions::Versions::new(nonce::state::State::Initialized(data)),
             nonce::state::State::size(),
-            &solana_program::system_program::id(),
+            &solana_sdk_ids::system_program::id(),
         )
         .unwrap();
         let nonce_pubkey = Pubkey::from([4u8; 32]);

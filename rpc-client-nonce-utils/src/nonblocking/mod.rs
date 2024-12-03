@@ -13,7 +13,6 @@ use {
     solana_pubkey::Pubkey,
     solana_rpc_client::nonblocking::rpc_client::RpcClient,
 };
-const SYSTEM_PROGRAM_ID: Pubkey = Pubkey::from_str_const("11111111111111111111111111111111");
 
 #[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum Error {
@@ -75,7 +74,7 @@ pub async fn get_account_with_commitment(
 /// system program. Returns [`Error::UnexpectedDataSize`] if the account
 /// contains no data.
 pub fn account_identity_ok<T: ReadableAccount>(account: &T) -> Result<(), Error> {
-    if account.owner() != &SYSTEM_PROGRAM_ID {
+    if account.owner() != &solana_sdk_ids::system_program::ID {
         Err(Error::InvalidAccountOwner)
     } else if account.data().is_empty() {
         Err(Error::UnexpectedDataSize)
@@ -148,10 +147,8 @@ pub fn state_from_account<T: ReadableAccount + StateMut<Versions>>(
 /// ```no_run
 /// use solana_rpc_client_nonce_utils::nonblocking;
 /// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-/// use solana_program::{
-///     message::Message,
-///     system_instruction
-/// };
+/// use solana_message::Message;
+/// use solana_system_interface::instruction as system_instruction;
 /// use solana_pubkey::Pubkey;
 /// use solana_sdk::{
 ///     signer::{keypair::Keypair, Signer},
@@ -240,15 +237,5 @@ pub fn data_from_state(state: &State) -> Result<&Data, Error> {
     match state {
         State::Uninitialized => Err(Error::InvalidStateForOperation),
         State::Initialized(data) => Ok(data),
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_inline_program_id() {
-        assert_eq!(SYSTEM_PROGRAM_ID, solana_program::system_program::id());
     }
 }

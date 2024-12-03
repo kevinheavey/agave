@@ -15,9 +15,11 @@ solana-account = { workspace = true }
 solana-clap-utils = { workspace = true, optional = true }
 solana-commitment-config = { workspace = true }
 solana-hash = { workspace = true }
+solana-message = { workspace = true }
 solana-nonce = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-rpc-client = { workspace = true }
+solana-sdk-ids = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
@@ -26,10 +28,10 @@ futures = { workspace = true }
 serde_json = { workspace = true }
 solana-account-decoder = { workspace = true }
 solana-fee-calculator = { workspace = true }
-solana-program = { workspace = true, default-features = false }
 solana-rpc-client-api = { workspace = true }
 solana-sdk = { workspace = true }
 solana-sha256-hasher = { workspace = true }
+solana-system-interface = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [features]
