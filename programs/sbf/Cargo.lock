@@ -5773,7 +5773,7 @@ version = "2.2.0"
 dependencies = [
  "serde",
  "serde_derive",
- "solana-program",
+ "solana-message",
 ]
 
 [[package]]

@@ -1,5 +1,5 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
-use solana_program::instruction::CompiledInstruction;
+use solana_message::compiled_instruction::CompiledInstruction;
 
 #[cfg_attr(
     feature = "serde",
