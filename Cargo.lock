@@ -8743,6 +8743,7 @@ dependencies = [
  "solana-transaction",
  "solana-transaction-context",
  "solana-transaction-error",
+ "solana-validator-exit",
  "static_assertions",
  "thiserror 2.0.6",
  "tiny-bip39",
@@ -9783,6 +9784,10 @@ dependencies = [
  "serde_json",
  "solana-metrics",
 ]
+
+[[package]]
+name = "solana-validator-exit"
+version = "2.2.0"
 
 [[package]]
 name = "solana-version"
