@@ -196,9 +196,9 @@ pub struct Transaction {
     /// is equal to [`num_required_signatures`] of the `Message`'s
     /// [`MessageHeader`].
     ///
-    /// [`account_keys`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#structfield.account_keys
-    /// [`MessageHeader`]: https://docs.rs/solana-program/latest/solana_program/message/struct.MessageHeader.html
-    /// [`num_required_signatures`]: https://docs.rs/solana-program/latest/solana_program/message/struct.MessageHeader.html#structfield.num_required_signatures
+    /// [`account_keys`]: https://docs.rs/solana-message/latest/solana_message/legacy/struct.Message.html#structfield.account_keys
+    /// [`MessageHeader`]: https://docs.rs/solana-message/latest/solana_message/struct.MessageHeader.html
+    /// [`num_required_signatures`]: https://docs.rs/solana-message/latest/solana_message/struct.MessageHeader.html#structfield.num_required_signatures
     // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
     #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub signatures: Vec<Signature>,
@@ -940,7 +940,7 @@ impl Transaction {
     /// See the documentation for the [`solana-remote-wallet`] crate for details
     /// on the operation of [`RemoteKeypair`] signers.
     ///
-    /// [`num_required_signatures`]: https://docs.rs/solana-program/latest/solana_program/message/struct.MessageHeader.html#structfield.num_required_signatures
+    /// [`num_required_signatures`]: https://docs.rs/solana-message/latest/solana_message/struct.MessageHeader.html#structfield.num_required_signatures
     /// [`account_keys`]: Message::account_keys
     /// [`Presigner`]: https://docs.rs/solana-presigner/latest/solana_presigner/struct.Presigner.html
     /// [`PresignerError`]: https://docs.rs/solana-signer/latest/solana_signer/enum.PresignerError.html
