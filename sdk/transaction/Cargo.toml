@@ -23,12 +23,12 @@ solana-logger = { workspace = true, optional = true }
 solana-message = { workspace = true }
 solana-precompiles = { workspace = true, optional = true }
 solana-pubkey = { workspace = true }
-solana-reserved-account-keys = { workspace = true }
+solana-reserved-account-keys = { workspace = true, optional = true }
 solana-sanitize = { workspace = true }
 solana-sdk-ids = { workspace = true }
 solana-short-vec = { workspace = true, optional = true }
 solana-signature = { workspace = true }
-solana-signer = { workspace = true }
+solana-signer = { workspace = true, optional = true }
 solana-system-interface = { workspace = true, optional = true, features = ["bincode"] }
 solana-transaction-error = { workspace = true }
 
@@ -57,11 +57,16 @@ static_assertions = { workspace = true }
 bincode = [
     "dep:bincode",
     "dep:solana-bincode",
+    "dep:solana-signer",
     "dep:solana-system-interface",
     "serde",
     "solana-message/bincode",
 ]
-blake3 = ["bincode", "solana-message/blake3"]
+blake3 = [
+    "dep:solana-reserved-account-keys",
+    "bincode",
+    "solana-message/blake3",
+]
 dev-context-only-utils = ["blake3", "precompiles", "serde", "verify"]
 frozen-abi = [
     "dep:solana-frozen-abi",
