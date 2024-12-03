@@ -2,11 +2,8 @@
 #![cfg(target_arch = "wasm32")]
 #![allow(non_snake_case)]
 use {
-    crate::Transaction,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_program::{message::Message, wasm::instructions::Instructions},
-    solana_pubkey::Pubkey,
+    crate::Transaction, solana_hash::Hash, solana_instruction::wasm::Instructions,
+    solana_keypair::Keypair, solana_message::Message, solana_pubkey::Pubkey,
     wasm_bindgen::prelude::*,
 };
 

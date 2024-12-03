@@ -60,7 +60,7 @@
 //! use borsh::{BorshSerialize, BorshDeserialize};
 //! use solana_instruction::Instruction;
 //! use solana_keypair::Keypair;
-//! use solana_program::message::Message;
+//! use solana_message::Message;
 //! use solana_pubkey::Pubkey;
 //! use solana_rpc_client::rpc_client::RpcClient;
 //! use solana_signer::Signer;
@@ -120,16 +120,18 @@ use {
 #[cfg(feature = "bincode")]
 use {
     solana_bincode::limited_deserialize,
-    solana_program::{system_instruction::SystemInstruction, system_program},
+    solana_hash::Hash,
+    solana_message::compiled_instruction::CompiledInstruction,
+    solana_sdk_ids::system_program,
+    solana_signer::{signers::Signers, SignerError},
+    solana_system_interface::instruction::SystemInstruction,
 };
 use {
-    solana_hash::Hash,
     solana_instruction::Instruction,
-    solana_program::{instruction::CompiledInstruction, message::Message},
+    solana_message::Message,
     solana_pubkey::Pubkey,
     solana_sanitize::{Sanitize, SanitizeError},
     solana_signature::Signature,
-    solana_signer::{signers::Signers, SignerError},
     solana_transaction_error::{TransactionError, TransactionResult as Result},
     std::result,
 };
@@ -227,7 +229,7 @@ pub struct Transaction {
 }
 
 impl Sanitize for Transaction {
-    fn sanitize(&self) -> std::result::Result<(), SanitizeError> {
+    fn sanitize(&self) -> result::Result<(), SanitizeError> {
         if self.message.header.num_required_signatures as usize > self.signatures.len() {
             return Err(SanitizeError::IndexOutOfBounds);
         }
@@ -254,7 +256,7 @@ impl Transaction {
     /// use borsh::{BorshSerialize, BorshDeserialize};
     /// use solana_instruction::Instruction;
     /// use solana_keypair::Keypair;
-    /// use solana_program::message::Message;
+    /// use solana_message::Message;
     /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
     /// use solana_signer::Signer;
@@ -332,7 +334,7 @@ impl Transaction {
     /// use borsh::{BorshSerialize, BorshDeserialize};
     /// use solana_instruction::Instruction;
     /// use solana_keypair::Keypair;
-    /// use solana_program::message::Message;
+    /// use solana_message::Message;
     /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
     /// use solana_signer::Signer;
@@ -381,6 +383,7 @@ impl Transaction {
     /// #
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    #[cfg(feature = "bincode")]
     pub fn new<T: Signers + ?Sized>(
         from_keypairs: &T,
         message: Message,
@@ -410,7 +413,7 @@ impl Transaction {
     /// use borsh::{BorshSerialize, BorshDeserialize};
     /// use solana_instruction::Instruction;
     /// use solana_keypair::Keypair;
-    /// use solana_program::message::Message;
+    /// use solana_message::Message;
     /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
     /// use solana_signer::Signer;
@@ -485,7 +488,7 @@ impl Transaction {
     /// use borsh::{BorshSerialize, BorshDeserialize};
     /// use solana_instruction::Instruction;
     /// use solana_keypair::Keypair;
-    /// use solana_program::message::Message;
+    /// use solana_message::Message;
     /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
     /// use solana_signer::Signer;
@@ -534,6 +537,7 @@ impl Transaction {
     /// #
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    #[cfg(feature = "bincode")]
     pub fn new_signed_with_payer<T: Signers + ?Sized>(
         instructions: &[Instruction],
         payer: Option<&Pubkey>,
@@ -559,6 +563,7 @@ impl Transaction {
     ///
     /// Panics when signing fails. See [`Transaction::try_sign`] and for a full
     /// description of failure conditions.
+    #[cfg(feature = "bincode")]
     pub fn new_with_compiled_instructions<T: Signers + ?Sized>(
         from_keypairs: &T,
         keys: &[Pubkey],
@@ -656,6 +661,7 @@ impl Transaction {
         &self.message
     }
 
+    #[cfg(feature = "bincode")]
     /// Return the serialized message data to sign.
     pub fn message_data(&self) -> Vec<u8> {
         self.message().serialize()
@@ -692,7 +698,7 @@ impl Transaction {
     /// use borsh::{BorshSerialize, BorshDeserialize};
     /// use solana_instruction::Instruction;
     /// use solana_keypair::Keypair;
-    /// use solana_program::message::Message;
+    /// use solana_message::Message;
     /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
     /// use solana_signer::Signer;
@@ -737,6 +743,7 @@ impl Transaction {
     /// #
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    #[cfg(feature = "bincode")]
     pub fn sign<T: Signers + ?Sized>(&mut self, keypairs: &T, recent_blockhash: Hash) {
         if let Err(e) = self.try_sign(keypairs, recent_blockhash) {
             panic!("Transaction::sign failed with error {e:?}");
@@ -763,6 +770,7 @@ impl Transaction {
     /// handle the error. See the documentation for
     /// [`Transaction::try_partial_sign`] for a full description of failure
     /// conditions.
+    #[cfg(feature = "bincode")]
     pub fn partial_sign<T: Signers + ?Sized>(&mut self, keypairs: &T, recent_blockhash: Hash) {
         if let Err(e) = self.try_partial_sign(keypairs, recent_blockhash) {
             panic!("Transaction::partial_sign failed with error {e:?}");
@@ -782,6 +790,7 @@ impl Transaction {
     ///
     /// Panics if signing fails. Use [`Transaction::try_partial_sign_unchecked`]
     /// to handle the error.
+    #[cfg(feature = "bincode")]
     pub fn partial_sign_unchecked<T: Signers + ?Sized>(
         &mut self,
         keypairs: &T,
@@ -829,7 +838,7 @@ impl Transaction {
     /// use borsh::{BorshSerialize, BorshDeserialize};
     /// use solana_instruction::Instruction;
     /// use solana_keypair::Keypair;
-    /// use solana_program::message::Message;
+    /// use solana_message::Message;
     /// use solana_pubkey::Pubkey;
     /// use solana_rpc_client::rpc_client::RpcClient;
     /// use solana_signer::Signer;
@@ -874,6 +883,7 @@ impl Transaction {
     /// #
     /// # Ok::<(), anyhow::Error>(())
     /// ```
+    #[cfg(feature = "bincode")]
     pub fn try_sign<T: Signers + ?Sized>(
         &mut self,
         keypairs: &T,
@@ -937,6 +947,7 @@ impl Transaction {
     /// [`PresignerError::VerificationFailure`]: https://docs.rs/solana-signer/latest/solana_signer/enum.PresignerError.html#variant.WrongSize
     /// [`solana-remote-wallet`]: https://docs.rs/solana-remote-wallet/latest/
     /// [`RemoteKeypair`]: https://docs.rs/solana-remote-wallet/latest/solana_remote_wallet/remote_keypair/struct.RemoteKeypair.html
+    #[cfg(feature = "bincode")]
     pub fn try_partial_sign<T: Signers + ?Sized>(
         &mut self,
         keypairs: &T,
@@ -963,6 +974,7 @@ impl Transaction {
     /// # Errors
     ///
     /// Returns an error if signing fails.
+    #[cfg(feature = "bincode")]
     pub fn try_partial_sign_unchecked<T: Signers + ?Sized>(
         &mut self,
         keypairs: &T,
@@ -1150,9 +1162,9 @@ mod tests {
         solana_instruction::AccountMeta,
         solana_keypair::Keypair,
         solana_presigner::Presigner,
-        solana_program::system_instruction,
         solana_sha256_hasher::hash,
         solana_signer::Signer,
+        solana_system_interface::instruction as system_instruction,
         std::mem::size_of,
     };
 

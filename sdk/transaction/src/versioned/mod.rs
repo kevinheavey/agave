@@ -1,12 +1,8 @@
 //! Defines a transaction which supports multiple versions of messages.
 
 use {
-    crate::Transaction,
-    solana_program::message::VersionedMessage,
-    solana_sanitize::SanitizeError,
-    solana_signature::Signature,
-    solana_signer::{signers::Signers, SignerError},
-    std::cmp::Ordering,
+    crate::Transaction, solana_message::VersionedMessage, solana_sanitize::SanitizeError,
+    solana_signature::Signature, std::cmp::Ordering,
 };
 #[cfg(feature = "serde")]
 use {
@@ -16,7 +12,9 @@ use {
 #[cfg(feature = "bincode")]
 use {
     solana_bincode::limited_deserialize,
-    solana_program::{system_instruction::SystemInstruction, system_program},
+    solana_sdk_ids::system_program,
+    solana_signer::{signers::Signers, SignerError},
+    solana_system_interface::instruction::SystemInstruction,
 };
 
 pub mod sanitized;
@@ -72,6 +70,7 @@ impl From<Transaction> for VersionedTransaction {
 impl VersionedTransaction {
     /// Signs a versioned message and if successful, returns a signed
     /// transaction.
+    #[cfg(feature = "bincode")]
     pub fn try_new<T: Signers + ?Sized>(
         message: VersionedMessage,
         keypairs: &T,
@@ -233,14 +232,12 @@ mod tests {
     use {
         super::*,
         solana_hash::Hash,
+        solana_instruction::{AccountMeta, Instruction},
         solana_keypair::Keypair,
-        solana_program::{
-            instruction::{AccountMeta, Instruction},
-            message::Message as LegacyMessage,
-            pubkey::Pubkey,
-            system_instruction,
-        },
+        solana_message::Message as LegacyMessage,
+        solana_pubkey::Pubkey,
         solana_signer::Signer,
+        solana_system_interface::instruction as system_instruction,
     };
 
     #[test]

@@ -1,22 +1,21 @@
 use {
-    crate::{
-        simple_vote_transaction_checker::is_simple_vote_transaction,
-        versioned::{sanitized::SanitizedVersionedTransaction, VersionedTransaction},
-        Transaction,
-    },
+    crate::versioned::{sanitized::SanitizedVersionedTransaction, VersionedTransaction},
     solana_hash::Hash,
-    solana_program::message::{
+    solana_message::{
         legacy,
         v0::{self, LoadedAddresses},
         AddressLoader, LegacyMessage, SanitizedMessage, SanitizedVersionedMessage,
         VersionedMessage,
     },
     solana_pubkey::Pubkey,
-    solana_reserved_account_keys::ReservedAccountKeys,
-    solana_sanitize::Sanitize,
     solana_signature::Signature,
     solana_transaction_error::{TransactionError, TransactionResult as Result},
     std::collections::HashSet,
+};
+#[cfg(feature = "blake3")]
+use {
+    crate::Transaction, solana_reserved_account_keys::ReservedAccountKeys,
+    solana_sanitize::Sanitize,
 };
 
 /// Maximum number of accounts that a transaction may lock.
@@ -91,6 +90,7 @@ impl SanitizedTransaction {
         })
     }
 
+    #[cfg(feature = "blake3")]
     /// Create a sanitized transaction from an un-sanitized versioned
     /// transaction.  If the input transaction uses address tables, attempt to
     /// lookup the address for each table index.
@@ -102,8 +102,11 @@ impl SanitizedTransaction {
         reserved_account_keys: &HashSet<Pubkey>,
     ) -> Result<Self> {
         let sanitized_versioned_tx = SanitizedVersionedTransaction::try_from(tx)?;
-        let is_simple_vote_tx = is_simple_vote_tx
-            .unwrap_or_else(|| is_simple_vote_transaction(&sanitized_versioned_tx));
+        let is_simple_vote_tx = is_simple_vote_tx.unwrap_or_else(|| {
+            crate::simple_vote_transaction_checker::is_simple_vote_transaction(
+                &sanitized_versioned_tx,
+            )
+        });
         let message_hash = match message_hash.into() {
             MessageHash::Compute => sanitized_versioned_tx.message.message.hash(),
             MessageHash::Precomputed(hash) => hash,
@@ -118,6 +121,7 @@ impl SanitizedTransaction {
     }
 
     /// Create a sanitized transaction from a legacy transaction
+    #[cfg(feature = "blake3")]
     pub fn try_from_legacy_transaction(
         tx: Transaction,
         reserved_account_keys: &HashSet<Pubkey>,
@@ -136,6 +140,7 @@ impl SanitizedTransaction {
     }
 
     /// Create a sanitized transaction from a legacy transaction. Used for tests only.
+    #[cfg(feature = "blake3")]
     pub fn from_transaction_for_tests(tx: Transaction) -> Self {
         Self::try_from_legacy_transaction(tx, &ReservedAccountKeys::empty_key_set()).unwrap()
     }
@@ -250,6 +255,7 @@ impl SanitizedTransaction {
     }
 
     /// If the transaction uses a durable nonce, return the pubkey of the nonce account
+    #[cfg(feature = "bincode")]
     pub fn get_durable_nonce(&self) -> Option<&Pubkey> {
         self.message.get_durable_nonce()
     }
@@ -337,10 +343,8 @@ mod tests {
     use {
         super::*,
         solana_keypair::Keypair,
-        solana_program::{
-            message::{MessageHeader, SimpleAddressLoader},
-            vote::{self, state::Vote},
-        },
+        solana_message::{MessageHeader, SimpleAddressLoader},
+        solana_program::vote::{self, state::Vote},
         solana_reserved_account_keys::ReservedAccountKeys,
         solana_signer::Signer,
     };
