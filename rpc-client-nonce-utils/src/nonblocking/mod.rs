@@ -97,10 +97,8 @@ pub fn account_identity_ok<T: ReadableAccount>(account: &T) -> Result<(), Error>
 /// ```no_run
 /// use solana_rpc_client_nonce_utils::nonblocking;
 /// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-/// use solana_sdk::{
-///     nonce::State,
-///     pubkey::Pubkey,
-/// };
+/// use solana_nonce::state::State;
+/// use solana_pubkey::Pubkey;
 /// use anyhow::Result;
 ///
 /// futures::executor::block_on(async {
@@ -147,13 +145,12 @@ pub fn state_from_account<T: ReadableAccount + StateMut<Versions>>(
 /// ```no_run
 /// use solana_rpc_client_nonce_utils::nonblocking;
 /// use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+/// use solana_keypair::Keypair;
 /// use solana_message::Message;
 /// use solana_system_interface::instruction as system_instruction;
 /// use solana_pubkey::Pubkey;
-/// use solana_sdk::{
-///     signer::{keypair::Keypair, Signer},
-///     transaction::Transaction
-/// };
+/// use solana_signer::Signer;
+/// use solana_sdk::transaction::Transaction;
 /// use std::path::Path;
 /// use anyhow::Result;
 /// # use anyhow::anyhow;
