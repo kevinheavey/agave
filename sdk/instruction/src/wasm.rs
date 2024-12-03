@@ -1,7 +1,6 @@
 //! The `Instructions` struct is a legacy workaround
 //! from when wasm-bindgen lacked Vec<T> support
 //! (ref: https://github.com/rustwasm/wasm-bindgen/issues/111)
-#![cfg(target_arch = "wasm32")]
 use {crate::Instruction, wasm_bindgen::prelude::*};
 
 #[wasm_bindgen]
