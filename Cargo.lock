@@ -8332,6 +8332,7 @@ dependencies = [
  "solana-sha256-hasher",
  "solana-signer",
  "solana-system-interface",
+ "solana-transaction",
  "thiserror 2.0.4",
  "tokio",
 ]

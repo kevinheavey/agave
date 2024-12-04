@@ -34,6 +34,7 @@ solana-sdk = { workspace = true }
 solana-sha256-hasher = { workspace = true }
 solana-signer = { workspace = true }
 solana-system-interface = { workspace = true }
+solana-transaction = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [features]

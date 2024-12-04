@@ -150,7 +150,7 @@ pub fn state_from_account<T: ReadableAccount + StateMut<Versions>>(
 /// use solana_system_interface::instruction as system_instruction;
 /// use solana_pubkey::Pubkey;
 /// use solana_signer::Signer;
-/// use solana_sdk::transaction::Transaction;
+/// use solana_transaction::Transaction;
 /// use std::path::Path;
 /// use anyhow::Result;
 /// # use anyhow::anyhow;
