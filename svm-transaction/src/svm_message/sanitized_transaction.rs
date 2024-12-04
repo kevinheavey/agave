@@ -4,7 +4,7 @@ use {
         svm_message::SVMMessage,
     },
     solana_hash::Hash,
-    solana_program::message::AccountKeys,
+    solana_message::AccountKeys,
     solana_pubkey::Pubkey,
     solana_transaction::sanitized::SanitizedTransaction,
 };

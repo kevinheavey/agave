@@ -4,7 +4,7 @@ use {
     },
     core::fmt::Debug,
     solana_hash::Hash,
-    solana_program::message::AccountKeys,
+    solana_message::AccountKeys,
     solana_pubkey::Pubkey,
     solana_sdk_ids::system_program,
 };

@@ -9018,11 +9018,12 @@ name = "solana-svm-transaction"
 version = "2.2.0"
 dependencies = [
  "solana-hash",
+ "solana-message",
  "solana-nonce",
- "solana-program",
  "solana-pubkey",
  "solana-sdk-ids",
  "solana-signature",
+ "solana-system-interface",
  "solana-transaction",
  "static_assertions",
 ]

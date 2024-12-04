@@ -2,18 +2,16 @@
 use {
     crate::svm_message::SVMMessage,
     solana_hash::Hash,
-    solana_program::{
-        instruction::CompiledInstruction,
-        message::{
-            legacy,
-            v0::{self, LoadedAddresses, MessageAddressTableLookup},
-            MessageHeader, SanitizedMessage, SanitizedVersionedMessage, SimpleAddressLoader,
-            VersionedMessage,
-        },
-        system_instruction::SystemInstruction,
+    solana_message::{
+        compiled_instruction::CompiledInstruction,
+        legacy,
+        v0::{self, LoadedAddresses, MessageAddressTableLookup},
+        MessageHeader, SanitizedMessage, SanitizedVersionedMessage, SimpleAddressLoader,
+        VersionedMessage,
     },
     solana_pubkey::Pubkey,
     solana_sdk_ids::system_program,
+    solana_system_interface::instruction::SystemInstruction,
     std::collections::HashSet,
 };
 
