@@ -1,7 +1,7 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 use {
     lazy_static::lazy_static, solana_feature_set::FeatureSet,
-    solana_precompile_error::PrecompileError, solana_program::instruction::CompiledInstruction,
+    solana_precompile_error::PrecompileError, solana_message::compiled_instruction::CompiledInstruction,
     solana_pubkey::Pubkey,
 };
 
