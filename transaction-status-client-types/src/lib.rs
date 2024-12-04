@@ -7,12 +7,10 @@ use {
     serde_json::Value,
     solana_account_decoder_client_types::token::UiTokenAmount,
     solana_commitment_config::CommitmentConfig,
-    solana_program::{
-        instruction::CompiledInstruction,
-        message::{
-            v0::{LoadedAddresses, MessageAddressTableLookup},
-            MessageHeader,
-        },
+    solana_message::{
+        compiled_instruction::CompiledInstruction,
+        v0::{LoadedAddresses, MessageAddressTableLookup},
+        MessageHeader,
     },
     solana_reward_info::RewardType,
     solana_signature::Signature,

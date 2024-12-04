@@ -9432,7 +9432,7 @@ dependencies = [
  "serde_json",
  "solana-account-decoder-client-types",
  "solana-commitment-config",
- "solana-program",
+ "solana-message",
  "solana-reward-info",
  "solana-signature",
  "solana-transaction",
