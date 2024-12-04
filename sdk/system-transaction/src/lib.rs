@@ -1,9 +1,9 @@
 //! The `system_transaction` module provides functionality for creating system transactions.
 
 use {
-    solana_hash::Hash, solana_keypair::Keypair, solana_message::Message,
-    solana_pubkey::Pubkey, solana_signer::Signer,
-    solana_system_interface::instruction as system_instruction, solana_transaction::Transaction,
+    solana_hash::Hash, solana_keypair::Keypair, solana_message::Message, solana_pubkey::Pubkey,
+    solana_signer::Signer, solana_system_interface::instruction as system_instruction,
+    solana_transaction::Transaction,
 };
 
 /// Create and sign new SystemInstruction::CreateAccount transaction
