@@ -225,10 +225,10 @@ macro_rules! saturating_add_assign {
     }};
 }
 
-#[cfg_attr(not(target_os = "solana"), macro_use)]
-extern crate serde_derive;
 pub extern crate bs58;
 extern crate log as logger;
+#[cfg_attr(not(target_os = "solana"), macro_use)]
+extern crate serde_derive;
 
 #[cfg_attr(feature = "frozen-abi", macro_use)]
 #[cfg(feature = "frozen-abi")]
