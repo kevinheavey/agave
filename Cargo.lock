@@ -9062,7 +9062,7 @@ version = "2.2.0"
 dependencies = [
  "solana-hash",
  "solana-keypair",
- "solana-program",
+ "solana-message",
  "solana-pubkey",
  "solana-signer",
  "solana-system-interface",
