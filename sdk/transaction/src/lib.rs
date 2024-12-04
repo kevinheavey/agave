@@ -941,7 +941,7 @@ impl Transaction {
     /// on the operation of [`RemoteKeypair`] signers.
     ///
     /// [`num_required_signatures`]: https://docs.rs/solana-message/latest/solana_message/struct.MessageHeader.html#structfield.num_required_signatures
-    /// [`account_keys`]: Message::account_keys
+    /// [`account_keys`]: https://docs.rs/solana-message/latest/solana_message/legacy/struct.Message.html#structfield.account_keys
     /// [`Presigner`]: https://docs.rs/solana-presigner/latest/solana_presigner/struct.Presigner.html
     /// [`PresignerError`]: https://docs.rs/solana-signer/latest/solana_signer/enum.PresignerError.html
     /// [`PresignerError::VerificationFailure`]: https://docs.rs/solana-signer/latest/solana_signer/enum.PresignerError.html#variant.WrongSize
