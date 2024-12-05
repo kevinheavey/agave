@@ -131,7 +131,7 @@ pub use solana_fee_structure as fee;
 #[deprecated(since = "2.1.0", note = "Use `solana-inflation` crate instead")]
 pub use solana_inflation as inflation;
 #[cfg(feature = "full")]
-#[deprecated(since = "2.1.0", note = "Use `solana-offchain-message` crate instead")]
+#[deprecated(since = "2.2.0", note = "Use `solana-offchain-message` crate instead")]
 pub use solana_offchain_message as offchain_message;
 #[deprecated(since = "2.1.0", note = "Use `solana-packet` crate instead")]
 pub use solana_packet as packet;
