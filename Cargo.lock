@@ -8327,7 +8327,6 @@ dependencies = [
  "solana-pubkey",
  "solana-rpc-client",
  "solana-rpc-client-api",
- "solana-sdk",
  "solana-sdk-ids",
  "solana-sha256-hasher",
  "solana-signer",
