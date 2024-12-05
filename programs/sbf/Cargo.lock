@@ -5264,7 +5264,7 @@ dependencies = [
  "solana-instruction",
  "solana-keypair",
  "solana-measure",
- "solana-program",
+ "solana-message",
  "solana-pubkey",
  "solana-pubsub-client",
  "solana-quic-client",

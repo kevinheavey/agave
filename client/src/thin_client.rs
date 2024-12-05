@@ -12,7 +12,7 @@ use {
     solana_hash::Hash,
     solana_instruction::Instruction,
     solana_keypair::Keypair,
-    solana_program::message::Message,
+    solana_message::Message,
     solana_pubkey::Pubkey,
     solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
     solana_rpc_client::rpc_client::RpcClient,

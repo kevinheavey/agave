@@ -7,7 +7,7 @@ use {
     dashmap::DashMap,
     futures_util::future::join_all,
     solana_hash::Hash,
-    solana_program::message::Message,
+    solana_message::Message,
     solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
     solana_rpc_client::spinner::{self, SendTransactionProgress},
     solana_rpc_client_api::{
