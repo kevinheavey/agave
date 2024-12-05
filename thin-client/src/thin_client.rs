@@ -20,12 +20,13 @@ use {
     solana_hash::Hash,
     solana_instruction::Instruction,
     solana_keypair::Keypair,
-    solana_program::{message::Message, system_instruction},
+    solana_message::Message,
     solana_pubkey::Pubkey,
     solana_rpc_client::rpc_client::RpcClient,
     solana_rpc_client_api::config::RpcProgramAccountsConfig,
     solana_signature::Signature,
     solana_signer::{signers::Signers, Signer},
+    solana_system_interface::instruction::transfer,
     solana_transaction::{versioned::VersionedTransaction, Transaction},
     solana_transaction_error::{TransactionResult, TransportResult},
     std::{
@@ -366,8 +367,7 @@ where
         keypair: &Keypair,
         pubkey: &Pubkey,
     ) -> TransportResult<Signature> {
-        let transfer_instruction =
-            system_instruction::transfer(&keypair.pubkey(), pubkey, lamports);
+        let transfer_instruction = transfer(&keypair.pubkey(), pubkey, lamports);
         self.send_and_confirm_instruction(keypair, transfer_instruction)
     }
 
