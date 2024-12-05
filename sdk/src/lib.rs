@@ -76,7 +76,6 @@ pub mod log;
 pub mod native_loader;
 pub mod net;
 pub mod nonce_account;
-pub mod poh_config;
 pub mod precompiles;
 pub mod program_utils;
 pub mod pubkey;
