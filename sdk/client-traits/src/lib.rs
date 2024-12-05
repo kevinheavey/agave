@@ -14,10 +14,11 @@ use {
     solana_hash::Hash,
     solana_instruction::Instruction,
     solana_keypair::Keypair,
-    solana_program::{message::Message, system_instruction::transfer},
+    solana_message::Message,
     solana_pubkey::Pubkey,
     solana_signature::Signature,
     solana_signer::{signers::Signers, Signer},
+    solana_system_interface::instruction::transfer,
     solana_transaction::{versioned::VersionedTransaction, Transaction},
     solana_transaction_error::{TransactionResult, TransportResult as Result},
 };
