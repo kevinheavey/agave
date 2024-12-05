@@ -46,7 +46,7 @@ use {
     crate::tpu_client::{SEND_TRANSACTION_INTERVAL, TRANSACTION_RESEND_INTERVAL},
     futures_util::FutureExt,
     indicatif::ProgressBar,
-    solana_program::message::Message,
+    solana_message::Message,
     solana_rpc_client::spinner::{self, SendTransactionProgress},
     solana_rpc_client_api::request::MAX_GET_SIGNATURE_STATUSES_QUERY_ITEMS,
     solana_signer::signers::Signers,

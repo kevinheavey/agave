@@ -23,7 +23,7 @@ use {
 };
 #[cfg(feature = "spinner")]
 use {
-    solana_program::message::Message, solana_signer::signers::Signers,
+    solana_message::Message, solana_signer::signers::Signers,
     solana_transaction_error::TransactionError, tokio::time::Duration,
 };
 

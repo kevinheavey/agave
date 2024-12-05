@@ -24,7 +24,7 @@ solana-connection-cache = { workspace = true }
 solana-epoch-info = { workspace = true }
 solana-measure = { workspace = true }
 solana-net-utils = { workspace = true }
-solana-program = { workspace = true, optional = true, default-features = false }
+solana-message = { workspace = true, optional = true }
 solana-pubkey = { workspace = true }
 solana-pubsub-client = { workspace = true }
 solana-quic-definitions = { workspace = true }
@@ -43,7 +43,7 @@ default = ["spinner"]
 # command-line interfaces
 spinner = [
     "dep:indicatif",
-    "dep:solana-program",
+    "dep:solana-message",
     "solana-rpc-client/spinner",
 ]
 
