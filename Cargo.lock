@@ -8313,9 +8313,11 @@ dependencies = [
  "solana-commitment-config",
  "solana-epoch-info",
  "solana-epoch-schedule",
+ "solana-feature-gate-interface",
  "solana-hash",
  "solana-instruction",
  "solana-keypair",
+ "solana-message",
  "solana-program",
  "solana-pubkey",
  "solana-rpc-client-api",
@@ -8326,6 +8328,7 @@ dependencies = [
  "solana-transaction-error",
  "solana-transaction-status-client-types",
  "solana-version",
+ "static_assertions",
  "tokio",
 ]
 

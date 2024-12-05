@@ -25,11 +25,9 @@ use {
     solana_commitment_config::CommitmentConfig,
     solana_epoch_info::EpochInfo,
     solana_epoch_schedule::EpochSchedule,
+    solana_feature_gate_interface::Feature,
     solana_hash::Hash,
-    solana_program::{
-        feature::Feature,
-        message::{v0, Message as LegacyMessage},
-    },
+    solana_message::{v0, Message as LegacyMessage},
     solana_pubkey::Pubkey,
     solana_rpc_client_api::{
         client_error::{Error as ClientError, ErrorKind, Result as ClientResult},

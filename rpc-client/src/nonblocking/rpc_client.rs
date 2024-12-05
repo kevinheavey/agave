@@ -33,7 +33,6 @@ use {
     solana_epoch_info::EpochInfo,
     solana_epoch_schedule::EpochSchedule,
     solana_hash::Hash,
-    solana_program::vote::state::MAX_LOCKOUT_HISTORY,
     solana_pubkey::Pubkey,
     solana_rpc_client_api::{
         client_error::{
@@ -56,6 +55,13 @@ use {
     },
     tokio::time::sleep,
 };
+// inlined to avoid a solana_program dep
+const MAX_LOCKOUT_HISTORY: usize = 31;
+#[cfg(test)]
+static_assertions::const_assert_eq!(
+    MAX_LOCKOUT_HISTORY,
+    solana_program::vote::state::MAX_LOCKOUT_HISTORY
+);
 
 /// A client of a remote Solana node.
 ///

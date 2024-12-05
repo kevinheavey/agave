@@ -10,7 +10,7 @@ use {
     solana_epoch_info::EpochInfo,
     solana_epoch_schedule::EpochSchedule,
     solana_instruction::error::InstructionError,
-    solana_program::message::MessageHeader,
+    solana_message::MessageHeader,
     solana_pubkey::Pubkey,
     solana_rpc_client_api::{
         client_error::Result,

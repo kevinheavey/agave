@@ -26,15 +26,16 @@ solana-account = { workspace = true }
 solana-account-decoder-client-types = { workspace = true, features = ["zstd"] }
 solana-clock = { workspace = true }
 solana-commitment-config = { workspace = true }
-solana-epoch-info = { workspace = true }
-solana-epoch-schedule = { workspace = true }
+solana-epoch-info = { workspace = true, features = ["serde"] }
+solana-epoch-schedule = { workspace = true, features = ["serde"] }
+solana-feature-gate-interface = { workspace = true, features = ["serde"] }
 solana-hash = { workspace = true }
 solana-instruction = { workspace = true }
-solana-program = { workspace = true, default-features = false }
+solana-message = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-rpc-client-api = { workspace = true }
 solana-signature = { workspace = true }
-solana-transaction = { workspace = true }
+solana-transaction = { workspace = true, features = ["bincode"] }
 solana-transaction-error = { workspace = true }
 solana-transaction-status-client-types = { workspace = true }
 solana-version = { workspace = true }
@@ -48,8 +49,10 @@ jsonrpc-core = { workspace = true }
 jsonrpc-http-server = { workspace = true }
 solana-account-decoder = { workspace = true }
 solana-keypair = { workspace = true }
+solana-program = { workspace = true }
 solana-sdk = { path = "../sdk" }
 solana-signer = { workspace = true }
+static_assertions = { workspace = true }
 
 [features]
 default = ["spinner"]
