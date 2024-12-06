@@ -3712,8 +3712,8 @@ mod tests {
         solana_instruction::error::InstructionError,
         solana_keypair::Keypair,
         solana_rpc_client_api::client_error::ErrorKind,
-        solana_system_transaction as system_transaction,
         solana_signer::Signer,
+        solana_system_transaction as system_transaction,
         solana_transaction_error::TransactionError,
         std::{io, thread},
     };
