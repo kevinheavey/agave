@@ -164,7 +164,7 @@ pub struct GetConfirmedSignaturesForAddress2Config {
 /// # use solana_keypair::Keypair;
 /// # use solana_rpc_client_api::client_error::Error;
 /// # use solana_rpc_client::rpc_client::RpcClient;
-/// # use solana_sdk::system_transaction;
+/// # use solana_system_transaction as system_transaction;
 /// # use solana_signer::Signer;
 /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
 /// # let key = Keypair::new();
@@ -645,7 +645,7 @@ impl RpcClient {
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// # let alice = Keypair::new();
     /// # let bob = Keypair::new();
@@ -755,7 +755,7 @@ impl RpcClient {
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Transfer lamports from Alice to Bob
     /// # let alice = Keypair::new();
@@ -830,7 +830,7 @@ impl RpcClient {
     /// #     config::RpcSendTransactionConfig,
     /// # };
     /// # use solana_rpc_client::rpc_client::RpcClient;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
@@ -893,7 +893,7 @@ impl RpcClient {
     /// # use solana_keypair::Keypair;
     /// # use solana_rpc_client_api::client_error::Error;
     /// # use solana_rpc_client::rpc_client::RpcClient;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
@@ -945,7 +945,7 @@ impl RpcClient {
     /// # use solana_rpc_client_api::client_error::Error;
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_keypair::Keypair;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # use std::time::Duration;
@@ -1030,7 +1030,7 @@ impl RpcClient {
     /// # };
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_hash::Hash;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
@@ -1099,7 +1099,7 @@ impl RpcClient {
     /// #     response::RpcSimulateTransactionResult,
     /// # };
     /// # use solana_rpc_client::rpc_client::RpcClient;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signer::Signer;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Transfer lamports from Alice to Bob
@@ -1190,7 +1190,7 @@ impl RpcClient {
     /// # use solana_rpc_client_api::client_error::Error;
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_hash::Hash;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
@@ -1253,7 +1253,7 @@ impl RpcClient {
     /// # use solana_rpc_client_api::client_error::Error;
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_hash::Hash;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # use std::time::Duration;
@@ -1326,7 +1326,7 @@ impl RpcClient {
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_hash::Hash;
     /// # use solana_keypair::Keypair;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
@@ -1387,7 +1387,7 @@ impl RpcClient {
     /// # use solana_keypair::Keypair;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// # let alice = Keypair::new();
     /// # let bob = Keypair::new();
@@ -1448,7 +1448,7 @@ impl RpcClient {
     /// # use solana_keypair::Keypair;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// # let alice = Keypair::new();
     /// # let bob = Keypair::new();
@@ -2229,7 +2229,7 @@ impl RpcClient {
     /// # use solana_rpc_client_api::client_error::Error;
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_keypair::Keypair;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signer::Signer;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// # let alice = Keypair::new();
@@ -2269,7 +2269,7 @@ impl RpcClient {
     /// # use solana_rpc_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient};
     /// # use solana_commitment_config::CommitmentConfig;
     /// # use solana_keypair::Keypair;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signer::Signer;
     /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// # let alice = Keypair::new();
@@ -2319,7 +2319,7 @@ impl RpcClient {
     /// # use solana_rpc_client_api::client_error::Error;
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_keypair::Keypair;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # use solana_transaction_status_client_types::UiTransactionEncoding;
@@ -2370,7 +2370,7 @@ impl RpcClient {
     /// # use solana_rpc_client::rpc_client::RpcClient;
     /// # use solana_commitment_config::CommitmentConfig;
     /// # use solana_keypair::Keypair;
-    /// # use solana_sdk::system_transaction;
+    /// # use solana_system_transaction as system_transaction;
     /// # use solana_signature::Signature;
     /// # use solana_signer::Signer;
     /// # use solana_transaction_status_client_types::UiTransactionEncoding;
@@ -3712,7 +3712,7 @@ mod tests {
         solana_instruction::error::InstructionError,
         solana_keypair::Keypair,
         solana_rpc_client_api::client_error::ErrorKind,
-        solana_sdk::system_transaction,
+        solana_system_transaction as system_transaction,
         solana_signer::Signer,
         solana_transaction_error::TransactionError,
         std::{io, thread},
