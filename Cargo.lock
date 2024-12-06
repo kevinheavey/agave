@@ -7761,7 +7761,6 @@ dependencies = [
  "solana-perf",
  "solana-pubkey",
  "solana-rayon-threadlimit",
- "solana-sdk",
  "solana-sdk-ids",
  "solana-short-vec",
  "solana-signature",
