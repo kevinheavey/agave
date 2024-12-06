@@ -676,10 +676,7 @@ mod tests {
         curve25519_dalek::{edwards::CompressedEdwardsY, scalar::Scalar},
         rand::{thread_rng, Rng},
         solana_keypair::Keypair,
-        solana_message::{
-            compiled_instruction::CompiledInstruction,
-            message::{Message, MessageHeader},
-        },
+        solana_message::{compiled_instruction::CompiledInstruction, Message, MessageHeader},
         solana_signature::Signature,
         solana_signer::Signer,
         solana_transaction::Transaction,
