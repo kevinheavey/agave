@@ -250,10 +250,9 @@ mod tests {
     use {
         super::*,
         solana_hash::Hash,
-        solana_sdk::{
-            signature::{Keypair, Signer},
-            system_transaction,
-        },
+        solana_keypair::Keypair,
+        solana_signer::Signer,
+        solana_system_transaction::transfer,
     };
 
     #[test]
