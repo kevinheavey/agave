@@ -55,6 +55,7 @@ thiserror = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
+solana-instruction = { workspace = true, features = ["bincode"] }
 solana-logger = { workspace = true }
 solana-pubkey = { workspace = true, features = ["rand"] }
 solana-transaction-context = { workspace = true, features = [
