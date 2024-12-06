@@ -248,10 +248,7 @@ where
 #[cfg(test)]
 mod tests {
     use {
-        super::*,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_signer::Signer,
+        super::*, solana_hash::Hash, solana_keypair::Keypair, solana_signer::Signer,
         solana_system_transaction::transfer,
     };
 
