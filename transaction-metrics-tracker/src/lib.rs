@@ -54,10 +54,7 @@ pub fn get_signature_from_packet(packet: &Packet) -> Result<&[u8; SIGNATURE_BYTE
 #[cfg(test)]
 mod tests {
     use {
-        super::*,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_signature::Signature,
+        super::*, solana_hash::Hash, solana_keypair::Keypair, solana_signature::Signature,
         solana_system_transaction as system_transaction,
     };
 
