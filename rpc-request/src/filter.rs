@@ -1,3 +1,4 @@
+#![allow(clippy::arithmetic_side_effects)]
 use {
     base64::{prelude::BASE64_STANDARD, Engine},
     serde_derive::{Deserialize, Serialize},
