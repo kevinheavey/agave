@@ -24,7 +24,6 @@ solana-signature = { workspace = true, default-features = false }
 solana-transaction = { workspace = true, features = ["serde"] }
 solana-transaction-context = { workspace = true }
 solana-transaction-error = { workspace = true, features = ["serde"] }
-thiserror = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

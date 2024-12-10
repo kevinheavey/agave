@@ -17,7 +17,6 @@ use {
     solana_transaction::versioned::{TransactionVersion, VersionedTransaction},
     solana_transaction_context::TransactionReturnData,
     solana_transaction_error::{TransactionError, TransactionResult},
-    thiserror::Error,
 };
 pub mod option_serializer;
 
@@ -71,10 +70,22 @@ impl Default for TransactionDetails {
     }
 }
 
-#[derive(Error, Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum EncodeError {
-    #[error("Encoding does not support transaction version {0}")]
     UnsupportedTransactionVersion(u8),
+}
+
+impl std::error::Error for EncodeError {}
+
+impl fmt::Display for EncodeError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            EncodeError::UnsupportedTransactionVersion(num) => f.write_fmt(format_args!(
+                "Encoding does not support transaction version {0}",
+                num
+            )),
+        }
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
