@@ -103,7 +103,7 @@ enum State {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_sdk::hash::Hash, std::time::Duration};
+    use {super::*, solana_hash::Hash, std::time::Duration};
 
     #[test]
     fn test_new_valid() {
