@@ -569,7 +569,7 @@ mod tests {
                                 let mut pk;
                                 loop {
                                     // expensive, but small numbers and for tests, so ok
-                                    pk = solana_sdk::pubkey::new_rand();
+                                    pk = solana_pubkey::new_rand();
                                     if binner.bin_from_pubkey(&pk) == bin {
                                         break;
                                     }
