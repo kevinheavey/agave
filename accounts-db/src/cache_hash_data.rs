@@ -5,8 +5,8 @@ use {
     crate::{accounts_hash::CalculateHashIntermediate, cache_hash_data_stats::CacheHashDataStats},
     bytemuck_derive::{Pod, Zeroable},
     memmap2::MmapMut,
+    solana_clock::Slot,
     solana_measure::{measure::Measure, measure_us},
-    solana_sdk::clock::Slot,
     std::{
         collections::HashSet,
         fs::{self, remove_file, File, OpenOptions},

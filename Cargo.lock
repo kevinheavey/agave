@@ -5971,6 +5971,7 @@ dependencies = [
  "smallvec",
  "solana-accounts-db",
  "solana-bucket-map",
+ "solana-clock",
  "solana-compute-budget",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
