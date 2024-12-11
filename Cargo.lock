@@ -5970,6 +5970,7 @@ dependencies = [
  "solana-compute-budget",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
+ "solana-hash",
  "solana-inline-spl",
  "solana-lattice-hash",
  "solana-logger",
