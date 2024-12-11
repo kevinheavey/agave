@@ -4838,6 +4838,7 @@ dependencies = [
  "serde_derive",
  "smallvec",
  "solana-bucket-map",
+ "solana-clock",
  "solana-hash",
  "solana-inline-spl",
  "solana-lattice-hash",
