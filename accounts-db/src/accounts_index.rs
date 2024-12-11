@@ -2191,7 +2191,7 @@ pub mod tests {
 
     #[test]
     fn test_get_empty() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let ancestors = Ancestors::default();
         let key = &key;
@@ -2308,7 +2308,7 @@ pub mod tests {
 
     #[test]
     fn test_insert_no_ancestors() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let mut gc = Vec::new();
         index.upsert(
@@ -2355,7 +2355,7 @@ pub mod tests {
 
     #[test]
     fn test_insert_duplicates() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let pubkey = &key;
         let slot = 0;
         let mut ancestors = Ancestors::default();
@@ -2379,7 +2379,7 @@ pub mod tests {
 
     #[test]
     fn test_insert_new_with_lock_no_ancestors() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let pubkey = &key;
         let slot = 0;
 
@@ -2519,8 +2519,8 @@ pub mod tests {
     #[test]
     fn test_batch_insert() {
         let slot0 = 0;
-        let key0 = solana_sdk::pubkey::new_rand();
-        let key1 = solana_sdk::pubkey::new_rand();
+        let key0 = solana_pubkey::new_rand();
+        let key1 = solana_pubkey::new_rand();
 
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let account_infos = [true, false];
@@ -2558,7 +2558,7 @@ pub mod tests {
 
         let slot0 = 0;
         let slot1 = 1;
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
 
         let mut config = ACCOUNTS_INDEX_CONFIG_FOR_TESTING;
         config.index_limit_mb = if use_disk {
@@ -2680,7 +2680,7 @@ pub mod tests {
 
     #[test]
     fn test_insert_with_lock_no_ancestors() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let slot = 0;
         let account_info = true;
@@ -2726,7 +2726,7 @@ pub mod tests {
 
     #[test]
     fn test_insert_wrong_ancestors() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let mut gc = Vec::new();
         index.upsert(
@@ -2757,7 +2757,7 @@ pub mod tests {
     fn test_insert_ignore_reclaims() {
         {
             // non-cached
-            let key = solana_sdk::pubkey::new_rand();
+            let key = solana_pubkey::new_rand();
             let index = AccountsIndex::<u64, u64>::default_for_tests();
             let mut reclaims = Vec::new();
             let slot = 0;
@@ -2803,7 +2803,7 @@ pub mod tests {
         }
         {
             // cached
-            let key = solana_sdk::pubkey::new_rand();
+            let key = solana_pubkey::new_rand();
             let index = AccountsIndex::<AccountInfoTest, AccountInfoTest>::default_for_tests();
             let mut reclaims = Vec::new();
             let slot = 0;
@@ -2851,7 +2851,7 @@ pub mod tests {
 
     #[test]
     fn test_insert_with_ancestors() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let mut gc = Vec::new();
         index.upsert(
@@ -2902,7 +2902,7 @@ pub mod tests {
         let root_slot = 0;
 
         let mut pubkeys: Vec<Pubkey> = std::iter::repeat_with(|| {
-            let new_pubkey = solana_sdk::pubkey::new_rand();
+            let new_pubkey = solana_pubkey::new_rand();
             index.upsert(
                 root_slot,
                 root_slot,
@@ -3066,7 +3066,7 @@ pub mod tests {
         index.upsert(
             0,
             0,
-            &solana_sdk::pubkey::new_rand(),
+            &solana_pubkey::new_rand(),
             &AccountSharedData::default(),
             &AccountSecondaryIndexes::default(),
             true,
@@ -3086,7 +3086,7 @@ pub mod tests {
 
     #[test]
     fn test_insert_with_root() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let mut gc = Vec::new();
         index.upsert(
@@ -3161,7 +3161,7 @@ pub mod tests {
 
     #[test]
     fn test_update_last_wins() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let ancestors = vec![(0, 0)].into_iter().collect();
         let mut gc = Vec::new();
@@ -3218,7 +3218,7 @@ pub mod tests {
     #[test]
     fn test_update_new_slot() {
         solana_logger::setup();
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let ancestors = vec![(0, 0)].into_iter().collect();
         let mut gc = Vec::new();
@@ -3273,7 +3273,7 @@ pub mod tests {
 
     #[test]
     fn test_update_gc_purged_slot() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let mut gc = Vec::new();
         index.upsert(
@@ -3365,7 +3365,7 @@ pub mod tests {
 
     #[test]
     fn test_purge() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<u64, u64>::default_for_tests();
         let mut gc = Vec::new();
         assert_eq!(0, account_maps_stats_len(&index));
@@ -4087,7 +4087,7 @@ pub mod tests {
     #[test]
     fn test_unref() {
         let value = true;
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let slot1 = 1;
 
@@ -4119,8 +4119,8 @@ pub mod tests {
     fn test_clean_rooted_entries_return() {
         solana_logger::setup();
         let value = true;
-        let key = solana_sdk::pubkey::new_rand();
-        let key_unknown = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
+        let key_unknown = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
         let slot1 = 1;
 
@@ -4217,7 +4217,7 @@ pub mod tests {
 
     #[test]
     fn test_handle_dead_keys_return() {
-        let key = solana_sdk::pubkey::new_rand();
+        let key = solana_pubkey::new_rand();
         let index = AccountsIndex::<bool, bool>::default_for_tests();
 
         assert_eq!(
