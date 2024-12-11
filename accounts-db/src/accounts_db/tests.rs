@@ -5467,8 +5467,8 @@ define_accounts_db_test!(
     test_calculate_storage_count_and_alive_bytes_2_accounts,
     |accounts| {
         let keys = [
-            solana_sdk::pubkey::Pubkey::from([0; 32]),
-            solana_sdk::pubkey::Pubkey::from([255; 32]),
+            solana_pubkey::Pubkey::from([0; 32]),
+            solana_pubkey::Pubkey::from([255; 32]),
         ];
         accounts.accounts_index.set_startup(Startup::Startup);
 
