@@ -576,7 +576,7 @@ mod tests {
                                 }
 
                                 CalculateHashIntermediate {
-                                    hash: AccountHash(solana_sdk::hash::Hash::new_unique()),
+                                    hash: AccountHash(solana_hash::Hash::new_unique()),
                                     lamports: ct as u64,
                                     pubkey: pk,
                                 }

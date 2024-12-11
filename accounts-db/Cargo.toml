@@ -43,6 +43,7 @@ solana-frozen-abi = { workspace = true, optional = true, features = [
 solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
+solana-hash = { workspace = true }
 solana-inline-spl = { workspace = true }
 solana-lattice-hash = { workspace = true }
 solana-measure = { workspace = true }
