@@ -1,5 +1,6 @@
 use {
-    serde::{Deserialize, Deserializer, Serialize, Serializer},
+    serde::{Deserializer, Serializer},
+    serde_derive::{Deserialize, Serialize},
     solana_account_decoder_client_types::{token::UiTokenAmount, UiAccount},
     solana_clock::{Epoch, Slot, UnixTimestamp},
     solana_fee_calculator::{FeeCalculator, FeeRateGovernor},
@@ -56,7 +57,7 @@ impl Default for RpcApiVersion {
     }
 }
 
-impl Serialize for RpcApiVersion {
+impl serde::Serialize for RpcApiVersion {
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -65,12 +66,12 @@ impl Serialize for RpcApiVersion {
     }
 }
 
-impl<'de> Deserialize<'de> for RpcApiVersion {
+impl<'de> serde::Deserialize<'de> for RpcApiVersion {
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        let s: String = Deserialize::deserialize(deserializer)?;
+        let s: String = serde::Deserialize::deserialize(deserializer)?;
         Ok(RpcApiVersion(
             semver::Version::from_str(&s).map_err(serde::de::Error::custom)?,
         ))
