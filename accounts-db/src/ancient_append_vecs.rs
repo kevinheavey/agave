@@ -18,8 +18,8 @@ use {
     },
     rand::{thread_rng, Rng},
     rayon::prelude::{IntoParallelRefIterator, ParallelIterator},
+    solana_clock::Slot,
     solana_measure::measure_us,
-    solana_sdk::clock::Slot,
     std::{
         collections::{HashMap, VecDeque},
         num::{NonZeroU64, Saturating},

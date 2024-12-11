@@ -1,6 +1,6 @@
 use {
     super::EpochAccountsHash,
-    solana_sdk::clock::Slot,
+    solana_clock::Slot,
     std::sync::{Condvar, Mutex},
 };
 
