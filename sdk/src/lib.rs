@@ -134,7 +134,10 @@ pub use solana_feature_set as feature_set;
 pub use solana_fee_structure as fee;
 #[deprecated(since = "2.1.0", note = "Use `solana-inflation` crate instead")]
 pub use solana_inflation as inflation;
-#[deprecated(since = "2.2.0", note = "Use `solana_message::inner_instruction` instead")]
+#[deprecated(
+    since = "2.2.0",
+    note = "Use `solana_message::inner_instruction` instead"
+)]
 pub use solana_message::inner_instruction;
 #[deprecated(since = "2.2.0", note = "Use `solana-nonce-account` crate instead")]
 pub use solana_nonce_account as nonce_account;
