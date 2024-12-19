@@ -9,10 +9,9 @@ use {
     solana_pubkey::Pubkey,
     solana_svm_transaction::instruction::SVMInstruction,
     solana_transaction::{
-        sanitized::SanitizedTransaction,
+        sanitized::{MessageHash, SanitizedTransaction},
         simple_vote_transaction_checker::is_simple_vote_transaction,
         versioned::{sanitized::SanitizedVersionedTransaction, VersionedTransaction},
-        MessageHash,
     },
     solana_transaction_error::TransactionResult as Result,
     std::{borrow::Cow, collections::HashSet},
@@ -159,12 +158,12 @@ mod tests {
         solana_hash::Hash,
         solana_instruction::Instruction,
         solana_keypair::Keypair,
-        solana_message::Message,
+        solana_message::{Message, SimpleAddressLoader},
         solana_program::vote::{self, state::Vote},
         solana_reserved_account_keys::ReservedAccountKeys,
         solana_signer::Signer,
         solana_system_interface::instruction as system_instruction,
-        solana_transaction::{versioned::VersionedTransaction, SimpleAddressLoader, Transaction},
+        solana_transaction::{versioned::VersionedTransaction, Transaction},
     };
 
     fn vote_sanitized_versioned_transaction() -> SanitizedVersionedTransaction {

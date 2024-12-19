@@ -18,9 +18,11 @@ use {
     solana_pubkey::Pubkey,
     solana_svm_transaction::svm_message::SVMMessage,
     solana_transaction::{
-        simple_vote_transaction_checker::is_simple_vote_transaction_impl, MessageHash, Result,
-        SanitizedTransaction, TransactionError, VersionedTransaction,
+        sanitized::{MessageHash, SanitizedTransaction},
+        simple_vote_transaction_checker::is_simple_vote_transaction_impl,
+        versioned::VersionedTransaction,
     },
+    solana_transaction_error::{TransactionError, TransactionResult as Result},
     std::{borrow::Cow, collections::HashSet},
 };
 
@@ -191,10 +193,11 @@ mod tests {
     use {
         super::*,
         solana_hash::Hash,
+        solana_keypair::Keypair,
         solana_message::{v0, AddressLookupTableAccount, SimpleAddressLoader},
         solana_reserved_account_keys::ReservedAccountKeys,
-        solana_signature::{Keypair, Signature},
-        solana_solana_system_interface::instruction as system_instruction,
+        solana_signature::Signature,
+        solana_system_interface::instruction as system_instruction,
         solana_system_transaction as system_transaction,
     };
 
