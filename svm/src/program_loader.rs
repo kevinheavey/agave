@@ -1,6 +1,7 @@
 use {
     crate::transaction_processing_callback::TransactionProcessingCallback,
     solana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount},
+    solana_clock::Slot,
     solana_instruction::error::InstructionError,
     solana_program::bpf_loader_upgradeable::{self, UpgradeableLoaderState},
     solana_program_runtime::loaded_programs::{
