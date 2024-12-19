@@ -1,7 +1,8 @@
 use {
     criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput},
+    solana_message::compiled_instruction::CompiledInstruction,
+    solana_pubkey::Pubkey,
     solana_runtime_transaction::signature_details::get_precompile_signature_details,
-    solana_sdk::{instruction::CompiledInstruction, pubkey::Pubkey},
     solana_svm_transaction::instruction::SVMInstruction,
 };
 

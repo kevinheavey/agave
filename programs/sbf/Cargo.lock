@@ -6869,10 +6869,13 @@ dependencies = [
  "log",
  "solana-compute-budget",
  "solana-compute-budget-instruction",
+ "solana-hash",
+ "solana-message",
  "solana-pubkey",
- "solana-sdk",
  "solana-sdk-ids",
+ "solana-signature",
  "solana-svm-transaction",
+ "solana-transaction",
  "thiserror 2.0.9",
 ]
 
