@@ -77,7 +77,6 @@ dependencies = [
 name = "agave-transaction-view"
 version = "2.2.0"
 dependencies = [
- "solana-message",
  "solana-sdk",
  "solana-sdk-ids",
  "solana-svm-transaction",
