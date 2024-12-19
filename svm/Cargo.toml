@@ -19,6 +19,7 @@ serde = { workspace = true, features = ["rc"] }
 serde_derive = { workspace = true }
 solana-account = { workspace = true }
 solana-bpf-loader-program = { workspace = true }
+solana-clock = { workspace = true }
 solana-compute-budget = { workspace = true }
 solana-compute-budget-instruction = { workspace = true }
 solana-feature-set = { workspace = true }

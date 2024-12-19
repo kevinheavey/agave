@@ -24,6 +24,7 @@ use {
     solana_bpf_loader_program::syscalls::{
         create_program_runtime_environment_v1, create_program_runtime_environment_v2,
     },
+    solana_clock::{Epoch, Slot},
     solana_compute_budget::compute_budget::ComputeBudget,
     solana_compute_budget_instruction::instructions_processor::process_compute_budget_instructions,
     solana_feature_set::{
@@ -169,10 +170,10 @@ impl Default for TransactionProcessingEnvironment<'_> {
 )]
 pub struct TransactionBatchProcessor<FG: ForkGraph> {
     /// Bank slot (i.e. block)
-    slot: u64,
+    slot: Slot,
 
     /// Bank epoch
-    epoch: u64,
+    epoch: Epoch,
 
     /// SysvarCache is a collection of system variables that are
     /// accessible from on chain programs. It is passed to SVM from
@@ -200,12 +201,12 @@ impl<FG: ForkGraph> Debug for TransactionBatchProcessor<FG> {
 impl<FG: ForkGraph> Default for TransactionBatchProcessor<FG> {
     fn default() -> Self {
         Self {
-            slot: u64::default(),
-            epoch: u64::default(),
+            slot: Slot::default(),
+            epoch: Epoch::default(),
             sysvar_cache: RwLock::<SysvarCache>::default(),
             program_cache: Arc::new(RwLock::new(ProgramCache::new(
-                u64::default(),
-                u64::default(),
+                Slot::default(),
+                Epoch::default(),
             ))),
             builtin_program_ids: RwLock::new(HashSet::new()),
         }
@@ -222,7 +223,7 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
     ///
     /// When using this method, it's advisable to call `set_fork_graph_in_program_cache`
     /// as well as `add_builtin` to configure the cache before using the processor.
-    pub fn new_uninitialized(slot: u64, epoch: u64) -> Self {
+    pub fn new_uninitialized(slot: Slot, epoch: Epoch) -> Self {
         Self {
             slot,
             epoch,
@@ -240,8 +241,8 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
     /// The cache will still not contain any builtin programs. It's advisable to
     /// call `add_builtin` to add the required builtins before using the processor.
     pub fn new(
-        slot: u64,
-        epoch: u64,
+        slot: Slot,
+        epoch: Epoch,
         fork_graph: Weak<RwLock<FG>>,
         program_runtime_environment_v1: Option<ProgramRuntimeEnvironment>,
         program_runtime_environment_v2: Option<ProgramRuntimeEnvironment>,
@@ -265,7 +266,7 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
     /// * Inherits the program cache and builtin program ids from the current
     ///   instance.
     /// * Resets the sysvar cache.
-    pub fn new_from(&self, slot: u64, epoch: u64) -> Self {
+    pub fn new_from(&self, slot: Slot, epoch: Epoch) -> Self {
         Self {
             slot,
             epoch,
@@ -315,7 +316,7 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
     #[cfg(feature = "dev-context-only-utils")]
     pub fn get_environments_for_epoch(
         &self,
-        epoch: u64,
+        epoch: Epoch,
     ) -> Option<solana_program_runtime::loaded_programs::ProgramRuntimeEnvironments> {
         self.program_cache
             .try_read()
@@ -1243,7 +1244,7 @@ mod tests {
     struct TestForkGraph {}
 
     impl ForkGraph for TestForkGraph {
-        fn relationship(&self, _a: u64, _b: u64) -> BlockRelation {
+        fn relationship(&self, _a: Slot, _b: Slot) -> BlockRelation {
             BlockRelation::Unknown
         }
     }

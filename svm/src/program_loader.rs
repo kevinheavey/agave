@@ -20,8 +20,8 @@ pub(crate) enum ProgramAccountLoadResult {
     InvalidAccountData(ProgramCacheEntryOwner),
     ProgramOfLoaderV1(AccountSharedData),
     ProgramOfLoaderV2(AccountSharedData),
-    ProgramOfLoaderV3(AccountSharedData, AccountSharedData, u64),
-    ProgramOfLoaderV4(AccountSharedData, u64),
+    ProgramOfLoaderV3(AccountSharedData, AccountSharedData, Slot),
+    ProgramOfLoaderV4(AccountSharedData, Slot),
 }
 
 pub(crate) fn load_program_from_bytes(
@@ -29,7 +29,7 @@ pub(crate) fn load_program_from_bytes(
     programdata: &[u8],
     loader_key: &Pubkey,
     account_size: usize,
-    deployment_slot: u64,
+    deployment_slot: Slot,
     program_runtime_environment: ProgramRuntimeEnvironment,
     reloading: bool,
 ) -> std::result::Result<ProgramCacheEntry, Box<dyn std::error::Error>> {
@@ -119,7 +119,7 @@ pub fn load_program_with_pubkey<CB: TransactionProcessingCallback>(
     callbacks: &CB,
     environments: &ProgramRuntimeEnvironments,
     pubkey: &Pubkey,
-    slot: u64,
+    slot: Slot,
     execute_timings: &mut ExecuteTimings,
     reload: bool,
 ) -> Option<Arc<ProgramCacheEntry>> {
@@ -215,7 +215,7 @@ pub fn load_program_with_pubkey<CB: TransactionProcessingCallback>(
 pub(crate) fn get_program_modification_slot<CB: TransactionProcessingCallback>(
     callbacks: &CB,
     pubkey: &Pubkey,
-) -> TransactionResult<u64> {
+) -> TransactionResult<Slot> {
     let program = callbacks
         .get_account_shared_data(pubkey)
         .ok_or(TransactionError::ProgramAccountNotFound)?;
@@ -268,7 +268,7 @@ mod tests {
     struct TestForkGraph {}
 
     impl ForkGraph for TestForkGraph {
-        fn relationship(&self, _a: u64, _b: u64) -> BlockRelation {
+        fn relationship(&self, _a: Slot, _b: Slot) -> BlockRelation {
             BlockRelation::Unknown
         }
     }
