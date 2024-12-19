@@ -52,8 +52,8 @@ fn bench_get_signature_details_no_sigs_unique(c: &mut Criterion) {
 
 fn bench_get_signature_details_packed_sigs(c: &mut Criterion) {
     let program_ids = [
-        solana_sdk::secp256k1_program::id(),
-        solana_sdk::ed25519_program::id(),
+        solana_sdk_ids::secp256k1_program::id(),
+        solana_sdk_ids::ed25519_program::id(),
     ];
     for num_instructions in [4, 64] {
         let instructions = (0..num_instructions)
@@ -87,8 +87,8 @@ fn bench_get_signature_details_packed_sigs(c: &mut Criterion) {
 
 fn bench_get_signature_details_mixed_sigs(c: &mut Criterion) {
     let program_ids = [
-        solana_sdk::secp256k1_program::id(),
-        solana_sdk::ed25519_program::id(),
+        solana_sdk_ids::secp256k1_program::id(),
+        solana_sdk_ids::ed25519_program::id(),
     ]
     .into_iter()
     .chain((0..6).map(|_| Pubkey::new_unique()))

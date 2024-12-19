@@ -8719,7 +8719,9 @@ dependencies = [
  "solana-compute-budget",
  "solana-compute-budget-instruction",
  "solana-compute-budget-interface",
+ "solana-feature-set",
  "solana-hash",
+ "solana-instruction",
  "solana-keypair",
  "solana-message",
  "solana-program",
@@ -8732,6 +8734,7 @@ dependencies = [
  "solana-system-interface",
  "solana-system-transaction",
  "solana-transaction",
+ "solana-transaction-error",
  "thiserror 2.0.8",
 ]
 
