@@ -328,7 +328,8 @@ impl CostTracker {
         self.secp256k1_instruction_signature_count +=
             tx_cost.num_secp256k1_instruction_signatures();
         self.ed25519_instruction_signature_count += tx_cost.num_ed25519_instruction_signatures();
-        self.secp256r1_instruction_signature_count += tx_cost.num_secp256r1_instruction_signatures();
+        self.secp256r1_instruction_signature_count +=
+            tx_cost.num_secp256r1_instruction_signatures();
         self.add_transaction_execution_cost(tx_cost, tx_cost.sum())
     }
 
@@ -341,7 +342,8 @@ impl CostTracker {
         self.secp256k1_instruction_signature_count -=
             tx_cost.num_secp256k1_instruction_signatures();
         self.ed25519_instruction_signature_count -= tx_cost.num_ed25519_instruction_signatures();
-        self.secp256r1_instruction_signature_count -= tx_cost.num_secp256r1_instruction_signatures();
+        self.secp256r1_instruction_signature_count -=
+            tx_cost.num_secp256r1_instruction_signatures();
     }
 
     /// Apply additional actual execution units to cost_tracker
