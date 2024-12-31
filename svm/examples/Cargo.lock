@@ -6695,6 +6695,7 @@ dependencies = [
  "solana-signature",
  "solana-svm-transaction",
  "solana-transaction",
+ "solana-transaction-error",
  "thiserror 2.0.9",
 ]
 

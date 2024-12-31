@@ -8744,6 +8744,7 @@ dependencies = [
  "solana-system-interface",
  "solana-system-transaction",
  "solana-transaction",
+ "solana-transaction-error",
  "thiserror 2.0.9",
 ]
 
