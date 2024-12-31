@@ -259,7 +259,7 @@ impl CostTracker {
             ),
             (
                 "secp256r1_instruction_signature_count",
-                self.secp256r1_instruction_signature_count,
+                self.secp256r1_instruction_signature_count.0,
                 i64
             )
         );
