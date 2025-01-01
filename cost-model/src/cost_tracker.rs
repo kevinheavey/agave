@@ -215,7 +215,7 @@ impl CostTracker {
         self.transaction_count.0
     }
 
-    pub fn report_stats(&self, bank_slot: u64) {
+    pub fn report_stats(&self, bank_slot: solana_clock::Slot) {
         // skip reporting if block is empty
         if self.transaction_count.0 == 0 {
             return;
