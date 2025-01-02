@@ -2598,7 +2598,7 @@ pub struct Node {
 
 impl Node {
     pub fn new_localhost() -> Self {
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = solana_pubkey::new_rand();
         Self::new_localhost_with_pubkey(&pubkey)
     }
 
@@ -3150,16 +3150,13 @@ mod tests {
     #[test]
     fn test_gossip_node() {
         //check that a gossip nodes always show up as spies
-        let (node, _, _) = ClusterInfo::spy_node(solana_sdk::pubkey::new_rand(), 0);
+        let (node, _, _) = ClusterInfo::spy_node(solana_pubkey::new_rand(), 0);
         assert!(ClusterInfo::is_spy_node(
             &node,
             &SocketAddrSpace::Unspecified
         ));
-        let (node, _, _) = ClusterInfo::gossip_node(
-            solana_sdk::pubkey::new_rand(),
-            &"1.1.1.1:0".parse().unwrap(),
-            0,
-        );
+        let (node, _, _) =
+            ClusterInfo::gossip_node(solana_pubkey::new_rand(), &"1.1.1.1:0".parse().unwrap(), 0);
         assert!(ClusterInfo::is_spy_node(
             &node,
             &SocketAddrSpace::Unspecified
@@ -3174,7 +3171,7 @@ mod tests {
             let node = Node::new_localhost_with_pubkey(&keypair.pubkey());
             ClusterInfo::new(node.info, keypair, SocketAddrSpace::Unspecified)
         });
-        let entrypoint_pubkey = solana_sdk::pubkey::new_rand();
+        let entrypoint_pubkey = solana_pubkey::new_rand();
         let data = test_crds_values(entrypoint_pubkey);
         let stakes = HashMap::from([(Pubkey::new_unique(), 1u64)]);
         let timeouts = CrdsTimeouts::new(
@@ -3300,7 +3297,7 @@ mod tests {
     fn test_cluster_spy_gossip() {
         let thread_pool = ThreadPoolBuilder::new().build().unwrap();
         //check that gossip doesn't try to push to invalid addresses
-        let (spy, _, _) = ClusterInfo::spy_node(solana_sdk::pubkey::new_rand(), 0);
+        let (spy, _, _) = ClusterInfo::spy_node(solana_pubkey::new_rand(), 0);
         let cluster_info = Arc::new({
             let keypair = Arc::new(Keypair::new());
             let node = Node::new_localhost_with_pubkey(&keypair.pubkey());
@@ -3343,7 +3340,7 @@ mod tests {
         let keypair = Arc::new(Keypair::new());
         let d = ContactInfo::new_localhost(&keypair.pubkey(), timestamp());
         let cluster_info = ClusterInfo::new(d, keypair, SocketAddrSpace::Unspecified);
-        let d = ContactInfo::new_localhost(&solana_sdk::pubkey::new_rand(), timestamp());
+        let d = ContactInfo::new_localhost(&solana_pubkey::new_rand(), timestamp());
         let label = CrdsValueLabel::ContactInfo(*d.pubkey());
         cluster_info.insert_info(d);
         let gossip_crds = cluster_info.gossip.crds.read().unwrap();
@@ -3392,7 +3389,7 @@ mod tests {
             num_quic_endpoints: DEFAULT_NUM_QUIC_ENDPOINTS,
         };
 
-        let node = Node::new_with_external_ip(&solana_sdk::pubkey::new_rand(), config);
+        let node = Node::new_with_external_ip(&solana_pubkey::new_rand(), config);
 
         check_node_sockets(&node, IpAddr::V4(ip), VALIDATOR_PORT_RANGE);
     }
@@ -3415,7 +3412,7 @@ mod tests {
             num_quic_endpoints: DEFAULT_NUM_QUIC_ENDPOINTS,
         };
 
-        let node = Node::new_with_external_ip(&solana_sdk::pubkey::new_rand(), config);
+        let node = Node::new_with_external_ip(&solana_pubkey::new_rand(), config);
 
         check_node_sockets(&node, ip, port_range);
 
@@ -3800,7 +3797,7 @@ mod tests {
             node_keypair,
             SocketAddrSpace::Unspecified,
         );
-        let entrypoint_pubkey = solana_sdk::pubkey::new_rand();
+        let entrypoint_pubkey = solana_pubkey::new_rand();
         let entrypoint = ContactInfo::new_localhost(&entrypoint_pubkey, timestamp());
         cluster_info.set_entrypoint(entrypoint.clone());
         let (pings, pulls) = cluster_info.new_pull_requests(&thread_pool, None, &HashMap::new());
@@ -3880,7 +3877,7 @@ mod tests {
             node_keypair,
             SocketAddrSpace::Unspecified,
         );
-        let entrypoint_pubkey = solana_sdk::pubkey::new_rand();
+        let entrypoint_pubkey = solana_pubkey::new_rand();
         let mut entrypoint = ContactInfo::new_localhost(&entrypoint_pubkey, timestamp());
         entrypoint
             .set_gossip(socketaddr!("127.0.0.2:1234"))
@@ -3889,7 +3886,7 @@ mod tests {
 
         let mut stakes = HashMap::new();
 
-        let other_node_pubkey = solana_sdk::pubkey::new_rand();
+        let other_node_pubkey = solana_pubkey::new_rand();
         let other_node = ContactInfo::new_localhost(&other_node_pubkey, timestamp());
         assert_ne!(other_node.gossip().unwrap(), entrypoint.gossip().unwrap());
         cluster_info.ping_cache.lock().unwrap().mock_pong(
@@ -3945,7 +3942,7 @@ mod tests {
         for i in 0..10 {
             // make these invalid for the upcoming repair request
             let peer_lowest = if i >= 5 { 10 } else { 0 };
-            let other_node_pubkey = solana_sdk::pubkey::new_rand();
+            let other_node_pubkey = solana_pubkey::new_rand();
             let other_node = ContactInfo::new_localhost(&other_node_pubkey, timestamp());
             cluster_info.insert_info(other_node.clone());
             let value = CrdsValue::new_unsigned(CrdsData::LowestSlot(
@@ -4009,7 +4006,7 @@ mod tests {
         // Simulate getting entrypoint ContactInfo from gossip with an entrypoint1 shred version of
         // 0
         let mut gossiped_entrypoint1_info =
-            ContactInfo::new_localhost(&solana_sdk::pubkey::new_rand(), timestamp());
+            ContactInfo::new_localhost(&solana_pubkey::new_rand(), timestamp());
         gossiped_entrypoint1_info
             .set_gossip(entrypoint1_gossip_addr)
             .unwrap();
@@ -4038,7 +4035,7 @@ mod tests {
         // Simulate getting entrypoint ContactInfo from gossip with an entrypoint2 shred version of
         // !0
         let mut gossiped_entrypoint2_info =
-            ContactInfo::new_localhost(&solana_sdk::pubkey::new_rand(), timestamp());
+            ContactInfo::new_localhost(&solana_pubkey::new_rand(), timestamp());
         gossiped_entrypoint2_info
             .set_gossip(entrypoint2_gossip_addr)
             .unwrap();
@@ -4091,7 +4088,7 @@ mod tests {
 
         // Simulate getting entrypoint ContactInfo from gossip
         let mut gossiped_entrypoint_info =
-            ContactInfo::new_localhost(&solana_sdk::pubkey::new_rand(), timestamp());
+            ContactInfo::new_localhost(&solana_pubkey::new_rand(), timestamp());
         gossiped_entrypoint_info
             .set_gossip(entrypoint_gossip_addr)
             .unwrap();
@@ -4118,7 +4115,7 @@ mod tests {
             Arc::new(Keypair::new()),
             SocketAddrSpace::Unspecified,
         ));
-        let entrypoint_pubkey = solana_sdk::pubkey::new_rand();
+        let entrypoint_pubkey = solana_pubkey::new_rand();
         let entrypoint = ContactInfo::new_localhost(&entrypoint_pubkey, timestamp());
         cluster_info.set_entrypoint(entrypoint);
 

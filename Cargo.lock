@@ -7375,6 +7375,7 @@ dependencies = [
  "solana-metrics",
  "solana-net-utils",
  "solana-perf",
+ "solana-pubkey",
  "solana-rayon-threadlimit",
  "solana-rpc-client",
  "solana-runtime",
