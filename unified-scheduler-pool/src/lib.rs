@@ -1483,7 +1483,7 @@ mod tests {
         solana_pubkey::Pubkey,
         solana_keypair::Keypair,
         solana_system_transaction as system_transaction,
-        solana_transaction::sanitized::SanitizedTransaction
+        solana_transaction::sanitized::SanitizedTransaction,
         solana_transaction_error::TransactionError,
         solana_timings::ExecuteTimingType,
         std::{
