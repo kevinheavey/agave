@@ -5,8 +5,8 @@ extern crate test;
 use {
     bincode::{deserialize, serialize},
     prost::Message,
+    solana_pubkey,
     solana_runtime::bank::RewardType,
-    solana_sdk::pubkey,
     solana_transaction_status::{Reward, Rewards},
     test::Bencher,
 };
