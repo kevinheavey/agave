@@ -20,6 +20,7 @@ use {
     solana_ledger::blockstore_processor::{
         execute_batch, TransactionBatchWithIndexes, TransactionStatusSender,
     },
+    solana_pubkey::Pubkey,
     solana_runtime::{
         installed_scheduler_pool::{
             initialized_result_with_timings, InstalledScheduler, InstalledSchedulerBox,
@@ -31,10 +32,9 @@ use {
         vote_sender_types::ReplayVoteSender,
     },
     solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_pubkey::Pubkey,
-    solana_transaction::sanitized::SanitizedTransaction,
-    solana_transaction_error::{TransactionResult as Result, TransactionError},
     solana_timings::ExecuteTimings,
+    solana_transaction::sanitized::SanitizedTransaction,
+    solana_transaction_error::{TransactionError, TransactionResult as Result},
     solana_unified_scheduler_logic::{SchedulingStateMachine, Task, UsageQueue},
     static_assertions::const_assert_eq,
     std::{
@@ -1472,6 +1472,9 @@ mod tests {
         super::*,
         crate::sleepless_testing,
         assert_matches::assert_matches,
+        solana_clock::{Slot, MAX_PROCESSING_AGE},
+        solana_keypair::Keypair,
+        solana_pubkey::Pubkey,
         solana_runtime::{
             bank::Bank,
             bank_forks::BankForks,
@@ -1479,13 +1482,10 @@ mod tests {
             installed_scheduler_pool::{BankWithScheduler, SchedulingContext},
             prioritization_fee_cache::PrioritizationFeeCache,
         },
-        solana_clock::{Slot, MAX_PROCESSING_AGE},
-        solana_pubkey::Pubkey,
-        solana_keypair::Keypair,
         solana_system_transaction as system_transaction,
+        solana_timings::ExecuteTimingType,
         solana_transaction::sanitized::SanitizedTransaction,
         solana_transaction_error::TransactionError,
-        solana_timings::ExecuteTimingType,
         std::{
             sync::{Arc, RwLock},
             thread::JoinHandle,
