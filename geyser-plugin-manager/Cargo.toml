@@ -18,6 +18,7 @@ jsonrpc-core = { workspace = true }
 libloading = { workspace = true }
 log = { workspace = true }
 serde_json = { workspace = true }
+solana-account = { workspace = true }
 solana-accounts-db = { workspace = true }
 solana-clock = { workspace = true }
 solana-entry = { workspace = true }
@@ -28,9 +29,8 @@ solana-pubkey = { workspace = true }
 solana-rpc = { workspace = true }
 solana-runtime = { workspace = true }
 solana-signature = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-account = { workspace = true }
 solana-transaction = { workspace = true }
+solana-transaction-status = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true }
 
