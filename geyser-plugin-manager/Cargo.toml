@@ -19,14 +19,18 @@ libloading = { workspace = true }
 log = { workspace = true }
 serde_json = { workspace = true }
 solana-accounts-db = { workspace = true }
+solana-clock = { workspace = true }
 solana-entry = { workspace = true }
 solana-ledger = { workspace = true }
 solana-measure = { workspace = true }
 solana-metrics = { workspace = true }
+solana-pubkey = { workspace = true }
 solana-rpc = { workspace = true }
 solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
+solana-signature = { workspace = true }
 solana-transaction-status = { workspace = true }
+solana-account = { workspace = true }
+solana-transaction = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true }
 
