@@ -8643,6 +8643,7 @@ dependencies = [
  "serde_json",
  "solana-account-decoder",
  "solana-client",
+ "solana-clock",
  "solana-commitment-config",
  "solana-connection-cache",
  "solana-hash",
