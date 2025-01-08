@@ -8,10 +8,10 @@ use {
     index_list::{Index, IndexList},
     log::*,
     solana_measure::{measure::Measure, measure_us},
+    solana_pubkey::Pubkey,
     solana_sdk::{
         account::{AccountSharedData, ReadableAccount},
         clock::Slot,
-        pubkey::Pubkey,
         timing::timestamp,
     },
     std::{
