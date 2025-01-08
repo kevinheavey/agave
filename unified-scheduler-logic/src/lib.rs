@@ -885,12 +885,10 @@ impl SchedulingStateMachine {
 mod tests {
     use {
         super::*,
-        solana_sdk::{
-            instruction::{AccountMeta, Instruction},
-            message::Message,
-            pubkey::Pubkey,
-            transaction::{SanitizedTransaction, Transaction},
-        },
+        solana_instruction::{AccountMeta, Instruction},
+        solana_message::Message,
+        solana_pubkey::Pubkey,
+        solana_transaction::{sanitized::SanitizedTransaction, Transaction},
         std::{cell::RefCell, collections::HashMap, rc::Rc},
     };
 
