@@ -27,7 +27,6 @@ criterion = { workspace = true }
 proptest = { workspace = true }
 solana-compute-budget = { workspace = true }
 solana-logger = { workspace = true }
-solana-pubkey = { workspace = true }
 test-case = { workspace = true }
 
 [lib]
