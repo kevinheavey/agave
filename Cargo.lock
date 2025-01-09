@@ -6608,6 +6608,7 @@ dependencies = [
  "solana-system-interface",
  "solana-sysvar",
  "solana-transaction",
+ "solana-transaction-context",
  "solana-transaction-error",
  "solana-transaction-status",
  "solana-vote-program",
