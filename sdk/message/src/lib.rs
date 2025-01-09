@@ -41,7 +41,6 @@
 
 pub mod compiled_instruction;
 mod compiled_keys;
-#[cfg(feature = "inner-instruction")]
 pub mod inner_instruction;
 pub mod legacy;
 #[cfg(feature = "serde")]
