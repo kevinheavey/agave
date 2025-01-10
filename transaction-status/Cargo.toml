@@ -29,7 +29,6 @@ solana-program = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-reserved-account-keys = { workspace = true }
 solana-reward-info = { workspace = true }
-solana-sdk = { workspace = true }
 solana-sdk-ids = { workspace = true }
 solana-signature = { workspace = true }
 solana-system-interface = { workspace = true }

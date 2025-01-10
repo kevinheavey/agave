@@ -9983,7 +9983,6 @@ dependencies = [
  "solana-pubkey",
  "solana-reserved-account-keys",
  "solana-reward-info",
- "solana-sdk",
  "solana-sdk-ids",
  "solana-signature",
  "solana-system-interface",

@@ -122,7 +122,7 @@ pub fn parse_ui_instruction(
 /// Maps a list of inner instructions from `solana_sdk` into a list of this
 /// crate's representation of inner instructions (with instruction indices).
 pub fn map_inner_instructions(
-    inner_instructions: solana_sdk::inner_instruction::InnerInstructionsList,
+    inner_instructions: solana_message::inner_instruction::InnerInstructionsList,
 ) -> impl Iterator<Item = InnerInstructions> {
     inner_instructions
         .into_iter()
