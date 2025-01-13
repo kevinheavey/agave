@@ -177,7 +177,7 @@ pub struct TransactionBatchProcessor<FG: ForkGraph> {
 
     /// SysvarCache is a collection of system variables that are
     /// accessible from on chain programs. It is passed to SVM from
-    /// client code (e.g. Bank) and forwarded to the process_message.
+    /// client code (e.g. Bank) and forwarded to process_message.
     sysvar_cache: RwLock<SysvarCache>,
 
     /// Programs required for transaction batch processing
