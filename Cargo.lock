@@ -8031,6 +8031,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-loader-v4-interface"
+version = "2.2.0"
+dependencies = [
+ "memoffset 0.9.1",
+ "serde",
+ "serde_bytes",
+ "serde_derive",
+ "solana-frozen-abi",
+ "solana-frozen-abi-macro",
+ "solana-instruction",
+ "solana-loader-v4-interface",
+ "solana-pubkey",
+ "solana-sdk-ids",
+ "solana-system-interface",
+]
+
+[[package]]
 name = "solana-loader-v4-program"
 version = "2.2.0"
 dependencies = [
@@ -8546,6 +8563,7 @@ dependencies = [
  "solana-keccak-hasher",
  "solana-last-restart-slot",
  "solana-loader-v3-interface",
+ "solana-loader-v4-interface",
  "solana-logger",
  "solana-message",
  "solana-msg",
