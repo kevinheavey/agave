@@ -60,8 +60,8 @@ pub enum UpgradeableLoaderInstruction {
     /// follows:
     ///
     /// ```
-    /// # use solana_program::pubkey::Pubkey;
-    /// # use solana_program::bpf_loader_upgradeable;
+    /// # use solana_pubkey::Pubkey;
+    /// # use solana_sdk_ids::bpf_loader_upgradeable;
     /// # let program_address = &[];
     /// let (program_data_address, _) = Pubkey::find_program_address(
     ///      &[program_address],
