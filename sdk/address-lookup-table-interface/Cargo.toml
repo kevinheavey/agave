@@ -25,7 +25,6 @@ solana-instruction = { workspace = true, features = ["std"] }
 solana-pubkey = { workspace = true }
 solana-sdk-ids = { workspace = true }
 solana-slot-hashes = { workspace = true }
-thiserror = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
 solana-pubkey = { workspace = true, features = ["curve25519"] }

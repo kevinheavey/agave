@@ -5083,6 +5083,7 @@ name = "solana-address-lookup-table-interface"
 version = "2.2.0"
 dependencies = [
  "bincode",
+ "bytemuck",
  "serde",
  "serde_derive",
  "solana-clock",
@@ -5090,7 +5091,6 @@ dependencies = [
  "solana-pubkey",
  "solana-sdk-ids",
  "solana-slot-hashes",
- "thiserror 2.0.11",
 ]
 
 [[package]]

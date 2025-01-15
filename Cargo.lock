@@ -6039,7 +6039,6 @@ dependencies = [
  "solana-pubkey",
  "solana-sdk-ids",
  "solana-slot-hashes",
- "thiserror 2.0.11",
 ]
 
 [[package]]
