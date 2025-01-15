@@ -1,3 +1,4 @@
+#![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 //! The [address lookup table program][np].
 //!
