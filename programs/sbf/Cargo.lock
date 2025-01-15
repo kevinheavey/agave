@@ -8563,7 +8563,6 @@ dependencies = [
  "solana-serialize-utils",
  "solana-short-vec",
  "solana-system-interface",
- "thiserror 2.0.11",
 ]
 
 [[package]]

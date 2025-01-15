@@ -4,15 +4,10 @@
 use bincode::deserialize;
 #[cfg(feature = "bincode")]
 use bincode::{serialize_into, ErrorKind};
-#[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{frozen_abi, AbiExample};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(test)]
-use {
-    solana_epoch_schedule::MAX_LEADER_SCHEDULE_EPOCH_OFFSET,
-    arbitrary::{Arbitrary, Unstructured},
-};
+#[cfg(feature = "frozen-abi")]
+use solana_frozen_abi_macro::{frozen_abi, AbiExample};
 use {
     crate::{authorized_voters::AuthorizedVoters, error::VoteError},
     solana_clock::{Clock, Epoch, Slot, UnixTimestamp},
@@ -21,6 +16,11 @@ use {
     solana_pubkey::Pubkey,
     solana_rent::Rent,
     std::{collections::VecDeque, fmt::Debug},
+};
+#[cfg(test)]
+use {
+    arbitrary::{Arbitrary, Unstructured},
+    solana_epoch_schedule::MAX_LEADER_SCHEDULE_EPOCH_OFFSET,
 };
 
 mod vote_state_0_23_5;
@@ -1177,7 +1177,9 @@ pub mod serde_tower_sync {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, bincode::serialized_size, itertools::Itertools, rand::Rng, core::mem::MaybeUninit};
+    use {
+        super::*, bincode::serialized_size, core::mem::MaybeUninit, itertools::Itertools, rand::Rng,
+    };
 
     #[test]
     fn test_vote_serialize() {

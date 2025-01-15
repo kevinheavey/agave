@@ -10357,7 +10357,6 @@ dependencies = [
  "solana-short-vec",
  "solana-system-interface",
  "solana-vote-interface",
- "thiserror 2.0.11",
 ]
 
 [[package]]

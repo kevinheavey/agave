@@ -32,7 +32,6 @@ solana-serde-varint = { workspace = true, optional = true }
 solana-serialize-utils = { workspace = true, optional = true }
 solana-short-vec = { workspace = true, optional = true }
 solana-system-interface = { workspace = true, features = ["bincode"], optional = true }
-thiserror = { workspace = true }
 
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-serialize-utils = { workspace = true }

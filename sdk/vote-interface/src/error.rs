@@ -1,77 +1,76 @@
 //! Vote program errors
 
 use {
+    core::fmt,
     num_derive::{FromPrimitive, ToPrimitive},
     solana_decode_error::DecodeError,
-    thiserror::Error,
 };
 
 /// Reasons the vote might have had an error
-#[derive(Error, Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
+#[derive(Debug, Clone, PartialEq, Eq, FromPrimitive, ToPrimitive)]
 pub enum VoteError {
-    #[error("vote already recorded or not in slot hashes history")]
     VoteTooOld,
-
-    #[error("vote slots do not match bank history")]
     SlotsMismatch,
-
-    #[error("vote hash does not match bank hash")]
     SlotHashMismatch,
-
-    #[error("vote has no slots, invalid")]
     EmptySlots,
-
-    #[error("vote timestamp not recent")]
     TimestampTooOld,
-
-    #[error("authorized voter has already been changed this epoch")]
     TooSoonToReauthorize,
-
     // TODO: figure out how to migrate these new errors
-    #[error("Old state had vote which should not have been popped off by vote in new state")]
     LockoutConflict,
-
-    #[error("Proposed state had earlier slot which should have been popped off by later vote")]
     NewVoteStateLockoutMismatch,
-
-    #[error("Vote slots are not ordered")]
     SlotsNotOrdered,
-
-    #[error("Confirmations are not ordered")]
     ConfirmationsNotOrdered,
-
-    #[error("Zero confirmations")]
     ZeroConfirmations,
-
-    #[error("Confirmation exceeds limit")]
     ConfirmationTooLarge,
-
-    #[error("Root rolled back")]
     RootRollBack,
-
-    #[error("Confirmations for same vote were smaller in new proposed state")]
     ConfirmationRollBack,
-
-    #[error("New state contained a vote slot smaller than the root")]
     SlotSmallerThanRoot,
-
-    #[error("New state contained too many votes")]
     TooManyVotes,
-
-    #[error("every slot in the vote was older than the SlotHashes history")]
     VotesTooOldAllFiltered,
-
-    #[error("Proposed root is not in slot hashes")]
     RootOnDifferentFork,
-
-    #[error("Cannot close vote account unless it stopped voting at least one full epoch ago")]
     ActiveVoteAccountClose,
-
-    #[error("Cannot update commission at this point in the epoch")]
     CommissionUpdateTooLate,
-
-    #[error("Assertion failed")]
     AssertionFailed,
+}
+
+impl std::error::Error for VoteError {}
+
+impl fmt::Display for VoteError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(match self {
+            Self::VoteTooOld => "vote already recorded or not in slot hashes history",
+            Self::SlotsMismatch => "vote slots do not match bank history",
+            Self::SlotHashMismatch => "vote hash does not match bank hash",
+            Self::EmptySlots => "vote has no slots, invalid",
+            Self::TimestampTooOld => "vote timestamp not recent",
+            Self::TooSoonToReauthorize => "authorized voter has already been changed this epoch",
+            Self::LockoutConflict => {
+                "Old state had vote which should not have been popped off by vote in new state"
+            }
+            Self::NewVoteStateLockoutMismatch => {
+                "Proposed state had earlier slot which should have been popped off by later vote"
+            }
+            Self::SlotsNotOrdered => "Vote slots are not ordered",
+            Self::ConfirmationsNotOrdered => "Confirmations are not ordered",
+            Self::ZeroConfirmations => "Zero confirmations",
+            Self::ConfirmationTooLarge => "Confirmation exceeds limit",
+            Self::RootRollBack => "Root rolled back",
+            Self::ConfirmationRollBack => {
+                "Confirmations for same vote were smaller in new proposed state"
+            }
+            Self::SlotSmallerThanRoot => "New state contained a vote slot smaller than the root",
+            Self::TooManyVotes => "New state contained too many votes",
+            Self::VotesTooOldAllFiltered => {
+                "every slot in the vote was older than the SlotHashes history"
+            }
+            Self::RootOnDifferentFork => "Proposed root is not in slot hashes",
+            Self::ActiveVoteAccountClose => {
+                "Cannot close vote account unless it stopped voting at least one full epoch ago"
+            }
+            Self::CommissionUpdateTooLate => "Cannot update commission at this point in the epoch",
+            Self::AssertionFailed => "Assertion failed",
+        })
+    }
 }
 
 impl<E> DecodeError<E> for VoteError {
