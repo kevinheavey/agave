@@ -7778,6 +7778,7 @@ dependencies = [
  "solana-clock",
  "solana-hash",
  "solana-instruction",
+ "solana-loader-instruction",
  "solana-message",
  "solana-program",
  "solana-pubkey",
