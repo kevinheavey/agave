@@ -42,7 +42,7 @@ itertools = { workspace = true }
 rand = { workspace = true }
 solana-epoch-schedule = { workspace = true }
 solana-logger = { workspace = true }
-solana-pubkey = { workspace = true, features = ["dev-context-only-utils"]}
+solana-pubkey = { workspace = true, features = ["dev-context-only-utils"] }
 solana-vote-interface = { path = ".", features = ["dev-context-only-utils"] }
 
 [features]
@@ -53,7 +53,13 @@ bincode = [
     "serde"
 ]
 dev-context-only-utils = ["bincode"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "serde", "solana-hash/frozen-abi", "solana-pubkey/frozen-abi"]
+frozen-abi = [
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "serde",
+    "solana-hash/frozen-abi",
+    "solana-pubkey/frozen-abi"
+]
 serde = [
     "dep:serde",
     "dep:serde_derive",
