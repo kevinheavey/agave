@@ -144,6 +144,7 @@ members = [
     "sdk/instructions-sysvar",
     "sdk/keccak-hasher",
     "sdk/keypair",
+    "sdk/loader-v4-interface",
     "sdk/logger",
     "sdk/macro",
     "sdk/message",
@@ -517,6 +518,7 @@ solana-keypair = { path = "sdk/keypair", version = "=2.2.0" }
 solana-last-restart-slot = { path = "sdk/last-restart-slot", version = "=2.2.0" }
 solana-lattice-hash = { path = "lattice-hash", version = "=2.2.0" }
 solana-ledger = { path = "ledger", version = "=2.2.0" }
+solana-loader-v4-interface = { path = "sdk/loader-v4-interface", version = "=2.2.0" }
 solana-loader-v4-program = { path = "programs/loader-v4", version = "=2.2.0" }
 solana-local-cluster = { path = "local-cluster", version = "=2.2.0" }
 solana-log-collector = { path = "log-collector", version = "=2.2.0" }
