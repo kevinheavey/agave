@@ -106,79 +106,53 @@ pub mod solana_rpc_client_nonce_utils {
     }
 }
 
-/// Re-exports and mocks of solana-program modules that mirror those from
-/// solana-program.
-///
-/// This lets examples in solana-program appear to be written as client
-/// programs.
-pub mod solana_sdk {
-    pub use crate::{
-        hash, instruction, keccak, message, nonce,
-        pubkey::{self, Pubkey},
-        system_instruction, system_program,
-        sysvar::{
-            self,
-            clock::{self, Clock},
-        },
-    };
+pub mod solana_account {
+    use {crate::pubkey::Pubkey, solana_clock::Epoch};
+    #[derive(Clone)]
+    pub struct Account {
+        pub lamports: u64,
+        pub data: Vec<u8>,
+        pub owner: Pubkey,
+        pub executable: bool,
+        pub rent_epoch: Epoch,
+    }
 
-    pub mod account {
-        use {crate::pubkey::Pubkey, solana_clock::Epoch};
-        #[derive(Clone)]
-        pub struct Account {
-            pub lamports: u64,
-            pub data: Vec<u8>,
-            pub owner: Pubkey,
-            pub executable: bool,
-            pub rent_epoch: Epoch,
-        }
+    pub trait ReadableAccount: Sized {
+        fn data(&self) -> &[u8];
+    }
 
-        pub trait ReadableAccount: Sized {
-            fn data(&self) -> &[u8];
-        }
-
-        impl ReadableAccount for Account {
-            fn data(&self) -> &[u8] {
-                &self.data
-            }
+    impl ReadableAccount for Account {
+        fn data(&self) -> &[u8] {
+            &self.data
         }
     }
 
-    pub mod account_utils {
-        use super::account::Account;
+    pub mod state_traits {
+        use super::Account;
 
         pub trait StateMut<T> {}
 
         impl<T> StateMut<T> for Account {}
     }
+}
 
-    pub mod signature {
-        use crate::pubkey::Pubkey;
+pub mod solana_signature {
+    #[derive(Default, Debug)]
+    pub struct Signature;
+}
 
-        #[derive(Default, Debug)]
-        pub struct Signature;
+pub mod solana_signer {
+    use {solana_pubkey::Pubkey, thiserror::Error};
 
-        pub struct Keypair;
-
-        impl Keypair {
-            pub fn new() -> Keypair {
-                Keypair
-            }
-        }
-
-        impl Signer for Keypair {
-            fn pubkey(&self) -> Pubkey {
-                Pubkey::default()
-            }
-        }
-
-        pub trait Signer {
-            fn pubkey(&self) -> Pubkey;
-        }
+    #[derive(Error, Debug)]
+    #[error("mock-error")]
+    pub struct SignerError;
+    pub trait Signer {
+        fn pubkey(&self) -> Pubkey;
     }
 
     pub mod signers {
-        use super::signature::Signer;
+        use super::Signer;
 
         pub trait Signers {}
 
@@ -186,27 +160,43 @@ pub mod solana_sdk {
         impl<T: Signer> Signers for [&T; 1] {}
         impl<T: Signer> Signers for [&T; 2] {}
     }
+}
 
-    pub mod signer {
-        use thiserror::Error;
+pub mod solana_keypair {
+    use {crate::example_mocks::solana_signer::Signer, solana_pubkey::Pubkey};
+    pub struct Keypair;
 
-        #[derive(Error, Debug)]
-        #[error("mock-error")]
-        pub struct SignerError;
+    impl Keypair {
+        pub fn new() -> Keypair {
+            Keypair
+        }
     }
 
-    pub mod transaction {
-        use {
-            super::{signature::Signature, signer::SignerError, signers::Signers},
-            crate::{
-                hash::Hash,
-                instruction::Instruction,
-                message::{Message, VersionedMessage},
-                pubkey::Pubkey,
-            },
-            serde_derive::Serialize,
-        };
+    impl Signer for Keypair {
+        fn pubkey(&self) -> Pubkey {
+            Pubkey::default()
+        }
+    }
+}
 
+pub mod solana_transaction {
+    use {
+        crate::example_mocks::solana_signer::{signers::Signers, SignerError},
+        serde_derive::Serialize,
+        solana_hash::Hash,
+        solana_instruction::Instruction,
+        solana_message::Message,
+        solana_pubkey::Pubkey,
+    };
+
+    pub mod versioned {
+        use {
+            crate::example_mocks::{
+                solana_signature::Signature,
+                solana_signer::{signers::Signers, SignerError},
+            },
+            solana_message::VersionedMessage,
+        };
         pub struct VersionedTransaction {
             pub signatures: Vec<Signature>,
             pub message: VersionedMessage,
@@ -223,55 +213,88 @@ pub mod solana_sdk {
                 })
             }
         }
+    }
 
-        #[derive(Serialize)]
-        pub struct Transaction {
-            pub message: Message,
-        }
+    #[derive(Serialize)]
+    pub struct Transaction {
+        pub message: Message,
+    }
 
-        impl Transaction {
-            pub fn new<T: Signers + ?Sized>(
-                _from_keypairs: &T,
-                _message: Message,
-                _recent_blockhash: Hash,
-            ) -> Transaction {
-                Transaction {
-                    message: Message::new(&[], None),
-                }
-            }
-
-            pub fn new_unsigned(_message: Message) -> Self {
-                Transaction {
-                    message: Message::new(&[], None),
-                }
-            }
-
-            pub fn new_with_payer(_instructions: &[Instruction], _payer: Option<&Pubkey>) -> Self {
-                Transaction {
-                    message: Message::new(&[], None),
-                }
-            }
-
-            pub fn new_signed_with_payer<T: Signers + ?Sized>(
-                instructions: &[Instruction],
-                payer: Option<&Pubkey>,
-                signing_keypairs: &T,
-                recent_blockhash: Hash,
-            ) -> Self {
-                let message = Message::new(instructions, payer);
-                Self::new(signing_keypairs, message, recent_blockhash)
-            }
-
-            pub fn sign<T: Signers + ?Sized>(&mut self, _keypairs: &T, _recent_blockhash: Hash) {}
-
-            pub fn try_sign<T: Signers + ?Sized>(
-                &mut self,
-                _keypairs: &T,
-                _recent_blockhash: Hash,
-            ) -> Result<(), SignerError> {
-                Ok(())
+    impl Transaction {
+        pub fn new<T: Signers + ?Sized>(
+            _from_keypairs: &T,
+            _message: Message,
+            _recent_blockhash: Hash,
+        ) -> Transaction {
+            Transaction {
+                message: Message::new(&[], None),
             }
         }
+
+        pub fn new_unsigned(_message: Message) -> Self {
+            Transaction {
+                message: Message::new(&[], None),
+            }
+        }
+
+        pub fn new_with_payer(_instructions: &[Instruction], _payer: Option<&Pubkey>) -> Self {
+            Transaction {
+                message: Message::new(&[], None),
+            }
+        }
+
+        pub fn new_signed_with_payer<T: Signers + ?Sized>(
+            instructions: &[Instruction],
+            payer: Option<&Pubkey>,
+            signing_keypairs: &T,
+            recent_blockhash: Hash,
+        ) -> Self {
+            let message = Message::new(instructions, payer);
+            Self::new(signing_keypairs, message, recent_blockhash)
+        }
+
+        pub fn sign<T: Signers + ?Sized>(&mut self, _keypairs: &T, _recent_blockhash: Hash) {}
+
+        pub fn try_sign<T: Signers + ?Sized>(
+            &mut self,
+            _keypairs: &T,
+            _recent_blockhash: Hash,
+        ) -> Result<(), SignerError> {
+            Ok(())
+        }
+    }
+}
+
+/// Re-exports and mocks of solana-program modules that mirror those from
+/// solana-program.
+///
+/// This lets examples in solana-program appear to be written as client
+/// programs.
+pub mod solana_sdk {
+    pub use crate::{
+        example_mocks::{
+            solana_account::{self as account, state_traits as account_utils},
+            solana_signer::{self as signer, signers},
+        },
+        hash, instruction, keccak, message, nonce,
+        pubkey::{self, Pubkey},
+        system_instruction, system_program,
+        sysvar::{
+            self,
+            clock::{self, Clock},
+        },
+    };
+
+    pub mod signature {
+        pub use crate::example_mocks::{
+            solana_keypair::Keypair, solana_signature::Signature, solana_signer::Signer,
+        };
+    }
+
+    pub mod transaction {
+        pub use crate::example_mocks::solana_transaction::{
+            versioned::VersionedTransaction, Transaction,
+        };
     }
 
     pub use crate::address_lookup_table;
