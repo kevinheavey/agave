@@ -28,6 +28,7 @@ serde_bytes = { workspace = true }
 serde_derive = { workspace = true }
 solana-account-info = { workspace = true, features = ["bincode"] }
 solana-atomic-u64 = { workspace = true }
+solana-big-mod-exp = { workspace = true }
 solana-bincode = { workspace = true }
 solana-borsh = { workspace = true, optional = true }
 solana-clock = { workspace = true, features = ["serde", "sysvar"] }
