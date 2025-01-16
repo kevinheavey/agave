@@ -88,7 +88,10 @@ pub mod solana_rpc_client_api {
 pub mod solana_rpc_client_nonce_utils {
     use {
         super::solana_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
-        crate::nonce::state::{Data, DurableNonce, Versions},
+        solana_nonce::{
+            state::{Data, DurableNonce},
+            versions::Versions,
+        },
     };
 
     #[derive(thiserror::Error, Debug)]
@@ -107,7 +110,7 @@ pub mod solana_rpc_client_nonce_utils {
 }
 
 pub mod solana_account {
-    use {crate::pubkey::Pubkey, solana_clock::Epoch};
+    use {solana_clock::Epoch, solana_pubkey::Pubkey};
     #[derive(Clone)]
     pub struct Account {
         pub lamports: u64,
@@ -271,18 +274,18 @@ pub mod solana_transaction {
 /// This lets examples in solana-program appear to be written as client
 /// programs.
 pub mod solana_sdk {
-    pub use crate::{
-        example_mocks::{
+    pub use {
+        crate::example_mocks::{
             solana_account::{self as account, state_traits as account_utils},
             solana_signer::{self as signer, signers},
         },
-        hash, instruction, keccak, message, nonce,
-        pubkey::{self, Pubkey},
-        system_instruction, system_program,
-        sysvar::{
-            self,
-            clock::{self, Clock},
-        },
+        solana_clock::{self as clock, Clock},
+        solana_hash as hash, solana_instruction as instruction, solana_keccak_hasher as keccack,
+        solana_message as message, solana_nonce as nonce,
+        solana_pubkey::{self as pubkey, Pubkey},
+        solana_sdk_ids::system_program,
+        solana_system_interface::instruction as system_instruction,
+        solana_sysvar as sysvar,
     };
 
     pub mod signature {
