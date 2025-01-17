@@ -136,7 +136,7 @@ name = "agave-geyser-plugin-interface"
 version = "2.2.0"
 dependencies = [
  "log",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-signature",
  "solana-transaction",
  "solana-transaction-status",
@@ -6008,7 +6008,7 @@ dependencies = [
  "serde_derive",
  "solana-account",
  "solana-account-info",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-instruction",
@@ -6034,7 +6034,7 @@ dependencies = [
  "serde_json",
  "solana-account",
  "solana-account-decoder-client-types",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-config-program",
  "solana-epoch-schedule",
  "solana-fee-calculator",
@@ -6167,7 +6167,7 @@ dependencies = [
  "smallvec",
  "solana-accounts-db",
  "solana-bucket-map",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-compute-budget",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
@@ -6223,7 +6223,7 @@ dependencies = [
  "num-traits",
  "solana-address-lookup-table-interface",
  "solana-bincode",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-feature-set",
  "solana-instruction",
  "solana-log-collector",
@@ -6512,7 +6512,7 @@ dependencies = [
  "solana-bincode",
  "solana-bn254",
  "solana-bpf-loader-program",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-compute-budget",
  "solana-cpi",
  "solana-curve25519",
@@ -6577,7 +6577,7 @@ dependencies = [
  "num_enum",
  "rand 0.8.5",
  "rayon",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-logger",
  "solana-measure",
  "solana-pubkey",
@@ -6670,7 +6670,7 @@ dependencies = [
  "chrono",
  "clap 2.33.3",
  "rpassword",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-cluster-type",
  "solana-commitment-config",
  "solana-derivation-path",
@@ -6700,7 +6700,7 @@ dependencies = [
  "chrono",
  "clap 3.2.23",
  "rpassword",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-cluster-type",
  "solana-commitment-config",
  "solana-derivation-path",
@@ -6853,7 +6853,7 @@ dependencies = [
  "solana-bincode",
  "solana-clap-utils",
  "solana-cli-config",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-epoch-info",
  "solana-hash",
  "solana-keypair",
@@ -6973,13 +6973,22 @@ dependencies = [
 
 [[package]]
 name = "solana-clock"
+version = "2.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d6f3beb4770cd15cdc4793cf10cb4ec502c51d944b64e32e34a116051dcbf5c2"
+dependencies = [
+ "solana-sdk-macro 2.1.9",
+]
+
+[[package]]
+name = "solana-clock"
 version = "2.2.0"
 dependencies = [
  "serde",
  "serde_derive",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-sdk-ids",
- "solana-sdk-macro",
+ "solana-sdk-macro 2.2.0",
  "solana-sysvar-id",
  "static_assertions",
 ]
@@ -7239,7 +7248,7 @@ dependencies = [
  "solana-bincode",
  "solana-borsh",
  "solana-builtins-default-costs",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-compute-budget",
  "solana-compute-budget-instruction",
  "solana-compute-budget-interface",
@@ -7450,7 +7459,7 @@ dependencies = [
  "solana-frozen-abi-macro",
  "solana-hash",
  "solana-sdk-ids",
- "solana-sdk-macro",
+ "solana-sdk-macro 2.2.0",
  "solana-sysvar-id",
 ]
 
@@ -7469,12 +7478,12 @@ version = "2.2.0"
 dependencies = [
  "serde",
  "serde_derive",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-epoch-schedule",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-sdk-ids",
- "solana-sdk-macro",
+ "solana-sdk-macro 2.2.0",
  "solana-sysvar-id",
  "static_assertions",
 ]
@@ -7591,7 +7600,7 @@ dependencies = [
  "log",
  "serde",
  "serde_derive",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-logger",
@@ -7685,7 +7694,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-account",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-cluster-type",
  "solana-epoch-schedule",
  "solana-fee-calculator",
@@ -7732,7 +7741,7 @@ dependencies = [
  "serde_json",
  "solana-account",
  "solana-accounts-db",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-entry",
  "solana-ledger",
  "solana-measure",
@@ -7955,7 +7964,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-sdk-ids",
- "solana-sdk-macro",
+ "solana-sdk-macro 2.2.0",
  "solana-sysvar-id",
 ]
 
@@ -8108,7 +8117,7 @@ dependencies = [
  "solana-account",
  "solana-bincode",
  "solana-bpf-loader-program",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-compute-budget",
  "solana-instruction",
  "solana-loader-v3-interface",
@@ -8275,7 +8284,7 @@ dependencies = [
  "rand 0.8.5",
  "reqwest",
  "serial_test",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-cluster-type",
  "solana-sha256-hasher",
  "solana-time-utils",
@@ -8441,7 +8450,7 @@ dependencies = [
  "rand_chacha 0.3.1",
  "rayon",
  "serde",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-hash",
@@ -8475,7 +8484,7 @@ dependencies = [
  "crossbeam-channel",
  "log",
  "rand 0.8.5",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-entry",
  "solana-hash",
  "solana-keypair",
@@ -8518,7 +8527,7 @@ version = "2.2.0"
 dependencies = [
  "serde",
  "serde_derive",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "static_assertions",
@@ -8602,7 +8611,7 @@ dependencies = [
  "solana-bincode",
  "solana-blake3-hasher",
  "solana-borsh",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-cpi",
  "solana-decode-error",
  "solana-define-syscall",
@@ -8635,7 +8644,7 @@ dependencies = [
  "solana-rent",
  "solana-sanitize",
  "solana-sdk-ids",
- "solana-sdk-macro",
+ "solana-sdk-macro 2.2.0",
  "solana-secp256k1-recover",
  "solana-serde-varint",
  "solana-serialize-utils",
@@ -8644,6 +8653,7 @@ dependencies = [
  "solana-slot-hashes",
  "solana-slot-history",
  "solana-stable-layout",
+ "solana-stake-interface",
  "solana-system-interface",
  "solana-sysvar",
  "solana-sysvar-id",
@@ -8711,7 +8721,7 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "solana-account",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-compute-budget",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
@@ -8823,7 +8833,7 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "solana-account-decoder-client-types",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-commitment-config",
  "solana-pubkey",
  "solana-rpc-client-api",
@@ -8913,11 +8923,11 @@ version = "2.2.0"
 dependencies = [
  "serde",
  "serde_derive",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-sdk-ids",
- "solana-sdk-macro",
+ "solana-sdk-macro 2.2.0",
  "solana-sysvar-id",
  "static_assertions",
 ]
@@ -9061,7 +9071,7 @@ dependencies = [
  "solana-account",
  "solana-account-decoder",
  "solana-account-decoder-client-types",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-commitment-config",
  "solana-epoch-info",
  "solana-epoch-schedule",
@@ -9101,7 +9111,7 @@ dependencies = [
  "serde_json",
  "solana-account",
  "solana-account-decoder-client-types",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-commitment-config",
  "solana-fee-calculator",
  "solana-inflation",
@@ -9157,7 +9167,7 @@ dependencies = [
  "serde_json",
  "solana-account-decoder",
  "solana-client",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-commitment-config",
  "solana-connection-cache",
  "solana-hash",
@@ -9387,7 +9397,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk",
  "solana-sdk-ids",
- "solana-sdk-macro",
+ "solana-sdk-macro 2.2.0",
  "solana-secp256k1-program",
  "solana-secp256k1-recover",
  "solana-secp256r1-program",
@@ -9414,6 +9424,18 @@ name = "solana-sdk-ids"
 version = "2.2.0"
 dependencies = [
  "solana-pubkey",
+]
+
+[[package]]
+name = "solana-sdk-macro"
+version = "2.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6ec1a8efb928767da37e058ffcedce0e78b4c4fb865d99b713fabb1430e11bf0"
+dependencies = [
+ "bs58",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.96",
 ]
 
 [[package]]
@@ -9664,6 +9686,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-stake-interface"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e7f014d9709121b3f0877e96701d535906ed06f2e7d93df97c6045528ce18e8c"
+dependencies = [
+ "num-traits",
+ "serde",
+ "serde_derive",
+ "solana-clock 2.1.9",
+ "solana-cpi",
+ "solana-decode-error",
+ "solana-instruction",
+ "solana-program-error",
+ "solana-pubkey",
+ "solana-system-interface",
+]
+
+[[package]]
 name = "solana-stake-program"
 version = "2.2.0"
 dependencies = [
@@ -9674,7 +9714,7 @@ dependencies = [
  "proptest",
  "solana-account",
  "solana-bincode",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-compute-budget",
  "solana-config-program",
  "solana-epoch-rewards",
@@ -9734,7 +9774,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "smpl_jwt",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-hash",
  "solana-keypair",
  "solana-message",
@@ -9851,7 +9891,7 @@ dependencies = [
  "shuttle",
  "solana-account",
  "solana-bpf-loader-program",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-compute-budget",
  "solana-compute-budget-instruction",
  "solana-compute-budget-interface",
@@ -10011,7 +10051,7 @@ dependencies = [
  "serde_derive",
  "serial_test",
  "solana-account-info",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-define-syscall",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
@@ -10032,7 +10072,7 @@ dependencies = [
  "solana-sanitize",
  "solana-sdk",
  "solana-sdk-ids",
- "solana-sdk-macro",
+ "solana-sdk-macro 2.2.0",
  "solana-sha256-hasher",
  "solana-slot-hashes",
  "solana-slot-history",
@@ -10089,7 +10129,7 @@ dependencies = [
  "rayon",
  "solana-account",
  "solana-client-traits",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-commitment-config",
  "solana-connection-cache",
  "solana-epoch-info",
@@ -10175,7 +10215,7 @@ dependencies = [
  "solana-account",
  "solana-client",
  "solana-client-traits",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-commitment-config",
  "solana-connection-cache",
  "solana-epoch-info",
@@ -10211,7 +10251,7 @@ dependencies = [
  "log",
  "rayon",
  "solana-client-traits",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-commitment-config",
  "solana-connection-cache",
  "solana-epoch-info",
@@ -10243,7 +10283,7 @@ dependencies = [
  "quinn",
  "rustls 0.23.21",
  "solana-cli-config",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-commitment-config",
  "solana-connection-cache",
  "solana-keypair",
@@ -10393,7 +10433,7 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "solana-account-decoder",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-hash",
  "solana-instruction",
  "solana-loader-v2-interface",
@@ -10533,7 +10573,7 @@ dependencies = [
  "log",
  "qualifier_attr",
  "scopeguard",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-entry",
  "solana-hash",
  "solana-keypair",
@@ -10634,7 +10674,7 @@ dependencies = [
  "serde_derive",
  "solana-account",
  "solana-bincode",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
  "solana-hash",
@@ -10696,7 +10736,7 @@ dependencies = [
  "serde_derive",
  "solana-account",
  "solana-bincode",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-epoch-schedule",
  "solana-feature-set",
  "solana-frozen-abi",
@@ -10737,7 +10777,7 @@ dependencies = [
  "rayon",
  "serial_test",
  "solana-accounts-db",
- "solana-clock",
+ "solana-clock 2.2.0",
  "solana-entry",
  "solana-gossip",
  "solana-hash",
