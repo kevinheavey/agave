@@ -16,11 +16,6 @@ solana-define-syscall = { workspace = true }
 num-bigint = { workspace = true }
 num-traits = { workspace = true }
 
-[target.'cfg(target_arch = "wasm32")'.dependencies]
-getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
-js-sys = { workspace = true }
-wasm-bindgen = { workspace = true }
-
 [dev-dependencies]
 array-bytes = { workspace = true }
 serde = { workspace = true }

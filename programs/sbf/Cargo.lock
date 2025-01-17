@@ -5157,12 +5157,9 @@ dependencies = [
 name = "solana-big-mod-exp"
 version = "2.2.0"
 dependencies = [
- "getrandom 0.2.10",
- "js-sys",
  "num-bigint 0.4.6",
  "num-traits",
  "solana-define-syscall",
- "wasm-bindgen",
 ]
 
 [[package]]
