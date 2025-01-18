@@ -110,6 +110,7 @@ members = [
     "sdk/account",
     "sdk/account-info",
     "sdk/atomic-u64",
+    "sdk/big-mod-exp",
     "sdk/bincode",
     "sdk/borsh",
     "sdk/cargo-build-sbf",
