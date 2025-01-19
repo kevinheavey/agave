@@ -3,7 +3,10 @@
 //! [sv]: https://docs.solanalabs.com/runtime/sysvars#stakehistory
 
 pub use solana_clock::Epoch;
-use {solana_sysvar_id::declare_sysvar_id, std::ops::Deref};
+use {
+    solana_sysvar_id::{declare_sysvar_id, impl_sysvar_id},
+    std::ops::Deref,
+};
 
 pub const MAX_ENTRIES: usize = 512; // it should never take as many as 512 epochs to warm up or cool down
 
@@ -104,9 +107,7 @@ impl StakeHistoryGetEntry for StakeHistory {
 
 #[cfg(test)]
 mod tests {
-    use solana_sysvar_id::SysvarId;
-
-    use super::*;
+    use {super::*, solana_sysvar_id::SysvarId};
 
     #[test]
     fn test_stake_history() {
