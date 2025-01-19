@@ -29,6 +29,7 @@ solana-frozen-abi-macro = { workspace = true, features = ["frozen-abi"], optiona
 solana-instruction = { workspace = true, features = ["std"] }
 solana-program-error = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false }
+solana-sdk-ids = { workspace = true }
 solana-system-interface = { workspace = true }
 solana-sysvar-id = { workspace = true }
 
@@ -36,7 +37,6 @@ solana-sysvar-id = { workspace = true }
 assert_matches = { workspace = true }
 bincode = { workspace = true }
 solana-borsh = { workspace = true }
-solana-program = { workspace = true, default-features = false }
 static_assertions = { workspace = true }
 strum = { workspace = true }
 strum_macros = { workspace = true }

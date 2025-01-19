@@ -7891,6 +7891,7 @@ dependencies = [
  "solana-instruction",
  "solana-program-error",
  "solana-pubkey",
+ "solana-sdk-ids",
  "solana-system-interface",
  "solana-sysvar-id",
 ]

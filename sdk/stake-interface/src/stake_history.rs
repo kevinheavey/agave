@@ -2,11 +2,11 @@
 //!
 //! [sv]: https://docs.solanalabs.com/runtime/sysvars#stakehistory
 
-pub use solana_clock::Epoch;
-use {
-    solana_sysvar_id::{declare_sysvar_id, impl_sysvar_id},
-    std::ops::Deref,
+pub use {
+    solana_clock::Epoch,
+    solana_sdk_ids::sysvar::stake_history::{check_id, id},
 };
+use {solana_sysvar_id::impl_sysvar_id, std::ops::Deref};
 
 pub const MAX_ENTRIES: usize = 512; // it should never take as many as 512 epochs to warm up or cool down
 
@@ -68,7 +68,7 @@ impl std::ops::Add for StakeHistoryEntry {
 #[derive(Debug, PartialEq, Eq, Default, Clone)]
 pub struct StakeHistory(Vec<(Epoch, StakeHistoryEntry)>);
 
-declare_sysvar_id!("SysvarStakeHistory1111111111111111111111111", StakeHistory);
+impl_sysvar_id!(StakeHistory);
 
 impl StakeHistory {
     pub fn get(&self, epoch: Epoch) -> Option<&StakeHistoryEntry> {
@@ -107,7 +107,7 @@ impl StakeHistoryGetEntry for StakeHistory {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_sysvar_id::SysvarId};
+    use super::*;
 
     #[test]
     fn test_stake_history() {
@@ -131,14 +131,6 @@ mod tests {
                 activating: 1,
                 ..StakeHistoryEntry::default()
             })
-        );
-    }
-
-    #[test]
-    fn test_id() {
-        assert_eq!(
-            StakeHistory::id(),
-            solana_program::sysvar::stake_history::id()
         );
     }
 }

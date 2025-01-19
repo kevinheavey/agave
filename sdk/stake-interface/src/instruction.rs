@@ -12,23 +12,11 @@ use {
 use {
     crate::{config, state::StakeStateV2},
     solana_instruction::{AccountMeta, Instruction},
+    solana_sdk_ids::sysvar::{
+        clock::ID as CLOCK_ID, rent::ID as RENT_ID, stake_history::ID as STAKE_HISTORY_ID,
+    },
     solana_system_interface::program::ID,
 };
-
-// Inline some constants to avoid dependencies.
-//
-// Note: replace these inline IDs with the corresponding value from
-// `solana_sdk_ids` once the version is updated to 2.2.0.
-
-#[cfg(feature = "bincode")]
-const CLOCK_ID: Pubkey = Pubkey::from_str_const("SysvarC1ock11111111111111111111111111111111");
-
-#[cfg(feature = "bincode")]
-const RENT_ID: Pubkey = Pubkey::from_str_const("SysvarRent111111111111111111111111111111111");
-
-#[cfg(feature = "bincode")]
-const STAKE_HISTORY_ID: Pubkey =
-    Pubkey::from_str_const("SysvarStakeHistory1111111111111111111111111");
 
 #[cfg_attr(
     feature = "serde",
@@ -899,23 +887,4 @@ pub fn move_lamports(
     ];
 
     Instruction::new_with_bincode(ID, &StakeInstruction::MoveLamports(lamports), account_metas)
-}
-
-#[cfg(feature = "bincode")]
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[allow(deprecated)]
-    #[test]
-    fn test_constants() {
-        // Ensure that the constants are in sync with the solana program.
-        assert_eq!(CLOCK_ID, solana_program::sysvar::clock::ID);
-
-        // Ensure that the constants are in sync with the solana program.
-        assert_eq!(STAKE_HISTORY_ID, solana_program::sysvar::stake_history::ID);
-
-        // Ensure that the constants are in sync with the solana rent.
-        assert_eq!(RENT_ID, solana_program::sysvar::rent::ID);
-    }
 }
