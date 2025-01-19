@@ -10352,7 +10352,6 @@ dependencies = [
  "solana-instruction",
  "solana-keypair",
  "solana-packet",
- "solana-program",
  "solana-pubkey",
  "solana-sdk-ids",
  "solana-sha256-hasher",
@@ -10360,6 +10359,7 @@ dependencies = [
  "solana-signer",
  "solana-svm-transaction",
  "solana-transaction",
+ "solana-vote-interface",
  "thiserror 2.0.11",
 ]
 
