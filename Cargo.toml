@@ -728,6 +728,7 @@ solana-program-option = { path = "sdk/program-option" }
 solana-program-pack = { path = "sdk/program-pack" }
 solana-pubkey = { path = "sdk/pubkey" }
 solana-sha256-hasher = { path = "sdk/sha256-hasher" }
+solana-sysvar-id = { path = "sdk/sysvar-id" }
 solana-zk-sdk = { path = "zk-sdk" }
 
 # curve25519-dalek uses the simd backend by default in v4 if possible,
