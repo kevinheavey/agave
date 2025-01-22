@@ -19,7 +19,6 @@ solana-sdk-ids = { workspace = true }
 
 [features]
 bincode = ["dep:solana-instruction", "serde"]
-dev-context-only-utils = ["bincode"]
 serde = ["dep:serde", "dep:serde_bytes", "dep:serde_derive"]
 
 [package.metadata.docs.rs]
