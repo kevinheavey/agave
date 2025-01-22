@@ -8014,7 +8014,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-loader-instruction"
+name = "solana-loader-v2-interface"
 version = "2.2.0"
 dependencies = [
  "serde",
@@ -8557,7 +8557,7 @@ dependencies = [
  "solana-instructions-sysvar",
  "solana-keccak-hasher",
  "solana-last-restart-slot",
- "solana-loader-instruction",
+ "solana-loader-v2-interface",
  "solana-loader-v3-interface",
  "solana-logger",
  "solana-message",
@@ -10357,7 +10357,7 @@ dependencies = [
  "solana-clock",
  "solana-hash",
  "solana-instruction",
- "solana-loader-instruction",
+ "solana-loader-v2-interface",
  "solana-message",
  "solana-program",
  "solana-pubkey",

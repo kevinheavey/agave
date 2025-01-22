@@ -535,9 +535,9 @@ pub use solana_keccak_hasher as keccak;
 pub use solana_last_restart_slot as last_restart_slot;
 #[deprecated(
     since = "2.2.0",
-    note = "Use `solana-loader-instruction` crate instead"
+    note = "Use `solana-loader-v2-interface` crate instead"
 )]
-pub use solana_loader_instruction as loader_instruction;
+pub use solana_loader_v2_interface as loader_instruction;
 #[deprecated(since = "2.2.0", note = "Use `solana-message` crate instead")]
 pub use solana_message as message;
 #[deprecated(since = "2.1.0", note = "Use `solana-program-memory` crate instead")]
