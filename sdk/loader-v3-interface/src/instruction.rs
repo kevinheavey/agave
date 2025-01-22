@@ -85,7 +85,7 @@ pub enum UpgradeableLoaderInstruction {
     ///      authority
     ///   4. `[]` Rent sysvar.
     ///   5. `[]` Clock sysvar.
-    ///   6. `[]` System program (`solana_sdk::system_program::id()`).
+    ///   6. `[]` System program (`solana_sdk_ids::system_program::id()`).
     ///   7. `[signer]` The program's authority
     DeployWithMaxDataLen {
         /// Maximum length that the program can be upgraded to.
