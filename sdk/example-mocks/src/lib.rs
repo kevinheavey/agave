@@ -88,7 +88,10 @@ pub mod solana_rpc_client_api {
 pub mod solana_rpc_client_nonce_utils {
     use {
         super::solana_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
-        solana_nonce::{state::{Data, DurableNonce}, versions::Versions},
+        solana_nonce::{
+            state::{Data, DurableNonce},
+            versions::Versions,
+        },
     };
 
     #[derive(thiserror::Error, Debug)]
@@ -107,7 +110,7 @@ pub mod solana_rpc_client_nonce_utils {
 }
 
 pub mod solana_account {
-    use {solana_pubkey::Pubkey, solana_clock::Epoch};
+    use {solana_clock::Epoch, solana_pubkey::Pubkey};
     #[derive(Clone)]
     pub struct Account {
         pub lamports: u64,
@@ -271,15 +274,21 @@ pub mod solana_transaction {
 /// This lets examples in solana-program appear to be written as client
 /// programs.
 pub mod solana_sdk {
-    pub use {crate::{
+    pub use {
+        crate::{
             solana_account::{self as account, state_traits as account_utils},
             solana_signer::{self as signer, signers},
         },
-    solana_hash as hash, solana_instruction as instruction, solana_keccak_hasher as keccack, solana_message as message, solana_nonce as nonce,
-    solana_pubkey::{self as pubkey, Pubkey},
-    solana_system_interface::instruction as system_instruction, solana_sdk_ids::{sysvar::clock, system_program, sysvar},
-    solana_clock::Clock
-};
+        solana_clock::Clock,
+        solana_hash as hash, solana_instruction as instruction, solana_keccak_hasher as keccack,
+        solana_message as message, solana_nonce as nonce,
+        solana_pubkey::{self as pubkey, Pubkey},
+        solana_sdk_ids::{
+            system_program,
+            sysvar::{self, clock},
+        },
+        solana_system_interface::instruction as system_instruction,
+    };
 
     pub mod signature {
         pub use crate::{
@@ -288,8 +297,13 @@ pub mod solana_sdk {
     }
 
     pub mod transaction {
-        pub use crate::solana_transaction::{
-            versioned::VersionedTransaction, Transaction,
+        pub use crate::solana_transaction::{versioned::VersionedTransaction, Transaction};
+    }
+
+    pub mod address_lookup_table {
+        pub use {
+            solana_address_lookup_table_interface::{error, instruction, program, state},
+            solana_message::AddressLookupTableAccount,
         };
     }
 }
