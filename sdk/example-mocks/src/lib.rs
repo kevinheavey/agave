@@ -88,7 +88,7 @@ pub mod solana_rpc_client_api {
 pub mod solana_rpc_client_nonce_utils {
     use {
         super::solana_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
-        crate::nonce::state::{Data, DurableNonce, Versions},
+        solana_nonce::{state::{Data, DurableNonce}, versions::Versions},
     };
 
     #[derive(thiserror::Error, Debug)]
@@ -107,7 +107,7 @@ pub mod solana_rpc_client_nonce_utils {
 }
 
 pub mod solana_account {
-    use {crate::pubkey::Pubkey, solana_clock::Epoch};
+    use {solana_pubkey::Pubkey, solana_clock::Epoch};
     #[derive(Clone)]
     pub struct Account {
         pub lamports: u64,
@@ -163,7 +163,7 @@ pub mod solana_signer {
 }
 
 pub mod solana_keypair {
-    use {crate::example_mocks::solana_signer::Signer, solana_pubkey::Pubkey};
+    use {crate::solana_signer::Signer, solana_pubkey::Pubkey};
     pub struct Keypair;
 
     impl Keypair {
@@ -181,7 +181,7 @@ pub mod solana_keypair {
 
 pub mod solana_transaction {
     use {
-        crate::example_mocks::solana_signer::{signers::Signers, SignerError},
+        crate::solana_signer::{signers::Signers, SignerError},
         serde_derive::Serialize,
         solana_hash::Hash,
         solana_instruction::Instruction,
@@ -191,7 +191,7 @@ pub mod solana_transaction {
 
     pub mod versioned {
         use {
-            crate::example_mocks::{
+            crate::{
                 solana_signature::Signature,
                 solana_signer::{signers::Signers, SignerError},
             },
@@ -271,31 +271,25 @@ pub mod solana_transaction {
 /// This lets examples in solana-program appear to be written as client
 /// programs.
 pub mod solana_sdk {
-    pub use crate::{
-        example_mocks::{
+    pub use {crate::{
             solana_account::{self as account, state_traits as account_utils},
             solana_signer::{self as signer, signers},
         },
-        hash, instruction, keccak, message, nonce,
-        pubkey::{self, Pubkey},
-        system_instruction, system_program,
-        sysvar::{
-            self,
-            clock::{self, Clock},
-        },
-    };
+    solana_hash as hash, solana_instruction as instruction, solana_keccak_hasher as keccack, solana_message as message, solana_nonce as nonce,
+    solana_pubkey::{self as pubkey, Pubkey},
+    solana_system_interface::instruction as system_instruction, solana_sdk_ids::{sysvar::clock, system_program, sysvar},
+    solana_clock::Clock
+};
 
     pub mod signature {
-        pub use crate::example_mocks::{
+        pub use crate::{
             solana_keypair::Keypair, solana_signature::Signature, solana_signer::Signer,
         };
     }
 
     pub mod transaction {
-        pub use crate::example_mocks::solana_transaction::{
+        pub use crate::solana_transaction::{
             versioned::VersionedTransaction, Transaction,
         };
     }
-
-    pub use crate::address_lookup_table;
 }
