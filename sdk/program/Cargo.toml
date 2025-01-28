@@ -152,6 +152,7 @@ frozen-abi = [
     "solana-pubkey/frozen-abi",
     "solana-rent/frozen-abi",
     "solana-short-vec/frozen-abi",
+    "solana-stake-interface/frozen-abi",
     "solana-sysvar/frozen-abi"
 ]
 
