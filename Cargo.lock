@@ -9259,9 +9259,6 @@ name = "solana-rpc-client-api"
 version = "2.3.0"
 dependencies = [
  "anyhow",
- "base64 0.22.1",
- "bs58",
- "const_format",
  "jsonrpc-core",
  "reqwest 0.12.12",
  "reqwest-middleware",
@@ -9277,7 +9274,6 @@ dependencies = [
  "solana-inflation",
  "solana-inline-spl",
  "solana-pubkey",
- "solana-signer",
  "solana-transaction-error",
  "solana-transaction-status-client-types",
  "solana-version",
