@@ -247,6 +247,7 @@ members = [
 #
 # There is a similar override in `../../Cargo.toml`.  Please keep both comments
 # and the overrides in sync.
+solana-clock = { path = "../../sdk/clock" }
 solana-curve25519 = { path = "../../curves/curve25519" }
 solana-account-info = { path = "../../sdk/account-info" }
 solana-borsh = { path = "../../sdk/borsh" }
