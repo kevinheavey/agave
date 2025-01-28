@@ -60,7 +60,11 @@ test-case = { workspace = true }
 bincode = ["dep:bincode", "serde", "solana-stake-interface/bincode"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 dev-context-only-utils = ["bincode", "bytemuck", "solana-instructions-sysvar/dev-context-only-utils"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = [
+    "dep:solana-frozen-abi",
+    "dep:solana-frozen-abi-macro",
+    "solana-stake-interface/frozen-abi"
+]
 serde = [
     "dep:serde",
     "dep:serde_derive",
