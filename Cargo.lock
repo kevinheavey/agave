@@ -9723,8 +9723,7 @@ dependencies = [
 [[package]]
 name = "solana-stake-interface"
 version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3681d784f2fdcebdfe0ad2496ae4aacbd687944a997cc3d67aea19b9c9f4e923"
+source = "git+https://github.com/solana-program/stake?rev=9cf99f4#9cf99f484d8f61c9e91631580c89046ae2d80c23"
 dependencies = [
  "num-traits",
  "serde",
