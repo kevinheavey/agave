@@ -5636,15 +5636,6 @@ dependencies = [
 
 [[package]]
 name = "solana-decode-error"
-version = "2.1.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "925822f929d56870b2cbee5e00548de65043a1b5dc1021a2a0f6ca663227e96c"
-dependencies = [
- "num-traits",
-]
-
-[[package]]
-name = "solana-decode-error"
 version = "2.2.0"
 dependencies = [
  "num-traits",
@@ -6437,7 +6428,7 @@ name = "solana-precompile-error"
 version = "2.2.0"
 dependencies = [
  "num-traits",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
 ]
 
 [[package]]
@@ -6496,7 +6487,7 @@ dependencies = [
  "solana-borsh",
  "solana-clock",
  "solana-cpi",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-define-syscall",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
@@ -6560,7 +6551,7 @@ dependencies = [
  "num-traits",
  "serde",
  "serde_derive",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-instruction",
  "solana-msg",
  "solana-pubkey",
@@ -6678,7 +6669,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-atomic-u64",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-define-syscall",
  "solana-sanitize",
  "solana-sha256-hasher",
@@ -7106,7 +7097,7 @@ dependencies = [
  "solana-cluster-type",
  "solana-commitment-config",
  "solana-compute-budget-interface",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-derivation-path",
  "solana-ed25519-program",
  "solana-epoch-info",
@@ -7354,15 +7345,16 @@ dependencies = [
 
 [[package]]
 name = "solana-stake-interface"
-version = "1.1.0"
-source = "git+https://github.com/solana-program/stake?rev=9cf99f4#9cf99f484d8f61c9e91631580c89046ae2d80c23"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "969a1f4ac2d82fe26eeb379dee252cd6c33ab0169d4ee4c8dbcf09d55c52c589"
 dependencies = [
  "num-traits",
  "serde",
  "serde_derive",
  "solana-clock",
  "solana-cpi",
- "solana-decode-error 2.1.9",
+ "solana-decode-error",
  "solana-instruction",
  "solana-program-error",
  "solana-pubkey",
@@ -7596,7 +7588,7 @@ dependencies = [
  "num-traits",
  "serde",
  "serde_derive",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-instruction",
  "solana-pubkey",
  "wasm-bindgen",
@@ -8067,7 +8059,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-clock",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-hash",
  "solana-instruction",
  "solana-pubkey",
@@ -8348,7 +8340,7 @@ dependencies = [
  "bytemuck_derive",
  "num-derive",
  "num-traits",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-msg",
  "solana-program-error",
  "solana-program-option",
@@ -8392,7 +8384,7 @@ dependencies = [
  "num-derive",
  "num-traits",
  "solana-account-info",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-instruction",
  "solana-msg",
  "solana-program-error",
@@ -8532,7 +8524,7 @@ dependencies = [
  "bytemuck",
  "num-derive",
  "num-traits",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-instruction",
  "solana-msg",
  "solana-program-error",
@@ -8552,7 +8544,7 @@ dependencies = [
  "num-derive",
  "num-traits",
  "solana-borsh",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-instruction",
  "solana-msg",
  "solana-program-error",
@@ -8575,7 +8567,7 @@ dependencies = [
  "num-traits",
  "solana-account-info",
  "solana-cpi",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-instruction",
  "solana-msg",
  "solana-program-error",
@@ -8598,7 +8590,7 @@ dependencies = [
  "num-derive",
  "num-traits",
  "solana-account-info",
- "solana-decode-error 2.2.0",
+ "solana-decode-error",
  "solana-msg",
  "solana-program-error",
  "spl-discriminator",
