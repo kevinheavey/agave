@@ -1,10 +1,6 @@
 #[deprecated(since = "2.2.0", note = "Use solana-stake-interface instead")]
 pub use solana_stake_interface::{
-    config,
-    stake_flags,
-    state,
-    tools,
-    MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION
+    config, stake_flags, state, tools, MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION,
 };
 
 pub mod instruction {
