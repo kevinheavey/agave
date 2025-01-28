@@ -6885,6 +6885,8 @@ dependencies = [
  "getrandom 0.2.10",
  "js-sys",
  "num-traits",
+ "serde",
+ "serde_derive",
  "solana-atomic-u64 2.1.9",
  "solana-decode-error 2.1.9",
  "solana-define-syscall 2.1.9",
@@ -8110,18 +8112,17 @@ dependencies = [
 [[package]]
 name = "solana-stake-interface"
 version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3681d784f2fdcebdfe0ad2496ae4aacbd687944a997cc3d67aea19b9c9f4e923"
+source = "git+https://github.com/solana-program/stake?rev=9cf99f4#9cf99f484d8f61c9e91631580c89046ae2d80c23"
 dependencies = [
  "num-traits",
  "serde",
  "serde_derive",
  "solana-clock 2.1.9",
  "solana-cpi",
- "solana-decode-error 2.2.0",
+ "solana-decode-error 2.1.9",
  "solana-instruction",
  "solana-program-error",
- "solana-pubkey 2.2.0",
+ "solana-pubkey 2.1.9",
  "solana-system-interface",
  "solana-sysvar-id 2.1.9",
 ]
