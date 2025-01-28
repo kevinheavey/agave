@@ -7701,6 +7701,7 @@ dependencies = [
  "solana-rpc-client-api",
  "solana-runtime",
  "solana-sdk",
+ "solana-stake-interface",
  "solana-stake-program",
  "solana-version",
  "solana-vote-program",
@@ -9704,6 +9705,8 @@ name = "solana-stake-interface"
 version = "1.1.0"
 source = "git+https://github.com/solana-program/stake?rev=9cf99f4#9cf99f484d8f61c9e91631580c89046ae2d80c23"
 dependencies = [
+ "borsh 0.10.3",
+ "borsh 1.5.5",
  "num-traits",
  "serde",
  "serde_derive",
