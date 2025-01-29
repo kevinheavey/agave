@@ -50,7 +50,6 @@ use {
         request::DELINQUENT_VALIDATOR_SLOT_DISTANCE,
         response::{RpcPerfSample, RpcPrioritizationFee, SlotInfo},
     },
-    solana_sdk::rpc_port::DEFAULT_RPC_PORT_STR,
     solana_sdk_ids::sysvar::{self, stake_history},
     solana_signature::Signature,
     solana_slot_history::{self as slot_history, SlotHistory},
@@ -76,6 +75,14 @@ use {
     },
     thiserror::Error,
 };
+
+const DEFAULT_RPC_PORT_STR: &str = "8899";
+
+#[cfg(test)]
+static_assertions::const_assert_eq!(
+    DEFAULT_RPC_PORT_STR,
+    solana_sdk::rpc_port::DEFAULT_RPC_PORT_STR
+);
 
 pub trait ClusterQuerySubCommands {
     fn cluster_query_subcommands(self) -> Self;
