@@ -98,7 +98,6 @@ solana-sdk = { workspace = true }
 solana-sha256-hasher = { workspace = true }
 solana-streamer = { workspace = true }
 solana-test-validator = { workspace = true }
-static_assertions = { workspace = true }
 tempfile = { workspace = true }
 test-case = { workspace = true }
 

@@ -78,12 +78,6 @@ use {
 
 const DEFAULT_RPC_PORT_STR: &str = "8899";
 
-#[cfg(test)]
-static_assertions::const_assert_eq!(
-    DEFAULT_RPC_PORT_STR,
-    solana_sdk::rpc_port::DEFAULT_RPC_PORT_STR
-);
-
 pub trait ClusterQuerySubCommands {
     fn cluster_query_subcommands(self) -> Self;
 }
@@ -2440,5 +2434,13 @@ mod tests {
                 signers: vec![Box::new(default_keypair)],
             }
         );
+    }
+
+    #[test]
+    fn check_default_rpc_port_inline() {
+        assert_eq!(
+            DEFAULT_RPC_PORT_STR,
+            solana_sdk::rpc_port::DEFAULT_RPC_PORT_STR
+        )
     }
 }

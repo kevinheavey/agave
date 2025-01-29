@@ -6811,7 +6811,6 @@ dependencies = [
  "solana-version",
  "solana-vote-program",
  "spl-memo",
- "static_assertions",
  "tempfile",
  "test-case",
  "thiserror 2.0.11",
