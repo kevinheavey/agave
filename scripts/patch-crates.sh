@@ -20,7 +20,6 @@ update_solana_dependencies() {
     solana-cli-config
     solana-cli-output
     solana-client
-    solana-clock
     solana-compute-budget
     solana-connection-cache
     solana-core
