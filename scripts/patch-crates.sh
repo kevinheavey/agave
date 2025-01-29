@@ -20,6 +20,7 @@ update_solana_dependencies() {
     solana-cli-config
     solana-cli-output
     solana-client
+    solana-clock
     solana-compute-budget
     solana-connection-cache
     solana-core
@@ -71,6 +72,7 @@ update_solana_dependencies() {
     solana-streamer
     solana-svm-rent-collector
     solana-svm-transaction
+    solana-sysvar-id
     solana-test-validator
     solana-thin-client
     solana-tpu-client
