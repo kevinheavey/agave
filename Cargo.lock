@@ -9702,9 +9702,8 @@ dependencies = [
 
 [[package]]
 name = "solana-stake-interface"
-version = "1.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "969a1f4ac2d82fe26eeb379dee252cd6c33ab0169d4ee4c8dbcf09d55c52c589"
+version = "1.1.0"
+source = "git+https://github.com/kevinheavey/stake?rev=bc7ce6f#bc7ce6fa669437db6a106521bd08aec546ae3f57"
 dependencies = [
  "borsh 0.10.3",
  "borsh 1.5.5",
