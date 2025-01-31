@@ -22,7 +22,6 @@ solana-instruction = { workspace = true }
 solana-log-collector = { workspace = true }
 solana-native-token = { workspace = true }
 solana-packet = { workspace = true }
-solana-program = { workspace = true }
 solana-program-runtime = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-rent = { workspace = true }
