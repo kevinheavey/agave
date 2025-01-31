@@ -8057,7 +8057,6 @@ dependencies = [
  "solana-log-collector",
  "solana-native-token",
  "solana-packet",
- "solana-program",
  "solana-program-runtime",
  "solana-pubkey",
  "solana-rent",
