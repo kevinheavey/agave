@@ -7,9 +7,9 @@ pub mod config_processor;
 )]
 pub mod date_instruction;
 
-#[allow(deprecated)]
-use solana_program::stake::config::Config as StakeConfig;
 pub use solana_sdk_ids::config::id;
+#[allow(deprecated)]
+use solana_stake_interface::config::Config as StakeConfig;
 use {
     bincode::{deserialize, serialize, serialized_size},
     serde_derive::{Deserialize, Serialize},

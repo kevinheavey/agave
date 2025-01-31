@@ -7126,12 +7126,12 @@ dependencies = [
  "solana-log-collector",
  "solana-logger",
  "solana-packet",
- "solana-program",
  "solana-program-runtime",
  "solana-pubkey",
  "solana-sdk-ids",
  "solana-short-vec",
  "solana-signer",
+ "solana-stake-interface",
  "solana-system-interface",
  "solana-transaction-context",
 ]

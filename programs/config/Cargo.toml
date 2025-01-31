@@ -19,11 +19,11 @@ solana-bincode = { workspace = true }
 solana-instruction = { workspace = true }
 solana-log-collector = { workspace = true }
 solana-packet = { workspace = true }
-solana-program = { workspace = true }
 solana-program-runtime = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-sdk-ids = { workspace = true }
 solana-short-vec = { workspace = true }
+solana-stake-interface = { workspace = true }
 solana-system-interface = { workspace = true }
 solana-transaction-context = { workspace = true }
 
