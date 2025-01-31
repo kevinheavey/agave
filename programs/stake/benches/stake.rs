@@ -5,7 +5,6 @@ use {
     solana_clock::{Clock, Epoch},
     solana_feature_set::FeatureSet,
     solana_instruction::AccountMeta,
-    solana_program::vote::state::{VoteState, VoteStateVersions},
     solana_program_runtime::invoke_context::mock_process_instruction,
     solana_pubkey::Pubkey,
     solana_rent::Rent,
@@ -23,6 +22,7 @@ use {
         stake_state::{Delegation, Meta, Stake},
     },
     solana_sysvar::stake_history::StakeHistory,
+    solana_vote_interface::state::{VoteState, VoteStateVersions},
     solana_vote_program::vote_state,
     std::sync::Arc,
 };

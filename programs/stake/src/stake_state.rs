@@ -14,7 +14,6 @@ use {
     solana_feature_set::FeatureSet,
     solana_instruction::error::InstructionError,
     solana_log_collector::ic_msg,
-    solana_program::vote::state::{VoteState, VoteStateVersions},
     solana_program_runtime::invoke_context::InvokeContext,
     solana_pubkey::Pubkey,
     solana_rent::Rent,
@@ -29,6 +28,7 @@ use {
     solana_transaction_context::{
         BorrowedAccount, IndexOfAccount, InstructionContext, TransactionContext,
     },
+    solana_vote_interface::state::{VoteState, VoteStateVersions},
     std::{collections::HashSet, convert::TryFrom},
 };
 
