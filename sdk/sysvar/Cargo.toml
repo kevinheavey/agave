@@ -76,6 +76,7 @@ serde = [
     "solana-rent/serde",
     "solana-slot-hashes/serde",
     "solana-slot-history/serde",
+    "solana-stake-interface/serde",
 ]
 
 [package.metadata.docs.rs]
