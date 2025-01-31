@@ -7701,7 +7701,6 @@ dependencies = [
  "solana-rpc-client-api",
  "solana-runtime",
  "solana-sdk",
- "solana-stake-interface",
  "solana-stake-program",
  "solana-version",
  "solana-vote-program",
