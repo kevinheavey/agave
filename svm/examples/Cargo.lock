@@ -5467,11 +5467,11 @@ dependencies = [
  "solana-instruction",
  "solana-log-collector",
  "solana-packet",
- "solana-program",
  "solana-program-runtime",
  "solana-pubkey",
  "solana-sdk-ids",
  "solana-short-vec",
+ "solana-stake-interface",
  "solana-system-interface",
  "solana-transaction-context",
 ]
