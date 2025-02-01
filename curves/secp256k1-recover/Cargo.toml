@@ -23,7 +23,7 @@ thiserror = { workspace = true }
 solana-define-syscall = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
-k256 = { workspace = true }
+k256 = { workspace = true, features = ["ecdsa"] }
 
 [dev-dependencies]
 anyhow = { workspace = true }
