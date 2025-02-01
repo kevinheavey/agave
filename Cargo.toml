@@ -332,7 +332,7 @@ dlopen2 = "0.5.0"
 eager = "0.1.0"
 ed25519-dalek = "=1.0.1"
 ed25519-dalek-bip32 = "0.2.0"
-elliptic-curve = "0.13.8"
+elliptic-curve = { version = "0.13.8", default-features = false }
 enum-iterator = "1.5.0"
 env_logger = "0.9.3"
 etcd-client = "0.11.1"
