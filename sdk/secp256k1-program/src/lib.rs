@@ -947,15 +947,6 @@ pub fn verify(
         if sig_end >= signature_instruction.len() {
             return Err(PrecompileError::InvalidSignature);
         }
-        let signature = k256::ecdsa::Signature::from_slice(
-            &signature_instruction[sig_start..sig_end],
-        )
-        .map_err(|_| PrecompileError::InvalidSignature)?;
-
-
-        let recovery_id = k256::ecdsa::RecoveryId::from_byte(signature_instruction[sig_end])
-            .ok_or(PrecompileError::InvalidRecoveryId)?;
-
         // Parse out pubkey
         let eth_address_slice = get_data_slice(
             instruction_datas,
@@ -971,6 +962,14 @@ pub fn verify(
             offsets.message_data_offset,
             offsets.message_data_size as usize,
         )?;
+        let sig_slice = &signature_instruction[sig_start..sig_end];
+        let signature = k256::ecdsa::Signature::from_slice(sig_slice)
+        .map_err(|_| PrecompileError::InvalidSignature)?;
+
+
+        let recovery_id = k256::ecdsa::RecoveryId::from_byte(signature_instruction[sig_end])
+            .ok_or(PrecompileError::InvalidRecoveryId)?;
+
 
         let mut hasher = sha3::Keccak256::new();
         hasher.update(message_slice);
