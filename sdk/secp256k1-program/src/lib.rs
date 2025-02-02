@@ -965,16 +965,21 @@ pub fn verify(
         let sig_slice = &signature_instruction[sig_start..sig_end];
         let signature = k256::ecdsa::Signature::from_slice(sig_slice)
         .map_err(|_| PrecompileError::InvalidSignature)?;
-
-
-        let recovery_id = k256::ecdsa::RecoveryId::from_byte(signature_instruction[sig_end])
+        let recovery_byte = signature_instruction[sig_end];
+        let maybe_normalized = signature.normalize_s();
+        let (normalized_sig, normalized_recovery_byte) = if let Some(sig) = maybe_normalized {
+            (sig, recovery_byte ^ 1)
+        } else {
+            (signature, recovery_byte)
+        };
+        let recovery_id = k256::ecdsa::RecoveryId::from_byte(normalized_recovery_byte)
             .ok_or(PrecompileError::InvalidRecoveryId)?;
 
 
         let mut hasher = sha3::Keccak256::new();
         hasher.update(message_slice);
 
-        let pubkey = k256::ecdsa::VerifyingKey::recover_from_digest(hasher, &signature, recovery_id)
+        let pubkey = k256::ecdsa::VerifyingKey::recover_from_digest(hasher, &normalized_sig, recovery_id)
         .map_err(|_| PrecompileError::InvalidSignature)?;
         let eth_address = construct_eth_pubkey(&pubkey);
 
