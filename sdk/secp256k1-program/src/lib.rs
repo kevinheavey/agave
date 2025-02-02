@@ -730,7 +730,7 @@
 //!             hasher.hash(&message);
 //!             hasher.result()
 //!         };
-//!         let (signature, recovery_id) = secret_key.sign_recoverable(&message_hash.0).unwrap();
+//!         let (signature, recovery_id) = secret_key.sign_prehash_recoverable(&message_hash.0).unwrap();
 //!         let signature = signature.to_bytes();
 //!         let recovery_id = recovery_id.to_byte();
 //!
@@ -830,15 +830,12 @@ pub fn new_secp256k1_instruction(
     priv_key: &k256::ecdsa::SigningKey,
     message_arr: &[u8],
 ) -> Instruction {
-    let secp_pubkey = k256::ecdsa::VerifyingKey::from(priv_key);
+    let secp_pubkey = priv_key.verifying_key();
     let eth_pubkey = construct_eth_pubkey(&secp_pubkey);
     let mut hasher = sha3::Keccak256::new();
     hasher.update(message_arr);
-    let message_hash = hasher.finalize();
-    let mut message_hash_arr = [0u8; 32];
-    message_hash_arr.copy_from_slice(message_hash.as_slice());
     // TODO: find out if this will always succeed
-    let (signature, recovery_id) = priv_key.sign_recoverable(&message_hash).unwrap();
+    let (signature, recovery_id) = priv_key.sign_digest_recoverable(hasher).unwrap();
     let signature_arr = signature.to_bytes();
     assert_eq!(signature_arr.len(), SIGNATURE_SERIALIZED_SIZE);
 
@@ -1223,7 +1220,7 @@ pub mod test {
         solana_logger::setup();
 
         let secret_key = k256::ecdsa::SigningKey::random(&mut thread_rng());
-        let public_key = k256::ecdsa::VerifyingKey::from(&secret_key);
+        let public_key = secret_key.verifying_key();
         let eth_address = construct_eth_pubkey(&public_key);
 
         let message = b"hello";
@@ -1233,7 +1230,7 @@ pub mod test {
             hasher.result()
         };
 
-        let (signature, recovery_id) = k256::ecdsa::SigningKey::from(secret_key).sign_recoverable(&message_hash.0).unwrap();
+        let (signature, recovery_id) = secret_key.sign_prehash_recoverable(&message_hash.0).unwrap();
 
         // Flip the S value in the signature to make a different but valid signature.
         let alt_signature = k256::ecdsa::Signature::from_scalars(signature.r(), -signature.s()).unwrap();
