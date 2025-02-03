@@ -1025,13 +1025,13 @@ declare_builtin_function!(
             return Ok(Secp256k1RecoverError::InvalidSignature.into());
         };
 
-        let public_key = match k256::ecdsa::VerifyingKey::recover_from_prehash(&hash, &signature, recovery_id) {
+        let public_key = match k256::ecdsa::VerifyingKey::recover_from_prehash(hash, &signature, recovery_id) {
             Ok(key) => key.to_encoded_point(false),
             Err(_) => {
                 return Ok(Secp256k1RecoverError::InvalidSignature.into());
             }
         };
-
+        #[allow(clippy::indexing_slicing)]
         secp256k1_recover_result.copy_from_slice(&public_key.as_bytes()[1..65]);
         Ok(SUCCESS)
     }
