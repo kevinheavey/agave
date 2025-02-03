@@ -1,7 +1,6 @@
 //! Example Rust-based SBF program tests loop iteration
 
 mod helper;
-extern crate solana_program;
 use solana_program::{custom_heap_default, custom_panic_default, entrypoint::SUCCESS, msg};
 
 #[no_mangle]

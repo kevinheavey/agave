@@ -3,7 +3,6 @@
 #![allow(unreachable_code)]
 #![allow(clippy::arithmetic_side_effects)]
 
-extern crate solana_program;
 use solana_program::{
     account_info::AccountInfo, bpf_loader, entrypoint::ProgramResult, log::*, msg,
     program::check_type_assumptions, pubkey::Pubkey,

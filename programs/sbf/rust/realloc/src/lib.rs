@@ -2,7 +2,6 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
-extern crate solana_program;
 use {
     solana_program::{
         account_info::AccountInfo,

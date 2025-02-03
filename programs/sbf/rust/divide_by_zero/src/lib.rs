@@ -2,7 +2,6 @@
 
 #![feature(asm_experimental_arch)]
 
-extern crate solana_program;
 use {
     solana_program::{account_info::AccountInfo, entrypoint::ProgramResult, pubkey::Pubkey},
     std::arch::asm,

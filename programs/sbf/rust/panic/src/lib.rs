@@ -8,7 +8,6 @@ fn custom_panic(info: &core::panic::PanicInfo<'_>) {
     solana_program::msg!(&format!("{info}"));
 }
 
-extern crate solana_program;
 use solana_program::{account_info::AccountInfo, entrypoint::ProgramResult, pubkey::Pubkey};
 
 solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);

@@ -7327,7 +7327,8 @@ version = "2.2.0"
 dependencies = [
  "array-bytes",
  "solana-bn254",
- "solana-program",
+ "solana-msg",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7336,7 +7337,8 @@ version = "2.2.0"
 dependencies = [
  "array-bytes",
  "solana-bn254",
- "solana-program",
+ "solana-msg",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7347,7 +7349,9 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-program",
+ "solana-big-mod-exp",
+ "solana-msg",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7355,7 +7359,11 @@ name = "solana-sbf-rust-call-args"
 version = "2.2.0"
 dependencies = [
  "borsh 1.5.5",
- "solana-program",
+ "solana-account-info",
+ "solana-cpi",
+ "solana-program-entrypoint",
+ "solana-program-error",
+ "solana-pubkey",
 ]
 
 [[package]]
@@ -7369,8 +7377,13 @@ dependencies = [
 name = "solana-sbf-rust-caller-access"
 version = "2.2.0"
 dependencies = [
- "solana-program",
+ "solana-account-info",
+ "solana-cpi",
+ "solana-instruction",
+ "solana-msg",
  "solana-program-entrypoint",
+ "solana-program-error",
+ "solana-pubkey",
 ]
 
 [[package]]
@@ -7378,15 +7391,19 @@ name = "solana-sbf-rust-curve25519"
 version = "2.2.0"
 dependencies = [
  "solana-curve25519",
- "solana-program",
+ "solana-msg",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
 name = "solana-sbf-rust-custom-heap"
 version = "2.2.0"
 dependencies = [
- "solana-program",
+ "solana-account-info",
+ "solana-msg",
  "solana-program-entrypoint",
+ "solana-program-error",
+ "solana-pubkey",
 ]
 
 [[package]]
@@ -7394,7 +7411,7 @@ name = "solana-sbf-rust-dep-crate"
 version = "2.2.0"
 dependencies = [
  "byteorder 1.5.0",
- "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7607,8 +7624,9 @@ name = "solana-sbf-rust-poseidon"
 version = "2.2.0"
 dependencies = [
  "array-bytes",
+ "solana-msg",
  "solana-poseidon",
- "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7687,7 +7705,9 @@ name = "solana-sbf-rust-secp256k1-recover"
 version = "2.2.0"
 dependencies = [
  "libsecp256k1 0.7.0",
- "solana-program",
+ "solana-keccak-hasher",
+ "solana-msg",
+ "solana-program-entrypoint",
  "solana-secp256k1-recover",
 ]
 

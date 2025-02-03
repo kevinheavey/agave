@@ -1,6 +1,5 @@
 //! Example Rust-based SBF program that tests sysvar use
 
-extern crate solana_program;
 #[allow(deprecated)]
 use solana_program::sysvar::recent_blockhashes::RecentBlockhashes;
 use solana_program::{

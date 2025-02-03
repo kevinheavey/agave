@@ -1,6 +1,5 @@
 //! Example Rust-based SBF program that exercises instruction introspection
 
-extern crate solana_program;
 use solana_program::{
     account_info::AccountInfo,
     entrypoint::ProgramResult,

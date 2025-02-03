@@ -1,7 +1,6 @@
 //! Example Rust-based SBF program that tests the `sol_get_epoch_stake`
 //! syscall.
 
-extern crate solana_program;
 use solana_program::{
     account_info::AccountInfo,
     entrypoint::ProgramResult,

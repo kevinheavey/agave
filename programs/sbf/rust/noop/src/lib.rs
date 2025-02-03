@@ -1,6 +1,5 @@
 //! Example Rust-based SBF noop program
 
-extern crate solana_program;
 use solana_program::{account_info::AccountInfo, entrypoint::ProgramResult, pubkey::Pubkey};
 
 // This program intentionally uses `entrypoint!` instead of `entrypoint_no_alloc!`
