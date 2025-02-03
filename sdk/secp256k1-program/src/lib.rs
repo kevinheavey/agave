@@ -831,7 +831,7 @@ pub fn new_secp256k1_instruction(
     message_arr: &[u8],
 ) -> Instruction {
     let secp_pubkey = priv_key.verifying_key();
-    let eth_pubkey = construct_eth_pubkey(&secp_pubkey);
+    let eth_pubkey = construct_eth_pubkey(secp_pubkey);
     let mut hasher = sha3::Keccak256::new();
     hasher.update(message_arr);
     // TODO: find out if this will always succeed
