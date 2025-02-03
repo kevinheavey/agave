@@ -1226,7 +1226,7 @@ pub mod test {
 
         let secret_key = k256::ecdsa::SigningKey::random(&mut thread_rng());
         let public_key = secret_key.verifying_key();
-        let eth_address = construct_eth_pubkey(&public_key);
+        let eth_address = construct_eth_pubkey(public_key);
 
         let message = b"hello";
         let message_hash = {
