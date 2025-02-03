@@ -1454,7 +1454,7 @@ mod tests {
         solana_program_runtime::with_mock_invoke_context,
         solana_pubkey::Pubkey,
         solana_sdk_ids::sysvar::epoch_schedule,
-        solana_stake_interface::{stake_flags::StakeFlags, state::warmup_cooldown_rate},
+        solana_stake_interface::state::warmup_cooldown_rate,
         solana_sysvar_id::SysvarId,
         test_case::test_case,
     };
