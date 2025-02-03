@@ -854,8 +854,7 @@ pub fn new_secp256k1_instruction(
     instruction_data[signature_offset..signature_offset.saturating_add(signature_arr.len())]
         .copy_from_slice(&signature_arr);
 
-    instruction_data[signature_offset.saturating_add(signature_arr.len())] =
-        recovery_id.to_byte();
+    instruction_data[signature_offset.saturating_add(signature_arr.len())] = recovery_id.to_byte();
 
     let message_data_offset = signature_offset
         .saturating_add(signature_arr.len())
@@ -888,7 +887,9 @@ pub fn construct_eth_pubkey(
     pubkey: &k256::ecdsa::VerifyingKey,
 ) -> [u8; HASHED_PUBKEY_SERIALIZED_SIZE] {
     let mut addr = [0u8; HASHED_PUBKEY_SERIALIZED_SIZE];
-    addr.copy_from_slice(&sha3::Keccak256::digest(&pubkey.to_encoded_point(false).as_bytes()[1..])[12..32]);
+    addr.copy_from_slice(
+        &sha3::Keccak256::digest(&pubkey.to_encoded_point(false).as_bytes()[1..])[12..32],
+    );
     assert_eq!(addr.len(), HASHED_PUBKEY_SERIALIZED_SIZE);
     addr
 }
@@ -935,7 +936,7 @@ pub fn verify(
         let end = start.saturating_add(SIGNATURE_OFFSETS_SERIALIZED_SIZE);
 
         let offsets: SecpSignatureOffsets = bincode::deserialize(&data[start..end])
-        .map_err(|_| PrecompileError::InvalidSignature)?;
+            .map_err(|_| PrecompileError::InvalidSignature)?;
         // Parse out signature
         let signature_index = offsets.signature_instruction_index as usize;
         if signature_index >= instruction_datas.len() {
@@ -964,7 +965,7 @@ pub fn verify(
         )?;
         let sig_slice = &signature_instruction[sig_start..sig_end];
         let signature = k256::ecdsa::Signature::from_slice(sig_slice)
-        .map_err(|_| PrecompileError::InvalidSignature)?;
+            .map_err(|_| PrecompileError::InvalidSignature)?;
         let recovery_byte = signature_instruction[sig_end];
         let maybe_normalized = signature.normalize_s();
         let (normalized_sig, normalized_recovery_byte) = if let Some(sig) = maybe_normalized {
@@ -975,12 +976,12 @@ pub fn verify(
         let recovery_id = k256::ecdsa::RecoveryId::from_byte(normalized_recovery_byte)
             .ok_or(PrecompileError::InvalidRecoveryId)?;
 
-
         let mut hasher = sha3::Keccak256::new();
         hasher.update(message_slice);
 
-        let pubkey = k256::ecdsa::VerifyingKey::recover_from_digest(hasher, &normalized_sig, recovery_id)
-        .map_err(|_| PrecompileError::InvalidSignature)?;
+        let pubkey =
+            k256::ecdsa::VerifyingKey::recover_from_digest(hasher, &normalized_sig, recovery_id)
+                .map_err(|_| PrecompileError::InvalidSignature)?;
         let eth_address = construct_eth_pubkey(&pubkey);
 
         if eth_address_slice != eth_address {
@@ -1234,11 +1235,15 @@ pub mod test {
             hasher.result()
         };
 
-        let (signature, recovery_id) = secret_key.sign_prehash_recoverable(&message_hash.0).unwrap();
+        let (signature, recovery_id) = secret_key
+            .sign_prehash_recoverable(&message_hash.0)
+            .unwrap();
 
         // Flip the S value in the signature to make a different but valid signature.
-        let alt_signature = k256::ecdsa::Signature::from_scalars(signature.r(), -signature.s()).unwrap();
-        let alt_recovery_id = k256::ecdsa::RecoveryId::from_byte(recovery_id.to_byte() ^ 1).unwrap();
+        let alt_signature =
+            k256::ecdsa::Signature::from_scalars(signature.r(), -signature.s()).unwrap();
+        let alt_recovery_id =
+            k256::ecdsa::RecoveryId::from_byte(recovery_id.to_byte() ^ 1).unwrap();
 
         let mut data: Vec<u8> = vec![];
         let mut both_offsets = vec![];
