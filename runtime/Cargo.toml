@@ -102,6 +102,7 @@ name = "solana_runtime"
 agave-transaction-view = { workspace = true }
 assert_matches = { workspace = true }
 ed25519-dalek = { workspace = true }
+k256 = { workspace = true }
 memoffset = { workspace = true }
 rand = { workspace = true }
 rand0-7 = { package = "rand", version = "0.7" }

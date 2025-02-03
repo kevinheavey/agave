@@ -9312,6 +9312,7 @@ dependencies = [
  "im",
  "index_list",
  "itertools 0.12.1",
+ "k256",
  "lazy_static",
  "libc",
  "log",
