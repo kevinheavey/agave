@@ -34,6 +34,7 @@ serde = "1.0.112"                                                               
 serde_derive = "1.0.112"                                                                      # must match the serde version, see https://github.com/serde-rs/serde/issues/2584#issuecomment-1685252251
 serde_json = "1.0.56"
 solana-account-decoder = { path = "../../account-decoder", version = "=2.2.0" }
+solana-account-info = { path = "../../sdk/account-info", version = "=2.2.0" }
 solana-accounts-db = { path = "../../accounts-db", version = "=2.2.0" }
 solana-bn254 = { path = "../../sdk/bn254", version = "=2.2.0" }
 solana-bpf-loader-program = { path = "../bpf_loader", version = "=2.2.0" }
@@ -50,7 +51,11 @@ solana-logger = { path = "../../sdk/logger", version = "=2.2.0" }
 solana-measure = { path = "../../measure", version = "=2.2.0" }
 solana-poseidon = { path = "../../poseidon/", version = "=2.2.0" }
 solana-program = { path = "../../sdk/program", version = "=2.2.0" }
+solana-program-entrypoint = { path = "../../sdk/program-entrypoint", version = "=2.2.0" }
+solana-program-error = { path = "../../sdk/program-error", version = "=2.2.0" }
+solana-program-memory = { path = "../../sdk/program-memory", version = "=2.2.0" }
 solana-program-runtime = { path = "../../program-runtime", version = "=2.2.0" }
+solana-pubkey = { path = "../../sdk/pubkey", version = "=2.2.0" }
 solana-runtime = { path = "../../runtime", version = "=2.2.0" }
 solana-runtime-transaction = { path = "../../runtime-transaction", version = "=2.2.0" }
 solana-sbf-rust-128bit-dep = { path = "rust/128bit_dep", version = "=2.2.0" }

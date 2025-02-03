@@ -10,7 +10,7 @@ use {
     std::convert::TryInto,
 };
 
-solana_program::entrypoint_no_alloc!(process_instruction);
+solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],

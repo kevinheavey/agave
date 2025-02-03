@@ -7295,22 +7295,23 @@ dependencies = [
 name = "solana-sbf-rust-128bit"
 version = "2.2.0"
 dependencies = [
- "solana-program",
+ "solana-program-entrypoint",
  "solana-sbf-rust-128bit-dep",
 ]
 
 [[package]]
 name = "solana-sbf-rust-128bit-dep"
 version = "2.2.0"
-dependencies = [
- "solana-program",
-]
 
 [[package]]
 name = "solana-sbf-rust-account-mem"
 version = "2.2.0"
 dependencies = [
- "solana-program",
+ "solana-account-info",
+ "solana-program-entrypoint",
+ "solana-program-error",
+ "solana-program-memory",
+ "solana-pubkey",
 ]
 
 [[package]]
@@ -7369,6 +7370,7 @@ name = "solana-sbf-rust-caller-access"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7384,6 +7386,7 @@ name = "solana-sbf-rust-custom-heap"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7406,6 +7409,7 @@ name = "solana-sbf-rust-divide-by-zero"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7413,6 +7417,7 @@ name = "solana-sbf-rust-dup-accounts"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7423,6 +7428,7 @@ dependencies = [
  "num-traits",
  "solana-decode-error",
  "solana-program",
+ "solana-program-entrypoint",
  "thiserror 1.0.69",
 ]
 
@@ -7431,6 +7437,7 @@ name = "solana-sbf-rust-external-spend"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7438,6 +7445,7 @@ name = "solana-sbf-rust-get-minimum-delegation"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7452,6 +7460,7 @@ name = "solana-sbf-rust-instruction-introspection"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7459,6 +7468,7 @@ name = "solana-sbf-rust-invoke"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
  "solana-sbf-rust-invoke-dep",
  "solana-sbf-rust-invoked-dep",
  "solana-sbf-rust-realloc-dep",
@@ -7469,6 +7479,7 @@ name = "solana-sbf-rust-invoke-and-error"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7476,6 +7487,7 @@ name = "solana-sbf-rust-invoke-and-ok"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7483,6 +7495,7 @@ name = "solana-sbf-rust-invoke-and-return"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7494,6 +7507,7 @@ name = "solana-sbf-rust-invoked"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
  "solana-sbf-rust-invoked-dep",
 ]
 
@@ -7516,6 +7530,7 @@ name = "solana-sbf-rust-log-data"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7538,6 +7553,7 @@ name = "solana-sbf-rust-mem"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
  "solana-sbf-rust-mem-dep",
 ]
 
@@ -7568,6 +7584,7 @@ name = "solana-sbf-rust-panic"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7601,6 +7618,7 @@ dependencies = [
  "getrandom 0.2.10",
  "rand 0.8.5",
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7608,6 +7626,7 @@ name = "solana-sbf-rust-realloc"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
  "solana-sbf-rust-realloc-dep",
 ]
 
@@ -7623,6 +7642,7 @@ name = "solana-sbf-rust-realloc-invoke"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
  "solana-sbf-rust-realloc-dep",
  "solana-sbf-rust-realloc-invoke-dep",
 ]
@@ -7636,6 +7656,7 @@ name = "solana-sbf-rust-remaining-compute-units"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7643,6 +7664,7 @@ name = "solana-sbf-rust-ro-account_modify"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7657,6 +7679,7 @@ name = "solana-sbf-rust-sanity"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7681,6 +7704,7 @@ name = "solana-sbf-rust-sibling-inner-instructions"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7688,6 +7712,7 @@ name = "solana-sbf-rust-sibling-instructions"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7695,6 +7720,7 @@ name = "solana-sbf-rust-simulation"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7702,6 +7728,7 @@ name = "solana-sbf-rust-spoof1"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7709,6 +7736,7 @@ name = "solana-sbf-rust-spoof1-system"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7717,6 +7745,7 @@ version = "2.2.0"
 dependencies = [
  "bincode",
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7724,6 +7753,7 @@ name = "solana-sbf-rust-upgradeable"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7731,6 +7761,7 @@ name = "solana-sbf-rust-upgraded"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
@@ -7738,6 +7769,7 @@ name = "solana-sbf-syscall-get-epoch-stake"
 version = "2.2.0"
 dependencies = [
  "solana-program",
+ "solana-program-entrypoint",
 ]
 
 [[package]]
