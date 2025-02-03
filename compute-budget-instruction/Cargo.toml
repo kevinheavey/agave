@@ -39,7 +39,7 @@ solana-message = { workspace = true }
 solana-program = { workspace = true }
 solana-signer = { workspace = true }
 solana-system-interface = { workspace = true }
-solana-transaction = { workspace = true }
+solana-transaction = { workspace = true, features = ["blake3"] }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
