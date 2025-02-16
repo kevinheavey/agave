@@ -1,5 +1,5 @@
 use crate::client_error;
-pub use solana_rpc_client_api_core::response::{
+pub use solana_rpc_client_types::response::{
     OptionalContext, ProcessedSignatureResult, ReceivedSignatureResult, Response,
     RpcAccountBalance, RpcApiVersion, RpcBlockCommitment, RpcBlockProduction,
     RpcBlockProductionRange, RpcBlockUpdate, RpcBlockUpdateError, RpcBlockhash,
