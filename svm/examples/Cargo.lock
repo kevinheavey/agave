@@ -7208,12 +7208,12 @@ dependencies = [
  "solana-signer",
  "solana-transaction-error",
  "solana-transaction-status-client-types",
- "thiserror 2.0.11",
+ "thiserror 2.0.12",
 ]
 
 [[package]]
 name = "solana-rpc-client-api-core"
-version = "2.2.0"
+version = "2.3.0"
 dependencies = [
  "base64 0.22.1",
  "bs58",
