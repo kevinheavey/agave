@@ -36,8 +36,8 @@ solana-pubkey = { workspace = true }
 solana-reserved-account-keys = { workspace = true }
 solana-rpc-client-api = { workspace = true }
 solana-sdk-ids = { workspace = true }
-solana-signature = { workspace = true }
 solana-sign-only = { workspace = true }
+solana-signature = { workspace = true }
 solana-system-interface = { workspace = true }
 solana-sysvar = { workspace = true }
 solana-transaction = { workspace = true, features = ["verify"] }
