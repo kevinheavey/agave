@@ -20,7 +20,6 @@ use {
     clap::ArgMatches,
     rpassword::prompt_password,
     solana_derivation_path::{DerivationPath, DerivationPathError},
-    solana_hash::Hash,
     solana_keypair::{
         keypair_from_seed, keypair_from_seed_phrase_and_passphrase, read_keypair,
         read_keypair_file, seed_derivable::keypair_from_seed_and_derivation_path, Keypair,
