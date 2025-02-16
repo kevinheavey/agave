@@ -3,7 +3,7 @@
 pub mod client_error;
 pub mod custom_error;
 pub mod response;
-pub use solana_rpc_client_api_core::{config, error_object, filter, request};
+pub use solana_rpc_client_types::{config, error_object, filter, request};
 
 #[macro_use]
 extern crate serde_derive;
