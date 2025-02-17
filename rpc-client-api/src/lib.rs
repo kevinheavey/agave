@@ -7,6 +7,7 @@ pub mod error_object;
 pub mod filter;
 pub mod request;
 pub mod response;
+pub mod rpc_sender;
 
 #[macro_use]
 extern crate serde_derive;

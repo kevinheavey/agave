@@ -4,8 +4,8 @@ pub mod http_sender;
 pub mod mock_sender;
 pub mod nonblocking;
 pub mod rpc_client;
-pub mod rpc_sender;
 pub mod spinner;
+pub use solana_rpc_client_api::rpc_sender;
 
 pub mod mock_sender_for_cli {
     /// Magic `SIGNATURE` value used by `solana-cli` unit tests.

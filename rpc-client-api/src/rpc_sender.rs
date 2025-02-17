@@ -1,7 +1,7 @@
 //! A transport for RPC calls.
 use {
+    crate::{client_error::Result, request::RpcRequest},
     async_trait::async_trait,
-    solana_rpc_client_api::{client_error::Result, request::RpcRequest},
     std::time::Duration,
 };
 

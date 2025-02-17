@@ -7092,6 +7092,7 @@ name = "solana-rpc-client-api"
 version = "2.2.0"
 dependencies = [
  "anyhow",
+ "async-trait",
  "base64 0.22.1",
  "bs58",
  "jsonrpc-core",
