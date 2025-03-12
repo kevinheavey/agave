@@ -1,6 +1,6 @@
 [package]
 name = "solana-rpc-client-types"
-description = "Solana Client Common Utilities"
+description = "Solana RPC Client Types"
 documentation = "https://docs.rs/solana-rpc-client-types"
 version = { workspace = true }
 authors = { workspace = true }
