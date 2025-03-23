@@ -88,7 +88,6 @@ pub const MAX_REQUEST_BODY_SIZE: usize = 50 * (1 << 10); // 50kB
 
 const EXECUTION_SLOT: u64 = 5; // The execution slot must be greater than the deployment slot
 const EXECUTION_EPOCH: u64 = 2; // The execution epoch must be greater than the deployment epoch
-const MAX_BASE58_SIZE: usize = 1683; // Golden, bump if PACKET_DATA_SIZE changes
 const MAX_BASE64_SIZE: usize = 1644; // Golden, bump if PACKET_DATA_SIZE changes
 
 fn new_response<T>(slot: Slot, value: T) -> RpcResponse<T> {
