@@ -2817,7 +2817,7 @@ dependencies = [
  "solana-transaction-context 2.3.0",
  "solana-transaction-status",
  "solana-version",
- "spl-token-2022 7.0.0",
+ "spl-token-2022 8.0.0",
  "tokio",
  "tokio-util 0.7.14",
 ]
@@ -8041,7 +8041,7 @@ dependencies = [
  "solana-system-program",
  "solana-test-validator",
  "spl-associated-token-account",
- "spl-token 7.0.0",
+ "spl-token 8.0.0",
  "termcolor",
 ]
 
@@ -9100,34 +9100,6 @@ dependencies = [
 
 [[package]]
 name = "spl-token-2022"
-version = "7.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9048b26b0df0290f929ff91317c83db28b3ef99af2b3493dd35baa146774924c"
-dependencies = [
- "arrayref",
- "bytemuck",
- "num-derive",
- "num-traits",
- "num_enum",
- "solana-program",
- "solana-security-txt",
- "solana-zk-sdk",
- "spl-elgamal-registry 0.1.1",
- "spl-memo",
- "spl-pod",
- "spl-token 7.0.0",
- "spl-token-confidential-transfer-ciphertext-arithmetic 0.2.1",
- "spl-token-confidential-transfer-proof-extraction 0.2.1",
- "spl-token-confidential-transfer-proof-generation 0.3.0",
- "spl-token-group-interface 0.5.0",
- "spl-token-metadata-interface 0.6.0",
- "spl-transfer-hook-interface 0.9.0",
- "spl-type-length-value 0.7.0",
- "thiserror 2.0.12",
-]
-
-[[package]]
-name = "spl-token-2022"
 version = "8.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2d2cf83cb0d5e2df4e5b9043c78744af9ff2866e21bcea9380704b8dabc61e15"
@@ -9237,17 +9209,6 @@ dependencies = [
  "curve25519-dalek 4.1.3",
  "solana-zk-sdk",
  "thiserror 1.0.69",
-]
-
-[[package]]
-name = "spl-token-confidential-transfer-proof-generation"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0e3597628b0d2fe94e7900fd17cdb4cfbb31ee35c66f82809d27d86e44b2848b"
-dependencies = [
- "curve25519-dalek 4.1.3",
- "solana-zk-sdk",
- "thiserror 2.0.12",
 ]
 
 [[package]]
