@@ -174,7 +174,7 @@ pub(in crate::parse_token) fn parse_confidential_mint_burn_instruction(
             })
         }
         ConfidentialMintBurnInstruction::Burn => {
-            check_num_token_accounts(account_indexes, 2)?;
+            check_num_token_accounts(account_indexes, 3)?;
             let burn_data: BurnInstructionData = *decode_instruction_data(instruction_data)
                 .map_err(|_| {
                     ParseInstructionError::InstructionNotParsable(ParsableProgram::SplToken)
@@ -182,9 +182,25 @@ pub(in crate::parse_token) fn parse_confidential_mint_burn_instruction(
             let mut value = json!({
                 "destination": account_keys[account_indexes[0] as usize].to_string(),
                 "mint": account_keys[account_indexes[1] as usize].to_string(),
+                "newDecryptableAvailableBalance": burn_data.new_decryptable_available_balance.to_string(),
+                "equalityProofInstructionOffset": burn_data.equality_proof_instruction_offset,
+                "ciphertextValidityProofInstructionOffset": burn_data.ciphertext_validity_proof_instruction_offset,
+                "rangeProofInstructionOffset": burn_data.range_proof_instruction_offset,
+
             });
             let mut offset = 2;
             let map = value.as_object_mut().unwrap();
+            if offset < account_indexes.len() - 1
+                && (burn_data.equality_proof_instruction_offset != 0
+                    || burn_data.ciphertext_validity_proof_instruction_offset != 0
+                    || burn_data.range_proof_instruction_offset != 0)
+            {
+                map.insert(
+                    "instructionsSysvar".to_string(),
+                    json!(account_keys[account_indexes[offset] as usize].to_string()),
+                );
+                offset += 1;
+            }
 
             // Assume that extra accounts are proof accounts and not multisig
             // signers. This might be wrong, but it's the best possible option.
