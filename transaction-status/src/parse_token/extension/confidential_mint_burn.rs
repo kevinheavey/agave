@@ -174,7 +174,7 @@ pub(in crate::parse_token) fn parse_confidential_mint_burn_instruction(
             })
         }
         ConfidentialMintBurnInstruction::Burn => {
-            check_num_token_accounts(account_indexes, 3)?;
+            check_num_token_accounts(account_indexes, 2)?;
             let burn_data: BurnInstructionData = *decode_instruction_data(instruction_data)
                 .map_err(|_| {
                     ParseInstructionError::InstructionNotParsable(ParsableProgram::SplToken)
@@ -182,25 +182,9 @@ pub(in crate::parse_token) fn parse_confidential_mint_burn_instruction(
             let mut value = json!({
                 "destination": account_keys[account_indexes[0] as usize].to_string(),
                 "mint": account_keys[account_indexes[1] as usize].to_string(),
-                "newDecryptableAvailableBalance": burn_data.new_decryptable_available_balance.to_string(),
-                "equalityProofInstructionOffset": burn_data.equality_proof_instruction_offset,
-                "ciphertextValidityProofInstructionOffset": burn_data.ciphertext_validity_proof_instruction_offset,
-                "rangeProofInstructionOffset": burn_data.range_proof_instruction_offset,
-
             });
             let mut offset = 2;
             let map = value.as_object_mut().unwrap();
-            if offset < account_indexes.len() - 1
-                && (burn_data.equality_proof_instruction_offset != 0
-                    || burn_data.ciphertext_validity_proof_instruction_offset != 0
-                    || burn_data.range_proof_instruction_offset != 0)
-            {
-                map.insert(
-                    "instructionsSysvar".to_string(),
-                    json!(account_keys[account_indexes[offset] as usize].to_string()),
-                );
-                offset += 1;
-            }
 
             // Assume that extra accounts are proof accounts and not multisig
             // signers. This might be wrong, but it's the best possible option.
@@ -254,6 +238,25 @@ pub(in crate::parse_token) fn parse_confidential_mint_burn_instruction(
                 info: value,
             })
         }
+        ConfidentialMintBurnInstruction::ApplyPendingBurn => {
+            check_num_token_accounts(account_indexes, 1)?;
+            let mut value = json!({
+                "mint": account_keys[account_indexes[0] as usize].to_string(),
+            });
+            let map = value.as_object_mut().unwrap();
+            parse_signers(
+                map,
+                1,
+                account_keys,
+                account_indexes,
+                "owner",
+                "multisigOwner",
+            );
+            Ok(ParsedInstructionEnum {
+                instruction_type: "applyPendingBurn".to_string(),
+                info: value,
+            })
+        }
     }
 }
 
@@ -263,13 +266,13 @@ mod test {
         super::*,
         bytemuck::Zeroable,
         solana_instruction::{AccountMeta, Instruction},
+        solana_message::Message,
         solana_pubkey::Pubkey,
         spl_token_2022::{
             extension::confidential_mint_burn::instruction::{
                 confidential_burn_with_split_proofs, confidential_mint_with_split_proofs,
                 initialize_mint,
             },
-            solana_program::message::Message,
             solana_zk_sdk::{
                 encryption::pod::{
                     auth_encryption::PodAeCiphertext,
@@ -392,7 +395,6 @@ mod test {
                 &spl_token_2022::id(),
                 &Pubkey::new_unique(),
                 &Pubkey::new_unique(),
-                None,
                 &PodElGamalCiphertext::default(),
                 &PodElGamalCiphertext::default(),
                 &Pubkey::new_unique(),
@@ -450,7 +452,6 @@ mod test {
                 &spl_token_2022::id(),
                 &Pubkey::new_unique(),
                 &Pubkey::new_unique(),
-                None,
                 &PodAeCiphertext::default(),
                 &PodElGamalCiphertext::default(),
                 &PodElGamalCiphertext::default(),
