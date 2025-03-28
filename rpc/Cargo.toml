@@ -72,7 +72,7 @@ tokio-util = { workspace = true, features = ["codec", "compat"] }
 agave-reserved-account-keys = { workspace = true }
 serial_test = { workspace = true }
 solana-net-utils = { workspace = true }
-solana-program-option = { workspace = true}
+solana-program-option = { workspace = true }
 solana-rpc = { path = ".", features = ["dev-context-only-utils"] }
 solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
 solana-runtime-transaction = { workspace = true, features = [
