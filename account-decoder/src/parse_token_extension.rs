@@ -405,6 +405,7 @@ fn convert_confidential_mint_burn(
         confidential_supply: confidential_mint_burn.confidential_supply.to_string(),
         decryptable_supply: confidential_mint_burn.decryptable_supply.to_string(),
         supply_elgamal_pubkey: confidential_mint_burn.supply_elgamal_pubkey.to_string(),
+        pending_burn: confidential_mint_burn.pending_burn.to_string(),
     }
 }
 
