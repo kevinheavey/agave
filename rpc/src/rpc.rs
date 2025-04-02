@@ -5866,11 +5866,11 @@ pub mod tests {
             rent_exempt_amount,
             recent_blockhash,
         );
-        let tx_serialized_encoded = bs58::encode(serialize(&tx).unwrap()).into_string();
+        let tx_serialized_encoded = BASE64_STANDARD.encode(serialize(&tx).unwrap());
         tx.signatures[0] = Signature::default();
-        let tx_badsig_serialized_encoded = bs58::encode(serialize(&tx).unwrap()).into_string();
+        let tx_badsig_serialized_encoded = BASE64_STANDARD.encode(serialize(&tx).unwrap());
         tx.message.recent_blockhash = Hash::default();
-        let tx_invalid_recent_blockhash = bs58::encode(serialize(&tx).unwrap()).into_string();
+        let tx_invalid_recent_blockhash = BASE64_STANDARD.encode(serialize(&tx).unwrap());
 
         // Simulation bank must be frozen
         bank.freeze();
@@ -6204,7 +6204,7 @@ pub mod tests {
         let recent_blockhash = bank.confirmed_last_blockhash();
         let tx =
             system_transaction::transfer(&fee_payer, &token_account_pubkey, 1, recent_blockhash);
-        let tx_serialized_encoded = bs58::encode(serialize(&tx).unwrap()).into_string();
+        let tx_serialized_encoded = BASE64_STANDARD.encode(serialize(&tx).unwrap());
 
         // Simulation bank must be frozen
         bank.freeze();
@@ -6510,7 +6510,7 @@ pub mod tests {
 
         let bob_pubkey = Pubkey::new_unique();
         let tx = system_transaction::transfer(&mint_keypair, &bob_pubkey, 1234, recent_blockhash);
-        let tx_serialized_encoded = bs58::encode(serialize(&tx).unwrap()).into_string();
+        let tx_serialized_encoded = BASE64_STANDARD.encode(serialize(&tx).unwrap());
 
         assert!(!bank.is_frozen());
 
@@ -6727,7 +6727,7 @@ pub mod tests {
         // sendTransaction will fail because the blockhash is invalid
         let req = format!(
             r#"{{"jsonrpc":"2.0","id":1,"method":"sendTransaction","params":["{}"]}}"#,
-            bs58::encode(serialize(&bad_transaction).unwrap()).into_string()
+            BASE64_STANDARD.encode(serialize(&bad_transaction).unwrap())
         );
         let res = io.handle_request_sync(&req, meta.clone());
         assert_eq!(
@@ -6743,7 +6743,7 @@ pub mod tests {
         bad_transaction.sign(&[&mint_keypair], recent_blockhash);
         let req = format!(
             r#"{{"jsonrpc":"2.0","id":1,"method":"sendTransaction","params":["{}"]}}"#,
-            bs58::encode(serialize(&bad_transaction).unwrap()).into_string()
+            BASE64_STANDARD.encode(serialize(&bad_transaction).unwrap())
         );
         let res = io.handle_request_sync(&req, meta.clone());
         assert_eq!(
@@ -6763,7 +6763,7 @@ pub mod tests {
         health.stub_set_health_status(Some(RpcHealthStatus::Behind { num_slots: 42 }));
         let req = format!(
             r#"{{"jsonrpc":"2.0","id":1,"method":"sendTransaction","params":["{}"]}}"#,
-            bs58::encode(serialize(&bad_transaction).unwrap()).into_string()
+            BASE64_STANDARD.encode(serialize(&bad_transaction).unwrap())
         );
         let res = io.handle_request_sync(&req, meta.clone());
         assert_eq!(
@@ -6779,7 +6779,7 @@ pub mod tests {
 
         let req = format!(
             r#"{{"jsonrpc":"2.0","id":1,"method":"sendTransaction","params":["{}"]}}"#,
-            bs58::encode(serialize(&bad_transaction).unwrap()).into_string()
+            BASE64_STANDARD.encode(serialize(&bad_transaction).unwrap())
         );
         let res = io.handle_request_sync(&req, meta.clone());
         assert_eq!(
@@ -6793,7 +6793,7 @@ pub mod tests {
         // transaction
         let req = format!(
             r#"{{"jsonrpc":"2.0","id":1,"method":"sendTransaction","params":["{}", {{"skipPreflight": true}}]}}"#,
-            bs58::encode(serialize(&bad_transaction).unwrap()).into_string()
+            BASE64_STANDARD.encode(serialize(&bad_transaction).unwrap())
         );
         let res = io.handle_request_sync(&req, meta.clone());
         assert_eq!(
@@ -6807,7 +6807,7 @@ pub mod tests {
         bad_transaction.signatures.clear();
         let req = format!(
             r#"{{"jsonrpc":"2.0","id":1,"method":"sendTransaction","params":["{}"]}}"#,
-            bs58::encode(serialize(&bad_transaction).unwrap()).into_string()
+            BASE64_STANDARD.encode(serialize(&bad_transaction).unwrap())
         );
         let res = io.handle_request_sync(&req, meta);
         assert_eq!(
@@ -8801,7 +8801,6 @@ pub mod tests {
         let tx_ser = vec![0xffu8; too_big];
 
         let tx64 = BASE64_STANDARD.encode(&tx_ser);
-        let tx64_len = tx64.len();
         assert_eq!(
             decode_and_deserialize::<Transaction>(tx64, TransactionBinaryEncoding::Base64)
                 .unwrap_err(),
