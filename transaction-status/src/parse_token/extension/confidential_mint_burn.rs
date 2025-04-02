@@ -255,7 +255,7 @@ pub(in crate::parse_token) fn parse_confidential_mint_burn_instruction(
             })
         }
         ConfidentialMintBurnInstruction::ApplyPendingBurn => {
-            check_num_token_accounts(account_indexes, 1)?;
+            check_num_token_accounts(account_indexes, 2)?;
             let mut value = json!({
                 "mint": account_keys[account_indexes[0] as usize].to_string(),
             });
