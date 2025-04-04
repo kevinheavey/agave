@@ -8804,15 +8804,6 @@ pub mod tests {
         assert_eq!(
             decode_and_deserialize::<Transaction>(tx64, TransactionBinaryEncoding::Base64)
                 .unwrap_err(),
-            Error::invalid_params(
-                "decoded solana_transaction::Transaction too large: 1234 bytes (max: 1232 bytes)"
-            )
-        );
-
-        let tx64 = BASE64_STANDARD.encode(&tx_ser);
-        assert_eq!(
-            decode_and_deserialize::<Transaction>(tx64, TransactionBinaryEncoding::Base64)
-                .unwrap_err(),
             Error::invalid_params(format!(
                 "decoded solana_transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
             ))
