@@ -3853,7 +3853,7 @@ pub mod rpc_full {
             let tx_encoding = encoding.unwrap_or(UiTransactionEncoding::Base64);
             let binary_encoding = tx_encoding.into_binary_encoding().ok_or_else(|| {
                 Error::invalid_params(format!(
-                    "unsupported encoding: {tx_encoding}. Supported encodings: base58, base64"
+                    "unsupported encoding: {tx_encoding}. Supported encodings: base64"
                 ))
             })?;
             let (wire_transaction, unsanitized_tx) =
@@ -3976,7 +3976,7 @@ pub mod rpc_full {
             let tx_encoding = encoding.unwrap_or(UiTransactionEncoding::Base64);
             let binary_encoding = tx_encoding.into_binary_encoding().ok_or_else(|| {
                 Error::invalid_params(format!(
-                    "unsupported encoding: {tx_encoding}. Supported encodings: base58, base64"
+                    "unsupported encoding: {tx_encoding}. Supported encodings: base64"
                 ))
             })?;
             let (_, mut unsanitized_tx) =
@@ -8831,19 +8831,19 @@ pub mod tests {
 
     #[test]
     fn test_sanitize_unsanitary() {
-        let unsanitary_tx58 = "ASQffZKTaGW1YaJ5haQqVH7ZtK/zVZiYy/W5NaYO1aSqKiMvIGell7X\
+        let unsanitary_tx64 = "ASQffZKTaGW1YaJ5haQqVH7ZtK/zVZiYy/W5NaYO1aSqKiMvIGell7X\
         Ko5wimQwVSMMTEr4lm5O9+DkF5QrvyAkBAAAC70MCfWZjFFXbkIVru6heL6R1kkGN+IIjav1\
         M/yCDigdy9cB+bX6mz0z3jZRqMKamWbSZZq0y+INBh+LY4YWCOwE\
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf8ABAAAAAA="
             .to_string();
 
         let unsanitary_versioned_tx = decode_and_deserialize::<VersionedTransaction>(
-            unsanitary_tx58,
+            unsanitary_tx64,
             TransactionBinaryEncoding::Base64,
         )
         .unwrap()
         .1;
-        let expect58 = Error::invalid_params(
+        let expect64 = Error::invalid_params(
             "invalid transaction: Transaction failed to sanitize accounts offsets correctly"
                 .to_string(),
         );
@@ -8854,7 +8854,7 @@ pub mod tests {
                 &ReservedAccountKeys::empty_key_set()
             )
             .unwrap_err(),
-            expect58
+            expect64
         );
     }
 
