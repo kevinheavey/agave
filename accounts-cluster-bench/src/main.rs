@@ -1417,7 +1417,8 @@ pub mod test {
             validator_configs::make_identical_validator_configs,
         },
         solana_measure::measure::Measure,
-        solana_sdk::{native_token::sol_to_lamports, poh_config::PohConfig},
+        solana_native_token::sol_to_lamports,
+        solana_poh_config::PohConfig,
         solana_test_validator::TestValidator,
         spl_token::{
             solana_program::program_pack::Pack,
