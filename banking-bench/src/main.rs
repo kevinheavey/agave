@@ -37,7 +37,6 @@ use {
     solana_system_transaction as system_transaction,
     solana_time_utils::timestamp,
     solana_transaction::Transaction,
-
     std::{
         sync::{atomic::Ordering, Arc, RwLock},
         thread::sleep,
