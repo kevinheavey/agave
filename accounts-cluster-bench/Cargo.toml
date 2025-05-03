@@ -31,7 +31,6 @@ solana-program-pack = { workspace = true }
 solana-pubkey = { workspace = true }
 solana-rpc-client = { workspace = true, features = ["default"] }
 solana-rpc-client-api = { workspace = true }
-solana-sdk-ids = { workspace = true }
 solana-signature = { workspace = true }
 solana-signer = { workspace = true }
 solana-streamer = { workspace = true }
