@@ -9,7 +9,7 @@ use {
 pub use {
     solana_account_decoder_client_types::{token::UiTokenAmount, UiAccount},
     solana_fee_calculator::{FeeCalculator, FeeRateGovernor},
-    solana_transaction_error::TransactionResult as Result,
+    solana_transaction_error::TransactionResult,
     solana_transaction_status_client_types::{
         TransactionConfirmationStatus, UiConfirmedBlock, UiInnerInstructions, UiLoadedAddresses,
         UiTransactionError, UiTransactionReturnData, UiTransactionTokenBalance,
@@ -394,7 +394,7 @@ pub struct RpcVoteAccountInfo {
 #[serde(rename_all = "camelCase")]
 pub struct RpcSignatureConfirmation {
     pub confirmations: usize,
-    pub status: Result<()>,
+    pub status: TransactionResult<()>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
