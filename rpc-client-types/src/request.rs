@@ -1,8 +1,8 @@
+pub use solana_pubkey::Pubkey;
 use {
     crate::response::RpcSimulateTransactionResult,
     serde_json::{json, Value},
     solana_clock::Slot,
-    solana_pubkey::Pubkey,
     std::fmt,
     thiserror::Error,
 };
