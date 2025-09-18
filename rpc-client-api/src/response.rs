@@ -1,9 +1,9 @@
 use crate::client_error;
 pub use solana_rpc_client_types::response::{
-    solana_transaction, EncodedTransaction, EncodedTransactionWithStatusMeta, FeeCalculator,
-    FeeRateGovernor, OptionSerializer, OptionalContext, ParsedAccount, ParsedInstruction,
-    ProcessedSignatureResult, ReceivedSignatureResult, Response, Reward, RewardType, Rewards,
-    RpcAccountBalance, RpcApiVersion, RpcBlockCommitment, RpcBlockProduction,
+    solana_transaction as transaction, EncodedTransaction, EncodedTransactionWithStatusMeta,
+    FeeCalculator, FeeRateGovernor, OptionSerializer, OptionalContext, ParsedAccount,
+    ParsedInstruction, ProcessedSignatureResult, ReceivedSignatureResult, Response, Reward,
+    RewardType, Rewards, RpcAccountBalance, RpcApiVersion, RpcBlockCommitment, RpcBlockProduction,
     RpcBlockProductionRange, RpcBlockUpdate, RpcBlockUpdateError, RpcBlockhash,
     RpcBlockhashFeeCalculator, RpcConfirmedTransactionStatusWithSignature, RpcContactInfo,
     RpcFeeCalculator, RpcFeeRateGovernor, RpcIdentity, RpcInflationGovernor, RpcInflationRate,
