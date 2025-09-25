@@ -18,7 +18,7 @@ pub use {
         UiAccountEncoding, // used in UiAccountData
     },
     solana_fee_calculator::{FeeCalculator, FeeRateGovernor},
-    solana_reward_info::RewardType, // used in Reward
+    solana_reward_info::RewardType,    // used in Reward
     solana_transaction as transaction, // used in EncodedTransaction (may as well re-export the whole crate)
     solana_transaction_error::{TransactionError, TransactionResult},
     solana_transaction_status_client_types::{
